@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { PlanetsContext } from '../context/PlanetsProvider';
 
 function Table() {
@@ -7,7 +7,6 @@ function Table() {
 
   function renderTableHeader() {
     return (
-
       <thead>
         <tr>
           <th>name</th>
@@ -24,7 +23,6 @@ function Table() {
           <th>edited</th>
           <th>url</th>
         </tr>
-
       </thead>
     );
   }
@@ -54,6 +52,7 @@ function Table() {
       </tbody>
     );
   }
+
   return (
     <table>
       {renderTableHeader()}

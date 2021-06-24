@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import fetchPlanetsStarWars from '../services/fetchStarWars';
 
 export const PlanetsContext = createContext({});
@@ -21,5 +22,10 @@ function PlanetsProvider({ children }) {
     </PlanetsContext.Provider>
   );
 }
+
+PlanetsProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+
+};
 
 export default PlanetsProvider;
