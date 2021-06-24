@@ -5,7 +5,6 @@ import planetsData from '../services/StarWarsAPI';
 
 function StarWarsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
-  const [filterByName, setFilterByName] = useState({ name: '' });
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -39,7 +38,6 @@ function StarWarsProvider({ children }) {
       value={ {
         planets,
         filters,
-        setFilterByName,
         setFilters,
       } }
     >

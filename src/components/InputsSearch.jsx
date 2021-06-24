@@ -11,7 +11,11 @@ function InputsSearch() {
 
   return (
     <section>
-      <input value={ filters.filterByName.name } onChange={ searchByText } data-testid="name-filter" />
+      <input
+        value={ filters.filterByName.name }
+        onChange={ searchByText }
+        data-testid="name-filter"
+      />
     </section>
   );
 }
