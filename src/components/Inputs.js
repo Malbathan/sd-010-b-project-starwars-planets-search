@@ -2,12 +2,17 @@ import React, { useContext, useState } from 'react';
 import planetsContext from '../contextAPI/planetsContext';
 
 function Inputs() {
-  const { handleName } = useContext(planetsContext);
+  const { handleName, handleOperatorFilter } = useContext(planetsContext);
   const [moreOrLessFilter, setMoreOrLessFilter] = useState({
     columnHeader: 'population',
     operator: 'maior que',
     numberForComparison: 0,
   });
+
+  const sendStateToFilter = () => {
+    const { columnHeader, operator, numberForComparison } = moreOrLessFilter;
+    return handleOperatorFilter(columnHeader, operator, numberForComparison);
+  };
 
   const prepareMoreOrLessFilter = ({ name, value }) => {
     setMoreOrLessFilter({ ...moreOrLessFilter, [name]: value });
@@ -50,7 +55,13 @@ function Inputs() {
           data-testid="value-filter"
           onChange={ ({ target }) => prepareMoreOrLessFilter(target) }
         />
-        <button type="button" data-testid="button-filter">Filtrar</button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => sendStateToFilter() }
+        >
+          Filtrar
+        </button>
       </section>
     </header>
   );

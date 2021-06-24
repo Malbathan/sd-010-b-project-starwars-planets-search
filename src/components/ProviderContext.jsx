@@ -10,12 +10,6 @@ function ProviderContext({ children }) {
   const [filter, setFilter] = useState({});
 
   const handleName = ({ value }) => {
-    /* if (value.length === 0) {
-      delete filter.filterByName;
-      const newFilter = filter;
-      setFilter(newFilter);
-      return;
-    } */
     const planetsFound = planets.filter((planet) => {
       const name = planet.name.toLowerCase();
       const input = value.toLowerCase();
@@ -26,6 +20,21 @@ function ProviderContext({ children }) {
     };
     setPlanetsAfterFilter(planetsFound);
     setFilter({ ...filter, filterByName });
+  };
+
+  const handleOperatorFilter = (header, operator, rawNumber) => {
+    const number = Number(rawNumber);
+    let result = [];
+    if (operator === 'maior que') {
+      result = planetsAfterFilter.filter((planet) => Number(planet[header]) > number);
+    }
+    if (operator === 'menor que') {
+      result = planetsAfterFilter.filter((planet) => Number(planet[header]) < number);
+    }
+    if (operator === 'igual a') {
+      result = planetsAfterFilter.filter((planet) => Number(planet[header]) === number);
+    }
+    setPlanetsAfterFilter(result);
   };
 
   useEffect(() => {
@@ -54,6 +63,7 @@ function ProviderContext({ children }) {
     setTableElements,
     setPlanetsAfterFilter,
     handleName,
+    handleOperatorFilter,
   };
 
   return (

@@ -58,7 +58,7 @@ function PlanetTable() {
   return (
     <main>
       <Inputs />
-      <table>
+      <table border="1">
         { headerTable() }
         { bodyTable() }
       </table>
