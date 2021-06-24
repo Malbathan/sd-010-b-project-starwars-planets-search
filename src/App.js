@@ -8,3 +8,5 @@ function App() {
 }
 
 export default App;
+
+// É UM COMENTÁRIO INICIAL PRO PRIMEIRO COMMIT. Logo após, irei apagar isso aqui.
