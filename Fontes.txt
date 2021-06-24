@@ -1,0 +1,4 @@
+https://stackoverflow.com/questions/56492261/the-function-makes-the-dependencies-of-useeffect-hook
+https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies
+https://pt.stackoverflow.com/questions/482772/react-tabela-din%C3%A2mica-adicionando-e-removendo-linhas-da-tabela
+https://www.w3schools.com/tags/tag_thead.asp
