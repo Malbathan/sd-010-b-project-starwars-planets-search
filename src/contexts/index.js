@@ -4,11 +4,34 @@ import PropTypes from 'prop-types';
 export const Context = createContext('');
 
 function Provider({ children }) {
-  const [input, setInput] = useState('');
+  const [name, setName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [operator, setOperator] = useState('>');
+  const [number, setNumber] = useState(0);
+  const [fullFilter, setFullFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: '>',
+        value: 0,
+      },
+    ],
+  });
 
   const value = {
-    input,
-    setInput,
+    name,
+    setName,
+    column,
+    setColumn,
+    setOperator,
+    setNumber,
+    operator,
+    number,
+    fullFilter,
+    setFullFilter,
   };
 
   return (
@@ -21,5 +44,5 @@ function Provider({ children }) {
 export default Provider;
 
 Provider.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.node,
 }.isRequired;

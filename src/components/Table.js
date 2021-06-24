@@ -3,25 +3,52 @@ import { Context } from '../contexts';
 
 function Table() {
   const [data, setData] = useState([]);
-  const { input } = useContext(Context);
+  const [planetsFilter, setPlanetsFilter] = useState([]);
+  const { name, fullFilter } = useContext(Context);
 
   useEffect(() => {
     const requisicao = async () => {
       const objeto = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
       const { results } = await objeto.json();
       setData(results);
+      setPlanetsFilter(results);
     };
     requisicao();
   }, []);
 
+  function filterData(objectRequest) {
+    const { filterByNumericValues } = fullFilter;
+    const { column, comparison, value } = filterByNumericValues[0];
+    if (comparison === '>') {
+      return objectRequest.filter((element) => parseFloat(element[column]) > value);
+    }
+    if (comparison === '<') {
+      return objectRequest.filter((element) => parseFloat(element[column]) < value);
+    }
+    return objectRequest.filter((element) => parseFloat(element[column]) === value);
+  }
+
+  useEffect(() => {
+    const planets = data.filter(({ name: planet }) => (
+      name ? planet.includes(name) : true));
+    setPlanetsFilter(planets);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [name]);
+
+  useEffect(() => {
+    const planets = filterData(data);
+    setPlanetsFilter(planets);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fullFilter]);
+
   function renderTable() {
-    return data.filter(({ name }) => (input ? name.includes(input) : true)).map((
-      { name, climate, created, diameter, edited, films, orbital_period: orbitalPeriod,
+    return planetsFilter.map((
+      { name: planet, climate, created, edited, films, orbital_period: orbitalPeriod,
         population, rotation_period: rotationPeriod, surface_water: surfaceWater, url,
-        gravity, terrain }, index,
+        gravity, terrain, diameter }, index,
     ) => (
       <tr key={ index }>
-        <td>{ name }</td>
+        <td>{ planet }</td>
         <td>{ climate }</td>
         <td>{ created }</td>
         <td>{ diameter }</td>
