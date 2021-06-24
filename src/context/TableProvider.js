@@ -8,11 +8,11 @@ function TableProvider({ children }) {
 
   useEffect(() => {
     const getPlanets = async () => {
-      const results = await getPlanetsFromAPI();
-      console.log(results);
-      // setPlanets({
-      //   results,
-      // });
+      const response = await getPlanetsFromAPI();
+      setPlanets({
+        response,
+      });
+      console.log(planets);
     };
     getPlanets();
   });
