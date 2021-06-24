@@ -1,12 +1,10 @@
-import React, { useEffect, useContext } from 'react';
-import StarWarsContext from './context/StarWarsContext';
-// import fetchAPI from './services/API';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const { planets, setPlanets } = useContext(StarWarsContext);
+  const [planets, setPlanets] = useState([]);
   const tableHeader = planets[0];
-  const loading = <h2>Loading</h2>;
+  // const loading = <h2>Loading</h2>;
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -20,23 +18,47 @@ function App() {
   const renderTH = () => {
     if (tableHeader) {
       return Object.keys(tableHeader).filter((el) => el !== 'residents')
-        .map((entrie, i) => <th key={ i }>{entrie}</th>);
+        .map((data, i) => <th key={ i }>{data}</th>);
     }
-    return loading;
+    // return loading;
   };
 
-  // const renderTBody = () => {
-  //   if (tableHeader)
-  // }
+  const renderTBody = () => {
+    const INDEX = 9;
+    if (tableHeader) {
+      return (
+        planets.map(
+          (planet, i) => (
+            <tr
+              key={ i }
+            >
+              { Object.values(planet).map(
+                (el, ix) => (ix !== INDEX ? <td key={ ix }>{ el }</td> : null),
+              ) }
+            </tr>
+          ),
+        )
+      );
+    }
+  };
 
   return (
-    <main>
+    <main className="App">
+      <form>
+        <input
+          placeholder="Buscar"
+          maxLength="30"
+          data-testid="name-filter"
+        />
+      </form>
       <table className="table">
         <thead>
-          { renderTH() }
+          <tr>
+            { renderTH() }
+          </tr>
         </thead>
         <tbody>
-          { }
+          { renderTBody() }
         </tbody>
       </table>
     </main>
