@@ -6,14 +6,14 @@ export default function Table() {
 
   useEffect(fetchPlanetsList, []);
 
-  const THeaders = [planetsList.name];
+  const THeaders = [...planetsList];
   return (
     !isLoading
       ? (
         <table>
           <tbody>
             <tr>
-              {THeaders.map((title, i) => <th key={ i }>{title}</th>)}
+              {THeaders.map((title, i) => <th key={ i }>{title.name}</th>)}
             </tr>
             <tr />
           </tbody>
