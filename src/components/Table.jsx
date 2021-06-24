@@ -1,12 +1,35 @@
-import React, { Component } from 'react';
-import getPlanets from '../API/GetPlanets';
+import React, { useContext, useEffect } from 'react';
+import Context from '../context/Context';
 
-export default class Table extends Component {
-  render() {
-    const api = getPlanets();
-    console.log(api);
-    return (
-      <span>eu sou a tabela</span>
-    );
-  }
+function Table() {
+  const {
+    planets,
+    fetching,
+    fetchPlanets,
+    headersList,
+    filterHeaders,
+  } = useContext(Context);
+
+  useEffect(
+    fetchPlanets, [],
+  );
+
+  const table = (
+    <table>
+      <thead>
+        <tr>
+          {headersList.map((header, index) => <th key={ index }>{ header }</th>)}
+        </tr>
+      </thead>
+      <tbody />
+    </table>
+  );
+
+  return (
+    <div>
+      { fetching ? 'Loading...' : table }
+    </div>
+  );
 }
+
+export default Table;
