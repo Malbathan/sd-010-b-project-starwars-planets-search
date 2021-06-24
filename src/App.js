@@ -1,12 +1,12 @@
 import React from 'react';
 import Provider from './context/Provider';
-// import Inputs from './components/Inputs';
+import Inputs from './components/Inputs';
 import Table from './components/Table';
 
 function App() {
   return (
     <Provider>
-      {/* <Inputs /> */}
+      <Inputs />
       <Table />
     </Provider>
   );
