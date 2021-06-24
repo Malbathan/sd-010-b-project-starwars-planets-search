@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=News+Cycle:400,700') ;
+
+html, body {
+  background: black;
+  color: #ff6;
+  font: 700 1em News Cycle , sans-serif;
+  height: 100%;
+  letter-spacing: 0.15em;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
