@@ -16,7 +16,7 @@ const Table = () => {
   return (
     <table>
       <Theader attributes={ attributes } />
-      <Tbody planets={ planets } />
+      <Tbody planets={ filterPlanet().sort(sortPlanet) } />
     </table>
   );
 };
