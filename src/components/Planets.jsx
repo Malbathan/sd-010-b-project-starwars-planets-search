@@ -1,18 +1,21 @@
-import React, { useEffect } from 'react';
-import fetchPlanets from '../services/Api';
+import React, { useContext } from 'react';
+import StarWarsContext from '../context/StarWarsContext';
 
 function Planets() {
-  useEffect(() => {
-    async function fetchData() {
-      const planetsList = await fetchPlanets();
-      return planetsList;
-    }
-    console.log(fetchData());
-  }, []);
+  const { planetsList } = useContext(StarWarsContext);
+  // const [planetsList, setPlanetsList] = useState([]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const planets = await fetchPlanets();
+  //     setPlanetsList(planets);
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <div>
       <h1>olá star war</h1>
+      {console.log(planetsList)}
     </div>
   );
 }
