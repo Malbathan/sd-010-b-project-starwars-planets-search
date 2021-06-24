@@ -1,9 +1,26 @@
 import React from 'react';
-import './App.css';
+import ProviderTabela from './provider/ProviderTabela';
+import Table from './components/Table';
 
 function App() {
+  // const [planets, setPlanets] = useState([]);
+
+  // useEffect(() => {
+  //   const getPlanets = async () => {
+  //     const urlApi = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  //     const { results } = await fetch(urlApi).then((data) => data.json());
+  //     setPlanets(results);
+  //   };
+  //   getPlanets();
+  // }, []);
+
   return (
-    <span>Hello, App!</span>
+    <ProviderTabela>
+      <div>
+        <h1>Star Wars Planets Search</h1>
+        <Table />
+      </div>
+    </ProviderTabela>
   );
 }
 
