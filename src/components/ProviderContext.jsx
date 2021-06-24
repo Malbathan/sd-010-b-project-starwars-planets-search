@@ -4,15 +4,23 @@ import planetsContext from '../contextAPI/planetsContext';
 
 function ProviderContext({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [tableElements, setTableElements] = useState([]);
 
   useEffect(() => {
     const makeRequest = () => giveMePlanets().then(({ results }) => setPlanets(results));
+
     makeRequest();
   }, []);
 
   const state = {
-    planets,
-    setPlanets,
+    planets: {
+      planets,
+      setPlanets,
+    },
+    tableElements: {
+      tableElements,
+      setTableElements,
+    },
   };
 
   return (

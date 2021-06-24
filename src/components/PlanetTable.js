@@ -1,7 +1,11 @@
-import { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
-function PlanetTable () {
-
-};
+function PlanetTable() {
+  return (
+    <table>
+      ei
+    </table>
+  );
+}
 
 export default PlanetTable;
