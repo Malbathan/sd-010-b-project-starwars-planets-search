@@ -54,3 +54,9 @@ table td {
   border: 1px solid;
   text-align: center;
 }
+
+.TableFilter {
+  background-color: yellow;
+  height: 100px;
+  text-align: center;
+}

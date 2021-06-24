@@ -4,6 +4,9 @@ import ContextStarWars from './ContextStarWars';
 
 function ProviderStarWars({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setfilters] = useState({
+    filterByName: { name: '' },
+  });
 
   useEffect(() => {
     async function featchPlanets() {
@@ -19,9 +22,19 @@ function ProviderStarWars({ children }) {
     featchPlanets();
   }, [setData]);
 
+  const functionSetFilters = (filter, name) => {
+    console.log(name);
+    setfilters({
+      ...filters,
+      [filter]: { name },
+    });
+  };
+
   const context = {
     data,
     setData,
+    filters,
+    functionSetFilters,
   };
 
   return (
@@ -32,7 +45,7 @@ function ProviderStarWars({ children }) {
 }
 
 ProviderStarWars.propTypes = {
-  children: PropTypes.shape(Object).isRequired,
+  children: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default ProviderStarWars;
