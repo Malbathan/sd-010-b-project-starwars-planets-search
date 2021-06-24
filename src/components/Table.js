@@ -17,15 +17,24 @@ function Table() {
   }, []);
 
   function filterData(objectRequest) {
+    console.log('ALOOOOO');
     const { filterByNumericValues } = fullFilter;
     const { column, comparison, value } = filterByNumericValues[0];
+    console.log(column, comparison, value);
     if (comparison === '>') {
-      return objectRequest.filter((element) => parseFloat(element[column]) > value);
+      return objectRequest
+        .filter((element) => parseFloat(element[column]) > parseFloat(value));
     }
     if (comparison === '<') {
-      return objectRequest.filter((element) => parseFloat(element[column]) < value);
+      return objectRequest
+        .filter((element) => parseFloat(element[column]) < parseFloat(value));
     }
-    return objectRequest.filter((element) => parseFloat(element[column]) === value);
+    if (comparison === '=') {
+      const result = objectRequest
+        .filter((element) => parseFloat(element[column]) === parseFloat(value));
+      console.log(result);
+      return result;
+    }
   }
 
   useEffect(() => {
