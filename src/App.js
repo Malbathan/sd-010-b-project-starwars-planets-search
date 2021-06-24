@@ -1,9 +1,16 @@
 import React from 'react';
-import './App.css';
+// eslint-disable-next-line import/no-named-as-default
+import Planets from './services/API';
+import Table from './components/Table';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <div>
+      <span>Hello, App!</span>
+      <Planets>
+        <Table />
+      </Planets>
+    </div>
   );
 }
 
