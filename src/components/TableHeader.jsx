@@ -88,7 +88,7 @@ function TableHeader() {
     );
   };
 
-  const xablau = () => {
+  const FilterByNumber = () => {
     if (filters.filterByNumericValues.length === 0) {
       return data;
     }
@@ -178,8 +178,8 @@ function TableHeader() {
   };
 
   useEffect(() => {
-    xablau();
-  }, [filters]);
+    FilterByNumber();
+  }, [FilterByNumber, filters]);
 
   if (!data.length) return <h1>Loading...</h1>;
 
