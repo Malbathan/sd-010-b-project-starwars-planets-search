@@ -6,13 +6,13 @@ import { columns } from '../services/Planets';
 
 function SortOptions() {
   const { state, setState } = useContext(GlobalContext);
-  const [column, setColumn] = useState('');
+  const [column, setColumn] = useState();
   const [sort, setSort] = useState();
 
   return (
     <div>
       <Select
-        value={ column }
+        value=""
         handle={ (value) => setColumn(value) }
         options={ columns }
         id="column-sort"
@@ -40,14 +40,14 @@ function SortOptions() {
             name="sort"
           />
         </label>
+        <Button
+          id="column-sort-button"
+          handle={ () => {
+            setState({ ...state, order: [column, sort] });
+          } }
+          text="Ordenar"
+        />
       </div>
-      <Button
-        id="column-sort-button"
-        handle={ () => {
-          setState({ ...state, order: [column, sort] });
-        } }
-        text="Ordenar"
-      />
     </div>
   );
 }
