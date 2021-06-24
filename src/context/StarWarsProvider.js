@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import fetchApi from '../services/Api/StarWarsApi';
 
@@ -25,5 +26,9 @@ function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default StarWarsProvider;
