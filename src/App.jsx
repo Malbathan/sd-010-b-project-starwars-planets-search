@@ -3,11 +3,12 @@ import './App.css';
 import OptionsHeader from './Components/OptionsHeader';
 import Table from './Components/Table';
 import SwContext from './contexts/swContext';
+import useNameFilter from './Hooks/useNameFilter';
 import { getPlanets } from './services/API/starwarsApi';
 
 function App() {
   const [swPlanets, setSwPlanets] = useState([]);
-  const [filterName, setFilterName] = useState('');
+  const { filteredByNameData, filterName, setFilterName } = useNameFilter(swPlanets);
   useEffect(() => {
     const fetchPlanets = async () => {
       const planets = await getPlanets();
@@ -16,7 +17,7 @@ function App() {
     fetchPlanets();
   }, []);
 
-  const swContext = { data: swPlanets,
+  const swContext = { data: filteredByNameData,
     filters: { filterByName: { name: filterName } },
     setFilterName };
 
