@@ -5,11 +5,11 @@ import TableProvider from './context/TableProvider';
 
 function App() {
   return (
-    <main>
-      <TableProvider>
+    <TableProvider>
+      <div>
         <Table />
-      </TableProvider>
-    </main>
+      </div>
+    </TableProvider>
   );
 }
 
