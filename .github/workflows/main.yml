@@ -14,7 +14,6 @@ jobs:
         uses: betrybe/eslint-linter-action@v2.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
   stylelint:
     runs-on: ubuntu-18.04
     steps:
