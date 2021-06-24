@@ -44,3 +44,34 @@ body {
   background-color: #333;
   color: whitesmoke;
 }
+
+
+table {
+  background-color: rgb(226, 224, 224);
+  border-collapse: collapse;
+  border-radius: 5px;
+  color: rgb(34, 33, 33);
+  text-align: center;
+  width: 100%;
+}
+
+table tr:nth-child( even ) {
+  background-color: #f2f2f2;
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+th, td {
+  padding: 8px;
+}
+
+
+th {
+  background-color: rgb(54, 88, 122);
+  color: white;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  text-align: center;
+}
