@@ -6,7 +6,7 @@ import planetsContext from '../contextAPI/planetsContext';
 function ProviderContext({ children }) {
   const [planets, setPlanets] = useState([]);
   const [tableElements, setTableElements] = useState([]);
-  const [planetsAfterFilter, setPlanetsAfterFilter] = useState({ ...planets });
+  const [planetsAfterFilter, setPlanetsAfterFilter] = useState([]);
   const [filter, setFilter] = useState({});
 
   const handleName = ({ value }) => {
@@ -15,8 +15,11 @@ function ProviderContext({ children }) {
       const input = value.toLowerCase();
       return name.includes(input);
     });
-
-    console.log(planetsFound);
+    const filterByName = {
+      name: value,
+    };
+    setFilter({ ...filter, filterByName });
+    setPlanetsAfterFilter(planetsFound);
   };
 
   useEffect(() => {
@@ -26,6 +29,7 @@ function ProviderContext({ children }) {
         return info;
       }));
       setPlanets(data);
+      setPlanetsAfterFilter(data);
     });
     makeRequest();
   }, []);

@@ -3,7 +3,7 @@ import arrayHeadTable from '../services/arrayHeaderTable';
 import planetsContext from '../contextAPI/planetsContext';
 
 function PlanetTable() {
-  const { planets: { planets }, handleName } = useContext(planetsContext);
+  const { planetsAfterFilter, handleName } = useContext(planetsContext);
   const headerTable = () => (
     <thead>
       <tr>
@@ -15,7 +15,7 @@ function PlanetTable() {
   );
 
   const bodyTable = () => {
-    const element = planets.map(({
+    const element = planetsAfterFilter.map(({
       name,
       rotation_period: rotationPeriod,
       orbital_period: orbitalPeriod,
@@ -56,7 +56,12 @@ function PlanetTable() {
 
   return (
     <main>
-      <input type="text" name="name" onChange={ ({ target }) => handleName(target) } />
+      <input
+        type="text"
+        name="name"
+        data-testid="name-filter"
+        onChange={ ({ target }) => handleName(target) }
+      />
       <table>
         { headerTable() }
         { bodyTable() }
