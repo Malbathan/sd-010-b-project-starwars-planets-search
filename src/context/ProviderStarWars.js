@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import ContextStarWars from './ContextStarWars';
 
 function ProviderStarWars({ children }) {
-  const [planetList, setPlanetList] = useState([]);
-  console.log(children);
+  const [data, setData] = useState([]);
 
   const context = {
-    planetList,
-    setPlanetList,
+    data,
+    setData,
   };
   return (
     <ContextStarWars.Provider value={ context }>
