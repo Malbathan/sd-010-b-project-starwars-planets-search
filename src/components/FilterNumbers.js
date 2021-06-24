@@ -69,6 +69,8 @@ function FilterNumbers() {
         id="comparison-filter"
       />
       <Input value={ input } handle={ setInput } id="value-filter" type="number" />
+      <Button id="button-filter" handle={ addFilter } text="Adicionar" />
+      {filterRead()}
     </div>
   );
 }
