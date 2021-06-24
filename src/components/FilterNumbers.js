@@ -41,18 +41,17 @@ function FilterNumbers() {
     });
   };
 
-  const filterRead = () => (
-    filters.map((filter, idx) => (
+  const filterRead = () => filters.map((filter, idx) => (
+    <div key={ `btn - ${idx}` } data-testid="filter">
       <Button
-        key={ `btn - ${idx}` }
-        id="filter"
+        id="btn-filterss"
         text={ `x ${filter}` }
         handle={ () => deleteFilter(filter) }
       >
         {filter}
       </Button>
-    ))
-  );
+    </div>
+  ));
 
   return (
     <div>
