@@ -21,6 +21,7 @@ function Table() {
                 <th>Surface Water</th>
                 <th>Population</th>
                 <th>Films</th>
+                <th>Created</th>
                 <th>Edited</th>
                 <th>URL</th>
               </tr>
@@ -41,6 +42,7 @@ function Table() {
                       return filmName;
                     }).toString()}
                   </td>
+                  <td>{planet.created}</td>
                   <td>{planet.edited}</td>
                   <td>{planet.url}</td>
                 </tr>))}
