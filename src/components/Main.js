@@ -10,6 +10,7 @@ import getplanets from '../services/data';
             const res = await getplanets();
             setData(res)
         }
+        dataSet()
      }, [])
   
     return (
