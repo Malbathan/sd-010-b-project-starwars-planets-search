@@ -8,9 +8,7 @@ function PlanetTable() {
     <thead>
       <tr>
         {
-          arrayHeadTable.map((element, index) => {
-            return (<th key={ index }>{ element }</th>);
-          })
+          arrayHeadTable.map((element, index) => (<th key={ index }>{ element }</th>))
         }
       </tr>
     </thead>
