@@ -85,31 +85,35 @@ const Provider = ({ children }) => {
     });
   };
 
-  const fetchPlanets = (async () => {
-    try {
-      const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
-        (resp) => resp.json(),
-      );
-      results.forEach((planet) => {
-        delete planet.residents;
-      });
-      setData(results);
-      setFilterData(generateCorrectNameOrder(results, 'name'));
-    } catch (error) {
-      console.log('Ocorreu um erro na requisição à API.');
-    }
-    // mock da API pois tinha limite de requisições
-    // response.results.forEach((planet) => {
-    //   delete planet.residents;
-    // });
-    // setData(response.results);
-    // setFilterData(response.results);
-    // setNewResultFromLayer(response.results);
-  });
+  const fetchPlanets = () => {
+    const fetchPlanetsCallback = async () => {
+      try {
+        const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
+          (resp) => resp.json(),
+        );
+        results.forEach((planet) => {
+          delete planet.residents;
+        });
+        setData(results);
+        setFilterData(generateCorrectNameOrder(results, 'name'));
+      } catch (error) {
+        console.log('Ocorreu um erro na requisição à API.');
+      }
+      // mock da API pois tinha limite de requisições
+      // response.results.forEach((planet) => {
+      //   delete planet.residents;
+      // });
+      // setData(response.results);
+      // setFilterData(response.results);
+      // setNewResultFromLayer(response.results);
+    };
+    fetchPlanetsCallback();
+  };
 
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
+  useEffect(
+    fetchPlanets,
+    [],
+  );
 
   useEffect(() => {
     if (filterText !== '') {
