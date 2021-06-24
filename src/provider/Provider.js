@@ -5,7 +5,17 @@ import reqPlanets from '../services/serviceAPis';
 const StarWarsContext = createContext();
 
 function Provider({ children }) {
+  const initial = {
+    filterByName: '',
+    filterByNumericValues: [],
+    order: {
+      column: 'Name',
+      sort: 'ASC',
+    },
+  };
+
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState(initial);
 
   const fetchData = async () => {
     const result = await reqPlanets();
@@ -16,7 +26,7 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const contextValue = { data };
+  const contextValue = { data, filters, setFilters, setData };
 
   return (
     <StarWarsContext.Provider value={ contextValue }>
