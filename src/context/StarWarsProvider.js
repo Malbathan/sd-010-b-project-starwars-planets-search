@@ -6,18 +6,18 @@ import fetchApi from '../services/Api/StarWarsApi';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
 
-  const setState = async () => {
-    const fetch = await fetchApi();
-    setData(fetch);
-    // console.log(fetch);
-  };
-
-  useEffect(setState, []);
+  useEffect(() => {
+    const getApi = async () => {
+      const teste = await fetchApi();
+      await setData(teste);
+    };
+    getApi();
+  }, []);
 
   const context = {
     data,
   };
-  console.log(context);
+
   return (
     <StarWarsContext.Provider
       value={ context }
