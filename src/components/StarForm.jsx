@@ -14,3 +14,16 @@ const measures = [
 ];
 
 const categoriesDel = [];
+
+export default function StarForm() {
+  // REFATORAR: criar apenas um estado com todas as chaves. Criar uma função genérica pra controlar os inputs.
+
+  const { starData, setNewState, newState } = useStarContext();
+  const [categoriesArr, setCategoriesArr] = useState(categories);
+  const [category, setCategory] = useState('population');
+  const [measure, setMeasures] = useState('maior que');
+  const [number, setNumber] = useState(0);
+  const [boolSubmit, setBoolSubmit] = useState(false);
+  const [sortCategory, setSortCategory] = useState('name');
+  const [sortType, setSortType] = useState('');
+}
