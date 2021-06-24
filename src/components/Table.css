@@ -1,0 +1,27 @@
+.planetas {
+  border: 3px solid #ddd;
+  border-collapse: collapse;
+  text-align: center;
+  width: 100%;
+}
+
+.planetas td, .planetas th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.planetas tr:hover {
+  background-color: #ddd;
+}
+
+.planetas tr:nth-child( even ) {
+  background-color: #f2f2f2;
+}
+
+.planetas th {
+  background-color: grey;
+  color: white;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  text-align: center;
+}
