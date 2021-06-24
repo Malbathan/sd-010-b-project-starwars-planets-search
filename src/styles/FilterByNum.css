@@ -1,0 +1,11 @@
+.header__logicalFilter__container {
+  display: flex;
+  margin: 1em;
+}
+
+.header__logicalFilter__container label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 2em;
+}
