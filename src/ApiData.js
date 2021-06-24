@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import AppContext from '../AppContext';
-import Table from './Table';
+import PropTypes from 'prop-types';
+import AppContext from './AppContext';
 
-function ApiData() {
+function ApiData({ children }) {
   const [planets, setPlanets] = useState([]);
 
   useEffect(() => {
@@ -17,9 +17,13 @@ function ApiData() {
 
   return (
     <AppContext.Provider value={ planets }>
-      <Table />
+      {children}
     </AppContext.Provider>
   );
 }
+
+ApiData.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ApiData;

@@ -23,22 +23,22 @@ function Table() {
           <th>url</th>
         </tr>
       </thead>
-      {planets.map((test) => (
-        <tbody key={ test.name }>
+      {planets.map((planet) => (
+        <tbody key={ planet.name }>
           <tr>
-            <td>{test.name}</td>
-            <td>{test.rotation_period}</td>
-            <td>{test.orbital_period}</td>
-            <td>{test.diameter}</td>
-            <td>{test.climate}</td>
-            <td>{test.gravity}</td>
-            <td>{test.terrain}</td>
-            <td>{test.surface_water}</td>
-            <td>{test.population}</td>
-            <td>{test.residents}</td>
-            <td>{test.films}</td>
-            <td>{test.created}</td>
-            <td>{test.url}</td>
+            <td>{planet.name}</td>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.residents}</td>
+            <td>{planet.films}</td>
+            <td>{planet.created}</td>
+            <td>{planet.url}</td>
           </tr>
         </tbody>
       ))}
