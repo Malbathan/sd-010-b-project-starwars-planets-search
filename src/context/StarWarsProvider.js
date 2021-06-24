@@ -10,14 +10,24 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     async function fetchData() {
-      urlArray.map(async (url) => {
-        const planets = await fetchPlanets(url);
-        setData(planets.results);
-      });
+      const planets = await fetchPlanets(urlArray[0]);
+      setData(planets.results);
       setLoading(true);
     }
     fetchData();
-  }, [data]);
+  }, []);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     urlArray.map(async (url) => {
+  //       let planets = [];
+  //       planets = (await fetchPlanets(url));
+  //       setData(planets.results);
+  //     });
+  //     setLoading(true);
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <StarWarsContext.Provider value={ { data, loading } }>
