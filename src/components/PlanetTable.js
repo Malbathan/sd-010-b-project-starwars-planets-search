@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import arrayHeadTable from '../services/arrayHeaderTable';
 import planetsContext from '../contextAPI/planetsContext';
+import Inputs from './Inputs';
 
 function PlanetTable() {
-  const { planetsAfterFilter, handleName } = useContext(planetsContext);
+  const { planetsAfterFilter } = useContext(planetsContext);
   const headerTable = () => (
     <thead>
       <tr>
@@ -56,12 +57,7 @@ function PlanetTable() {
 
   return (
     <main>
-      <input
-        type="text"
-        name="name"
-        data-testid="name-filter"
-        onChange={ ({ target }) => handleName(target) }
-      />
+      <Inputs />
       <table>
         { headerTable() }
         { bodyTable() }

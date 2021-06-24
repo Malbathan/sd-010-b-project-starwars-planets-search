@@ -10,6 +10,12 @@ function ProviderContext({ children }) {
   const [filter, setFilter] = useState({});
 
   const handleName = ({ value }) => {
+    /* if (value.length === 0) {
+      delete filter.filterByName;
+      const newFilter = filter;
+      setFilter(newFilter);
+      return;
+    } */
     const planetsFound = planets.filter((planet) => {
       const name = planet.name.toLowerCase();
       const input = value.toLowerCase();
@@ -18,8 +24,8 @@ function ProviderContext({ children }) {
     const filterByName = {
       name: value,
     };
-    setFilter({ ...filter, filterByName });
     setPlanetsAfterFilter(planetsFound);
+    setFilter({ ...filter, filterByName });
   };
 
   useEffect(() => {
