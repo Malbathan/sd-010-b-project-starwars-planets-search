@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Table from './Components/Table';
+import SwContext from './contexts/swContext';
 import { getPlanets } from './services/API/starwarsApi';
 
 function App() {
@@ -12,12 +13,14 @@ function App() {
     };
     fetchPlanets();
   }, []);
-  const renderPlanetNames = () => swPlanets
-    .map(({ name }, index) => <span key={ index }>{name}</span>);
+
+  const swContext = { data: swPlanets };
   return (
-    <div>
-      <Table />
-    </div>
+    <SwContext.Provider value={ swContext }>
+      <div>
+        <Table />
+      </div>
+    </SwContext.Provider>
   );
 }
 

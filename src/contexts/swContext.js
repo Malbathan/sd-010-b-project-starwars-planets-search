@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const SwContext = createContext();
+const SwContext = createContext([]);
 
 export default SwContext;
