@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import DataContext from '../Context/DataContext';
+import { filterContext } from '../Components/Filters';
 
 function Table() {
   const { data } = useContext(DataContext);
+  const { filters: { filterByName } } = useContext(filterContext);
 
   function renderData() {
-    return data.map((planet) => {
+    return data.filter(({ name }) => name.includes(filterByName)).map((planet) => {
       const attributes = Object.values(planet);
       return (
         <tr key={ planet.name }>

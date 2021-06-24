@@ -5,7 +5,6 @@ import DataContext from './DataContext';
 const { Provider } = DataContext;
 
 function DataProvider({ children }) {
-  // console.log(children)
   const [data, setData] = useState([]);
   useEffect(() => {
     function fetchPlanets() {
