@@ -1,8 +1,32 @@
 import React from 'react';
+import TableBody from './TableBody';
+
+const tableHeader = [
+  'name',
+  'rotation_period',
+  'orbital_period',
+  'diameter',
+  'climate',
+  'gravity',
+  'terrain',
+  'surface_water',
+  'population',
+  'residents',
+  'films',
+  'created',
+  'edited',
+];
 
 function Table() {
   return (
-    <table />
+    <table>
+      <thead>
+        <tr>
+          {tableHeader.map((th, idx) => <th key={ idx }>{th}</th>)}
+        </tr>
+      </thead>
+      <TableBody />
+    </table>
   );
 }
 
