@@ -5,7 +5,7 @@ function Table() {
   const { data, fetchAPI } = useContext(PlanetContext);
   useEffect(fetchAPI, []);
 
-  console.log(data);
+  console.log(data[0]);
 
   return (
     <div>
@@ -28,11 +28,27 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((element) => {
-            <tr>
-              <td>{element.name}</td>
-            </tr>;
-          })}
+          {data.map(({ name,
+            rotation_period: rotationPeriod,
+            orbital_period: orbitalPeriod,
+            diameter,
+            climate,
+            gravity,
+            terrain,
+            surface_water: surfaceWater,
+            population,
+          }, index) => (
+            <tr key={ index }>
+              <td>{name}</td>
+              <td>{ rotationPeriod }</td>
+              <td>{ orbitalPeriod }</td>
+              <td>{ diameter }</td>
+              <td>{ climate }</td>
+              <td>{ gravity }</td>
+              <td>{ terrain }</td>
+              <td>{ surfaceWater }</td>
+              <td>{ population }</td>
+            </tr>))}
         </tbody>
       </table>
     </div>
