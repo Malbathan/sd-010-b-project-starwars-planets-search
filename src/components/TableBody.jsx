@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function TableBody() {
-  const { data } = useContext(PlanetsContext);
+  const { data, filteredByName, textFilter } = useContext(PlanetsContext);
+  const showData = textFilter.length === 0 ? data : filteredByName;
   return (
     <tbody>
-      {data.map((planet, idx) => (
+      {showData.map((planet, idx) => (
         <tr key={ idx }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
