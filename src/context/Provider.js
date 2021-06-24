@@ -159,6 +159,7 @@ const Provider = ({ children }) => {
     filterLayer,
     handleDeleteLayer,
     generateCorrectOrder,
+    columnSelectArray,
   };
 
   // if (!filterData || !data || data.length === 0) {
