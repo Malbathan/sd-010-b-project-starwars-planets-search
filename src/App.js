@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
 import Table from './Components/Table';
+import FilterByName from './Components/FilterByName';
 
 function App() {
   return (
-
-    <Table />
+    <div>
+      <FilterByName />
+      <Table />
+    </div>
 
   );
 }

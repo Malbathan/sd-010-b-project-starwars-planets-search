@@ -4,7 +4,7 @@ import useFetchApiPlanets from '../Hooks/apiPlanets';
 import './table.css';
 
 export default function Table() {
-  const { data, setData } = useContext(StarWarsContext);
+  const { data, setData, filters } = useContext(StarWarsContext);
   const { results } = useFetchApiPlanets();
   let tableHeads = [];
 
@@ -12,9 +12,13 @@ export default function Table() {
     results.map((planet) => delete planet.residents);
     setData(results);
   }
-  if (Object.keys(data).length !== 0) {
+  if (data.length > 0) {
     tableHeads = Object.keys(data[0]);
   }
+
+  const filtered = (filters.filters.filterByName.name !== '')
+    ? data.filter((planet) => (planet.name).toLowerCase().includes(filters.filters.filterByName.name))
+    : data;
 
   return (
 
@@ -33,7 +37,7 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            {data.map((planet) => (
+            {filtered.map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
