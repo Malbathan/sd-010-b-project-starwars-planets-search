@@ -30,7 +30,16 @@ function App() {
   // }
 
   return (
-    <span>Hello, App!</span>
+    <main>
+      <table className="table">
+        <thead>
+          { renderTH() }
+        </thead>
+        <tbody>
+          { }
+        </tbody>
+      </table>
+    </main>
   );
 }
 
