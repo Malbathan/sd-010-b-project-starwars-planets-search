@@ -1,14 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import PlanetLine from './PlanetLine';
+import React, { useContext } from 'react';
+import PlanetContext from '../context/PlanetContext';
 
-function Table(data) {
-
-  const teste = () => {
-    data.data.map((planet) => console.log(planet));
-  };
+function Table() {
+  const { data } = useContext(PlanetContext);
+  if (data === undefined) {
+    return (
+      <p>carregando</p>
+    );
+  }
   return (
     <table>
-      { teste }
+      <tr>
+        <th>nome</th>
+        <th>rotação</th>
+        <th>orbita</th>
+        <th>diametro</th>
+        <th>clima</th>
+        <th>gravidade</th>
+        <th>terreno</th>
+        <th>superficie </th>
+        <th>população</th>
+        <th>filmes</th>
+        <th>criado</th>
+        <th>editado</th>
+        <th>url</th>
+      </tr>
+      {data.map((planet) => (
+        <tr key={ planet.name }>
+          <td>{ planet.name }</td>
+          <td>{ planet.rotation_period }</td>
+          <td>{ planet.orbital_period }</td>
+          <td>{ planet.diameter }</td>
+          <td>{ planet.climate }</td>
+          <td>{ planet.gravity}</td>
+          <td>{ planet.terrain }</td>
+          <td>{ planet.surface_water }</td>
+          <td>{ planet.population }</td>
+          <td>{ planet.films }</td>
+          <td>{ planet.created }</td>
+          <td>{ planet.edited }</td>
+          <td>{ planet.url }</td>
+        </tr>
+      ))}
     </table>
   );
 }
