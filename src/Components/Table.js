@@ -16,8 +16,9 @@ export default function Table() {
     tableHeads = Object.keys(data[0]);
   }
 
-  const filtered = (filters.filters.filterByName.name !== '')
-    ? data.filter((planet) => (planet.name).toLowerCase().includes(filters.filters.filterByName.name))
+  const { name } = filters.filters.filterByName;
+  const filtered = (name !== '')
+    ? data.filter((planet) => (planet.name).toLowerCase().includes(name))
     : data;
 
   return (
