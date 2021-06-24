@@ -5,10 +5,11 @@ function Table() {
   const { data, fetchAPI } = useContext(PlanetContext);
   useEffect(fetchAPI, []);
 
-  console.log(data[0]);
-
   return (
     <div>
+      <label htmlFor="">
+        <input type="text" />
+      </label>
       <table>
         <thead>
           <tr>
@@ -37,9 +38,12 @@ function Table() {
             terrain,
             surface_water: surfaceWater,
             population,
+            created,
+            edited,
+            url,
           }, index) => (
             <tr key={ index }>
-              <td>{name}</td>
+              <td>{ name }</td>
               <td>{ rotationPeriod }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ diameter }</td>
@@ -48,6 +52,9 @@ function Table() {
               <td>{ terrain }</td>
               <td>{ surfaceWater }</td>
               <td>{ population }</td>
+              <td>{ created }</td>
+              <td>{ edited }</td>
+              <td>{ url }</td>
             </tr>))}
         </tbody>
       </table>
