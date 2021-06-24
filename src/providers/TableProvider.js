@@ -35,4 +35,8 @@ const TableProvider = ({ children }) => {
   );
 };
 
+TableProvider.propTypes = ({
+  children: PropTypes.func,
+}).isRequired;
+
 export default TableProvider;
