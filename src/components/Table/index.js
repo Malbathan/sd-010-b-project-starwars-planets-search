@@ -21,11 +21,11 @@ const Table = () => {
   const filterToNumber = ({ comparison, value, column: c }, planet) => {
     switch (comparison) {
     case 'maior que':
-      return parseFloat(planet[c]) > parseFloat(value);
+      return +planet[c] > +value;
     case 'igual a':
-      return parseFloat(planet[c]) === parseFloat(value);
+      return +planet[c] === +value;
     case 'menor que':
-      return parseFloat(planet[c]) < parseFloat(value);
+      return +planet[c] < +value;
     default: {
       return false;
     }
