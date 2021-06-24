@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <span>A long time agora in a galaxy far, far away...</span>
   );
 }
 
