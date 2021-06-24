@@ -1,20 +1,13 @@
-import React, { useEffect , userState} from 'react';
+import React, { useEffect , useState} from 'react';
 import Table from './Table';
 import getplanets from '../services/data';
+import TableProvider from '../providers/TableProvider'
 
  function Main() {
-     const [data, setData] = useState([])
-     
-    useEffect(() => {
-        const dataSet = async () => {
-            const res = await getplanets();
-            setData(res)
-        }
-        dataSet()
-     }, [])
-  
     return (
+      <TableProvider>
         <Table />
+        </TableProvider>
     )
 
  }
