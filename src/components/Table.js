@@ -6,7 +6,7 @@ import TableContext from '../context/tablecontext';
 // td é coluna table division
 
 function Table() {
-  const { data, collums, planetName } = useContext(TableContext);
+  const { data, collums } = useContext(TableContext);
   return (
     <table border="1">
       <thead>
