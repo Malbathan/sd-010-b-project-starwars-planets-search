@@ -1,14 +1,35 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
   const { data, fetchAPI } = useContext(PlanetContext);
+  // states
   useEffect(fetchAPI, []);
 
+  const [name, setName] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
+
+  // functions
+  const handleChange = ({ target: { value } }) => {
+    setName(value);
+  };
+
+  // render
   return (
     <div>
-      <label htmlFor="">
-        <input type="text" />
+      <label htmlFor="name-filtre">
+        filtre por nome
+        <input
+          type="text"
+          id="name-filtre"
+          onChange={ handleChange }
+          data-testid="name-filter"
+        />
       </label>
       <table>
         <thead>
@@ -29,7 +50,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ name,
+          {data.map(({
+            name: namePlanet,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,
             diameter,
@@ -43,7 +65,7 @@ function Table() {
             url,
           }, index) => (
             <tr key={ index }>
-              <td>{ name }</td>
+              <td>{ namePlanet }</td>
               <td>{ rotationPeriod }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ diameter }</td>
