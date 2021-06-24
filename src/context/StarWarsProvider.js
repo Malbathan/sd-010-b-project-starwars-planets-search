@@ -17,11 +17,10 @@ class StarWarsProvider extends React.Component {
   }
 
   fetchPlanets() {
-    this.setState({ isFetching: true }, async () => {
+    this.setState({ data: [] }, async () => {
       const planets = await getPlanets();
       this.setState({
         data: planets,
-        isFetching: false,
       });
     });
   }
