@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import StarWarsContext from './context/StarWarsContext';
+// import fetchAPI from './services/API';
 import './App.css';
 
 function App() {
