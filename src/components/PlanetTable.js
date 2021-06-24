@@ -3,8 +3,6 @@ import planetsContext from '../contextAPI/planetsContext';
 
 function PlanetTable() {
   const { planets: { planets } } = useContext(planetsContext);
-  console.log(planets)
-
   const headerTable = () => (
     <thead>
       <tr>
@@ -29,6 +27,7 @@ function PlanetTable() {
     <main>
       <table>
         { headerTable() }
+        { bodyTable() }
       </table>
     </main>
   );

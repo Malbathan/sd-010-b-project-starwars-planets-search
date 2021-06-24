@@ -8,8 +8,13 @@ function ProviderContext({ children }) {
   const [tableElements, setTableElements] = useState([]);
 
   useEffect(() => {
-    const makeRequest = () => giveMePlanets().then(({ results }) => setPlanets(results));
-
+    const makeRequest = () => giveMePlanets().then(({ results }) => {
+      const data = (results.map((info) => {
+        delete info.residents;
+        return info;
+      }));
+      setPlanets(data);
+    });
     makeRequest();
   }, []);
 
