@@ -6,6 +6,12 @@ import fetchData from './services/fetchData';
 
 function App() {
   const [data, setData] = useState({ results: [] });
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
+
   useEffect(() => {
     async function settingData() {
       const dataToSet = await fetchData();
@@ -13,8 +19,9 @@ function App() {
     }
     settingData();
   }, []);
+
   return (
-    <TableContext.Provider value={ data }>
+    <TableContext.Provider value={ { data, filters, setFilters } }>
       <Table />
     </TableContext.Provider>
   );
