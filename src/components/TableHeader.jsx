@@ -88,7 +88,7 @@ function TableHeader() {
     );
   };
 
-  const FilterByNumber = () => {
+  const addFilterOptions = () => {
     if (filters.filterByNumericValues.length === 0) {
       return data;
     }
@@ -178,8 +178,8 @@ function TableHeader() {
   };
 
   useEffect(() => {
-    FilterByNumber();
-  }, [FilterByNumber, filters]);
+    addFilterOptions();
+  }, [filters]);
 
   if (!data.length) return <h1>Loading...</h1>;
 
