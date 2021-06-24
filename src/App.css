@@ -10,9 +10,10 @@ html, body {
   width: 100%;
 }
 
-table, th, tr {
+table, th, tr, td {
   border: 1px;
   border-color: #ff6;
   border-spacing: 0;
   border-style: solid;
+  text-align: center;
 }

@@ -2,9 +2,30 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Planets() {
-  const { data, loading } = useContext(StarWarsContext);
+  const { data, loading, filteredPlanet } = useContext(StarWarsContext);
 
   const renderTable = () => (
+    <tbody>
+      {filteredPlanet.map((planet) => (
+        <tr key={ planet.name }>
+          <td>{planet.name}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.population}</td>
+          <td>{planet.films}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.url}</td>
+        </tr>))}
+    </tbody>
+  );
+
+  return (
     <table>
       <thead>
         <tr>
@@ -23,36 +44,10 @@ function Planets() {
           <th>URL</th>
         </tr>
       </thead>
-      <tbody>
-        {data.map((planet) => (
-          <tr key={ planet.name }>
-            <td>{planet.name}</td>
-            <td>{planet.rotation_period}</td>
-            <td>{planet.orbital_period}</td>
-            <td>{planet.diameter}</td>
-            <td>{planet.climate}</td>
-            <td>{planet.gravity}</td>
-            <td>{planet.terrain}</td>
-            <td>{planet.surface_water}</td>
-            <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
-          </tr>))}
-      </tbody>
-    </table>
-  );
-
-  return (
-    <div>
-      {loading ? <h1>olá star war</h1> : <h1>Carregando</h1>}
+      {loading ? renderTable() : <tbody><tr><td>Carregando</td></tr></tbody>}
 
       {console.log(data)}
-
-      {renderTable()}
-
-    </div>
+    </table>
   );
 }
 

@@ -7,6 +7,8 @@ import fetchPlanets, { urlArray } from '../services/Api';
 function StarWarsProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState({ name: '' });
+  const [filteredPlanet, setFilteredPlanet] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +18,10 @@ function StarWarsProvider({ children }) {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setFilteredPlanet(data.filter(({ name }) => name.includes(filter.name)));
+  }, [data, filter]);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -30,7 +36,13 @@ function StarWarsProvider({ children }) {
   // }, []);
 
   return (
-    <StarWarsContext.Provider value={ { data, loading } }>
+    <StarWarsContext.Provider
+      value={ { data,
+        loading,
+        filter,
+        setFilter,
+        filteredPlanet } }
+    >
       {children}
     </StarWarsContext.Provider>
   );
