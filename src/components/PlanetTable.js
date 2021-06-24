@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import arrayHeadTable from '../services/arrayHeaderTable';
 import planetsContext from '../contextAPI/planetsContext';
 
 function PlanetTable() {
@@ -6,19 +7,11 @@ function PlanetTable() {
   const headerTable = () => (
     <thead>
       <tr>
-        <th>name</th>
-        <th>rotation_period</th>
-        <th>orbital_period</th>
-        <th>diameter</th>
-        <th>climate</th>
-        <th>gravity</th>
-        <th>terrain</th>
-        <th>surface_water</th>
-        <th>population</th>
-        <th>films</th>
-        <th>created</th>
-        <th>edited</th>
-        <th>url</th>
+        {
+          arrayHeadTable.map((element, index) => {
+            return (<th key={ index }>{ element }</th>);
+          })
+        }
       </tr>
     </thead>
   );
@@ -40,19 +33,19 @@ function PlanetTable() {
       url,
     }, index) => (
       <tr key={ index }>
-        <th>{ name }</th>
-        <th>{ rotationPeriod }</th>
-        <th>{ orbitalPeriod }</th>
-        <th>{ diameter }</th>
-        <th>{ climate }</th>
-        <th>{ gravity }</th>
-        <th>{ terrain }</th>
-        <th>{ surfaceWater }</th>
-        <th>{ population }</th>
-        <th>{ films }</th>
-        <th>{ created }</th>
-        <th>{ edited }</th>
-        <th>{ url }</th>
+        <td>{ name }</td>
+        <td>{ rotationPeriod }</td>
+        <td>{ orbitalPeriod }</td>
+        <td>{ diameter }</td>
+        <td>{ climate }</td>
+        <td>{ gravity }</td>
+        <td>{ terrain }</td>
+        <td>{ surfaceWater }</td>
+        <td>{ population }</td>
+        <td>{ films }</td>
+        <td>{ created }</td>
+        <td>{ edited }</td>
+        <td>{ url }</td>
       </tr>
     ));
 
