@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ContextTabela from '../context/ContextTabela';
 
 function Table() {
-  const { planets } = useContext(ContextTabela);
+  const { data } = useContext(ContextTabela);
   return (
     <table>
       <thead>
@@ -23,7 +23,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planets.map(({ name,
+        {data.map(({ name,
           rotation_period: rotationPeriod,
           orbital_period: orbitalPeriod,
           diameter,
