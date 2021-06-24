@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css';
-import Planets from './Planets';
+import Planets from './components/Planets';
+import PlanetsProvider from './context/PlanetsProvider';
 
 function App() {
-  return <Planets />;
+  return (
+    <PlanetsProvider>
+      <Planets />
+    </PlanetsProvider>
+  );
 }
 
 export default App;
