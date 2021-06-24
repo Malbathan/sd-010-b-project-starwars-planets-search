@@ -2,17 +2,14 @@ import React, { useContext } from 'react';
 
 import contextSauder from '../context/context';
 
-import logo from '../logo.svg';
-
 function Table() {
   const { responseAPI, handleChangePlanet,
     changefilteredByNumber, handleButtonFilterClick,
     filters: { filterByName: { name } } } = useContext(contextSauder);
 
   return (
-    <div className="cor">
-      <img src={ logo } className="App-logo" alt="logo" />
-      <input onChange={ handleChangePlanet } />
+    <div>
+      <input data-testid="name-filter" onChange={ handleChangePlanet } />
       <select
         name="column"
         id=""

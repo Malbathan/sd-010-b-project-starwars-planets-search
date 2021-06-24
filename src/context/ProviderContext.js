@@ -53,7 +53,6 @@ function Provider({ children }) {
   };
 
   const GLOBAL_STATE = {
-    fetchAPI,
     responseAPI,
     handleChangePlanet,
     changefilteredByNumber,
