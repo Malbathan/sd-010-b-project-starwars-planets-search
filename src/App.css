@@ -7,9 +7,13 @@
   pointer-events: none;
 }
 
-.table th{
+.table th, td{
   border: 1px solid;
   padding: 5px;
+}
+
+.table td{
+  background-color: rgba(38, 42, 49, 0.2);
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
