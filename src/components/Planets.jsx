@@ -2,19 +2,12 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Planets() {
-  const { planetsList } = useContext(StarWarsContext);
-  // const [planetsList, setPlanetsList] = useState([]);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const planets = await fetchPlanets();
-  //     setPlanetsList(planets);
-  //   }
-  //   fetchData();
-  // }, []);
+  const { planetsList, loading } = useContext(StarWarsContext);
 
   return (
     <div>
-      <h1>olá star war</h1>
+      {loading ? <h1>olá star war</h1> : <h1>Carregando</h1>}
+
       {console.log(planetsList)}
     </div>
   );

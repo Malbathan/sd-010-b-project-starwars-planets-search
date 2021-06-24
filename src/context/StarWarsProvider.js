@@ -5,18 +5,20 @@ import StarWarsContext from './StarWarsContext';
 import fetchPlanets from '../services/Api';
 
 function StarWarsProvider({ children }) {
+  const [loading, setLoading] = useState(false);
   const [planetsList, setPlanetsList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const planets = await fetchPlanets();
-      return setPlanetsList(planets);
+      setPlanetsList(planets.results);
+      setLoading(true);
     }
     fetchData();
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ { planetsList } }>
+    <StarWarsContext.Provider value={ { planetsList, loading } }>
       {children}
     </StarWarsContext.Provider>
   );
