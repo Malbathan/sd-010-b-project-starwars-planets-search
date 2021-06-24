@@ -8,17 +8,16 @@ function TableProvider({ children }) {
 
   useEffect(() => {
     const getPlanets = async () => {
-      const response = await getPlanetsFromAPI();
-      setPlanets({
-        response,
-      });
-      console.log(planets);
+      const { results } = await getPlanetsFromAPI();
+      setPlanets(results);
     };
     getPlanets();
-  });
+  }, []);
+
+  const context = { planets };
 
   return (
-    <TableContext.Provider>
+    <TableContext.Provider value={ context }>
       {children}
     </TableContext.Provider>
   );
