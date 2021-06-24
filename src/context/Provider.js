@@ -11,19 +11,6 @@ const Provider = ({ children }) => {
     value: '',
   };
 
-  const generateCorrectOrder = (array) => {
-    const isSmaller = -1;
-    return array.sort((a, b) => {
-      if (a.arrayIndex > b.arrayIndex) {
-        return 1;
-      }
-      if (a.arrayIndex < b.arrayIndex) {
-        return isSmaller;
-      }
-      return 0;
-    });
-  };
-
   const columnSelectArray = [
     { valor: 'population', arrayIndex: 0 },
     { valor: 'orbital_period', arrayIndex: 1 },
@@ -49,6 +36,28 @@ const Provider = ({ children }) => {
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
   const [filterLayer, setFilterLayer] = useState([]);
   // const [newResultFromLayer, setNewResultFromLayer] = useState([]);
+  const [sortColumnFilter, setSortColumnFilter] = useState('population');
+  const [sortBoolean, setSortBoolean] = useState('desc');
+
+  const generateCorrectOrder = (array, arrayProp) => {
+    const inverseNumbers = -1;
+    let ascendencyOrder = 1;
+    if (sortBoolean === 'desc') {
+      ascendencyOrder = inverseNumbers;
+    }
+    const isSmaller = inverseNumbers * ascendencyOrder;
+    const isBigger = 1 * ascendencyOrder;
+
+    return array.sort((a, b) => {
+      if (a[arrayProp] > b[arrayProp]) {
+        return isBigger;
+      }
+      if (a[arrayProp] < b[arrayProp]) {
+        return isSmaller;
+      }
+      return 0;
+    });
+  };
 
   const fetchPlanets = async () => {
     try {
@@ -59,11 +68,11 @@ const Provider = ({ children }) => {
         delete planet.residents;
       });
       setData(results);
-      setFilterData(results);
+      setFilterData(generateCorrectOrder(results, 'name'));
     } catch (error) {
       console.log('Ocorreu um erro na requisição à API.');
     }
-
+    // mock da API pois tinha limite de requisições
     // response.results.forEach((planet) => {
     //   delete planet.residents;
     // });
@@ -72,9 +81,9 @@ const Provider = ({ children }) => {
     // setNewResultFromLayer(response.results);
   };
 
-  useEffect(() => {
-    fetchPlanets();
-  }, []);
+  useEffect(
+    fetchPlanets, [],
+  );
 
   useEffect(() => {
     if (filterText !== '') {
@@ -127,6 +136,19 @@ const Provider = ({ children }) => {
     setFilterNumber({ ...filterNumber, [name]: value });
   };
 
+  const handleSortColumnFilter = ({ target: { value } }) => {
+    setSortColumnFilter(value);
+  };
+
+  const handleSortBoolean = ({ target: { value } }) => {
+    setSortBoolean(value);
+  };
+
+  const requestSort = () => {
+    console.log(sortColumnFilter);
+    setFilterData(generateCorrectOrder(filterData, sortColumnFilter));
+  };
+
   const newFilteredResultsAfterDelete = (newFiltersAfterDelete) => {
     let result = data;
     newFiltersAfterDelete.forEach((filter) => {
@@ -160,6 +182,9 @@ const Provider = ({ children }) => {
     handleDeleteLayer,
     generateCorrectOrder,
     columnSelectArray,
+    handleSortColumnFilter,
+    handleSortBoolean,
+    requestSort,
   };
 
   // if (!filterData || !data || data.length === 0) {

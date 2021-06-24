@@ -2,7 +2,13 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Sort() {
-  const { filterData, data, columnSelectArray } = useContext(PlanetsContext);
+  const {
+    filterData,
+    data,
+    columnSelectArray,
+    handleSortColumnFilter,
+    handleSortBoolean,
+    requestSort } = useContext(PlanetsContext);
   if (!filterData || !data || data.length === 0) {
     return null;
   }
@@ -10,7 +16,7 @@ function Sort() {
     <div>
       Ordenar:
       <label htmlFor="column">
-        <select id="column">
+        <select id="column" onChange={ handleSortColumnFilter }>
           {columnSelectArray.map((column) => (
             <option
               key={ column.arrayIndex }
@@ -24,22 +30,26 @@ function Sort() {
       <label htmlFor="asc">
         Asc
         <input
+          value="asc"
           id="asc"
           type="radio"
           name="sort"
           required
+          onClick={ handleSortBoolean }
         />
       </label>
       <label htmlFor="desc">
         Desc
         <input
+          value="desc"
           id="desc"
           type="radio"
           name="sort"
           required
+          onClick={ handleSortBoolean }
         />
       </label>
-      <button type="button">Ordenar</button>
+      <button type="button" onClick={ requestSort }>Ordenar</button>
     </div>
   );
 }
