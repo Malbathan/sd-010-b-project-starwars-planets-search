@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
+import Table from './components/Table';
+import StarWarsProvider from './contex/StarWarsProvider';
 
-function App() {
+export default function App() {
   return (
-    <span>Hello, App!</span>
+    <StarWarsProvider>
+      <Table />
+    </StarWarsProvider>
   );
 }
-
-export default App;

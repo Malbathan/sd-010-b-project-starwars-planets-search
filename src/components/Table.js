@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import StarWarsContext from '../contex/StarWarsContext';
 
 export default function Table() {
-  const THeaders = [];
+  const { isLoading, planetsList, fetchPlanetsList } = useContext(StarWarsContext);
+
+  useEffect(fetchPlanetsList, []);
+
+  const THeaders = [planetsList.name];
   return (
-    <table>
-      <tbody>
-        <tr>
-          {THeaders.map((title, i) => <th key={ i }>{title}</th>)}
-        </tr>
-        <tr />
-      </tbody>
-    </table>
+    !isLoading
+      ? (
+        <table>
+          <tbody>
+            <tr>
+              {THeaders.map((title, i) => <th key={ i }>{title}</th>)}
+            </tr>
+            <tr />
+          </tbody>
+        </table>
+      )
+      : (<h1>Loading...</h1>)
   );
 }

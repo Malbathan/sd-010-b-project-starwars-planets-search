@@ -1,9 +1,6 @@
-const API_URL_BASE = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const API_URL_BASE = 'https://swapi-trybe.herokuapp.com/api/planets/?format=json';
 
 export default async function getAPIPlanetsInfo() {
-  fetch(API_URL_BASE).then((resp) => (
-    resp
-      .json()
-      .then((json) => (resp.ok ? Promise.resolve(json) : Promise.reject(json)))
-  ));
+  const { results } = await fetch(API_URL_BASE).then((resp) => (resp.json()));
+  return results;
 }
