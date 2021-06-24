@@ -6,16 +6,34 @@ export default function Table() {
 
   useEffect(fetchPlanetsList, []);
 
-  const THeaders = [...planetsList];
+  const generateTableRows = (tableInfo, keyIdentifyer) => (
+    <tr>
+      {tableInfo.map((tbData, i) => <td key={ i }>{tbData[keyIdentifyer]}</td>)}
+    </tr>
+  );
+
+  const TableInfo = [...planetsList];
   return (
     !isLoading
       ? (
         <table>
           <tbody>
             <tr>
-              {THeaders.map((title, i) => <th key={ i }>{title.name}</th>)}
+              {TableInfo.map((headers, i) => <th key={ i }>{headers.name}</th>)}
             </tr>
-            <tr />
+            {generateTableRows(TableInfo, 'rotation_period')}
+            {generateTableRows(TableInfo, 'orbital_period')}
+            {generateTableRows(TableInfo, 'diameter')}
+            {generateTableRows(TableInfo, 'climate')}
+            {generateTableRows(TableInfo, 'gravity')}
+            {generateTableRows(TableInfo, 'terrain')}
+            {generateTableRows(TableInfo, 'surface_water')}
+            {generateTableRows(TableInfo, 'population')}
+            {generateTableRows(TableInfo, 'residents')}
+            {generateTableRows(TableInfo, 'films')}
+            {generateTableRows(TableInfo, 'created')}
+            {generateTableRows(TableInfo, 'edited')}
+            {generateTableRows(TableInfo, 'url')}
           </tbody>
         </table>
       )
