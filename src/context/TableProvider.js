@@ -4,6 +4,11 @@ import TableContext from './TableContext';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const getPlanets = async () => {
     const fetchAPI = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -11,8 +16,12 @@ function TableProvider({ children }) {
     setData(response.results);
   };
 
+  const handleChange = ({ target }) => {
+    setFilters(target.value);
+  };
+
   return (
-    <TableContext.Provider value={ { data, setData, getPlanets } }>
+    <TableContext.Provider value={ { data, setData, getPlanets, handleChange, filters } }>
       { children }
     </TableContext.Provider>
   );

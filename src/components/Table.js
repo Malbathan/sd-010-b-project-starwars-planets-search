@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import TableContext from '../context/TableContext';
 
 function Table() {
-  const { data, getPlanets } = useContext(TableContext);
+  const { data, getPlanets, handleChange } = useContext(TableContext);
 
   useEffect(() => {
     getPlanets();
@@ -10,11 +10,7 @@ function Table() {
 
   return (
     <div>
-      <button
-        type="button"
-      >
-        Filtro
-      </button>
+      <input type="text" data-testid="name-filter" onChange={ handleChange } />
       <table>
         <thead>
           <tr>
