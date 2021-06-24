@@ -1,22 +1,8 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import ContextStarWars from '../context/ContextStarWars';
 
 function Table() {
-  const { data, setData } = useContext(ContextStarWars);
-
-  useEffect(() => {
-    async function featchPlanets() {
-      const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
-      const objResponse = await fetch(url).then((results) => results.json());
-      const arrayPlanets = objResponse.results.map((obj) => {
-        delete obj.residents;
-        return obj;
-      });
-      setData(arrayPlanets);
-    }
-
-    featchPlanets();
-  }, [setData]);
+  const { data } = useContext(ContextStarWars);
 
   let arrayHeaders = null;
 
