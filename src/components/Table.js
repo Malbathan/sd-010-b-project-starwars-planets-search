@@ -1,10 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import TableContext from '../context/tablecontext';
 
 function Table() {
-  const [filter, setFilter] = useState([]);
+  const [filter, setFilter] = useState(['']);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const { data, collums } = useContext(TableContext);
+
+  useEffect(() => (
+    filter === '' ? setFilteredPlanets(data)
+      : setFilteredPlanets(data.filter((planet) => planet.name.match(filter)))), [data, filter]);
 
   return (
     <>
@@ -21,7 +25,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((planet, indexp) => (
+          {filteredPlanets.map((planet, indexp) => (
             <tr key={ indexp }>
               {collums.map((collum, index) => (
                 <td key={ index }>
