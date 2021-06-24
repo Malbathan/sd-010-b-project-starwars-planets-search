@@ -12,9 +12,13 @@ function Table() {
         <tbody>
           {filterData.map((planet, index) => (
             <tr key={ index }>
-              {Object.values(planet).map((value, index2) => (
+              {Object.values(planet).map((value, index2) => (index2 === 0 ? (
+                <td data-testid="planet-name" key={ index2 }>
+                  {value}
+                </td>
+              ) : (
                 <td key={ index2 }>{value}</td>
-              ))}
+              )))}
             </tr>
           ))}
         </tbody>

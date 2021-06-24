@@ -40,9 +40,35 @@ const Provider = ({ children }) => {
   const [sortBoolean, setSortBoolean] = useState('desc');
 
   const generateCorrectOrder = (array, arrayProp) => {
+    const isSmaller = -1;
+    const isBigger = 1;
+
+    if (sortBoolean === 'desc') {
+      return array.sort((a, b) => {
+        if (Number(a[arrayProp]) > Number(b[arrayProp])) {
+          return isBigger;
+        }
+        if (Number(a[arrayProp]) < Number(b[arrayProp])) {
+          return isSmaller;
+        }
+        return 0;
+      });
+    }
+    return array.sort((a, b) => {
+      if (Number(b[arrayProp]) > Number(a[arrayProp])) {
+        return isBigger;
+      }
+      if (Number(b[arrayProp]) < Number(a[arrayProp])) {
+        return isSmaller;
+      }
+      return 0;
+    });
+  };
+
+  const generateCorrectNameOrder = (array, arrayProp) => {
     const inverseNumbers = -1;
     let ascendencyOrder = 1;
-    if (sortBoolean === 'desc') {
+    if (sortBoolean === 'asc') {
       ascendencyOrder = inverseNumbers;
     }
     const isSmaller = inverseNumbers * ascendencyOrder;
@@ -59,7 +85,7 @@ const Provider = ({ children }) => {
     });
   };
 
-  const fetchPlanets = async () => {
+  const fetchPlanets = (async () => {
     try {
       const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
         (resp) => resp.json(),
@@ -68,7 +94,7 @@ const Provider = ({ children }) => {
         delete planet.residents;
       });
       setData(results);
-      setFilterData(generateCorrectOrder(results, 'name'));
+      setFilterData(generateCorrectNameOrder(results, 'name'));
     } catch (error) {
       console.log('Ocorreu um erro na requisição à API.');
     }
@@ -79,11 +105,11 @@ const Provider = ({ children }) => {
     // setData(response.results);
     // setFilterData(response.results);
     // setNewResultFromLayer(response.results);
-  };
+  });
 
-  useEffect(
-    fetchPlanets, [],
-  );
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   useEffect(() => {
     if (filterText !== '') {
@@ -145,7 +171,6 @@ const Provider = ({ children }) => {
   };
 
   const requestSort = () => {
-    console.log(sortColumnFilter);
     setFilterData(generateCorrectOrder(filterData, sortColumnFilter));
   };
 

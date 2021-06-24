@@ -16,7 +16,7 @@ function Sort() {
     <div>
       Ordenar:
       <label htmlFor="column">
-        <select id="column" onChange={ handleSortColumnFilter }>
+        <select data-testid="column-sort" id="column" onChange={ handleSortColumnFilter }>
           {columnSelectArray.map((column) => (
             <option
               key={ column.arrayIndex }
@@ -30,6 +30,7 @@ function Sort() {
       <label htmlFor="asc">
         Asc
         <input
+          data-testid="column-sort-input-asc"
           value="asc"
           id="asc"
           type="radio"
@@ -41,6 +42,7 @@ function Sort() {
       <label htmlFor="desc">
         Desc
         <input
+          data-testid="column-sort-input-desc"
           value="desc"
           id="desc"
           type="radio"
@@ -49,7 +51,13 @@ function Sort() {
           onClick={ handleSortBoolean }
         />
       </label>
-      <button type="button" onClick={ requestSort }>Ordenar</button>
+      <button
+        data-testid="column-sort-button"
+        type="button"
+        onClick={ requestSort }
+      >
+        Ordenar
+      </button>
     </div>
   );
 }
