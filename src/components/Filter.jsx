@@ -16,7 +16,10 @@ const comparisonFilters = [
 ];
 
 function Filter() {
-  const { handleChangeText, textFilter } = useContext(PlanetsContext);
+  const {
+    handleChangeText, handleSelect, textFilter,
+  } = useContext(PlanetsContext);
+
   return (
     <form>
 
@@ -33,23 +36,38 @@ function Filter() {
 
       <label htmlFor="column-filter">
         Filtrar por:
-        <select name="column" id="column-filter" data-testid="column-filter">
+        <select
+          name="column"
+          id="column-filter"
+          data-testid="column-filter"
+          onChange={ handleSelect }
+        >
           {numberValuesOptions.map((el, idx) => (
-            <option key={ idx }>{el}</option>
+            <option key={ idx } defaultValue>{el}</option>
           ))}
         </select>
       </label>
 
-      <select name="comparation" id="comparation" data-testid="comparison-filter">
-        {comparisonFilters.map((el, idx) => (
-          <option key={ idx }>{el}</option>
-        ))}
+      <select
+        name="comparison"
+        id="comparison"
+        data-testid="comparison-filter"
+        onChange={ handleSelect }
+      >
+        {comparisonFilters.map((el, idx) => {
+          if (idx === 0) {
+            return <option key={ idx } defaultValue>{el}</option>;
+          }
+          return <option key={ idx }>{el}</option>;
+        })}
       </select>
 
       <input
         type="number"
-        data-testid="value-filter"
+        name="value"
         id="value-filter"
+        data-testid="value-filter"
+        onChange={ handleSelect }
       />
 
       <button type="button" data-testid="button-filter">Filtrar</button>
