@@ -3,7 +3,7 @@ import arrayHeadTable from '../services/arrayHeaderTable';
 import planetsContext from '../contextAPI/planetsContext';
 
 function PlanetTable() {
-  const { planets: { planets } } = useContext(planetsContext);
+  const { planets: { planets }, handleName } = useContext(planetsContext);
   const headerTable = () => (
     <thead>
       <tr>
@@ -56,6 +56,7 @@ function PlanetTable() {
 
   return (
     <main>
+      <input type="text" name="name" onChange={ ({ target }) => handleName(target) } />
       <table>
         { headerTable() }
         { bodyTable() }

@@ -6,7 +6,6 @@ import ProviderContext from './components/ProviderContext';
 function App() {
   return (
     <ProviderContext>
-      <span>Inicio</span>
       <PlanetTable />
     </ProviderContext>
   );
