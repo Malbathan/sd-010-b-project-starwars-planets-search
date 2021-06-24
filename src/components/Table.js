@@ -48,7 +48,7 @@ function Table() {
             url,
           }, index) => (
             <tr key={ index }>
-              <td>{name}</td>
+              <td>{ name }</td>
               <td>{ rotationPeriod }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ diameter }</td>
