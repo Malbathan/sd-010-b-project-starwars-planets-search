@@ -12,7 +12,12 @@ function Filter() {
     filterLayer,
     handleDeleteLayer,
     generateCorrectOrder,
+    filterData,
+    data,
   } = useContext(PlanetsContext);
+  if (!filterData || !data || data.length === 0) {
+    return null;
+  }
   const columnSelectCorrectOrder = generateCorrectOrder(columnSelect);
   const renderFilterLayer = () => {
     if (filterLayer.length > 0) {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 // import ProviderHooks from '../hooks/ProviderHooks';
-import response from '../testData';
+// import response from '../testData';
 
 const Provider = ({ children }) => {
   const numbersDefault = {
@@ -32,15 +32,15 @@ const Provider = ({ children }) => {
     { valor: 'surface_water', arrayIndex: 4 },
   ];
 
-  const findIndex = (valor) => {
-    let objectWithIndex = {};
-    columnSelectArray.forEach((column) => {
-      if (column.valor === valor) {
-        objectWithIndex = { valor, arrayIndex: column.arrayIndex };
-      }
-    });
-    return objectWithIndex;
-  };
+  // const findIndex = (valor) => {
+  //   let objectWithIndex = {};
+  //   columnSelectArray.forEach((column) => {
+  //     if (column.valor === valor) {
+  //       objectWithIndex = { valor, arrayIndex: column.arrayIndex };
+  //     }
+  //   });
+  //   return objectWithIndex;
+  // };
 
   const [data, setData] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -48,28 +48,28 @@ const Provider = ({ children }) => {
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
   const [columnSelect, setColumnSelect] = useState(columnSelectArray);
   const [filterLayer, setFilterLayer] = useState([]);
-  const [newResultFromLayer, setNewResultFromLayer] = useState([]);
+  // const [newResultFromLayer, setNewResultFromLayer] = useState([]);
 
   const fetchPlanets = async () => {
-    // try {
-    //   const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
-    //     (resp) => resp.json(),
-    //   );
-    //   results.forEach((planet) => {
-    //     delete planet.residents;
-    //   });
-    //   setData(results);
-    //   setFilterData(results);
-    // } catch (error) {
-    //   console.log('Ocorreu um erro na requisição à API.');
-    // }
+    try {
+      const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/').then(
+        (resp) => resp.json(),
+      );
+      results.forEach((planet) => {
+        delete planet.residents;
+      });
+      setData(results);
+      setFilterData(results);
+    } catch (error) {
+      console.log('Ocorreu um erro na requisição à API.');
+    }
 
-    response.results.forEach((planet) => {
-      delete planet.residents;
-    });
-    setData(response.results);
-    setFilterData(response.results);
-    setNewResultFromLayer(response.results);
+    // response.results.forEach((planet) => {
+    //   delete planet.residents;
+    // });
+    // setData(response.results);
+    // setFilterData(response.results);
+    // setNewResultFromLayer(response.results);
   };
 
   useEffect(() => {
@@ -161,9 +161,9 @@ const Provider = ({ children }) => {
     generateCorrectOrder,
   };
 
-  if (!filterData || !data || data.length === 0) {
-    return <h1>Loading...</h1>;
-  }
+  // if (!filterData || !data || data.length === 0) {
+  //   return <h1>Loading...</h1>;
+  // }
   return (
     <PlanetsContext.Provider value={ providerContext }>
       {children}
