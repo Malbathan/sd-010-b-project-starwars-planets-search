@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import DataContext from '../Context/DataContext';
-import { filterContext } from '../Components/Filters';
+import { filterContext } from './Filters';
 
 function Table() {
   const { data } = useContext(DataContext);
