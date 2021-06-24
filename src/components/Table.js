@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { Context } from '../contexts';
 
 function Table() {
   const [data, setData] = useState([]);
+  const { input } = useContext(Context);
 
   useEffect(() => {
     const requisicao = async () => {
@@ -13,28 +15,26 @@ function Table() {
   }, []);
 
   function renderTable() {
-    return data.map((
+    return data.filter(({ name }) => (input ? name.includes(input) : true)).map((
       { name, climate, created, diameter, edited, films, orbital_period: orbitalPeriod,
         population, rotation_period: rotationPeriod, surface_water: surfaceWater, url,
         gravity, terrain }, index,
     ) => (
-      <tbody key={ index }>
-        <tr>
-          <td>{ name }</td>
-          <td>{ climate }</td>
-          <td>{ created }</td>
-          <td>{ diameter }</td>
-          <td>{ edited }</td>
-          <td>{ films }</td>
-          <td>{ gravity }</td>
-          <td>{ orbitalPeriod }</td>
-          <td>{ population }</td>
-          <td>{ rotationPeriod }</td>
-          <td>{ surfaceWater }</td>
-          <td>{ terrain }</td>
-          <td>{ url }</td>
-        </tr>
-      </tbody>
+      <tr key={ index }>
+        <td>{ name }</td>
+        <td>{ climate }</td>
+        <td>{ created }</td>
+        <td>{ diameter }</td>
+        <td>{ edited }</td>
+        <td>{ films }</td>
+        <td>{ gravity }</td>
+        <td>{ orbitalPeriod }</td>
+        <td>{ population }</td>
+        <td>{ rotationPeriod }</td>
+        <td>{ surfaceWater }</td>
+        <td>{ terrain }</td>
+        <td>{ url }</td>
+      </tr>
     ));
   }
 
@@ -42,22 +42,24 @@ function Table() {
     <table>
       <thead>
         <tr>
-          <td>Name</td>
-          <td>Climate</td>
-          <td>Created</td>
-          <td>Diameter</td>
-          <td>Edited</td>
-          <td>Films</td>
-          <td>Gravity</td>
-          <td>Orbital Period</td>
-          <td>Population</td>
-          <td>Rotation Period</td>
-          <td>Surface Water</td>
-          <td>Terrain</td>
-          <td>Url</td>
+          <th>Name</th>
+          <th>Climate</th>
+          <th>Created</th>
+          <th>Diameter</th>
+          <th>Edited</th>
+          <th>Films</th>
+          <th>Gravity</th>
+          <th>Orbital Period</th>
+          <th>Population</th>
+          <th>Rotation Period</th>
+          <th>Surface Water</th>
+          <th>Terrain</th>
+          <th>Url</th>
         </tr>
       </thead>
-      { renderTable() }
+      <tbody>
+        { renderTable() }
+      </tbody>
     </table>
   );
 }
