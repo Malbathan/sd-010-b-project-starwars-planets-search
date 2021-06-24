@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useStarContext } from '../context/myContext';
+import { useStarContext } from '../context/myContext';
 
 export default function Table() {
   const { starData, filtersData } = useStarContext();
