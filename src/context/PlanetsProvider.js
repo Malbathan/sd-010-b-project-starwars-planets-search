@@ -10,8 +10,11 @@ const PlanetsProvider = ({ children }) => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const getPlanets = async () => {
       const planetsList = await fetch(PLANETS_URL)
-        .then((res) => res.json())
-        .then(({ results }) => results);
+        .then((res) => res
+          .json()
+          .then((json) => (res.ok
+            ? Promise.resolve(json.results)
+            : Promise.reject(json))));
       setPlanets(planetsList);
     };
 
