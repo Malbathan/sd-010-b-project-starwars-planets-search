@@ -8,9 +8,12 @@ class StarWarsProvider extends React.Component {
     super(props);
     this.state = {
       data: [],
-      isFetching: false,
     };
     this.fetchPlanets = this.fetchPlanets.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchPlanets();
   }
 
   fetchPlanets() {
@@ -27,7 +30,7 @@ class StarWarsProvider extends React.Component {
     const { children } = this.props;
     return (
       <StarWarsContext.Provider
-        value={ { ...this.state, fetchPlanets: this.fetchPlanets } }
+        value={ { ...this.state } }
       >
         {children}
       </StarWarsContext.Provider>
