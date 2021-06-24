@@ -23,6 +23,46 @@ function PlanetTable() {
     </thead>
   );
 
+  const bodyTable = () => {
+    const element = planets.map(({
+      name,
+      rotation_period: rotationPeriod,
+      orbital_period: orbitalPeriod,
+      diameter,
+      climate,
+      gravity,
+      terrain,
+      surface_water: surfaceWater,
+      population,
+      films,
+      created,
+      edited,
+      url,
+    }, index) => (
+      <tr key={ index }>
+        <th>{ name }</th>
+        <th>{ rotationPeriod }</th>
+        <th>{ orbitalPeriod }</th>
+        <th>{ diameter }</th>
+        <th>{ climate }</th>
+        <th>{ gravity }</th>
+        <th>{ terrain }</th>
+        <th>{ surfaceWater }</th>
+        <th>{ population }</th>
+        <th>{ films }</th>
+        <th>{ created }</th>
+        <th>{ edited }</th>
+        <th>{ url }</th>
+      </tr>
+    ));
+
+    return (
+      <tbody>
+        { element }
+      </tbody>
+    );
+  };
+
   return (
     <main>
       <table>
