@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import StarWarsContext from '../Context/StarWarsContext';
 import useFetchApiPlanets from '../Hooks/apiPlanets';
 import './table.css';
 
 export default function Table() {
+  const { data, setData } = useContext(StarWarsContext);
   const { results } = useFetchApiPlanets();
   let tableHeads = [];
 
   if (results !== undefined) {
     results.map((planet) => delete planet.residents);
+    setData(results);
   }
-  if (results !== undefined) {
-    tableHeads = Object.keys(results[0]);
+  if (Object.keys(data).length !== 0) {
+    tableHeads = Object.keys(data[0]);
   }
 
   return (
 
-    (results === undefined) ? <h1>Loading...</h1>
+    ((Object.keys(data).length === 0)) ? <h1>Loading...</h1>
       : (
         <table className="table">
           <thead>
@@ -30,7 +33,7 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            {results.map((planet) => (
+            {data.map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>

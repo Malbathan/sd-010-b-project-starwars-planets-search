@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
-  const [planetList, setPlanetList] = useState({});
+  const [data, setData] = useState({});
   return (
-    <StarWarsContext.Provider value={ { planetList, setPlanetList } }>
+    <StarWarsContext.Provider value={ { data, setData } }>
       { children }
     </StarWarsContext.Provider>
   );
