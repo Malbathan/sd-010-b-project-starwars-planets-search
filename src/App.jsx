@@ -7,6 +7,7 @@ import { getPlanets } from './services/API/starwarsApi';
 
 function App() {
   const [swPlanets, setSwPlanets] = useState([]);
+  const [filterName, setFilterName] = useState('');
   useEffect(() => {
     const fetchPlanets = async () => {
       const planets = await getPlanets();
@@ -15,7 +16,10 @@ function App() {
     fetchPlanets();
   }, []);
 
-  const swContext = { data: swPlanets };
+  const swContext = { data: swPlanets,
+    filters: { filterByName: { name: filterName } },
+    setFilterName };
+
   return (
     <SwContext.Provider value={ swContext }>
       <OptionsHeader />

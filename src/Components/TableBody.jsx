@@ -2,17 +2,20 @@ import React, { useContext } from 'react';
 import SwContext from '../contexts/swContext';
 
 const TableBody = () => {
-  const { data } = useContext(SwContext);
+  const { data, filters: { filterByName: { name } } } = useContext(SwContext);
   const renderFilms = (films) => films.map((film) => film).join(',');
-
-  const renderTableElements = () => data.map((element, index) => {
-    const { name, rotation_period: rotationPeriod,
+  let rawData = data;
+  if (name) {
+    rawData = rawData.filter((planet) => planet.name.includes(name));
+  }
+  const renderTableElements = () => rawData.map((element, index) => {
+    const { name: pName, rotation_period: rotationPeriod,
       orbital_period: orbitalPeriod, diameter, climate,
       gravity, terrain, surface_water: surfaceWater, population, films,
       created, edited, url } = element;
     return (
       <tr key={ index }>
-        <td>{name}</td>
+        <td>{pName}</td>
         <td>{rotationPeriod}</td>
         <td>{orbitalPeriod}</td>
         <td>{diameter}</td>
@@ -28,6 +31,7 @@ const TableBody = () => {
       </tr>
     );
   });
+
   return (
     <tbody>
       {renderTableElements()}
