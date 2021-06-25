@@ -3,14 +3,14 @@ import './App.css';
 import OptionsHeader from './Components/OptionsHeader';
 import Table from './Components/Table';
 import SwContext from './contexts/swContext';
-import useLogicalFilter from './Hooks/useLogicalFilter';
 import useNameFilter from './Hooks/useNameFilter';
 import { getPlanets } from './services/API/starwarsApi';
 
 function App() {
   const [swPlanets, setSwPlanets] = useState([]);
   const { filteredByNameData, filterName, setFilterName } = useNameFilter(swPlanets);
-  const { FilteredLogicaldata } = useLogicalFilter(filteredByNameData);
+  const [filterList, setFilterList] = useState([]);
+
   useEffect(() => {
     const fetchPlanets = async () => {
       const planets = await getPlanets();
@@ -19,16 +19,16 @@ function App() {
     fetchPlanets();
   }, []);
 
-  const swContext = { data: FilteredLogicaldata,
+  const handleFilter = ({ column, comparison, amount }) => {
+    const payload = { column, comparison, amount };
+    setFilterList([...filterList, payload]);
+  };
+
+  const swContext = { data: filteredByNameData,
     filters: {
       filterByName: { name: filterName },
-      filterByNumericValues: [
-        {
-          column: 'population',
-          comparison: 'maior que',
-          value: '100000',
-        },
-      ] },
+      filterByNumericValues: filterList },
+    handleFilter,
     setFilterName,
   };
 

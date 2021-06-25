@@ -1,10 +1,14 @@
 import React, { useContext } from 'react';
 import SwContext from '../contexts/swContext';
+import useLogicalFilter from '../Hooks/useLogicalFilter';
 
 const TableBody = () => {
-  const { data } = useContext(SwContext);
+  const { data, filters: { filterByNumericValues } } = useContext(SwContext);
+
+  const { planets } = useLogicalFilter(data, filterByNumericValues);
+
   const renderFilms = (films) => films.map((film) => film).join(',');
-  const renderTableElements = () => data.map((element, index) => {
+  const renderTableElements = () => planets.map((element, index) => {
     const { name: pName, rotation_period: rotationPeriod,
       orbital_period: orbitalPeriod, diameter, climate,
       gravity, terrain, surface_water: surfaceWater, population, films,
