@@ -31,7 +31,14 @@ function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const filtroEspecial = () => {
+    const filterPlanets = () => {
+      if (filter.filterByName.name !== '') {
+        setFilteredPlanet(data.filter(
+          ({ name }) => name.toLowerCase().includes(filter.filterByName.name),
+        ));
+      } else {
+        setFilteredPlanet(data);
+      }
       filter.filterByNumericValues.map(({ column, comparison, value }) => {
         if (value !== '') {
           if (comparison === 'maior que') {
@@ -50,21 +57,7 @@ function StarWarsProvider({ children }) {
             ));
           }
         }
-        return console.log('teste');
       });
-    };
-    filtroEspecial();
-  }, [data, filter.filterByNumericValues]);
-
-  useEffect(() => {
-    const filterPlanets = () => {
-      if (filter.filterByName.name !== '') {
-        setFilteredPlanet(data.filter(
-          ({ name }) => name.toLowerCase().includes(filter.filterByName.name),
-        ));
-      } else {
-        setFilteredPlanet(data);
-      }
     };
     filterPlanets();
   }, [data, filter]);
