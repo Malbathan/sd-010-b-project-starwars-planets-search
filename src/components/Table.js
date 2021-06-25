@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import context from '../Context/Context';
 import Input from './Input';
+import Select from './Select';
 
 const Table = () => {
-  const { data, input, handleInput } = useContext(context);
-  console.log(data);
+  const { data, input, handleInput, handleSelect } = useContext(context);
   return (
     <div>
       <Input
@@ -13,6 +13,8 @@ const Table = () => {
         handleInput={ handleInput }
         dataTestid="name-filter"
       />
+      <Select />
+      <input onChange={ handleSelect } id="number" type="number" placeholder="Ex: 1" />
       <table>
         <thead>
           <tr>
