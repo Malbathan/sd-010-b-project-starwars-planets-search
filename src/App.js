@@ -10,6 +10,13 @@ function App() {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'bigger_than',
+        value: 0,
+      },
+    ],
   });
 
   useEffect(() => {

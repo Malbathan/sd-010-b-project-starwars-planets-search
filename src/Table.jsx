@@ -1,17 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import fetchMovieTitle from './services/fetchMovieTitle';
 import TableContext from './TableContext';
 
 function Table() {
+  const [columnFilter, setColumnFilter] = useState('diameter');
+  const [comparisonFilter, setComparisonFilter] = useState('bigger_than');
+  const [valueFilter, setValueFilter] = useState(0);
   return (
     <TableContext.Consumer>
       {
         (data) => {
           const { data: { results }, filters, setFilters } = data;
-          const { filterByName } = filters;
+          const { filterByName, filterByNumericValues } = filters;
+          function handleNumericFilterChange({ target }) {
+            const { name, value } = target;
+            setFilters({
+              ...filters,
+              filterByNumericValues: [
+                {
+                  ...filterByNumericValues[0],
+                  [name]: value,
+
+                },
+              ],
+            });
+          }
+          function setFiltersInState() {
+            const { column, comparison, value } = filterByNumericValues[0];
+            setColumnFilter(column);
+            setComparisonFilter(comparison);
+            setValueFilter(parseInt(value, 10));
+          }
+          function filterByNumbers(planet) {
+            if (comparisonFilter === 'bigger_than') return planet[columnFilter] > valueFilter;
+            if (comparisonFilter === 'less_than') return planet[columnFilter] < valueFilter;
+            if (comparisonFilter === 'equal_to') return planet[columnFilter] === valueFilter;
+            return false;
+          }
           return (
             <div>
-              <p>Filtrar</p>
+              <h3>Filter</h3>
+              <p>By name:</p>
               <input
                 type="text"
                 name="filterbyName"
@@ -20,6 +49,43 @@ function Table() {
                 onChange={ ({ target }) => setFilters({
                   ...filters, filterByName: { name: target.value } }) }
               />
+              <p>By numbers:</p>
+              <select
+                name="column"
+                id="column"
+                data-testid="column-filter"
+                onChange={ handleNumericFilterChange }
+              >
+                <option value="population">Population</option>
+                <option value="orbital_period">Orbital Period</option>
+                <option value="diameter">Diameter</option>
+                <option value="rotation_period">Rotation Period</option>
+                <option value="surface_water">Surface water</option>
+              </select>
+              <select
+                name="comparison"
+                id="comparison"
+                data-testid="comparison-filter"
+                onChange={ handleNumericFilterChange }
+              >
+                <option value="bigger_than">bigger than</option>
+                <option value="less_than">less than</option>
+                <option value="equal_to">equal to</option>
+              </select>
+              <input
+                type="number"
+                name="value"
+                id="value"
+                data-testid="value-filter"
+                onChange={ handleNumericFilterChange }
+              />
+              <button
+                type="button"
+                data-testid="button-filter"
+                onClick={ setFiltersInState }
+              >
+                Filter
+              </button>
               <table>
                 <thead>
                   <tr>
@@ -39,7 +105,9 @@ function Table() {
                   </tr>
                 </thead>
                 <tbody>
-                  {results.filter((planet) => planet.name.includes(filterByName.name))
+                  {results
+                    .filter((planet) => filterByNumbers(planet))
+                    .filter((planet) => planet.name.includes(filterByName.name))
                     .map((planet) => (
                       <tr key={ planet.name }>
                         <td>{planet.name}</td>
