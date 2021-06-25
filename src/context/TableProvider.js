@@ -5,11 +5,7 @@ import getPlanetsFromAPI from '../services';
 
 function TableProvider({ children }) {
   const [planets, setPlanets] = useState('');
-  const [filters, setFilters] = useState({
-    filterByName: {
-      name: 'Tatoo',
-    },
-  });
+  const [filterByName, setFilterByName] = useState('');
 
   const getPlanets = async () => {
     const result = await getPlanetsFromAPI();
@@ -20,9 +16,15 @@ function TableProvider({ children }) {
 
   useEffect(() => {
     getPlanets();
-  }, []);
+  }, [filterByName]);
 
-  const context = { planets, filters, setFilters };
+  const filters = {
+    filterByName: {
+      name: filterByName,
+    },
+  };
+
+  const context = { planets, filters, setFilterByName };
 
   return (
     <TableContext.Provider value={ context }>

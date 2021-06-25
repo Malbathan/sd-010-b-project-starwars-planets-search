@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 //  Fonte ultilização de da tag <table>: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/table
 function Table() {
-  const { planets } = useContext(TableContext);
+  const { planets,
+    filters: {
+      filterByName: { name: nameToFilter },
+    },
+    setFilterByName } = useContext(TableContext);
 
   const tableHead = () => {
     if (planets) {
@@ -14,39 +18,52 @@ function Table() {
     }
   };
 
-  const tableBody = () => {
-    if (planets) {
-      return planets.map((planet, index) => (
-        <tr key={ index }>
-          <td>{planet.name}</td>
-          <td>{planet.rotation_period}</td>
-          <td>{planet.orbital_period}</td>
-          <td>{planet.diameter}</td>
-          <td>{planet.climate}</td>
-          <td>{planet.gravity}</td>
-          <td>{planet.terrain}</td>
-          <td>{planet.surface_water}</td>
-          <td>{planet.population}</td>
-          <td>{planet.films}</td>
-          <td>{planet.created}</td>
-          <td>{planet.edited}</td>
-          <td>{planet.url}</td>
-        </tr>
-      ));
-    }
-  };
+  const tableBody = () => (
+    planets
+      && planets
+        .filter((planet) => (nameToFilter ? planet.name.includes(nameToFilter) : planet))
+        .map((planet, index) => (
+          <tr key={ index }>
+            <td>{planet.name}</td>
+            <td>{planet.rotation_period}</td>
+            <td>{planet.orbital_period}</td>
+            <td>{planet.diameter}</td>
+            <td>{planet.climate}</td>
+            <td>{planet.gravity}</td>
+            <td>{planet.terrain}</td>
+            <td>{planet.surface_water}</td>
+            <td>{planet.population}</td>
+            <td>{planet.films}</td>
+            <td>{planet.created}</td>
+            <td>{planet.edited}</td>
+            <td>{planet.url}</td>
+          </tr>
+        ))
+  );
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {tableHead()}
-        </tr>
-      </thead>
-      <tbody>
-        {tableBody()}
-      </tbody>
-    </table>
+    <>
+      <label htmlFor="name-filter">
+        Filtrar
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ ({ target: { value } }) => {
+            setFilterByName(value);
+          } }
+        />
+      </label>
+      <table>
+        <thead>
+          <tr>
+            {tableHead()}
+          </tr>
+        </thead>
+        <tbody>
+          {tableBody()}
+        </tbody>
+      </table>
+    </>
   );
 }
 
