@@ -6,7 +6,7 @@ export const Context = createContext('');
 function Provider({ children }) {
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
-  const [operator, setOperator] = useState('');
+  const [operator, setOperator] = useState('maior que');
   const [number, setNumber] = useState(0);
   const [fullFilter, setFullFilter] = useState({
     filterByName: {
@@ -15,7 +15,7 @@ function Provider({ children }) {
     filterByNumericValues: [
       {
         column: 'population',
-        comparison: '',
+        comparison: 'maior que',
         value: 0,
       },
     ],

@@ -16,32 +16,32 @@ function Table() {
     requisicao();
   }, []);
 
-  function filterData(objectRequest) {
-    console.log('ALOOOOO');
+  function filterName() {
+    return data.filter(({ name: planet }) => (
+      name ? planet.includes(name) : true));
+  }
+
+  function filterData(objectData) {
     const { filterByNumericValues } = fullFilter;
     const { column, comparison, value } = filterByNumericValues[0];
-    console.log(column, comparison, value);
-    if (comparison === '>') {
-      return objectRequest
+    if (comparison === 'maior que') {
+      return objectData
         .filter((element) => parseFloat(element[column]) > parseFloat(value));
     }
-    if (comparison === '<') {
-      return objectRequest
+    if (comparison === 'menor que') {
+      return objectData
         .filter((element) => parseFloat(element[column]) < parseFloat(value));
     }
-    if (comparison === '=') {
-      const result = objectRequest
+    if (comparison === 'igual a') {
+      return objectData
         .filter((element) => parseFloat(element[column]) === parseFloat(value));
-      console.log(result);
-      return result;
     }
   }
 
   useEffect(() => {
-    const planets = data.filter(({ name: planet }) => (
-      name ? planet.includes(name) : true));
+    const planets = filterName();
     setPlanetsFilter(planets);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name]);
 
   useEffect(() => {
@@ -94,7 +94,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { renderTable() }
+        { planetsFilter && renderTable() }
       </tbody>
     </table>
   );
