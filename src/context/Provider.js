@@ -7,6 +7,13 @@ function Provider({ children }) {
   // states
 
   const [planetsList, setPlanetsList] = useState([]);
+  const [filters, setFilters] = useState(
+    {
+      filterByName: {
+        name: '',
+      },
+    },
+  );
 
   const fetchPlanets = async () => {
     const planetsApi = await getPlanets();
@@ -21,6 +28,8 @@ function Provider({ children }) {
   const context = {
     planetsList,
     fetchPlanets,
+    filters,
+    setFilters,
   };
 
   return (
