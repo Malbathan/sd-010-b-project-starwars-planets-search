@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-function Filters() {
-  const { filters, setFilters } = useContext(Context);
+function NameFilter() {
+  const { nameFilter, setNameFilter } = useContext(Context);
 
   const handleChange = ({ target: { value } }) => {
-    setFilters({
-      ...filters,
+    setNameFilter({
+      ...nameFilter,
       filterByName: {
         name: value,
       },
@@ -25,4 +25,4 @@ function Filters() {
   );
 }
 
-export default Filters;
+export default NameFilter;

@@ -4,7 +4,7 @@ import Context from '../context/Context';
 function Table() {
   const {
     planetsList,
-    filters,
+    nameFilter,
   } = useContext(Context);
 
   const tableBody = (newPlanetsList) => (
@@ -19,7 +19,7 @@ function Table() {
   );
 
   const filterPlanetsByName = () => {
-    const { filterByName: { name } } = filters;
+    const { filterByName: { name }, filterByNumericValues: [] } = nameFilter;
     if (planetsList) {
       const filterPlanets = planetsList.filter(({
         name: planet,

@@ -7,13 +7,19 @@ function Provider({ children }) {
   // states
 
   const [planetsList, setPlanetsList] = useState([]);
-  const [filters, setFilters] = useState(
+  const [nameFilter, setNameFilter] = useState(
     {
       filterByName: {
         name: '',
       },
     },
   );
+
+  const [numericFilter, setNumericFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
 
   const fetchPlanets = async () => {
     const planetsApi = await getPlanets();
@@ -28,8 +34,10 @@ function Provider({ children }) {
   const context = {
     planetsList,
     fetchPlanets,
-    filters,
-    setFilters,
+    nameFilter,
+    setNameFilter,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (
