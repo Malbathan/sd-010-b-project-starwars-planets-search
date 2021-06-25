@@ -4,8 +4,6 @@ import StarWarsContext from '../../context/StarWarsContext';
 function InputFilter() {
   const { filters, setFilters } = useContext(StarWarsContext);
 
-  console.log(filters);
-
   function handleSearchInput({ target }) {
     const newValue = target.value;
     setFilters({ filterByName: { name: newValue } });
@@ -17,6 +15,7 @@ function InputFilter() {
       <label htmlFor="planets">
         Nome do planeta:
         <input
+          data-testid="name-filter"
           value={ name }
           id="planets"
           type="text"
