@@ -32,6 +32,7 @@ function StarWarsProvider({ children }) {
 
   useEffect(() => {
     const filterPlanets = () => {
+      const { column, comparison, value } = filter.filterByNumericValues[0];
       if (filter.filterByName.name !== '') {
         setFilteredPlanet(data.filter(
           ({ name }) => name.toLowerCase().includes(filter.filterByName.name),
@@ -39,25 +40,23 @@ function StarWarsProvider({ children }) {
       } else {
         setFilteredPlanet(data);
       }
-      filter.filterByNumericValues.map(({ column, comparison, value }) => {
-        if (value !== '') {
-          if (comparison === 'maior que') {
-            return setFilteredPlanet(data.filter(
-              (planet) => parseFloat(planet[column]) > parseFloat(value),
-            ));
-          }
-          if (comparison === 'igual a') {
-            return setFilteredPlanet(data.filter(
-              (planet) => parseFloat(planet[column]) === parseFloat(value),
-            ));
-          }
-          if (comparison === 'menor que') {
-            return setFilteredPlanet(data.filter(
-              (planet) => parseFloat(planet[column]) < parseFloat(value),
-            ));
-          }
+      if (value !== '') {
+        if (comparison === 'maior que') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) > parseFloat(value),
+          ));
         }
-      });
+        if (comparison === 'igual a') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) === parseFloat(value),
+          ));
+        }
+        if (comparison === 'menor que') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) < parseFloat(value),
+          ));
+        }
+      }
     };
     filterPlanets();
   }, [data, filter]);
@@ -75,24 +74,13 @@ function StarWarsProvider({ children }) {
   // }, []);
   //
 
-  const removeFilter = (coluna) => {
-    let esseFiltro = filter.filterByNumericValues.find(({ column }) => column === coluna);
-    esseFiltro = {};
-    setFilter(esseFiltro);
-    const pai = document.getElementById('pai');
-    const essaLista = document.getElementById('lista');
-    pai.removeChild(essaLista);
-  };
-
   return (
     <StarWarsContext.Provider
       value={ { data,
         loading,
         filter,
         setFilter,
-        filteredPlanet,
-        removeFilter,
-      } }
+        filteredPlanet } }
     >
       {children}
     </StarWarsContext.Provider>
