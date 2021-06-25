@@ -2,29 +2,29 @@ import React, { useContext } from 'react';
 import myContext from '../context/myContext';
 
 function Table() {
-  const { loading, data: { results } } = useContext(myContext);
-  console.log(results);
-  function planetsTable(data) {
-    return data.map((planet) => (
-      <tr key={ planet.name }>
-        <td>{planet.name}</td>
-        <td>{planet.terrain}</td>
-        <td>{planet.population}</td>
-        <td>{planet.climate}</td>
-        <td>{planet.diameter}</td>
-        <td>{planet.gravity}</td>
-        <td>{planet.orbital_period}</td>
-        <td>{planet.rotation_period}</td>
-        <td>{planet.surface_water}</td>
-        <td>{planet.created}</td>
-        <td>{planet.edited}</td>
-        <td>{planet.films}</td>
-        <td>{planet.url}</td>
-      </tr>
-    ));
+  const { isLoading, data, filterByName: { name } } = useContext(myContext);
+
+  function planetsTable(arr) {
+    return isLoading ? <span>Carregando...</span>
+      : arr.filter((planet) => planet.name.includes(name)).map((planet) => (
+        <tr key={ planet.name }>
+          <td>{planet.name}</td>
+          <td>{planet.terrain}</td>
+          <td>{planet.population}</td>
+          <td>{planet.climate}</td>
+          <td>{planet.diameter}</td>
+          <td>{planet.gravity}</td>
+          <td>{planet.orbital_period}</td>
+          <td>{planet.rotation_period}</td>
+          <td>{planet.surface_water}</td>
+          <td>{planet.created}</td>
+          <td>{planet.edited}</td>
+          <td>{planet.films}</td>
+          <td>{planet.url}</td>
+        </tr>
+      ));
   }
 
-  if (loading) return <h1>Carregando...</h1>;
   return (
     <table>
       <thead>
@@ -46,7 +46,7 @@ function Table() {
       </thead>
 
       <tbody>
-        { planetsTable(results) }
+        { planetsTable(data) }
       </tbody>
     </table>
   );

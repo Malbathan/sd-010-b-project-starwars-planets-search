@@ -4,27 +4,24 @@ import myContext from './myContext';
 import startwarsApi from '../services/starwarsApi';
 
 function Provider({ children }) {
-  const INITIAL_STATE = {
-    data: [],
-    loading: true,
-  };
-
-  const [state, setState] = useState(INITIAL_STATE);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filterByName, setFilterByName] = useState({ name: '' });
 
   useEffect(() => {
     async function planetsApi() {
       const response = await startwarsApi();
-      setState((prevState) => ({
-        ...prevState,
-        data: response,
-        loading: false,
-      }));
+      setData(response);
+      setIsLoading(false);
     }
     planetsApi();
   }, []);
 
   const context = {
-    ...state,
+    data,
+    isLoading,
+    filterByName,
+    setFilterByName,
   };
 
   return (
