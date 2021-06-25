@@ -32,7 +32,7 @@ function Planets() {
     }
   };
 
-  if (Object.keys(order)) {
+  if (Object.keys(order).length === 2) {
     planets.sort((a, b) => {
       const { column } = order;
       if (column === 'name') return sortByName(a, b, order);
