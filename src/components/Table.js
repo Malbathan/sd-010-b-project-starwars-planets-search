@@ -39,7 +39,9 @@ function Table() {
   return (
     <table>
       <thead>
-        {tableHead()}
+        <tr>
+          {tableHead()}
+        </tr>
       </thead>
       <tbody>
         {tableBody()}
