@@ -30,6 +30,7 @@ const Provider = ({ children }) => {
   // };
 
   const [data, setData] = useState([]);
+  // const [data2, setData2] = useState('data2');
   const [filterData, setFilterData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
@@ -38,12 +39,13 @@ const Provider = ({ children }) => {
   // const [newResultFromLayer, setNewResultFromLayer] = useState([]);
   const [sortColumnFilter, setSortColumnFilter] = useState('population');
   const [sortBoolean, setSortBoolean] = useState('desc');
+  const [sortedTable, setSortedTable] = useState('');
 
   const generateCorrectOrder = (array, arrayProp) => {
     const isSmaller = -1;
     const isBigger = 1;
 
-    if (sortBoolean === 'desc') {
+    if (sortBoolean === 'asc') {
       return array.sort((a, b) => {
         if (Number(a[arrayProp]) > Number(b[arrayProp])) {
           return isBigger;
@@ -175,7 +177,8 @@ const Provider = ({ children }) => {
   };
 
   const requestSort = () => {
-    setFilterData(generateCorrectOrder(filterData, sortColumnFilter));
+    setSortedTable(generateCorrectOrder(filterData, sortColumnFilter));
+    // dont why but this fixes the bug of requestSort not being able to setFilterData appropriately
   };
 
   const newFilteredResultsAfterDelete = (newFiltersAfterDelete) => {
@@ -214,11 +217,9 @@ const Provider = ({ children }) => {
     handleSortColumnFilter,
     handleSortBoolean,
     requestSort,
+    sortedTable,
   };
 
-  // if (!filterData || !data || data.length === 0) {
-  //   return <h1>Loading...</h1>;
-  // }
   return (
     <PlanetsContext.Provider value={ providerContext }>
       {children}
