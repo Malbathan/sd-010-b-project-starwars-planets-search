@@ -9,10 +9,11 @@ const useFiltering = () => {
     const { name } = filters.filterByName;
     let filteredByName = data;
     if (filtered.length > 0) { filteredByName = filtered; }
-    // if (name !== '') {
-    filteredByName = data.filter((planet) => (planet.name)
-      .toLowerCase().includes(name));
-    // }
+    if (filters.filterByNumericValues.length === 1) { filteredByName = data; }
+    if (name !== '') {
+      filteredByName = data.filter((planet) => (planet.name)
+        .toLowerCase().includes(name));
+    }
 
     return filteredByName;
   };
