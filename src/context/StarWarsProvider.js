@@ -17,7 +17,7 @@ function StarWarsProvider({ children }) {
     const { results } = await planetsData();
     setPlanets(results);
     setTableThs(Object.keys(results[0]).filter((e) => e !== 'residents'));
-    console.log(results);
+    // console.log(results);
   };
 
   useEffect(() => {

@@ -2,8 +2,11 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function InputsSearch() {
-  const [column, setColumn] = useState('');
-  const [comp, setComp] = useState('');
+  const [opColumn, setOpColumn] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
+  const [column, setColumn] = useState('population');
+  const [comp, setComp] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
   const { setFilters, filters } = useContext(StarWarsContext);
 
@@ -16,6 +19,7 @@ function InputsSearch() {
   };
 
   const ApplyFilter = () => {
+    setOpColumn(opColumn.filter((op) => op !== column));
     setFilters({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues,
@@ -36,11 +40,7 @@ function InputsSearch() {
       />
 
       <select data-testid="column-filter" onChange={ (e) => handle(e, setColumn) }>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        { opColumn.map((op) => (<option value={ op } key={ op }>{op}</option>)) }
       </select>
 
       <select data-testid="comparison-filter" onChange={ (e) => handle(e, setComp) }>
