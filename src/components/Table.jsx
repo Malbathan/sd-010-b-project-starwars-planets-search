@@ -10,23 +10,26 @@ function Table() {
     },
   };
 
-  const { data, fetchAPI } = useContext(PlanetContext);
   // states
+  const { data, fetchAPI } = useContext(PlanetContext);
 
   const [{ filters }, setFilters] = useState(INITIAL_STATE);
-  const nameState = filters.filterByName.name;
+  const nameInputState = filters.filterByName.name;
 
-  // functions
+  // functions and Hooks
   useEffect(fetchAPI, []);
 
   const handleChange = ({ target: { value } }) => {
     setFilters({ ...filters, filters: { filterByName: { name: value } } });
   };
 
+  const [dataFilteredByName, setDataFilteredByName] = useState([]);
   useEffect(() => {
     // filteredByName
-    const dataFilteredByName = data.filter((e) => e.name.includes(nameState));
-  }, [data, nameState]);
+    const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
+    console.log(countriesFilteredByName);
+    setDataFilteredByName(countriesFilteredByName);
+  }, [data, nameInputState]);
 
   // render
   return (
