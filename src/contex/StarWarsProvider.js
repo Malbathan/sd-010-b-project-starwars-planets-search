@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getAPIPlanetsInfo from '../services/PlanetsListsAPI';
-// import { mochResolved } from '../services/dataMoch';
 
 import StarWarsContext from './StarWarsContext';
 
@@ -49,9 +48,6 @@ export default function StarWarsProvider({ children }) {
 
   const filterByNumericValues = (column, comparison, value) => {
     setFilter({ ...filter,
-      filterByName: {
-        name: '',
-      },
       filterByNumericValues: [
         {
           column,
