@@ -4,8 +4,8 @@ import StarWarsContext from '../../context/StarWarsContext';
 function FormSearch() {
   const { setFilters } = useContext(StarWarsContext);
   const [inputsSearch, setInputSearch] = useState({
-    column: 'population',
-    comparison: 'maior que',
+    column: '',
+    comparison: '',
     value: 0,
   });
 
