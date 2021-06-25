@@ -3,24 +3,20 @@ import Thead from './Thead';
 
 import { Context } from './Provider/Provider';
 
-// console.log(Context);
-
 const RenderTable = () => {
-  // const batata = useContext(Context);
-  // const { planetName, data } = useContext(Context);
   const batata = useContext(Context);
-  const { data, planetName: { filterByName: { planetName } } } = batata;
-  console.log(batata);
+  const { data, filtername: { filterByName: { name } } } = batata;
+
   return (
     <table>
       <Thead />
       <tbody>
         { data
-          .filter((planet) => planet.name.includes(planetName))
+          .filter((planet) => planet.name.includes(name))
           .map((item, index) => (
             <tr key={ index }>
               <td>
-                {item.name}
+                { item.name }
               </td>
               <td>
                 {item.rotation_period}
@@ -57,9 +53,6 @@ const RenderTable = () => {
               </td>
               <td>
                 {item.edited}
-              </td>
-              <td>
-                {item.url}
               </td>
             </tr>))}
       </tbody>

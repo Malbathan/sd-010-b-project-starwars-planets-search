@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.css';
 import Home from './components/Home';
-import RenderTable from './components/table';
+import { Provider } from './components/Provider/Provider';
 
 function App() {
   return (
     <div>
-      <Home />
-      <RenderTable />
+      <Provider>
+        <Home />
+      </Provider>
     </div>
   );
 }
