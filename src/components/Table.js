@@ -4,6 +4,8 @@ import StarWarsContext from '../contex/StarWarsContext';
 export default function Table() {
   const { isLoading, data, filter } = useContext(StarWarsContext);
 
+  const nameFilter = filter.filters.filterByName.name.toLowerCase();
+
   const generateTableHeaders = (object1) => {
     if (object1) { return Object.keys(object1).map((key) => <th key={ key }>{key}</th>); }
   };
@@ -22,20 +24,15 @@ export default function Table() {
     Object.values(planetInfo).map((info, index) => <td key={ index }>{info}</td>)
   );
   const tableInfo = [...data];
-  // const tableHeaders = [...headers];
   return (
     !isLoading
       ? (
         <table>
           <tbody>
             <tr>{generateTableHeaders(tableInfo[0])}</tr>
-            {/* <tr>{tableHeaders.map((ele, i) => <th key={ i }>{ele}</th>)}</tr> */}
             {tableInfo
-              .map((planet, i) => {
-                if (planet.name.includes(filter.filters.filterByName.name)) {
-                  return (<tr key={ i }>{generateTableCollumns(planet)}</tr>);
-                }
-              })}
+              .map((planet, i) => (planet.name.toLowerCase().includes(nameFilter))
+              && (<tr key={ i }>{generateTableCollumns(planet)}</tr>))}
           </tbody>
         </table>
       )

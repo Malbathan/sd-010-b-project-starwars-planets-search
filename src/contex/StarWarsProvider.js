@@ -27,10 +27,6 @@ export default function StarWarsProvider({ children }) {
     fetchPlanetsList();
   }, []);
 
-  // useEffect(() => {
-  //   if (data) data.forEach((planet) => setData(planet.name.includes(filter)));
-  // }, [data, filter]);
-
   const handleFilters = ({ target }) => {
     console.log(target.value);
     setFilter({ filters:
