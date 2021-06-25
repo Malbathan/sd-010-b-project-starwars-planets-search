@@ -3,8 +3,11 @@ import './App.css';
 
 function App() {
   const [planets, setPlanets] = useState([]);
-  const tableHeader = planets[0];
-  // const loading = <h2>Loading</h2>;
+  const [filter, setFilter] = useState([]);
+
+  const frstElemnt = planets[0];
+  const tableHead = frstElemnt ? Object.keys(frstElemnt)
+    .filter((el) => el !== 'residents') : null;
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -16,22 +19,26 @@ function App() {
   }, [setPlanets]);
 
   const renderTH = () => {
-    if (tableHeader) {
-      return Object.keys(tableHeader).filter((el) => el !== 'residents')
-        .map((data, i) => <th key={ i }>{data}</th>);
+    if (frstElemnt) {
+      return tableHead.map((data, i) => <th key={ i }>{data}</th>);
     }
-    // return loading;
+  };
+
+  const searchFilter = () => {
+    console.log(filter);
+    console.log(setFilter);
   };
 
   const renderTBody = () => {
     const INDEX = 9;
-    if (tableHeader) {
+    if (frstElemnt) {
       return (
         planets.map(
           (planet, i) => (
             <tr
               key={ i }
             >
+              {/* { console.log(planet) } */}
               { Object.values(planet).map(
                 (el, ix) => (ix !== INDEX ? <td key={ ix }>{ el }</td> : null),
               ) }
@@ -49,6 +56,7 @@ function App() {
           placeholder="Buscar"
           maxLength="30"
           data-testid="name-filter"
+          onChange={ searchFilter }
         />
       </form>
       <table className="table">
