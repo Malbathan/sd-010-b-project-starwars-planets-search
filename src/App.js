@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <Provider>
-      <span>A long time agora in a galaxy far, far away...</span>
+      <span>A long time ago in a galaxy far, far away...</span>
       <Filter />
       <Table />
     </Provider>

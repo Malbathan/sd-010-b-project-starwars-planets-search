@@ -11,10 +11,10 @@ const tableHeader = [
   'terrain',
   'surface_water',
   'population',
-  'residents',
   'films',
   'created',
   'edited',
+  'url',
 ];
 
 function Table() {

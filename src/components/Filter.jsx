@@ -17,7 +17,7 @@ const comparisonFilters = [
 
 function Filter() {
   const {
-    handleChangeText, handleSelect, textFilter,
+    handleChangeText, handleSelect, textFilter, handleFilter,
   } = useContext(PlanetsContext);
 
   return (
@@ -70,7 +70,13 @@ function Filter() {
         onChange={ handleSelect }
       />
 
-      <button type="button" data-testid="button-filter">Filtrar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleFilter }
+      >
+        Filtrar
+      </button>
 
     </form>
   );

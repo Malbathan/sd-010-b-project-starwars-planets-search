@@ -2,8 +2,13 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function TableBody() {
-  const { data, filteredByName, textFilter } = useContext(PlanetsContext);
-  const showData = textFilter.length === 0 ? data : filteredByName;
+  const {
+    data, filteredByName, textFilter, wasFilteredByNumber, filteredByNumber,
+  } = useContext(PlanetsContext);
+  let showData = textFilter.length === 0 ? data : filteredByName;
+  if (wasFilteredByNumber) {
+    showData = filteredByNumber;
+  }
   return (
     <tbody>
       {showData.map((planet, idx) => (
@@ -17,10 +22,10 @@ function TableBody() {
           <td>{planet.terrain}</td>
           <td>{planet.surface_water}</td>
           <td>{planet.population}</td>
-          <td>{planet.residents}</td>
           <td>{planet.films}</td>
           <td>{planet.created}</td>
           <td>{planet.edited}</td>
+          <td>{planet.url}</td>
         </tr>
       ))}
     </tbody>
