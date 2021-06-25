@@ -2,10 +2,34 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { data } = useContext(PlanetContext);
+  const { data, setData } = useContext(PlanetContext);
+
+  // {
+  //   filters: {
+  //     filterByName: {
+  //       name: 'Tatoo',
+  //     };
+  //   };
+  // };
+
+  const handleFilterData = ({ target: { value } }) => {
+    console.log(value);
+    const originData = data;
+    const filteredName = data
+      .filter((element) => (element.name.includes(value)));
+    return filteredName.length < 1 ? setData(originData) : setData(filteredName);
+  };
+
   return (
     <main>
       <h1>Minha Tabela</h1>
+      <input
+        type="text"
+        name="filterByName"
+        placeholder="filtrar"
+        data-testid="name-filter"
+        onChange={ (event) => handleFilterData(event) }
+      />
       <table>
         <thead>
           <tr>

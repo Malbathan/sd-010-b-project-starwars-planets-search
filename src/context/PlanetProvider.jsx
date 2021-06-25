@@ -5,6 +5,16 @@ import fetchPlanetsAPI from '../services/planetsAPI';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
+  // const [planets, setPlanets] = useState([]);
+  // const [filters, setFilters] = useState({});
+
+  // {
+  //   filters: {
+  //     filterByName: {
+  //       name: 'Tatoo',
+  //     };
+  //   };
+  // };
 
   const dataAPI = async () => {
     const response = await fetchPlanetsAPI();
@@ -15,8 +25,10 @@ function PlanetProvider({ children }) {
     dataAPI();
   }, []);
 
+  // const state = { planets, setPlanets };
+
   return (
-    <PlanetContext.Provider value={ { data } }>
+    <PlanetContext.Provider value={ { data, setData } }>
       {children}
     </PlanetContext.Provider>
   );
