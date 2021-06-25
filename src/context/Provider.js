@@ -177,7 +177,8 @@ const Provider = ({ children }) => {
   };
 
   const requestSort = () => {
-    if (data2 === 'a') { setData2('b'); } else { setData2('a'); } // unbugger hook for rendering new filterData
+    if (data2 === 'a') { setData2('b'); } else { setData2('a'); } 
+    // unbugger hook for rendering new filterData
     setSortedTable(generateCorrectOrder(filterData, sortColumnFilter));
   };
 
