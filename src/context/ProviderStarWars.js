@@ -29,11 +29,18 @@ function ProviderStarWars({ children }) {
     const filted = data.filter(
       (objPlanet) => {
         // filtes
+        const arraTruOrFalse = [];
+        filters.filterByNumericValues.forEach((objFilter) => {
+          arraTruOrFalse.push(helperFilter(objFilter, objPlanet));
+        });
+
+        const allArrayIsTrue = arraTruOrFalse.every((ele) => ele === true);
         const nameIsTrue = objPlanet.name.includes(filters.filterByName.name);
-        const comparedColumn = helperFilter(filters.filterByNumericValues[0], objPlanet);
+
+        console.log(allArrayIsTrue);
 
         // condicional
-        if (nameIsTrue && comparedColumn) {
+        if (nameIsTrue && allArrayIsTrue) {
           return true;
         }
         return false;

@@ -4,8 +4,8 @@ import ContextStarWars from '../context/ContextStarWars';
 function TableFilter() {
   const { filters, addNameFilter, addSelectFilter } = useContext(ContextStarWars);
   const [comparasionColum, setComparasionColum] = useState({
-    column: '',
-    coparasion: '',
+    column: 'population',
+    coparasion: 'maior que',
     value: 0,
   });
 
