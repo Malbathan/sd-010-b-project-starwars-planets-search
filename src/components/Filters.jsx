@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Context from '../context/Context';
 
-function Filters(params) {
+function Filters() {
   const { filters, setFilters } = useContext(Context);
 
   const handleChange = ({ target: { value } }) => {
