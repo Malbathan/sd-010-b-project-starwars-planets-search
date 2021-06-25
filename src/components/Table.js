@@ -21,17 +21,14 @@ function Table() {
     const { column } = filtraNome.filterByNumericValues[0];
     const { comparision } = filtraNome.filterByNumericValues[0];
     const { value } = filtraNome.filterByNumericValues[0];
-    const filtraDados = (value !== 0)
-      ? filtraPeloNome.filter((planeta) => {
-        if (comparision === 'maior que') {
-          return parseFloat(planeta[column]) > parseFloat(value);
-        }
-        if (comparision === 'igual a') {
-          return parseFloat(planeta[column]) === parseFloat(value);
-        }
-        return parseFloat(planeta[column]) < parseFloat(value);
-      })
-      : filtraPeloNome;
+    const filtraDados = filtraPeloNome.filter((planeta) => {
+      switch (comparision) {
+      case 'maior que': return parseFloat(planeta[column]) > parseFloat(value);
+      case 'igual a': return parseFloat(planeta[column]) === parseFloat(value);
+      case 'menor que': return parseFloat(planeta[column]) < parseFloat(value);
+      default: return false;
+      }
+    });
     setFiltrar(filtraDados);
   }, [data, filtraNome.filterByName, filtraNome.filterByNumericValues]);
 

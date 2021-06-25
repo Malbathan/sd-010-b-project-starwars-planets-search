@@ -11,8 +11,8 @@ function SearchProvider({ children }) {
     },
     filterByNumericValues: [
       {
-        column: 'population',
-        comparison: 'maior que',
+        column: '',
+        comparison: '',
         value: 0,
       },
     ],
