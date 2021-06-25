@@ -12,7 +12,7 @@ const Select = () => {
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
-      <select id="comparation" onChange={ handleSelect } data-testid="value-filter">
+      <select id="comparison" onChange={ handleSelect } data-testid="comparison-filter">
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>

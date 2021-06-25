@@ -4,7 +4,9 @@ import Input from './Input';
 import Select from './Select';
 
 const Table = () => {
-  const { data, input, handleInput, handleSelect } = useContext(context);
+  const { data,
+    filters: { filterByName:
+      { name } }, handleInput, handleSelect } = useContext(context);
   return (
     <div>
       <Input
@@ -14,7 +16,13 @@ const Table = () => {
         dataTestid="name-filter"
       />
       <Select />
-      <input onChange={ handleSelect } id="number" type="number" placeholder="Ex: 1" />
+      <input
+        onChange={ handleSelect }
+        id="value"
+        type="number"
+        placeholder="Ex: 1"
+        data-testid="value-filter"
+      />
       <table>
         <thead>
           <tr>
@@ -34,7 +42,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {data.filter((planet) => planet.name.includes(input))
+          {data.filter((planet) => planet.name.includes(name))
             .map((value) => (
               <tr key={ value.name }>
                 <td>{value.name}</td>

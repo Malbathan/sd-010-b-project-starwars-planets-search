@@ -5,7 +5,7 @@ import context from '../Context/Context';
 const ProviderContext = ({ children }) => {
   const [data, setData] = useState([]);
   const [input, setInput] = useState('');
-  const [select, setSelect] = useState({ column: '', comparation: '', number: null });
+  const [select, setSelect] = useState({ column: '', comparison: '', value: null });
 
   const fetchApi = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -14,11 +14,11 @@ const ProviderContext = ({ children }) => {
   };
 
   const handleClick = () => {
-    const { column, comparation, number } = select;
+    const { column, comparison, value } = select;
     const filterData = data.filter((planet) => {
-      if (comparation === 'maior que') return Number(planet[column]) > Number(number);
-      if (comparation === 'menor que') return Number(planet[column]) < Number(number);
-      return Number(planet[column]) === Number(number);
+      if (comparison === 'maior que') return Number(planet[column]) > Number(value);
+      if (comparison === 'menor que') return Number(planet[column]) < Number(value);
+      return Number(planet[column]) === Number(value);
     });
     setData(filterData);
   };
@@ -40,10 +40,21 @@ const ProviderContext = ({ children }) => {
 
   const INITIAL_STATE = {
     data,
-    input,
     handleInput,
     handleSelect,
     handleClick,
+    filters: {
+      filterByName: {
+        name: input,
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
+    },
   };
 
   return (
