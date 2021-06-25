@@ -3,7 +3,10 @@ import PlanetContext from '../context/PlanetContext';
 
 function PlanetList() {
   const { values: {
-    data, data2, filterName, Select, filterSelect, selectFilter,
+    data,
+    data2,
+    filterName,
+    Select, filterSelect, selectFilter, typeFilter, selectedFilter, resetFilter,
   } } = useContext(PlanetContext);
 
   function list() {
@@ -58,11 +61,14 @@ function PlanetList() {
         name="status"
         onChange={ ({ target }) => Select(target) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {typeFilter.map((filtro) => (
+          <option
+            key={ filtro }
+            value={ filtro }
+          >
+            {filtro}
+          </option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
@@ -86,6 +92,19 @@ function PlanetList() {
       >
         Buscar
       </button>
+      <div data-testid="filter">
+        {selectedFilter.map((filt) => (
+          <button
+            onClick={ ({ target }) => resetFilter(target) }
+            key={ filt }
+            type="button"
+            value={ filt }
+          >
+            X
+            {' '}
+            {filt}
+          </button>))}
+      </div>
       <table border="1px">
         <tr>
           <th>name</th>

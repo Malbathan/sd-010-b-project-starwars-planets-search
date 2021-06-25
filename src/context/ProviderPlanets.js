@@ -7,11 +7,15 @@ import { planetsAPI } from '../services/api';
 function QuestionsProvider({ children }) {
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
+  const [typeFilter, setTypeFilter] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
   const [selectFilter, setSelectFilter] = useState({
     status: 'population',
     operator: 'maior que',
     value: 0,
   });
+  const [selectedFilter, setSelectedFilter] = useState([]);
 
   useEffect(() => {
     planetsAPI().then(({ results }) => setData(results));
@@ -48,6 +52,15 @@ function QuestionsProvider({ children }) {
         Number(itens[selections.status]) === Number(selections.value)));
     }
     setData2(list);
+    const newFilter = typeFilter.filter((item) => item !== selections.status);
+    setSelectedFilter([selections.status]);
+    setTypeFilter(newFilter);
+  };
+
+  const resetFilter = ({ value }) => {
+    const filterFull = [...typeFilter, value];
+    setTypeFilter(filterFull);
+    setData2([]);
   };
 
   const values = {
@@ -57,6 +70,9 @@ function QuestionsProvider({ children }) {
     filterSelect,
     Select,
     selectFilter,
+    typeFilter,
+    selectedFilter,
+    resetFilter,
   };
 
   return (
