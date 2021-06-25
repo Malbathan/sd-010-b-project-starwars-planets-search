@@ -8,9 +8,6 @@ function ContentsTable() {
 
   console.log(name);
 
-  // const filterNamePlanets = data.filter(({ name }) => name.toLocaleLowerCase()
-  //   .includes(name.toLocaleLowerCase()));
-
   const filterNamePlanets = (name !== '')
     ? data.filter((value) => value.name.toLocaleLowerCase()
       .includes(name))
