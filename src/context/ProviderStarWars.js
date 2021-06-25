@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ContextStarWars from './ContextStarWars';
+import helperFilter from '../helpers/helpFilter';
 
 function ProviderStarWars({ children }) {
   const [data, setData] = useState([]);
   const [dataFilted, setDataFilted] = useState([]);
   const [filters, setfilters] = useState({
     filterByName: { name: '' },
+    filterByNumericValues: [{ column: '', comparison: '', value: '' }],
   });
 
   useEffect(() => {
@@ -25,13 +27,23 @@ function ProviderStarWars({ children }) {
 
   useEffect(() => {
     const filted = data.filter(
-      ({ name }) => name.includes(filters.filterByName.name),
+      (objPlanet) => {
+        // filtes
+        const nameIsTrue = objPlanet.name.includes(filters.filterByName.name);
+        const comparedColumn = helperFilter(filters.filterByNumericValues[0], objPlanet);
+
+        // condicional
+        if (nameIsTrue && comparedColumn) {
+          return true;
+        }
+        return false;
+      },
     );
 
     setDataFilted(filted);
   }, [data, filters]);
 
-  const functionSetFilters = (filter, name) => {
+  const addNameFilter = (filter, name) => {
     console.log(name);
     setfilters({
       ...filters,
@@ -39,12 +51,21 @@ function ProviderStarWars({ children }) {
     });
   };
 
+  const addSelectFilter = (obj) => {
+    console.log(obj);
+    setfilters({
+      ...filters,
+      filterByNumericValues: [obj],
+    });
+  };
+
   const context = {
     data,
     setData,
     filters,
-    functionSetFilters,
+    addNameFilter,
     dataFilted,
+    addSelectFilter,
   };
 
   return (
