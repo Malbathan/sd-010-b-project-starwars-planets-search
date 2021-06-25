@@ -33,11 +33,14 @@ function Table() {
   function submitFilter() {
     switch (comparison) {
     case 'maior que':
-      return setFilteredPlanets(data.filter((planet) => Number(planet[collumsFilter]) > Number(numberComparison)));
+      return setFilteredPlanets(data.filter((planet) => (
+        Number(planet[collumsFilter]) > Number(numberComparison))));
     case 'menor que':
-      return setFilteredPlanets(data.filter((planet) => Number(planet[collumsFilter]) < Number(numberComparison)));
+      return setFilteredPlanets(data.filter((planet) => (
+        Number(planet[collumsFilter]) < Number(numberComparison))));
     case 'igual a':
-      return setFilteredPlanets(data.filter((planet) => Number(planet[collumsFilter]) === Number(numberComparison)));
+      return setFilteredPlanets(data.filter((planet) => (
+        Number(planet[collumsFilter]) === Number(numberComparison))));
     default:
       return (data);
     }
