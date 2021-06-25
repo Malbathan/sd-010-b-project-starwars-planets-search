@@ -9,6 +9,7 @@ function Inputs() {
         <input
           type="text"
           id="name"
+          data-testid="name-filter"
           placeholder="digite o nome do planeta"
           onChange={ ({ target: { value } }) => setName({
             filters: {
