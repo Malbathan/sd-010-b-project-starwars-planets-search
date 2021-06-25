@@ -6,6 +6,7 @@ import getPlanetsFromAPI from '../services';
 function TableProvider({ children }) {
   const [planets, setPlanets] = useState('');
   const [filterByName, setFilterByName] = useState('');
+  const [filterByValue, setFilterByValue] = useState([]);
 
   const getPlanets = async () => {
     const result = await getPlanetsFromAPI();
@@ -22,9 +23,10 @@ function TableProvider({ children }) {
     filterByName: {
       name: filterByName,
     },
+    filterByValue,
   };
 
-  const context = { planets, filters, setFilterByName };
+  const context = { planets, filters, setFilterByName, setFilterByValue };
 
   return (
     <TableContext.Provider value={ context }>
