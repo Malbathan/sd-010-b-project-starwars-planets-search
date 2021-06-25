@@ -4,11 +4,20 @@ import '../style/table.css';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
+  const arrayColumns = ['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water'];
+
+  const arrayComparison = ['maior que', 'igual a', 'menor que'];
   const { data } = useContext(MyContext);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: 'population',
+      comparison: 'maior que',
+      value: 0,
+    }],
   });
   const [filteredData, setFilteredData] = useState([]);
 
@@ -23,6 +32,30 @@ export default function Table() {
     setFilteredData(filter.filter((planet) => planet.name.includes(value)));
   }
 
+  function handleChangeNumericFilters({ target: { name, value } }) {
+    setFilters({
+      filterByNumericValues: [{
+        ...filters.filterByNumericValues[0],
+        [name]: value }],
+    });
+  }
+
+  function addNumericFilters() {
+    const currentColumn = filters.filterByNumericValues[0].column;
+    const currentComparrison = filters.filterByNumericValues[0].comparison;
+    const currentValue = Number(filters.filterByNumericValues[0].value);
+    const filter = data;
+    setFilteredData(filter);
+    setFilteredData(filter.filter((planet) => {
+      if (currentComparrison === 'maior que') {
+        return Number(planet[currentColumn]) > currentValue;
+      } if (currentComparrison === 'menor que') {
+        return Number(planet[currentColumn]) < currentValue;
+      }
+      return Number(planet[currentColumn]) === currentValue;
+    }));
+  }
+
   return (
     <main>
       <form>
@@ -35,7 +68,43 @@ export default function Table() {
             onChange={ handleChangeFilterByName }
           />
         </label>
-        <p>{filters.filterByName.name}</p>
+
+        <select
+          data-testid="column-filter"
+          name="column"
+          onChange={ handleChangeNumericFilters }
+        >
+          {arrayColumns.map((column) => <option option key={ column }>{column}</option>)}
+
+        </select>
+
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ handleChangeNumericFilters }
+        >
+          {arrayComparison
+            .map((comparison) => <option key={ comparison }>{ comparison }</option>)}
+        </select>
+
+        <label htmlFor="input-number">
+          <input
+            data-testid="value-filter"
+            type="number"
+            id="input-number"
+            name="value"
+            onChange={ handleChangeNumericFilters }
+            min="0"
+          />
+        </label>
+
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ addNumericFilters }
+        >
+          Add filter
+        </button>
       </form>
       <table>
         <thead>
