@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
-
+//  Fonte ultilização de da tag <table>: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/table
 function Table() {
   const { planets } = useContext(TableContext);
 
