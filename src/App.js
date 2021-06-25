@@ -1,12 +1,13 @@
 import React from 'react';
-import './App.css';
+import GetDataPlanets from './Components/fetchProvedor';
+import CriarTabela from './Components/Table';
 
+// Table é filha de GetDataPlanets e por isso recebe a requisição API por meio do Provider(lá no return do GetDataPlanets)
 function App() {
   return (
-    <span>Hello, App!</span>
+    <GetDataPlanets>
+      <CriarTabela />
+    </GetDataPlanets>
   );
 }
-
 export default App;
-
-// É UM COMENTÁRIO INICIAL PRO PRIMEIRO COMMIT. Logo após, irei apagar isso aqui.
