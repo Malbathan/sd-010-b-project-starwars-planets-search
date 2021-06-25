@@ -8,18 +8,10 @@ const FilterByNum = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setcomparison] = useState('maior que');
   const [amount, setAmount] = useState('');
-  const [options, setOptions] = useState([
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ]);
-
   const renderOptions = (opts) => opts
     .map((opt, i) => <option key={ i } value={ opt }>{opt}</option>);
 
-  const { handleFilter } = useContext(SwContext);
+  const { handleFilter, options, setOptions } = useContext(SwContext);
 
   const handleClick = async () => {
     if (!amount) return;

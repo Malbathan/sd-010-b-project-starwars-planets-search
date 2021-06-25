@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import SwContext from '../contexts/swContext';
+import FilterButtons from './FilterButtons';
 import FilterByNum from './FilterByNum';
 
 const OptionsHeader = () => {
@@ -21,6 +22,7 @@ const OptionsHeader = () => {
         </label>
       </div>
       <FilterByNum />
+      <FilterButtons />
     </div>
   );
 };

@@ -265,10 +265,8 @@ describe('4 - Não utilize filtros repetidos', () => {
     expect(column).toHaveProperty('nodeName', 'SELECT');
     foundColumnFilter = Array.from(column.children).map(child => {
       expect(child).toHaveProperty('nodeName', 'OPTION');
-      console.log(child.innerHTML)
       return child.innerHTML;
     });
-    console.log(foundColumnFilter)
     expect(foundColumnFilter).toEqual(expect.arrayContaining(['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']));
 
     fireEvent.change(await screen.findByTestId(COLUMN_FILTER_SELECTOR), { target: { value: 'population' }});
