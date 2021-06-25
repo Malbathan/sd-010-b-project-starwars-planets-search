@@ -1,27 +1,31 @@
 import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsProvider';
 
+const nameColumns = ['name',
+  'rotation_period', 'orbital_period',
+  'diameter', 'climate',
+  'gravity', 'terrain',
+  'population', 'surface_water',
+  'films', 'created',
+  'edited', 'url'];
+
 function Table() {
   const { planetsStarWars,
     name: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
 
+  const { column: { filters: { filterByNumericValues } } } = useContext(StarWarsContext);
+  const { column } = filterByNumericValues[0];
+
   function renderTableHeader() {
+    const columns = (column ? nameColumns
+      .filter((nameColumn) => nameColumn === column) : nameColumns);
+
     return (
       <thead>
         <tr>
-          <th>name</th>
-          <th>rotation_period</th>
-          <th>orbital_period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>population</th>
-          <th>surface_water</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
+          {
+            columns.map((item, index) => <th key={ index }>{item}</th>)
+          }
         </tr>
       </thead>
     );
@@ -30,6 +34,7 @@ function Table() {
   function renderTableBody() {
     const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
       : planetsStarWars);
+
     return (
       <tbody>
         {
@@ -56,10 +61,28 @@ function Table() {
     );
   }
 
+  function renderTableFilteredColumn() {
+    const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
+      : planetsStarWars);
+
+    const columnsPlanet = () // fazer lógica para filtrar dependendo do valor do column
+
+    return (
+      <tbody>
+        {
+          planets.filter((planet) => planet.name.includes(name))
+            .map((planet, index) => (
+              <tr key={ index } />
+            ))
+        }
+      </tbody>
+    );
+  }
+
   return (
     <table>
       {renderTableHeader()}
-      {renderTableBody()}
+      {column ? renderTableFilteredColumn() : renderTableBody()}
     </table>
   );
 }
