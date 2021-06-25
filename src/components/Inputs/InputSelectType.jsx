@@ -3,7 +3,7 @@ import React from 'react';
 function InputSelectType() {
   return (
     <div>
-      <select name="tipo" id="tipo">
+      <select name="tipo" id="tipo" data-testid="column-filter">
         <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
