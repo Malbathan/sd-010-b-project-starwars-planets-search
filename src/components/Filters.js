@@ -1,11 +1,13 @@
-import React, { useContext, createRef } from 'react';
+import React, { useContext, useState, createRef } from 'react';
 // import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Filters() {
+  const [sort, setSort] = useState({});
   const {
     setFilterByName,
     setFilterByValue,
+    setOrder,
     filters: { filterByValue },
   } = useContext(PlanetsContext);
 
@@ -27,7 +29,7 @@ function Filters() {
   const filterUsedAlready = (filterType, option) => filterByValue
     .find((filter) => filter[filterType] === option);
 
-  const renderColumnOptions = () => {
+  const renderFilterColumnOptions = () => {
     const options = [
       'population',
       'orbital_period',
@@ -44,9 +46,27 @@ function Filters() {
       </option>
     ));
   };
+  const renderSortColumnOptions = () => {
+    const options = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+      'name',
+    ];
+
+    return options.map((filteredOption) => (
+      <option key={ filteredOption } value={ filteredOption }>
+        {filteredOption}
+      </option>
+    ));
+  };
 
   const removeFilter = (filter) => {
-    const filterToRemove = filterByValue.filter(({ column }) => column !== filter);
+    const filterToRemove = filterByValue.filter(
+      ({ column }) => column !== filter,
+    );
     setFilterByValue(filterToRemove);
   };
 
@@ -73,53 +93,108 @@ function Filters() {
 
   return (
     <>
-      <label htmlFor="filterByName">
-        Name
-        <input
-          id="filterByName"
-          data-testid="name-filter"
-          type="text"
-          onChange={ ({ target: { value } }) => {
-            setFilterByName(value);
+      <div className="filterByName">
+        <label htmlFor="filterByName">
+          Name
+          <input
+            id="filterByName"
+            data-testid="name-filter"
+            type="text"
+            onChange={ ({ target: { value } }) => {
+              setFilterByName(value);
+            } }
+          />
+        </label>
+      </div>
+      <div className="filterByValue">
+        <label htmlFor="filterColumn">
+          Column
+          <select
+            id="filterColumn"
+            ref={ filterColumn }
+            data-testid="column-filter"
+          >
+            {renderFilterColumnOptions()}
+          </select>
+        </label>
+
+        <label htmlFor="filterComparison">
+          Comparison
+          <select
+            id="filterComparison"
+            ref={ filterComparison }
+            data-testid="comparison-filter"
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+        </label>
+
+        <label htmlFor="filterValue">
+          Value
+          <input
+            id="filterValue"
+            ref={ filterValue }
+            data-testid="value-filter"
+            type="number"
+          />
+        </label>
+        <button onClick={ filterList } type="button" data-testid="button-filter">
+          Search
+        </button>
+      </div>
+
+      <div className="sort">
+        <label htmlFor="sortColumn">
+          Sort
+          <select
+            id="sortColumn"
+            onChange={ ({ target }) => { setSort({ ...sort, column: target.value }); } }
+            data-testid="column-sort"
+          >
+            <option hidden> </option>
+            {renderSortColumnOptions()}
+          </select>
+        </label>
+        <div
+          className="radioChange"
+          onChange={ ({ target }) => {
+            setSort({ ...sort, sort: target.value });
           } }
-        />
-      </label>
-      <label htmlFor="filterColumn">
-        Column
-        <select
-          id="filterColumn"
-          ref={ filterColumn }
-          data-testid="column-filter"
         >
-          {renderColumnOptions()}
-        </select>
-      </label>
-
-      <label htmlFor="filterComparison">
-        Comparison
-        <select
-          id="filterComparison"
-          ref={ filterComparison }
-          data-testid="comparison-filter"
+          <label htmlFor="sortWay">
+            ascendente
+            <input
+              type="radio"
+              name="sortWay"
+              id="sortAsc"
+              value="ASC"
+              data-testid="column-sort-input-asc"
+            />
+          </label>
+          <label htmlFor="sortWay">
+            descendente
+            <input
+              type="radio"
+              name="sortWay"
+              id="sortDesc"
+              value="DESC"
+              data-testid="column-sort-input-desc"
+            />
+          </label>
+        </div>
+        <button
+          type="button"
+          onClick={ () => {
+            if (Object.keys(sort).length === 2) setOrder(sort);
+          } }
+          data-testid="column-sort-button"
         >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
-      </label>
+          Sort
+        </button>
+      </div>
 
-      <label htmlFor="filterValue">
-        Value
-        <input
-          id="filterValue"
-          ref={ filterValue }
-          data-testid="value-filter"
-          type="number"
-        />
-      </label>
-      <button onClick={ filterList } type="button" data-testid="button-filter">
-        Search
-      </button>
       <div>{renderUsedFilterList()}</div>
     </>
   );

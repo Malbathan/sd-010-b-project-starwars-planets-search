@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { sortByName, sortByValues } from '../aux/auxFuncs';
 import PlanetsContext from '../context/PlanetsContext';
 import Filters from './Filters';
 
@@ -8,6 +9,7 @@ function Planets() {
     filters: {
       filterByName: { name: nameFilter },
       filterByValue,
+      order,
     },
   } = useContext(PlanetsContext);
 
@@ -29,6 +31,14 @@ function Planets() {
       return planet;
     }
   };
+
+  if (Object.keys(order)) {
+    planets.sort((a, b) => {
+      const { column } = order;
+      if (column === 'name') return sortByName(a, b, order);
+      return sortByValues(a, b, order);
+    });
+  }
 
   return (
     <div>
@@ -57,7 +67,7 @@ function Planets() {
               .filter((planet) => (nameFilter
                 ? planet.name.includes(nameFilter)
                 : planet))
-              .filter((planet) => (filterFromContext(planet)))
+              .filter((planet) => filterFromContext(planet))
               .map(
                 ({
                   name,
@@ -75,7 +85,7 @@ function Planets() {
                   url,
                 }) => (
                   <tr key={ name }>
-                    <td>{name}</td>
+                    <td data-testid="planet-name">{name}</td>
                     <td>{rotationPeriod}</td>
                     <td>{orbitalPeriod}</td>
                     <td>{diameter}</td>
