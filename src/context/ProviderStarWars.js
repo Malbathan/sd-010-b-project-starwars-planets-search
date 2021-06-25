@@ -24,7 +24,11 @@ function ProviderStarWars({ children }) {
   }, [setData]);
 
   useEffect(() => {
-    setDataFilted(data.filter(({ name }) => name.includes(filters.filterByName.name)));
+    const filted = data.filter(
+      ({ name }) => name.includes(filters.filterByName.name),
+    );
+
+    setDataFilted(filted);
   }, [data, filters]);
 
   const functionSetFilters = (filter, name) => {
