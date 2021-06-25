@@ -21,7 +21,7 @@ function ContentsTable() {
       .includes(name.toLocaleLowerCase()))
     : data;
 
-  // console.log(filterNamePlanets);
+  console.log(filterNamePlanets);
 
   const filterData = (value !== 0 && column !== '' && comparison !== '')
     ? filterNamePlanets.filter((item) => {
