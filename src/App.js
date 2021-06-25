@@ -5,6 +5,7 @@ import MyContext from './components/MyContext';
 
 function App() {
   const [data, setData] = useState([{}]);
+  const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     const fetchApiStarwars = () => {
@@ -14,11 +15,26 @@ function App() {
     };
 
     fetchApiStarwars();
-  }, []);
+  }, [fetching]);
+
+  const filterPlanet = ({ target: { value } }) => {
+    if (value === '') {
+      return setFetching(!fetching);
+    }
+    const filteredPlanet = data.filter(({ name }) => name.includes(value));
+    console.log(filteredPlanet);
+    if (filteredPlanet.length > 0) {
+      return setData(filteredPlanet);
+    }
+  };
 
   return (
     <MyContext.Provider value={ data }>
       <div>
+        <input
+          data-testid="name-filter"
+          onChange={ filterPlanet }
+        />
         <Table />
       </div>
     </MyContext.Provider>
