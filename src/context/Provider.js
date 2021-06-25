@@ -6,21 +6,26 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [keys, setKeys] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [arrCol] = useState([
+  const [arrCol, setArrCol] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [arrComp] = useState(['maior que', 'menor que', 'igual a']);
-  const [dropDownF, setDropDownF] = useState({
+  const [dropDown, setDropwDown] = useState({
     column: 'population',
     comparison: 'maior que',
     number: 0,
   });
 
   const handleState = ({ name, value }) => {
-    setDropDownF({ ...dropDownF, [name]: value });
+    setDropwDown({ ...dropDown, [name]: value });
+  };
+
+  const deleteOption = (value) => {
+    setArrCol(arrCol.filter((i) => i !== value));
   };
 
   const filterSwitch = () => {
-    const { column, comparison, number } = dropDownF;
+    const { column, comparison, number } = dropDown;
+    deleteOption(column);
     switch (comparison) {
     case 'maior que':
       return setFilteredData(data.filter((i) => Number(i[column]) > Number(number)));
@@ -32,6 +37,7 @@ function Provider({ children }) {
       break;
     }
   };
+
   useEffect(() => {
     const getPlanets = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -71,14 +77,13 @@ function Provider({ children }) {
   const truePlanets = trueData();
 
   const context = {
-    data,
     keys,
-    setKeys,
     handleDataByName,
     optionMaker,
     truePlanets,
     handleState,
     filterSwitch,
+    deleteOption,
   };
 
   return (
