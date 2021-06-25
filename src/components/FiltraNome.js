@@ -8,6 +8,10 @@ function FiltraNome() {
     setFiltraNome({ ...filtraNome, filterByName: { name: target.value } });
   };
 
+  const limpaFiltroNome = () => {
+    setFiltraNome({ ...filtraNome, filterByName: { name: '' } });
+  };
+
   return (
     <form>
       <label htmlFor="filterByName">
@@ -20,6 +24,9 @@ function FiltraNome() {
           onChange={ filtraPeloNome }
         />
       </label>
+      <button type="button" data-testid="filter" onClick={ limpaFiltroNome }>
+        X
+      </button>
     </form>
   );
 }

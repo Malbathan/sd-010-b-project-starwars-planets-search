@@ -29,6 +29,15 @@ function Filtros() {
     setValues(value);
   };
 
+  const limpaFiltroNome = () => {
+    setFiltraNome({
+      ...filtraNome,
+      filterByNumericValues: [{
+        column: 'population',
+        comparision: 'maior que',
+        value: 0 }] });
+  };
+
   return (
     <form onSubmit={ filtraDados }>
       <label htmlFor="filterByColumn">
@@ -67,6 +76,9 @@ function Filtros() {
         onClick={ filtraDados }
       >
         Filtra
+      </button>
+      <button type="button" data-testid="filter" onClick={ limpaFiltroNome }>
+        X
       </button>
     </form>
   );
