@@ -5,6 +5,11 @@ import starWarsApi from '../service/starWarsAPI';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     const fetchStarWarsAPI = async () => {
@@ -17,7 +22,7 @@ function TableProvider({ children }) {
     fetchStarWarsAPI();
   }, []);
 
-  const myContext = { data, setData };
+  const myContext = { data, setData, filters, setFilter };
 
   return (
     <TableContext.Provider value={ myContext }>
