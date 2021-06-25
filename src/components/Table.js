@@ -21,13 +21,11 @@ function Table() {
 
   const handleClick = () => {
     setFilters({ filterByNumericValues: filterComparisons });
-    // delete columnFilter ===
   };
   const filtering = (element) => {
     if (!filters.filterByNumericValues) return element;
     const { filterByNumericValues: { filterColumn, filterComparison, valor } } = filters;
     const value = parseFloat(element[filterColumn]);
-    // console.log(typeof(valor));
     switch (filterComparison) {
     case 'maior que':
       return value > Number(valor);
