@@ -2,11 +2,10 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { filter, setFilter, removeFilter } = useContext(StarWarsContext);
+  const { filter, setFilter } = useContext(StarWarsContext);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
-  const [newFilter, setNewFilter] = useState([]);
 
   const handleChangeName = ({ target }) => {
     setFilter({ ...filter, filterByName: { [target.name]: target.value } });
@@ -26,10 +25,7 @@ function Filters() {
   };
 
   const clickFilter = () => {
-    const newvalues = { column, comparison, value };
-    setFilter({ ...filter,
-      filterByNumericValues: [...filter.filterByNumericValues, newvalues] });
-    setNewFilter([...newFilter, [`${column} ${comparison} ${value}`]]);
+    setFilter({ ...filter, filterByNumericValues: [{ column, comparison, value }] });
   };
 
   const renderNameFilter = () => (
@@ -87,22 +83,11 @@ function Filters() {
     </section>
   );
 
-  const renderFilters = () => (
-    <section id="pai">
-      {newFilter.map((filtro) => (
-        <section id="lista" key={ filtro.index }>
-          <p data-testid="filter">{filtro}</p>
-          <button type="button" onClick={ () => removeFilter(column) }>x</button>
-        </section>
-      ))}
-    </section>);
-
   return (
     <section>
       <h1>Olá guerra de estrelas</h1>
       {renderNameFilter()}
       {renderComparer()}
-      {renderFilters()}
     </section>
   );
 }
