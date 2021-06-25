@@ -25,7 +25,7 @@ function ApiProvider({ children }) {
 }
 
 ApiProvider.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default ApiProvider;
