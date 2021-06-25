@@ -7,7 +7,6 @@ function Table() {
   if (name) {
     newData = newData.filter((planet) => planet.name.includes(name));
   }
-
   return (
     <div>
       <table>

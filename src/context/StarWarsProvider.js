@@ -6,12 +6,11 @@ import fetchApi from '../services/Api/StarWarsApi';
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
-  const [filterByNumeric, setFilterByNumeric] = useState([{
-    column: '',
-    comparison: '',
-    value: '',
-  },
-  ]);
+  const [filterByNumeric, setFilterByNumeric] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  });
 
   useEffect(() => {
     const getApi = async () => {
@@ -21,12 +20,6 @@ function StarWarsProvider({ children }) {
     getApi();
   }, []);
 
-  // const filterNumeric = ({ target: { name, value } }) => {
-  //   setFilterByNumeric({
-  //     ...filterByNumeric,
-  //     [name]: value,
-  //   });
-  // };
   const filterNumeric = ({ target: { name, value } }) => {
     setFilterByNumeric({
       ...filterByNumeric,
@@ -34,9 +27,26 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const aplyFilter = () => {
+    const { comparison, value, column } = filterByNumeric;
+    console.log(comparison, value, column);
+    let newData = data;
+    if (comparison === 'maior que') {
+      newData = data.filter((item) => (Number(item[column]) > Number(value)));
+    }
+    if (comparison === 'menor que') {
+      newData = data.filter((item) => (Number(item[column]) < Number(value)));
+    }
+    if (comparison === 'igual a') {
+      newData = data.filter((item) => Number(item[column]) === Number(value));
+    }
+    setData(newData);
+  };
+
   const context = {
     setFilter,
     filterNumeric,
+    aplyFilter,
     data,
     filterByNumeric,
     filters: {
