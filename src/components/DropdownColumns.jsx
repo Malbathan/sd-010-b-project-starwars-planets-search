@@ -1,14 +1,24 @@
 import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsProvider';
 
+const options = ['population', 'orbital_period',
+  'diameter', 'rotation_period', 'surface_water'];
+
 function DropdownColumns() {
-  const { setColumn } = useContext(StarWarsContext);
+  const { setColumn, isFiltered } = useContext(StarWarsContext);
+
+  const { column: { filters: { filterByNumericValues } } } = useContext(StarWarsContext);
+  const { column } = filterByNumericValues[0];
+
+  const newOptions = options.filter((option) => option !== column);
+  const optionsFiltered = isFiltered ? newOptions : options;
+
   return (
     <label htmlFor="columns">
       Filtre por coluna:
       <select
-        id="columns"
         data-testid="column-filter"
+        id="columns"
         onChange={ ({ target: { value } }) => setColumn({
           filters: {
             filterByNumericValues: [
@@ -19,12 +29,12 @@ function DropdownColumns() {
           },
         }) }
       >
-        <option>{}</option>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+
+        {
+          optionsFiltered.map((option, index) => (
+            <option key={ index } value={ option }>{option}</option>
+          ))
+        }
       </select>
     </label>
   );

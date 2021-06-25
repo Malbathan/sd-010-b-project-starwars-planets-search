@@ -20,6 +20,19 @@ const objDefault = {
   },
 };
 
+const objDefaultFilters = {
+  filterByName: {
+    name: '',
+  },
+  filterByNumericValues: [
+    {
+      column: '',
+      comparison: '',
+      value: '',
+    },
+  ],
+};
+
 function StarWarsProvider({ children }) {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
   const [name, setName] = useState(objDefault);
@@ -27,6 +40,7 @@ function StarWarsProvider({ children }) {
   const [comparison, setComparison] = useState(objDefault);
   const [value, setValue] = useState(objDefault);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [filters, setFilters] = useState(objDefaultFilters);
 
   async function getPlanets() {
     const data = await fetchPlanetsStarWars();
@@ -49,7 +63,10 @@ function StarWarsProvider({ children }) {
         value,
         setValue,
         isFiltered,
-        setIsFiltered } }
+        setIsFiltered,
+        filters,
+        setFilters,
+      } }
     >
       { children }
     </StarWarsContext.Provider>
