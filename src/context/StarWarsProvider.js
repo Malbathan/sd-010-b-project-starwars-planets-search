@@ -8,12 +8,30 @@ class StarWarsProvider extends React.Component {
     super(props);
     this.state = {
       data: [],
+      dataOriginal: [],
+      filterByName: {
+        name: '',
+      },
     };
     this.fetchPlanets = this.fetchPlanets.bind(this);
+    this.saveFilter = this.saveFilter.bind(this);
   }
 
   componentDidMount() {
     this.fetchPlanets();
+  }
+
+  saveFilter(value) {
+    this.setState({ filterByName: { name: value } },
+      () => {
+        const { dataOriginal, filterByName: { name } } = this.state;
+        if (name !== '') {
+          const dataTemp = dataOriginal.filter((planet) => planet.name.includes(name));
+          this.setState({ data: dataTemp });
+        } else {
+          this.setState({ data: dataOriginal });
+        }
+      });
   }
 
   fetchPlanets() {
@@ -21,6 +39,7 @@ class StarWarsProvider extends React.Component {
       const planets = await getPlanets();
       this.setState({
         data: planets,
+        dataOriginal: planets,
       });
     });
   }
@@ -29,7 +48,7 @@ class StarWarsProvider extends React.Component {
     const { children } = this.props;
     return (
       <StarWarsContext.Provider
-        value={ { ...this.state } }
+        value={ { ...this.state, saveFilter: this.saveFilter } }
       >
         {children}
       </StarWarsContext.Provider>

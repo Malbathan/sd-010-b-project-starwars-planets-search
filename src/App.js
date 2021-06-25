@@ -6,7 +6,6 @@ import Content from './Components/Content';
 function App() {
   return (
     <StarWarsProvider>
-      <span>Hello, App! Mariana</span>
       <Content />
     </StarWarsProvider>
   );

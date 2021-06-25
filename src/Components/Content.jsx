@@ -1,14 +1,14 @@
 import React from 'react';
 // import StarWarsContext from '../context/StarWarsContext';
 import Table from './Table';
+import Filters from './Filters';
 
 function Content() {
   // const { fetchPlanets } = useContext(StarWarsContext);
 
   return (
     <main>
-      {' '}
-      <h1>Content</h1>
+      <Filters />
       <Table />
     </main>
   );
