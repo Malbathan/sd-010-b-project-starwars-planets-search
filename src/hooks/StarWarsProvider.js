@@ -4,25 +4,32 @@ import StarWarsContext from './StarWarsContext';
 import starWarsAPI from '../services/starWarsAPI';
 
 function StarWarsProvider({ children }) {
-  const [planets, setPlanets] = useState({});
+  const [data, setPlanets] = useState({});
+  const [filters, setFilters] = useState({ filterByName: '' });
+  const contexValue = {
+    data,
+    setPlanets,
+    filters,
+    setFilters,
+  };
 
   useEffect(() => {
     const response = async () => {
-      const data = await starWarsAPI();
-      setPlanets(data);
+      const planets = await starWarsAPI();
+      setPlanets(planets);
     };
     response();
   }, []);
 
   return (
-    <StarWarsContext.Provider value={ planets }>
+    <StarWarsContext.Provider value={ contexValue }>
       { children }
     </StarWarsContext.Provider>
   );
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default StarWarsProvider;

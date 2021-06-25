@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../hooks/StarWarsContext';
+import RenderRowTable from './RenderRowTable';
 
 const NOVE = 9;
 
 export default function Table() {
-  const { results } = useContext(StarWarsContext);
+  const { data: { results } } = useContext(StarWarsContext);
+  // console.log(filterByName);
   if (results !== undefined) {
     const chaves = Object.keys(results[0]);
     chaves.splice(NOVE, 2);
@@ -29,19 +31,13 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-
           {
-            results.map((title) => (
-              <tr key={ title.name }>
-                {chaves.map((chave) => (
-                  <td key={ chave }>
-                    {title[chave]}
-                  </td>
-                ))}
+            RenderRowTable(results).map((planets) => (
+              <tr key={ planets.name }>
+                {chaves.map((chave) => (<td key={ chave }>{planets[chave]}</td>))}
               </tr>
             ))
           }
-
         </tbody>
       </table>
     );
