@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
   const [planets, setPlanets] = useState([]);
-  const [filter, setFilter] = useState([]);
+  // const [filter, setFilter] = useState([]);
 
   const frstElemnt = planets[0];
   const tableHead = frstElemnt ? Object.keys(frstElemnt)
@@ -18,36 +18,48 @@ function App() {
     getPlanets();
   }, [setPlanets]);
 
-  const renderTH = () => {
+  const newPlanets = () => {
+    // remove a specific key of object: https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
     if (frstElemnt) {
-      return tableHead.map((data, i) => <th key={ i }>{data}</th>);
-    }
-  };
-
-  const searchFilter = () => {
-    console.log(filter);
-    console.log(setFilter);
-  };
-
-  const renderTBody = () => {
-    const INDEX = 9;
-    if (frstElemnt) {
-      return (
-        planets.map(
-          (planet, i) => (
-            <tr
-              key={ i }
-            >
-              {/* { console.log(planet) } */}
-              { Object.values(planet).map(
-                (el, ix) => (ix !== INDEX ? <td key={ ix }>{ el }</td> : null),
-              ) }
-            </tr>
-          ),
-        )
+      const response = planets.map(
+        (planet) => {
+          const filtered = Object.keys(planet)
+            .filter((key) => tableHead.includes(key))
+            .reduce((obj, key) => {
+              obj[key] = planet[key];
+              return obj;
+            }, {});
+          return filtered;
+        },
       );
+      return response;
     }
   };
+
+  const renderTH = (arrayOfData) => {
+    if (frstElemnt) {
+      return <tr>{arrayOfData.map((data, i) => <th key={ i }>{data}</th>)}</tr>;
+    }
+  };
+
+  const renderTB = () => {
+    if (frstElemnt) {
+      const official = newPlanets().map((el) => Object.values(el));
+      const filtrada = official
+        .map((array, i) => (
+          <tr key={ i }>
+            { array
+              .map((el, index) => <td key={ index }>{el}</td>) }
+          </tr>));
+      console.log(official);
+      return filtrada;
+    }
+  };
+
+  // const searchFilter = () => {
+  //   console.log(filter);
+  //   console.log(setFilter);
+  // };
 
   return (
     <main className="App">
@@ -56,17 +68,15 @@ function App() {
           placeholder="Buscar"
           maxLength="30"
           data-testid="name-filter"
-          onChange={ searchFilter }
+          // onChange={ searchFilter }
         />
       </form>
       <table className="table">
         <thead>
-          <tr>
-            { renderTH() }
-          </tr>
+          { renderTH(tableHead) }
         </thead>
         <tbody>
-          { renderTBody() }
+          { renderTB() }
         </tbody>
       </table>
     </main>
