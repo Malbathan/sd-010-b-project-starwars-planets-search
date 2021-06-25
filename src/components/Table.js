@@ -34,22 +34,19 @@ function Table() {
   }, [data, name]);
 
   useEffect(() => {
-    if (comparison === '>') {
-      // console.log(`${column}`);
-      // console.log(dados);
-      // console.log(dados[0][`${column}`]);
+    if (comparison === 'maior que') {
       const dadosnovos = data.filter(
-        (element) => parseFloat(element[`${column}`]) > `${value}`,
+        (element) => parseFloat(element[`${column}`]) > parseFloat(`${value}`),
       );
       setNewData(dadosnovos);
-    } else if (comparison === '<') {
+    } else if (comparison === 'menor que') {
       const dadosnovos = data.filter(
-        (element) => parseFloat(element[`${column}`]) < `${value}`,
+        (element) => parseFloat(element[`${column}`]) < parseFloat(`${value}`),
       );
       setNewData(dadosnovos);
-    } else if (comparison === '=') {
+    } else if (comparison === 'igual a') {
       const dadosnovos = data.filter(
-        (element) => parseFloat(element[`${column}`]) === `${value}`,
+        (element) => parseFloat(element[`${column}`]) === parseFloat(`${value}`),
       );
       setNewData(dadosnovos);
     } else {
