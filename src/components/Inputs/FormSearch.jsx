@@ -10,10 +10,10 @@ function FormSearch() {
   });
 
   function handleFilterByNumericValues() {
-    setFilters((prevState) => ({
-      ...prevState,
+    setFilters({
+      ...inputsSearch,
       filterByNumericValues: [inputsSearch],
-    }));
+    });
   }
 
   function handleOnChangeInputs(event) {
