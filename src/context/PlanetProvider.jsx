@@ -5,7 +5,7 @@ import fetchPlanetsAPI from '../services/planetsAPI';
 
 function PlanetProvider({ children }) {
   const [data, setData] = useState([]);
-  // const [planets, setPlanets] = useState([]);
+  const [planets, setPlanets] = useState([]);
   // const [filters, setFilters] = useState({});
 
   // {
@@ -19,16 +19,15 @@ function PlanetProvider({ children }) {
   const dataAPI = async () => {
     const response = await fetchPlanetsAPI();
     setData(response.results);
+    setPlanets(response.results);
   };
 
   useEffect(() => {
     dataAPI();
   }, []);
 
-  // const state = { planets, setPlanets };
-
   return (
-    <PlanetContext.Provider value={ { data, setData } }>
+    <PlanetContext.Provider value={ { data, setData, planets, setPlanets } }>
       {children}
     </PlanetContext.Provider>
   );
