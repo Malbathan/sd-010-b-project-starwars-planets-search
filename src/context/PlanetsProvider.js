@@ -17,10 +17,8 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
-  console.log(data);
-
   return (
-    <PlanetsContext.Provider>
+    <PlanetsContext.Provider value={ { data } }>
       { children }
     </PlanetsContext.Provider>
   );
