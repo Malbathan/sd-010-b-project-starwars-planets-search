@@ -2,9 +2,9 @@ import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanetsStarWars from '../services/fetchStarWars';
 
-export const PlanetsContext = createContext({});
+export const StarWarsContext = createContext({});
 
-function PlanetsProvider({ children }) {
+function StarWarsProvider({ children }) {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
 
   async function getPlanets() {
@@ -16,16 +16,26 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
+  const objDefault = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  };
+
+  const [name, setName] = useState(objDefault);
+
   return (
-    <PlanetsContext.Provider value={ { planetsStarWars } }>
+    <StarWarsContext.Provider value={ { planetsStarWars, name, setName } }>
       { children }
-    </PlanetsContext.Provider>
+    </StarWarsContext.Provider>
   );
 }
 
-PlanetsProvider.propTypes = {
+StarWarsProvider.propTypes = {
   children: PropTypes.element.isRequired,
 
 };
 
-export default PlanetsProvider;
+export default StarWarsProvider;

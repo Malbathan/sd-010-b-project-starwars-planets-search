@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { PlanetsContext } from '../context/PlanetsProvider';
+import { StarWarsContext } from '../context/StarWarsProvider';
 
 function Table() {
-  const { planetsStarWars } = useContext(PlanetsContext);
-  console.log(planetsStarWars);
+  const { planetsStarWars,
+    name: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
 
   function renderTableHeader() {
     return (
@@ -27,27 +27,31 @@ function Table() {
     );
   }
 
+  const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
+    : planetsStarWars);
+
   function renderTableBody() {
     return (
       <tbody>
         {
-          planetsStarWars.map((planet, index) => (
-            <tr key={ index }>
-              <td>{planet.name}</td>
-              <td>{planet.rotation_period}</td>
-              <td>{planet.orbital_period}</td>
-              <td>{planet.diameter}</td>
-              <td>{planet.climate}</td>
-              <td>{planet.gravity}</td>
-              <td>{planet.terrain}</td>
-              <td>{planet.population}</td>
-              <td>{planet.surface_water}</td>
-              <td>{planet.films}</td>
-              <td>{planet.created}</td>
-              <td>{planet.edited}</td>
-              <td>{planet.url}</td>
-            </tr>
-          ))
+          planets.filter((planet) => planet.name.includes(name))
+            .map((planet, index) => (
+              <tr key={ index }>
+                <td>{planet.name}</td>
+                <td>{planet.rotation_period}</td>
+                <td>{planet.orbital_period}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.climate}</td>
+                <td>{planet.gravity}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.population}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.films}</td>
+                <td>{planet.created}</td>
+                <td>{planet.edited}</td>
+                <td>{planet.url}</td>
+              </tr>
+            ))
         }
       </tbody>
     );
