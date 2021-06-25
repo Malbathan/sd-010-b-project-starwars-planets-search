@@ -10,13 +10,12 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const requestApi = async () => {
-      const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-      const req = await fetch(endpoint);
-      const { results } = await req.json();
-      setData(results);
+    const awaitRequest = async () => {
+      await requestApi();
+      const planets = getPlanets();
+      setData(planets);
     };
-    requestApi();
+    awaitRequest();
   }, []);
 
   return <Provider value={ { data } }>{children}</Provider>;
