@@ -1,33 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
-  const [keys, setKeys] = useState([]);
-  const [dataByName, setDataByName] = useState([]);
-
-  const handleDataByName = ({ value }) => {
-    const dataFiltered = data.filter(({ name }) => {
-      const nameLowerCase = name.toLowerCase();
-      const valueLowerCase = value.toLowerCase();
-      return nameLowerCase.includes(valueLowerCase);
-    });
-    setDataByName(dataFiltered);
-  };
-
-  const trueData = () => {
-    if (dataByName.length > 0) return dataByName;
-    return data;
-  };
-
-  useEffect(() => {
-    if (data.length) {
-      const allKeys = Object.keys(data[0]);
-      setKeys(allKeys.filter((key) => key !== 'residents'));
-    }
-  }, [data]);
-
-  const truePlanets = trueData();
+  const {
+    keys,
+    handleDataByName,
+    optionMaker,
+    truePlanets,
+    handleState,
+    filterSwitch } = useContext(PlanetsContext);
 
   return (
     <>
@@ -40,7 +21,41 @@ function Table() {
             onChange={ ({ target }) => handleDataByName(target) }
           />
         </label>
+
+        <label htmlFor="column">
+          <select
+            name="column"
+            data-testid="column-filter"
+            onChange={ ({ target }) => handleState(target) }
+          >
+            {optionMaker('column')}
+          </select>
+        </label>
+
+        <label htmlFor="comparison">
+          <select
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={ ({ target }) => handleState(target) }
+          >
+            {optionMaker('comparison')}
+          </select>
+        </label>
+
+        <label htmlFor="number">
+          <input
+            type="number"
+            name="number"
+            data-testid="value-filter"
+            onChange={ ({ target }) => handleState(target) }
+          />
+        </label>
+
+        <button type="button" data-testid="button-filter" onClick={ filterSwitch }>
+          Acionar filtro
+        </button>
       </header>
+
       <table>
         <tbody>
           <tr>
