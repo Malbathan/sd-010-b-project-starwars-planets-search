@@ -2,9 +2,18 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWars';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, handleChange, searchName } = useContext(StarWarsContext);
   return (
     <div>
+      <label htmlFor="searchName">
+        <input
+          data-testid="name-filter"
+          id="searchName"
+          onChange={ handleChange }
+        />
+      </label>
+
+      <hr />
       <table>
         <thead>
           <tr>
@@ -24,23 +33,24 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data && data.map((item) => (
-            <tr key={ item.name }>
-              <td>{item.name}</td>
-              <td>{item.population}</td>
-              <td>{item.rotation_period}</td>
-              <td>{item.orbital_period}</td>
-              <td>{item.surface_water}</td>
-              <td>{item.gravity}</td>
-              <td>{item.created}</td>
-              <td>{item.climate}</td>
-              <td>{item.terrain}</td>
-              <td>{item.diameter}</td>
-              <td>{item.films}</td>
-              <td>{item.edited}</td>
-              <td>{item.url}</td>
-            </tr>
-          ))}
+          {data.filter((object) => object.name.includes(searchName))
+            .map((item) => (
+              <tr key={ item.name }>
+                <td>{item.name}</td>
+                <td>{item.population}</td>
+                <td>{item.rotation_period}</td>
+                <td>{item.orbital_period}</td>
+                <td>{item.surface_water}</td>
+                <td>{item.gravity}</td>
+                <td>{item.created}</td>
+                <td>{item.climate}</td>
+                <td>{item.terrain}</td>
+                <td>{item.diameter}</td>
+                <td>{item.films}</td>
+                <td>{item.edited}</td>
+                <td>{item.url}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

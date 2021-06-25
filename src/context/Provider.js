@@ -6,7 +6,7 @@ import StarWarsContext from './StarWars';
 const AuthProvider = (props) => {
   const { children } = props;
   const [data, setData] = useState([]);
-  const [aux1] = useState({ name: 'esio' });
+  const [searchName, setSearchName] = useState('');
 
   async function API() {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -20,9 +20,14 @@ const AuthProvider = (props) => {
     API();
   }, []);
 
+  function handleChange(e) {
+    setSearchName(e.target.value);
+  }
+
   const aux = {
     data,
-    aux1,
+    searchName,
+    handleChange,
   };
 
   return (

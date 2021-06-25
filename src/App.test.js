@@ -83,7 +83,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(11);
   });
 });
-/* 
+
 describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto*, exibindo somente os planetas cujos nomes incluam o texto digitado', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
@@ -365,4 +365,3 @@ describe('6 - Ordene as colunas de forma ascendente ou descendente', () => {
     expect(actual).toEqual(expected);
   });
 });
- */
