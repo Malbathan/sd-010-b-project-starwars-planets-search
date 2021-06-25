@@ -3,8 +3,6 @@ import planContext from '../context/planContext';
 
 function Table() {
   const { data, filters } = useContext(planContext);
-  console.log(data);
-  console.log(filters.filterByName.name);
   return (
     data.length > 0
       ? (

@@ -10,23 +10,24 @@ function ProviderPlan({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
 
   });
 
-  console.log(filters);
   useEffect(() => {
     fetchURL().then(({ results }) => setData(results));
   }, []);
 
   function filtered({ value }) {
     setFilter({ ...filters, filterByName: { name: value } });
-
-    // const filter = beckupData
-    //   .filter((planet) => planet.name.includes(filters.filterByName.name));
-    // setData(filter);
-    // console.log(filter);
-    // console.log(data);
   }
+
   const state = {
     data,
     setData,
