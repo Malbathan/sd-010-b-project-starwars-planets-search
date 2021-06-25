@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import Context from './context';
 
 function Provider({ children }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   useEffect(() => {
     const getPlanets = () => {
@@ -25,7 +32,9 @@ function Provider({ children }) {
   //   console.log(data)
   const myObj = {
     data,
+    filters,
     setData,
+    setFilters,
   };
   return (
     <Context.Provider value={ { ...myObj } }>
