@@ -4,6 +4,13 @@ import AppContext from '../context/AppContext';
 function Table() {
   const { data } = useContext(AppContext);
   const [keys, setKeys] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
 
   useEffect(() => {
     if (data.length) {
@@ -13,36 +20,51 @@ function Table() {
   }, [data]);
 
   // console.log(keys);
+  const filterName = ({ value }) => {
+    setFilter({ ...filter, filters: { filterByName: { name: value } } });
+  };
+
   return (
-    <table border="1px">
-      <tr>
-        {keys.map((key) => (
-          <th key={ key }>
-            {key}
-          </th>
-        ))}
-      </tr>
-      {data.map((planet, index) => (
-        <tr key={ index }>
-          <td>{planet.name}</td>
-          <td>{planet.rotation_period}</td>
-          <td>{planet.orbital_period}</td>
-          <td>{planet.diameter}</td>
-          <td>{planet.climate}</td>
-          <td>{planet.gravity}</td>
-          <td>{planet.terrain}</td>
-          <td>{planet.surface_water}</td>
-          <td>{planet.population}</td>
-          <td>{planet.films}</td>
-          <td>{planet.created}</td>
-          <td>{planet.edited}</td>
-          <td>{planet.url}</td>
+    <div>
+      <label htmlFor="filter">
+        <input
+          id="filter"
+          type="text"
+          onChange={ ({ target }) => filterName(target) }
+          data-testid="name-filter"
+        />
+      </label>
+      <table border="1px">
+        <tr>
+          {keys.map((key) => (
+            <th key={ key }>
+              {key}
+            </th>
+          ))}
         </tr>
-      ))}
-    </table>
+        {data.filter((e) => e.name.includes(filter.filters.filterByName.name))
+          .map((planet, index) => (
+            <tr key={ index }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))}
+      </table>
+    </div>
   );
 }
 
 export default Table;
 
-// Agradecimentos Turma 10-B a Daniel Roberto, Raphael Gumieri, Lucas Martins
+// Agradecimentos Turma 10-B a Daniel Roberto, Raphael Gumieri, Lucas Martins, Jefferson Andrade
