@@ -2,22 +2,31 @@ import React, { useEffect, useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { data, fetchAPI } = useContext(PlanetContext);
-  // states
-  useEffect(fetchAPI, []);
-
-  const [name, setName] = useState({
+  const INITIAL_STATE = {
     filters: {
       filterByName: {
         name: '',
       },
     },
-  });
+  };
+
+  const { data, fetchAPI } = useContext(PlanetContext);
+  // states
+
+  const [{ filters }, setFilters] = useState(INITIAL_STATE);
+  const nameState = filters.filterByName.name;
 
   // functions
+  useEffect(fetchAPI, []);
+
   const handleChange = ({ target: { value } }) => {
-    setName(value);
+    setFilters({ ...filters, filters: { filterByName: { name: value } } });
   };
+
+  useEffect(() => {
+    // filteredByName
+    const dataFilteredByName = data.filter((e) => e.name.includes(nameState));
+  }, [data, nameState]);
 
   // render
   return (
@@ -34,7 +43,7 @@ function Table() {
       <table>
         <thead>
           <tr>
-            <th>name</th>
+            <th>name Planet</th>
             <th>Rotation Period</th>
             <th>Orbital Period</th>
             <th>Diameter</th>
