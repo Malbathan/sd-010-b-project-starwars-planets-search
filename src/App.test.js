@@ -159,11 +159,11 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
   });
 });
 
-describe('3 - Crie um filtro para valores numéricos', () => {
+describe.only('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
-  it.only('Renderize o filtro de coluna', async () => {
+  it('Renderize o filtro de coluna', async () => {
     await act(async () => {
       render(<App />);
     });

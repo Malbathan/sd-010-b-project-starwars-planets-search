@@ -12,11 +12,23 @@ const filteredColumns = [
 const fixedColumn = ['name'];
 
 function Table() {
-  const { planetsStarWars,
-    name: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
+  const { planetsStarWars, isFiltered } = useContext(StarWarsContext);
+
+  const { name: { filters: { filterByName: { name } } } } = useContext(StarWarsContext);
 
   const { column: { filters: { filterByNumericValues } } } = useContext(StarWarsContext);
   const { column } = filterByNumericValues[0];
+
+  const { comparison: { filters: { filterByNumericValues:
+    filterNumericValues } } } = useContext(StarWarsContext);
+  const { comparison } = filterNumericValues[0];
+
+  const { value: { filters: { filterByNumericValues:
+    filterNumericValuesRename } } } = useContext(StarWarsContext);
+  const { value } = filterNumericValuesRename[0];
+
+  let planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
+    : planetsStarWars);
 
   function renderTableHeader() {
     const columnFiltered = (column ? filteredColumns
@@ -36,15 +48,12 @@ function Table() {
     );
   }
 
-  function renderTableBody() {
-    const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
-      : planetsStarWars);
-
+  function renderDefaultTable() {
     return (
       <tbody>
         { column
           ? (
-            planets.filter((planet) => planet.name.includes(name))
+            planets
               .map((planet, index) => (
                 <tr key={ index }>
                   <td>{planet.name}</td>
@@ -53,7 +62,7 @@ function Table() {
               ))
           )
           : (
-            planets.filter((planet) => planet.name.includes(name))
+            planets
               .map((planet, index) => (
                 <tr key={ index }>
                   <td>{planet.name}</td>
@@ -76,10 +85,43 @@ function Table() {
     );
   }
 
+  function renderTableFiltered() {
+    const filteredPlanetsBiggerThen = planets
+      .filter((planet) => Number(planet[column]) > Number(value));
+
+    const filteredPlanetsSmallerThen = planets
+      .filter((planet) => Number(planet[column]) < Number(value));
+
+    const filteredPlanetsEqualTo = planets
+      .filter((planet) => Number(planet[column]) === Number(value));
+
+    if (comparison === 'maior que' && value && column) {
+      planets = filteredPlanetsBiggerThen;
+    } else if (comparison === 'menor que' && value && column) {
+      planets = filteredPlanetsSmallerThen;
+    } else {
+      planets = filteredPlanetsEqualTo;
+    }
+
+    return (
+      <tbody>
+        {
+          planets
+            .map((planet, index) => (
+              <tr key={ index }>
+                <td>{planet.name}</td>
+                <td>{planet[column]}</td>
+              </tr>
+            ))
+        }
+      </tbody>
+    );
+  }
+
   return (
     <table>
       {renderTableHeader()}
-      {renderTableBody()}
+      {isFiltered ? renderTableFiltered() : renderDefaultTable()}
     </table>
   );
 }

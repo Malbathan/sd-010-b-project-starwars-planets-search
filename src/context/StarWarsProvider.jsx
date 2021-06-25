@@ -13,8 +13,8 @@ const objDefault = {
     filterByNumericValues: [
       {
         column: '',
-        comparison: 'maior que',
-        value: '100000',
+        comparison: '',
+        value: '',
       },
     ],
   },
@@ -24,6 +24,9 @@ function StarWarsProvider({ children }) {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
   const [name, setName] = useState(objDefault);
   const [column, setColumn] = useState(objDefault);
+  const [comparison, setComparison] = useState(objDefault);
+  const [value, setValue] = useState(objDefault);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   async function getPlanets() {
     const data = await fetchPlanetsStarWars();
@@ -40,7 +43,13 @@ function StarWarsProvider({ children }) {
         name,
         setName,
         column,
-        setColumn } }
+        setColumn,
+        comparison,
+        setComparison,
+        value,
+        setValue,
+        isFiltered,
+        setIsFiltered } }
     >
       { children }
     </StarWarsContext.Provider>
