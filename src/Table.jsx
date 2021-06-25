@@ -32,9 +32,15 @@ function Table() {
             setValueFilter(parseInt(value, 10));
           }
           function filterByNumbers(planet) {
-            if (comparisonFilter === 'bigger_than') return planet[columnFilter] > valueFilter;
-            if (comparisonFilter === 'less_than') return planet[columnFilter] < valueFilter;
-            if (comparisonFilter === 'equal_to') return planet[columnFilter] === valueFilter;
+            if (comparisonFilter === 'bigger_than') {
+              return planet[columnFilter] > valueFilter;
+            }
+            if (comparisonFilter === 'less_than') {
+              return planet[columnFilter] < valueFilter;
+            }
+            if (comparisonFilter === 'equal_to') {
+              return planet[columnFilter] === valueFilter;
+            }
             return false;
           }
           return (
@@ -56,11 +62,11 @@ function Table() {
                 data-testid="column-filter"
                 onChange={ handleNumericFilterChange }
               >
-                <option value="population">Population</option>
-                <option value="orbital_period">Orbital Period</option>
-                <option value="diameter">Diameter</option>
-                <option value="rotation_period">Rotation Period</option>
-                <option value="surface_water">Surface water</option>
+                <option value="population">population</option>
+                <option value="orbital_period">orbital_period</option>
+                <option value="diameter">diameter</option>
+                <option value="rotation_period">rotation_period</option>
+                <option value="surface_water">surface_water</option>
               </select>
               <select
                 name="comparison"
@@ -68,9 +74,9 @@ function Table() {
                 data-testid="comparison-filter"
                 onChange={ handleNumericFilterChange }
               >
-                <option value="bigger_than">bigger than</option>
-                <option value="less_than">less than</option>
-                <option value="equal_to">equal to</option>
+                <option value="bigger_than">maior que</option>
+                <option value="less_than">menor que</option>
+                <option value="equal_to">igual a</option>
               </select>
               <input
                 type="number"
