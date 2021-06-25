@@ -5,6 +5,11 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
+  const [filter, setFilter] = useState({
+    coluna: 'population',
+    sinal: 'maior que',
+    numero: '',
+  });
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -16,16 +21,12 @@ function Provider({ children }) {
     getPlanets();
   }, []);
 
-  // if (search.length > 0) {
-  //   setData(dataSearch);
-  // } else {
-  //   setData(dataAPI);
-  // }
-
   const contextValue = {
     data,
     dataSearch,
     setDataSearch,
+    filter,
+    setFilter,
   };
 
   return (
