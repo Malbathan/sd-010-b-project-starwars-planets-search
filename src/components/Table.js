@@ -12,7 +12,7 @@ function StarWarsTable() {
   const byValue = searchTerm.filters.filterByNumericValues;
   useEffect(() => {
     dataApi();
-  }, []);
+  }, [dataApi]);/* //https://pt-br.reactjs.org/docs/hooks-effect.html */
 
   function masterFilter() {
     let initialArray = data;
