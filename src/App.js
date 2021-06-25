@@ -4,10 +4,9 @@ import PlanersList from './components/PlanetsList';
 
 function App() {
   return (
-    
-  <div>
-    <PlanersList />
-  </div>
+    <div>
+      <PlanersList />
+    </div>
   );
 }
 
