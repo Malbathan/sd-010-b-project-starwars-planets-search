@@ -1,10 +1,12 @@
 import React from 'react';
+import TableProvider from './Provider/TableProvider';
+import Table from './Component/Table';
 import './App.css';
 
-function App() {
-  return (
-    <span>Hello, App! lets go boys!</span>
-  );
-}
+const App = () => (
+  <TableProvider>
+    <Table />
+  </TableProvider>
+);
 
 export default App;
