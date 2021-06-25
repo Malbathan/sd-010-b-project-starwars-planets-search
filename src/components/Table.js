@@ -4,22 +4,23 @@ import '../style/table.css';
 import MyContext from '../context/MyContext';
 
 export default function Table() {
-  const arrayColumns = ['population', 'orbital_period',
-    'diameter', 'rotation_period', 'surface_water'];
-
   const arrayComparison = ['maior que', 'igual a', 'menor que'];
+
   const { data } = useContext(MyContext);
+  const [filteredData, setFilteredData] = useState([]);
+  const [arrayColumns, setArrayColumns] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [{
-      column: 'population',
-      comparison: 'maior que',
-      value: 0,
-    }],
+    filterByNumericValues: [],
   });
-  const [filteredData, setFilteredData] = useState([]);
+  const [addNewFilter, setAddNewFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
 
   useEffect(() => {
     setFilteredData(data);
@@ -32,18 +33,18 @@ export default function Table() {
     setFilteredData(filter.filter((planet) => planet.name.includes(value)));
   }
 
-  function handleChangeNumericFilters({ target: { name, value } }) {
-    setFilters({
-      filterByNumericValues: [{
-        ...filters.filterByNumericValues[0],
-        [name]: value }],
+  function handleChangeFilter({ target: { name, value } }) {
+    setAddNewFilter({ ...addNewFilter,
+      [name]: value,
     });
   }
 
   function addNumericFilters() {
-    const currentColumn = filters.filterByNumericValues[0].column;
-    const currentComparrison = filters.filterByNumericValues[0].comparison;
-    const currentValue = Number(filters.filterByNumericValues[0].value);
+    const currentColumn = addNewFilter.column;
+    const currentComparrison = addNewFilter.comparison;
+    const currentValue = Number(addNewFilter.value);
+    const newArrayColumns = arrayColumns.filter((column) => column !== currentColumn);
+    setArrayColumns(newArrayColumns);
     const filter = data;
     setFilteredData(filter);
     setFilteredData(filter.filter((planet) => {
@@ -54,6 +55,14 @@ export default function Table() {
       }
       return Number(planet[currentColumn]) === currentValue;
     }));
+  }
+
+  function changeNumericFilters() {
+    setFilters({
+      filterByNumericValues: [...filters.filterByNumericValues,
+        addNewFilter],
+    });
+    addNumericFilters();
   }
 
   return (
@@ -72,7 +81,7 @@ export default function Table() {
         <select
           data-testid="column-filter"
           name="column"
-          onChange={ handleChangeNumericFilters }
+          onChange={ handleChangeFilter }
         >
           {arrayColumns.map((column) => <option option key={ column }>{column}</option>)}
 
@@ -81,7 +90,7 @@ export default function Table() {
         <select
           data-testid="comparison-filter"
           name="comparison"
-          onChange={ handleChangeNumericFilters }
+          onChange={ handleChangeFilter }
         >
           {arrayComparison
             .map((comparison) => <option key={ comparison }>{ comparison }</option>)}
@@ -93,7 +102,7 @@ export default function Table() {
             type="number"
             id="input-number"
             name="value"
-            onChange={ handleChangeNumericFilters }
+            onChange={ handleChangeFilter }
             min="0"
           />
         </label>
@@ -101,7 +110,7 @@ export default function Table() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ addNumericFilters }
+          onClick={ changeNumericFilters }
         >
           Add filter
         </button>
