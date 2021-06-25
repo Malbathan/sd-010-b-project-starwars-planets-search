@@ -18,12 +18,12 @@ function ContentsTable() {
 
   const filterNamePlanets = (name !== '')
     ? data.filter((itemValue) => itemValue.name.toLocaleLowerCase()
-      .includes(name))
+      .includes(name.toLocaleLowerCase()))
     : data;
 
   // console.log(filterNamePlanets);
 
-  const filterData = (value !== 0)
+  const filterData = (value !== 0 && column !== '' && comparison !== '')
     ? filterNamePlanets.filter((item) => {
       if (comparison === 'maior que') {
         return parseFloat(item[column]) > parseFloat(value);
