@@ -13,6 +13,18 @@ class StarWarsProvider extends React.Component {
         name: '',
       },
       filterByNumericValues: [],
+      filtersColumn: [
+        'population',
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+        'surface_water'],
+      filtersColumnOriginal: [
+        'population',
+        'orbital_period',
+        'diameter',
+        'rotation_period',
+        'surface_water'],
     };
     this.fetchPlanets = this.fetchPlanets.bind(this);
     this.saveFilter = this.saveFilter.bind(this);
@@ -50,7 +62,12 @@ class StarWarsProvider extends React.Component {
     this.setState((prevState) => ({
       filterByNumericValues: [...prevState.filterByNumericValues, filter],
     }), () => {
-      const { filterByNumericValues, dataOriginal } = this.state;
+      const {
+        filterByNumericValues,
+        dataOriginal,
+        filtersColumnOriginal,
+        filtersColumn } = this.state;
+      console.log(filterByNumericValues);
       if (filterByNumericValues !== []) {
         const dataFilter = filterByNumericValues.map(({
           column,
@@ -63,18 +80,20 @@ class StarWarsProvider extends React.Component {
             case 'menor que':
               return parseInt(planet[column], 10) < parseInt(value, 10);
             case 'igual a':
-              console.log(parseInt(planet[column], 10) === parseInt(value, 10));
               return parseInt(planet[column], 10) === parseInt(value, 10);
             default:
               break;
             }
             return false;
           });
+          filtersColumn.splice(filtersColumn.indexOf(column), 1);
+          console.log(filtersColumn);
+          this.setState({ filtersColumn });
           return filtro;
         });
         this.setState({ data: dataFilter[0] });
       } else {
-        this.setState({ data: dataOriginal });
+        this.setState({ data: dataOriginal, filtersColumn: filtersColumnOriginal });
       }
     });
   }

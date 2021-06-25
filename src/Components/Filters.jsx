@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { saveFilter, filterNUmbers } = useContext(StarWarsContext);
+  const { saveFilter, filterNUmbers, filtersColumn } = useContext(StarWarsContext);
   const [filter, setFilter] = useState({
     column: '', // 'population'
     comparison: '', // maior que
@@ -33,11 +33,7 @@ function Filters() {
       </label>
       <div>
         <select data-testid="column-filter" name="column" onChange={ handleChangeFilter }>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
-          <option value="population">population</option>
+          {filtersColumn.map((f) => <option key={ f } value={ f }>{ f }</option>)}
         </select>
         <select
           data-testid="comparison-filter"
