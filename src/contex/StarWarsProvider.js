@@ -7,12 +7,14 @@ import StarWarsContext from './StarWarsContext';
 
 export default function StarWarsProvider({ children }) {
   const [isLoading, setLoader] = useState(false);
-  const [planetsList, setterList] = useState([]);
+  const [data, setterList] = useState([]);
+  const [headers, setHeaders] = useState([]);
 
   async function fetchPlanetsList() {
     setLoader(true);
     const planets = await getAPIPlanetsInfo();
     setterList(planets);
+    setHeaders(Object.keys(planets[0]));
     setLoader(false);
   }
 
@@ -32,7 +34,7 @@ export default function StarWarsProvider({ children }) {
   };
 
   return (
-    <StarWarsContext.Provider value={ { isLoading, planetsList, fetchPlanetsList } }>
+    <StarWarsContext.Provider value={ { isLoading, data, fetchPlanetsList, headers } }>
       {children}
     </StarWarsContext.Provider>
   );
