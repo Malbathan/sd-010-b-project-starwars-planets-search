@@ -7,8 +7,29 @@ function Planets() {
     planets,
     filters: {
       filterByName: { name: nameFilter },
+      filterByValue,
     },
   } = useContext(PlanetsContext);
+
+  const filterFromContext = (planet) => {
+    if (!filterByValue) return planet;
+    const { column, comparison, value } = filterByValue;
+    const comparisonValue = parseFloat(planet[column]);
+    switch (comparison) {
+    case 'maior que':
+      return comparisonValue > value;
+
+    case 'menor que':
+      return comparisonValue < value;
+
+    case 'igual a':
+      return comparisonValue === value;
+
+    default:
+      return planet;
+    }
+  };
+
   return (
     <div>
       <Filters />
@@ -36,6 +57,7 @@ function Planets() {
               .filter((planet) => (nameFilter
                 ? planet.name.includes(nameFilter)
                 : planet))
+              .filter((planet) => (filterFromContext(planet)))
               .map(
                 ({
                   name,
