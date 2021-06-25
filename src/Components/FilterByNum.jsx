@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SwContext from '../contexts/swContext';
 import '../styles/FilterByNum.css';
 
@@ -16,10 +16,22 @@ const FilterByNum = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setcomparison] = useState('maior que');
   const [amount, setAmount] = useState('');
+  const [options, setOptions] = useState(OPTIONS);
 
-  const renderOptions = (options) => options
+  const renderOptions = (opts) => opts
     .map((opt, i) => <option key={ i } value={ opt }>{opt}</option>);
+
   const { handleFilter } = useContext(SwContext);
+
+  const handleClick = () => {
+    handleFilter({ column, comparison, amount });
+    const index = options.findIndex((el) => el === column);
+    const arr = options;
+    arr.splice(index, 1);
+    setColumn(arr[0]);
+    setOptions(arr);
+  };
+
   return (
     <div className="header__logicalFilter__container">
       <div>
@@ -31,7 +43,7 @@ const FilterByNum = () => {
             data-testid="column-filter"
             onChange={ ({ target: { value } }) => setColumn(value) }
           >
-            {renderOptions(OPTIONS)}
+            {renderOptions(options)}
           </select>
         </label>
       </div>
@@ -63,7 +75,7 @@ const FilterByNum = () => {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => handleFilter({ column, comparison, amount }) }
+        onClick={ handleClick }
       >
         Filter
       </button>
