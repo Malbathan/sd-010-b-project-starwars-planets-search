@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
 import TableContext from './TableContext';
-import getPlanetsFromAPI from '../services';
 
 function TableProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [planets, setPlanets] = useState('');
+  const API_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+
+  const getPlanetsFromAPI = async () => {
+    const result = await fetch(API_URL);
+    const data = await result.json();
+    const { results } = data;
+    setPlanets(results);
+  };
 
   useEffect(() => {
-    const getPlanets = async () => {
-      const { results } = await getPlanetsFromAPI();
-      setPlanets(results);
-    };
-    getPlanets();
+    getPlanetsFromAPI();
   }, []);
 
   const context = { planets };

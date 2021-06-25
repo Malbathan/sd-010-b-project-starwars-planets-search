@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.css';
-import TablePlanets from './components/TablePlanets';
+import Table from './components/Table';
 
 function App() {
   return (
-    <div>
-      <TablePlanets />
-    </div>
+    <Table />
   );
 }
 
