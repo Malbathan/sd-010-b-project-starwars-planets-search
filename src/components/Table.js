@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SearchContext from '../context/SearchContext';
 import FetchPlanetAPI from '../services/serviceAPI';
 
@@ -6,40 +6,57 @@ import './Table.css';
 
 function Table() {
   const { results } = FetchPlanetAPI();
-  const { data, setData, filtraNome: { filters:
-    { filterByName: { name } } } } = useContext(SearchContext);
+  const { data, setData, filtraNome } = useContext(SearchContext);
+  const [filtrar, setFiltrar] = useState(data);
 
   if (results !== undefined) {
     results.map((planeta) => delete planeta.residents);
     setData(results);
   }
 
-  const filtro = name !== ''
-    ? data.filter((planeta) => planeta.name.includes(name)) : data;
+  useEffect(() => {
+    const { name } = filtraNome.filterByName;
+    const filtraPeloNome = (name !== '')
+      ? data.filter((planeta) => (planeta.name).toLowerCase().includes(name)) : data;
+    if (filtraNome.filterByNumericValues !== undefined) {
+      const { column } = filtraNome.filterByNumericValues[0];
+      const { comparision } = filtraNome.filterByNumericValues[0];
+      const { value } = filtraNome.filterByNumericValues[0];
+      const filtraDados = (value !== 0 && column !== '' && comparision !== '')
+        ? filtraPeloNome.filter((planeta) => {
+          if (comparision === 'maior que') {
+            return parseFloat(planeta[column]) > parseFloat(value);
+          }
+          if (comparision === 'igual a') {
+            return parseFloat(planeta[column]) === parseFloat(value);
+          }
+          return parseFloat(planeta[column]) < parseFloat(value);
+        })
+        : filtraPeloNome;
+      setFiltrar(filtraDados);
+    }
+  }, [data, filtraNome.filterByName, filtraNome.filterByNumericValues]);
 
   let titulo = [];
-  if (filtro.length > 0) {
-    titulo = Object.keys(filtro[0]);
+  if (data.length > 0) {
+    titulo = Object.keys(data[0]);
   }
 
-  //  TABELA E REGEX - HENRIQUE ZÓZIMO
   return (
-    (filtro.length > 0
+    (data.length > 0
       ? (
         <table className="planetas">
           <thead>
             <tr>
               {titulo.map((title, index) => (
                 <th key={ index }>
-                  {title.replace(/_/g, ' ')
-                    .replace(/\b([a-zÁ-ú]{3,})/g,
-                      (w) => w.charAt(0).toUpperCase() + w.slice(1))}
+                  {title}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {filtro.map((planet) => (
+            {filtrar.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>

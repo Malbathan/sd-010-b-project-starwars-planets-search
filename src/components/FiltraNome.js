@@ -5,7 +5,7 @@ function FiltraNome() {
   const { filtraNome, setFiltraNome } = useContext(SearchContext);
 
   const filtraPeloNome = ({ target }) => {
-    setFiltraNome({ ...filtraNome, filters: { filterByName: { name: target.value } } });
+    setFiltraNome({ ...filtraNome, filterByName: { name: target.value } });
   };
 
   return (

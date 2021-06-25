@@ -6,11 +6,16 @@ function SearchProvider({ children }) {
   const [data, setData] = useState([]);
 
   const [filtraNome, setFiltraNome] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: 0,
+      },
+    ],
   });
 
   return (
