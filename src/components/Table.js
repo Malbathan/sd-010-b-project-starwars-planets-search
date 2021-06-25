@@ -5,6 +5,9 @@ export default function Table() {
   const { isLoading, data, filter } = useContext(StarWarsContext);
 
   const nameFilter = filter.filters.filterByName.name.toLowerCase();
+  // const columnFilter = filter.filters.filterByNumericValues.column;
+  // const comparisonFilters = filter.filters.filterByNumericValues.comparison;
+  // const valueFilters = filter.filters.filterByNumericValues.value;
 
   const generateTableHeaders = (object1) => {
     if (object1) { return Object.keys(object1).map((key) => <th key={ key }>{key}</th>); }

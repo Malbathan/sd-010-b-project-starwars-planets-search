@@ -11,7 +11,19 @@ export default function StarWarsProvider({ children }) {
   const [headers, setHeaders] = useState([]);
   const [filter, setFilter] = useState(
     { filters:
-      { filterByName: { name: '' } } },
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: '',
+            comparison: '',
+            value: '',
+          },
+        ],
+      },
+    },
   );
 
   // Ajuda do colega Dennis Marcelo para resolver requisicao e problemas com o Hook useEffect
@@ -27,12 +39,28 @@ export default function StarWarsProvider({ children }) {
     fetchPlanetsList();
   }, []);
 
-  const handleFilters = ({ target }) => {
-    console.log(target.value);
+  const handleNameFilter = ({ target }) => {
     setFilter({ filters:
       { filterByName: { name: target.value } } });
-    // setData(data.filter((ele) => ele.name === filter.filters.filterByName.name));
   };
+
+  const filterByNumericValues = (column, comparison, value) => {
+    setFilter({ filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column,
+            comparison,
+            value,
+          },
+        ],
+      },
+    });
+  };
+
   // async function fetchPlanetsList() {
   //   setLoader(true);
   //   setterList(mochResolved.results);
@@ -54,7 +82,8 @@ export default function StarWarsProvider({ children }) {
         isLoading,
         data,
         headers,
-        handleFilters,
+        handleNameFilter,
+        filterByNumericValues,
         filter } }
     >
       {children}
