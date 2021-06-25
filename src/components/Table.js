@@ -11,6 +11,7 @@ function Table({ state }) {
       setKeys(Object.keys(apiContext[0]));
     }
   }, [apiContext]);
+
   return (
     <table>
       <thead>
