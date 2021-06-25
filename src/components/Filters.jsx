@@ -1,29 +1,93 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Filters() {
-  const { setFilter } = useContext(StarWarsContext);
-  const handleChange = ({ target }) => {
-    setFilter({ name: target.value });
+  const { filter, setFilter } = useContext(StarWarsContext);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
+
+  const handleChangeName = ({ target }) => {
+    setFilter({ ...filter, filterByName: { [target.name]: target.value } });
+  };
+
+  const handleChangeNumeric = ({ target }) => {
+    if (target.name === 'column') {
+      setColumn(target.value);
+    }
+    if (target.name === 'comparison') {
+      setComparison(target.value);
+    }
+    if (target.name === 'value') {
+      setValue(target.value);
+    }
+    // setFilter({ ...filter, filterByNumericValues: { [target.name]: target.value } });
+  };
+
+  const clickFilter = () => {
+    setFilter({ ...filter, filterByNumericValues: [{ column, comparison, value }] });
   };
 
   const renderNameFilter = () => (
     <div>
-      <label htmlFor="name">
+      <label htmlFor="filterByName">
         <input
           data-testid="name-filter"
           type="text"
-          id="name"
-          onChange={ handleChange }
+          name="name"
+          id="filterByName"
+          onChange={ handleChangeName }
         />
       </label>
     </div>
+  );
+
+  const renderComparer = () => (
+    <section>
+      <select
+        data-testid="column-filter"
+        name="column"
+        id="filterByNumeric"
+        onChange={ handleChangeNumeric }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        name="comparison"
+        id="filterByNumeric"
+        onChange={ handleChangeNumeric }
+      >
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="maior que">menor que</option>
+      </select>
+      <input
+        data-testid="value-filter"
+        name="value"
+        type="number"
+        id="filterByNumeric"
+        onChange={ handleChangeNumeric }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+        onClick={ clickFilter }
+      >
+        Filtrar
+      </button>
+    </section>
   );
 
   return (
     <section>
       <h1>Olá guerra de estrelas</h1>
       {renderNameFilter()}
+      {renderComparer()}
     </section>
   );
 }

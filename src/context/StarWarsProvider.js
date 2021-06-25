@@ -7,7 +7,18 @@ import fetchPlanets, { urlArray } from '../services/Api';
 function StarWarsProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [filter, setFilter] = useState({ name: '' });
+  const [filter, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
+  });
   const [filteredPlanet, setFilteredPlanet] = useState([]);
 
   useEffect(() => {
@@ -20,14 +31,41 @@ function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    setFilteredPlanet(data.filter(({ name }) => name.includes(filter.name)));
-  }, [data, filter]);
+    const filterPlanets = () => {
+      const { column, comparison, value } = filter.filterByNumericValues[0];
+      if (filter.filterByName.name !== '') {
+        setFilteredPlanet(data.filter(
+          ({ name }) => name.toLowerCase().includes(filter.filterByName.name),
+        ));
+      } else {
+        setFilteredPlanet(data);
+      }
+      if (value !== '') {
+        if (comparison === 'maior que') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) > parseFloat(value),
+          ));
+        }
+        if (comparison === 'igual a') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) > parseFloat(value),
+          ));
+        }
+        if (comparison === 'menor que') {
+          return setFilteredPlanet(data.filter(
+            (planet) => parseFloat(planet[column]) > parseFloat(value),
+          ));
+        }
+      }
+    };
+    filterPlanets();
+  }, [data, filter, filteredPlanet]);
 
   // useEffect(() => {
   //   async function fetchData() {
   //     urlArray.map(async (url) => {
-  //       let planets = [];
-  //       planets = (await fetchPlanets(url));
+  //       const planets = [];
+  //       planets.push(await fetchPlanets(url));
   //       setData(planets.results);
   //     });
   //     setLoading(true);
