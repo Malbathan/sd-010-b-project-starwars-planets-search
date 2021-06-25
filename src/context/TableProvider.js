@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TableContext from './TableContext';
+import testData from '../testData';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
@@ -13,11 +14,12 @@ function TableProvider({ children }) {
   const getPlanets = async () => {
     const fetchAPI = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const response = await fetchAPI.json();
-    setData(response.results);
+    console.log(response);
+    setData(testData.results);
   };
 
   const handleChange = ({ target }) => {
-    setFilters(target.value);
+    setFilters({ ...filters, filterByName: { name: target.value } });
   };
 
   return (

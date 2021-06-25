@@ -2,7 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import TableContext from '../context/TableContext';
 
 function Table() {
-  const { data, getPlanets, handleChange, filters } = useContext(TableContext);
+  const {
+    data,
+    getPlanets,
+    handleChange,
+    filters: { filterByName: { name } } } = useContext(TableContext);
 
   useEffect(() => {
     getPlanets();
@@ -30,37 +34,38 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0
-            && data
-              .filter((response) => (filters
-                ? response.name.includes(filters)
-                : response.map(({ name,
-                  rotation_period: rotationPeriod,
-                  orbital_period: orbitalPeriod,
-                  diameter,
-                  climate,
-                  gravity,
-                  terrain,
-                  surface_water: surfaceWater,
-                  population,
-                  created,
-                  edited,
-                  url,
-                }, index) => (
-                  <tr key={ index }>
-                    <td>{ name }</td>
-                    <td>{ rotationPeriod }</td>
-                    <td>{ orbitalPeriod }</td>
-                    <td>{ diameter }</td>
-                    <td>{ climate }</td>
-                    <td>{ gravity }</td>
-                    <td>{ terrain }</td>
-                    <td>{ surfaceWater }</td>
-                    <td>{ population }</td>
-                    <td>{ created }</td>
-                    <td>{ edited }</td>
-                    <td>{ url }</td>
-                  </tr>))))}
+          {data
+            .filter((response) => (name
+              ? response.name.includes(name)
+              : response))
+            .map(({
+              name: planet,
+              rotation_period: rotationPeriod,
+              orbital_period: orbitalPeriod,
+              diameter,
+              climate,
+              gravity,
+              terrain,
+              surface_water: surfaceWater,
+              population,
+              created,
+              edited,
+              url,
+            }, index) => (
+              <tr key={ index }>
+                <td>{ planet }</td>
+                <td>{ rotationPeriod }</td>
+                <td>{ orbitalPeriod }</td>
+                <td>{ diameter }</td>
+                <td>{ climate }</td>
+                <td>{ gravity }</td>
+                <td>{ terrain }</td>
+                <td>{ surfaceWater }</td>
+                <td>{ population }</td>
+                <td>{ created }</td>
+                <td>{ edited }</td>
+                <td>{ url }</td>
+              </tr>))}
         </tbody>
       </table>
     </div>
