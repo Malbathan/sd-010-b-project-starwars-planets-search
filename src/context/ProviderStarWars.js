@@ -4,6 +4,7 @@ import ContextStarWars from './ContextStarWars';
 
 function ProviderStarWars({ children }) {
   const [data, setData] = useState([]);
+  const [dataFilted, setDataFilted] = useState([]);
   const [filters, setfilters] = useState({
     filterByName: { name: '' },
   });
@@ -22,6 +23,10 @@ function ProviderStarWars({ children }) {
     featchPlanets();
   }, [setData]);
 
+  useEffect(() => {
+    setDataFilted(data.filter(({ name }) => name.includes(filters.filterByName.name)));
+  }, [data, filters]);
+
   const functionSetFilters = (filter, name) => {
     console.log(name);
     setfilters({
@@ -35,6 +40,7 @@ function ProviderStarWars({ children }) {
     setData,
     filters,
     functionSetFilters,
+    dataFilted,
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ContextStarWars from '../context/ContextStarWars';
 
 function Table() {
-  const { data } = useContext(ContextStarWars);
+  const { dataFilted: data } = useContext(ContextStarWars);
 
   let arrayHeaders = null;
 
