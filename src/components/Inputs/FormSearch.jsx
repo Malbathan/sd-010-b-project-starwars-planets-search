@@ -9,11 +9,12 @@ function FormSearch() {
     value: 0,
   });
 
-  function handleFilterByNumericValues() {
-    setFilters({
-      ...inputsSearch,
+  function handleFilterByNumericValues(event) {
+    event.preventDefault();
+    setFilters((prevState) => ({
+      ...prevState,
       filterByNumericValues: [inputsSearch],
-    });
+    }));
   }
 
   function handleOnChangeInputs(event) {
