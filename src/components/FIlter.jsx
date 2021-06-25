@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import PlanetContext from '../context/PlanetContext';
 
 function Filter() {
+  const { getFilter, filter } = useContext(PlanetContext);
+
   return (
-    <div>
-      <input type="text" />
-    </div>
+    <section>
+      <input
+        value={ filter.filterByName.name }
+        onChange={ getFilter }
+        data-testid="name-filter"
+      />
+    </section>
   );
 }
 

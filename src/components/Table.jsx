@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { data } = useContext(PlanetContext);
-  if (data === undefined) {
+  const { planetsFilter } = useContext(PlanetContext);
+  if (planetsFilter === undefined) {
     return (
       <p>carregando</p>
     );
@@ -25,7 +25,7 @@ function Table() {
         <th>editado</th>
         <th>url</th>
       </tr>
-      {data.map((planet) => (
+      {planetsFilter.map((planet) => (
         <tr key={ planet.name }>
           <td>{ planet.name }</td>
           <td>{ planet.rotation_period }</td>
