@@ -6,10 +6,8 @@ export default function Table() {
 
   useEffect(fetchPlanetsList, []);
 
-  const generateTableRows = (tableInfo, keyIdentifyer) => (
-    <tr>
-      {tableInfo.map((tbData, i) => <td key={ i }>{tbData[keyIdentifyer]}</td>)}
-    </tr>
+  const generateTableCollumns = (planetInfo) => (
+    Object.values(planetInfo).map((info, index) => <td key={ index }>{info}</td>)
   );
 
   const TableInfo = [...planetsList];
@@ -18,22 +16,8 @@ export default function Table() {
       ? (
         <table>
           <tbody>
-            <tr>
-              {TableInfo.map((headers, i) => <th key={ i }>{headers.name}</th>)}
-            </tr>
-            {generateTableRows(TableInfo, 'rotation_period')}
-            {generateTableRows(TableInfo, 'orbital_period')}
-            {generateTableRows(TableInfo, 'diameter')}
-            {generateTableRows(TableInfo, 'climate')}
-            {generateTableRows(TableInfo, 'gravity')}
-            {generateTableRows(TableInfo, 'terrain')}
-            {generateTableRows(TableInfo, 'surface_water')}
-            {generateTableRows(TableInfo, 'population')}
-            {generateTableRows(TableInfo, 'residents')}
-            {generateTableRows(TableInfo, 'films')}
-            {generateTableRows(TableInfo, 'created')}
-            {generateTableRows(TableInfo, 'edited')}
-            {generateTableRows(TableInfo, 'url')}
+            {TableInfo
+              .map((planet, i) => (<tr key={ i }>{generateTableCollumns(planet)}</tr>))}
           </tbody>
         </table>
       )
