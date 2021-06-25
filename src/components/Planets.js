@@ -12,8 +12,8 @@ function Planets() {
   } = useContext(PlanetsContext);
 
   const filterFromContext = (planet) => {
-    if (!filterByValue) return planet;
-    const { column, comparison, value } = filterByValue;
+    if (filterByValue.length === 0) return planet;
+    const { column, comparison, value } = filterByValue[filterByValue.length - 1];
     const comparisonValue = parseFloat(planet[column]);
     switch (comparison) {
     case 'maior que':

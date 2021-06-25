@@ -6,7 +6,7 @@ import PlanetsContext from './PlanetsContext';
 const PlanetsProvider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState('');
-  const [filterByValue, setFilterByValue] = useState();
+  const [filterByValue, setFilterByValue] = useState([]);
 
   useEffect(() => {
     const PLANETS_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';

@@ -3,18 +3,25 @@ import React, { useContext, createRef } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Filters() {
-  const { setFilterByName, setFilterByValue } = useContext(PlanetsContext);
+  const {
+    setFilterByName,
+    setFilterByValue,
+    filters: { filterByValue },
+  } = useContext(PlanetsContext);
 
   const filterColumn = createRef();
   const filterComparison = createRef();
   const filterValue = createRef();
 
   const filterList = () => {
-    setFilterByValue({
-      column: filterColumn.current.value,
-      comparison: filterComparison.current.value,
-      value: parseFloat(filterValue.current.value),
-    });
+    setFilterByValue([
+      ...filterByValue,
+      {
+        column: filterColumn.current.value,
+        comparison: filterComparison.current.value,
+        value: parseFloat(filterValue.current.value),
+      },
+    ]);
   };
 
   return (
@@ -52,9 +59,7 @@ function Filters() {
           ref={ filterComparison }
           data-testid="comparison-filter"
         >
-          <option value="maior que">
-            maior que
-          </option>
+          <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
