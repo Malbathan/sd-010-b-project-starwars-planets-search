@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import tabbleContext from '../context/SWcontext';
 import starwarsAPI from '../services/SWApi';
 
+// recebi o auxilio do colega Eder Paiva para a resolução do requisito 1
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
   const [colunas, setColunas] = useState([]);
@@ -11,7 +12,7 @@ function TableProvider({ children }) {
   const fetchSW = async () => {
     setLoading(true);
     const response = await starwarsAPI();
-    response.results.forEach((planet) => delete planet.residents);
+    response.results.forEach((res) => delete res.residents);
     setData(response);
     setColunas(Object.keys(response.results[0]));
     setLoading(false);
