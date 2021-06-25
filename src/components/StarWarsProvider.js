@@ -5,11 +5,8 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [planetNames, setplanetNames] = useState([]);
   const [nameSearch, setNameSearch] = useState('');
-  const [filter, setFilter] = useState({});
-  // const [planetsFiltered, setPlanetsFiltered] = useState([]);
 
   const fetchAPI = () => {
-    // const apiStarWars = 'https://swapi-trybe.herokuapp.com/api/planets/?format=json';
     fetch('https://swapi-trybe.herokuapp.com/api/planets/?format=json')
       .then((response) => response.json())
       .then((resp) => setplanetNames(resp.results));
@@ -21,12 +18,20 @@ function Provider({ children }) {
 
   const handleInputSearch = (event) => {
     setNameSearch(event.target.value);
-    // const planetsSearch = planetNames.filter((planet) => {
-    //   const name = planet.name.toLowerCase();
-    //   const input = event.target.value.toLowerCase();
-    //   return name.includes(input);
-    // });
-
+    // const aux = planetNames;
+    // console.log(aux);
+    // console.log(planetNames);
+    // planetNames.filter((planet) => {
+    // const name = planet.name.toLowerCase();
+    // const input = event.target.value.toLowerCase();
+    // return
+    // console.log(event.target.value.name.includes(nameSearch));
+    // };
+    // return planetNames.filter((filter) => filter.name.includes(nameSearch));
+    // setplanetNames(planetsSearch);
+    // if (nameSearch === '' || planetsSearch === []) {
+    //   setplanetNames(aux);
+    // }
     // const filterByName = {
     //   name: event.target.value,
     // };
