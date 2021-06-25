@@ -7,9 +7,11 @@ const TableProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [collums, setCollums] = useState([]);
   const [planetName, setPlanetName] = useState([]);
+  const [loading, setLoading] = useState([false]);
 
   useEffect(() => {
     const dataSet = async () => {
+      setLoading(true);
       const res = await getplanets();
       res.results.forEach((planet) => {
         delete planet.residents;
@@ -18,6 +20,7 @@ const TableProvider = ({ children }) => {
       // colunas abaixo!!! TRs
       setCollums(Object.keys(res.results[0]));
       setPlanetName(res.results.map((planet) => planet.name));
+      setLoading(false);
     };
     dataSet();
   }, []);
@@ -28,6 +31,8 @@ const TableProvider = ({ children }) => {
     collums,
     setPlanetName,
     planetName,
+    setLoading,
+    loading,
   };
   return (
     <TableContext.Provider value={ contextOfTable }>
