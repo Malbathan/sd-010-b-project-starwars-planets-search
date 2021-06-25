@@ -48,18 +48,18 @@ function StarWarsProvider({ children }) {
         }
         if (comparison === 'igual a') {
           return setFilteredPlanet(data.filter(
-            (planet) => parseFloat(planet[column]) > parseFloat(value),
+            (planet) => parseFloat(planet[column]) === parseFloat(value),
           ));
         }
         if (comparison === 'menor que') {
           return setFilteredPlanet(data.filter(
-            (planet) => parseFloat(planet[column]) > parseFloat(value),
+            (planet) => parseFloat(planet[column]) < parseFloat(value),
           ));
         }
       }
     };
     filterPlanets();
-  }, [data, filter, filteredPlanet]);
+  }, [data, filter]);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -72,6 +72,7 @@ function StarWarsProvider({ children }) {
   //   }
   //   fetchData();
   // }, []);
+  //
 
   return (
     <StarWarsContext.Provider

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Planets() {
-  const { data, loading, filteredPlanet } = useContext(StarWarsContext);
+  const { loading, filteredPlanet } = useContext(StarWarsContext);
 
   const renderTable = () => (
     <tbody>
@@ -45,8 +45,6 @@ function Planets() {
         </tr>
       </thead>
       {loading ? renderTable() : <tbody><tr><td>Carregando</td></tr></tbody>}
-
-      {console.log(data)}
     </table>
   );
 }

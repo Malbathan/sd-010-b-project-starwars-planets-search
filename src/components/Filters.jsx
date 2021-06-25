@@ -64,7 +64,7 @@ function Filters() {
       >
         <option value="maior que">maior que</option>
         <option value="igual a">igual a</option>
-        <option value="maior que">menor que</option>
+        <option value="menor que">menor que</option>
       </select>
       <input
         data-testid="value-filter"
