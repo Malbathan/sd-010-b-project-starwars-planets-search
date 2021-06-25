@@ -3,9 +3,17 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
+
   const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('');
   const [value, setValue] = useState(0);
+
+  const selectOptions = () => {
+    if (data.length) {
+      const options = Object.keys(data[0]).filter((key) => key !== 'name');
+      return options;
+    }
+  };
 
   return (
     <form>
@@ -16,10 +24,8 @@ function SelectForm() {
           name="column"
           onChange={ (event) => setColumn(event.target.value) }
         >
-          { data.length
-            ? Object.keys(data[0]).map((key, index) => (
-              <option key={ index }>{key}</option>))
-            : null }
+          { selectOptions() ? selectOptions().map((option, index) => (
+            <option key={ index }>{option}</option>)) : null }
         </select>
       </label>
 

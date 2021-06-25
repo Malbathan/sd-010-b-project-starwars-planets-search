@@ -2,16 +2,19 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 
-import FilterByName from './Filters';
+import FilterByName, { FilterByNumericValues } from './Filters';
 
 function Tbody({ data }) {
   const { filters } = useContext(PlanetsContext);
-  const { filterByName } = filters;
+  const { filterByName, filterByNumericValues } = filters;
   const { name } = filterByName;
 
   const planetsArr = () => {
     if (name) {
       return FilterByName(data);
+    }
+    if (filterByNumericValues.length) {
+      return FilterByNumericValues(data);
     }
     return data;
   };
