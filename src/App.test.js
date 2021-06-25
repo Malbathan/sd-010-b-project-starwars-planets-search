@@ -27,7 +27,7 @@ const mockFetch = () => {
       json: () => Promise.resolve(testData)
     }));
 }
-
+// .only - para testar apenas o requisito desejado
 describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
