@@ -11,13 +11,7 @@ function PlanetsProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: '',
-        comparison: '',
-        value: 0,
-      },
-    ],
+    filterByNumericValues: [],
   });
 
   async function fetchApi() {

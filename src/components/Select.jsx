@@ -1,17 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
-
-  const handleChange = ({ target }) => {
-    setFilter({
-      ...filters,
-      filterByNumericValues: [{
-        [target.name]: target.value,
-      }],
-    });
-  };
+  const [column, setColumn] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState(0);
 
   return (
     <form>
@@ -20,7 +14,7 @@ function SelectForm() {
           data-testid="column-filter"
           id="column"
           name="column"
-          onChange={ (event) => handleChange(event) }
+          onChange={ (event) => setColumn(event.target.value) }
         >
           { data.length
             ? Object.keys(data[0]).map((key, index) => (
@@ -30,7 +24,12 @@ function SelectForm() {
       </label>
 
       <label htmlFor="comparison">
-        <select id="comparison" data-testid="comparison-filter">
+        <select
+          id="comparison"
+          name="comparison"
+          data-testid="comparison-filter"
+          onChange={ (event) => setComparison(event.target.value) }
+        >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
@@ -38,10 +37,24 @@ function SelectForm() {
       </label>
 
       <label htmlFor="value">
-        <input data-testid="value-filter" type="number" />
+        <input
+          data-testid="value-filter"
+          name="value"
+          type="number"
+          onChange={ (event) => setValue(event.target.value) }
+        />
       </label>
 
-      <button type="button" data-testid="button-filter">Enviar</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => (
+          setFilter({ ...filters,
+            filterByNumericValues: [{ column, comparison, value }],
+          })) }
+      >
+        Enviar
+      </button>
     </form>
 
   );
