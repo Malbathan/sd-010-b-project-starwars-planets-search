@@ -10,7 +10,8 @@ function PlanetsProvider({ children }) {
 
   async function fetchApi() {
     const planets = await getPlanets();
-    setData(planets.results);
+    planets.map((planet) => delete planet.residents);
+    setData(planets);
   }
 
   useEffect(() => {

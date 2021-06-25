@@ -67,7 +67,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
     };
   });
 
-  it('Verifique se a tabela tem 13 colunas', async () => {
+  it.only('Verifique se a tabela tem 13 colunas', async () => {
     await act(async () => {
       render(<App />);
     });
