@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import StarWars from './StarWars';
+import StarWarsContext from './StarWars';
 /* import API from '../service/API'; */
 
 const AuthProvider = (props) => {
   const { children } = props;
   const [data, setData] = useState([]);
   const [aux1] = useState({ name: 'esio' });
+
   async function API() {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
@@ -19,17 +20,15 @@ const AuthProvider = (props) => {
     API();
   }, []);
 
-  console.log(data);
-
   const aux = {
     data,
     aux1,
   };
 
   return (
-    <StarWars.Provider value={ aux }>
+    <StarWarsContext.Provider value={ aux }>
       {children}
-    </StarWars.Provider>
+    </StarWarsContext.Provider>
   );
 };
 
