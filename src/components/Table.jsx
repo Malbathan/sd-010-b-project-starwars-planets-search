@@ -27,10 +27,9 @@ function Table() {
     );
   }
 
-  const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
-    : planetsStarWars);
-
   function renderTableBody() {
+    const planets = (name ? planetsStarWars.filter((planet) => planet.name.includes(name))
+      : planetsStarWars);
     return (
       <tbody>
         {

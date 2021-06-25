@@ -4,8 +4,17 @@ import fetchPlanetsStarWars from '../services/fetchStarWars';
 
 export const StarWarsContext = createContext({});
 
+const objDefault = {
+  filters: {
+    filterByName: {
+      name: '',
+    },
+  },
+};
+
 function StarWarsProvider({ children }) {
   const [planetsStarWars, setPlanetsStarWars] = useState([]);
+  const [name, setName] = useState(objDefault);
 
   async function getPlanets() {
     const data = await fetchPlanetsStarWars();
@@ -16,16 +25,6 @@ function StarWarsProvider({ children }) {
     getPlanets();
   }, []);
 
-  const objDefault = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  };
-
-  const [name, setName] = useState(objDefault);
-
   return (
     <StarWarsContext.Provider value={ { planetsStarWars, name, setName } }>
       { children }
@@ -34,8 +33,7 @@ function StarWarsProvider({ children }) {
 }
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-
+  children: PropTypes.node.isRequired,
 };
 
 export default StarWarsProvider;
