@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
+import FiltersInsert from './FiltersInsert';
 //  Fonte ultilização de da tag <table>: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/table
 function Table() {
   const { planets,
     filters: {
       filterByName: { name: nameToFilter },
     },
-    setFilterByName } = useContext(TableContext);
+  } = useContext(TableContext);
 
   const tableHead = () => {
     if (planets) {
@@ -43,16 +44,7 @@ function Table() {
 
   return (
     <>
-      <label htmlFor="name-filter">
-        Filtrar
-        <input
-          type="text"
-          data-testid="name-filter"
-          onChange={ ({ target: { value } }) => {
-            setFilterByName(value);
-          } }
-        />
-      </label>
+      <FiltersInsert />
       <table>
         <thead>
           <tr>
