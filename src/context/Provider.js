@@ -16,10 +16,10 @@ function Provider({ children }) {
   };
 
   const fetchPlanets = async () => {
-    setFetching(true);
     const planetsApi = await getPlanets();
     filterHeaders(planetsApi);
     setPlanetsList(planetsApi);
+    setFetching(true);
     console.log(planetsApi);
   };
 
@@ -28,7 +28,6 @@ function Provider({ children }) {
     fetching,
     headersList,
     fetchPlanets,
-    filterHeaders,
   };
 
   return (

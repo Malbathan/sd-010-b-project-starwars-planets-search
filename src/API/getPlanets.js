@@ -7,7 +7,6 @@ async function getPlanets() {
     delete eachResult.residents;
     return eachResult;
   });
-  console.log(data);
   return data;
 }
 
