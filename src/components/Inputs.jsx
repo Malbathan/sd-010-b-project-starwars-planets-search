@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import store from '../context/store';
 
 export default function Inputs() {
-  const { renderColumn, renderComparison, handleChange, handleClick } = useContext(store);
+  const { details, operator, handleChange, handleClick } = useContext(store);
 
   const rendNameInput = () => (
     <input
@@ -15,13 +15,12 @@ export default function Inputs() {
     />
   );
 
-  const rendColumnComparison = (selectName, selectItems, dataTestId, defaulOption) => (
+  const rendColumnComparison = (selectName, selectItems, dataTestId) => (
     <select
       name={ selectName }
       data-testid={ dataTestId }
       onChange={ handleChange }
     >
-      <option>{defaulOption}</option>
       {selectItems
         .map((item) => (
           <option key={ item }>{ item }</option>))}
@@ -50,10 +49,8 @@ export default function Inputs() {
   return (
     <div>
       { rendNameInput() }
-      { rendColumnComparison('column', renderColumn,
-        'column-filter', 'Coluna') }
-      { rendColumnComparison('comparison', renderComparison,
-        'comparison-filter', 'Comparação') }
+      { rendColumnComparison('column', details, 'column-filter') }
+      { rendColumnComparison('comparison', operator, 'comparison-filter') }
       { rendNumberInput() }
       { rendButton() }
     </div>

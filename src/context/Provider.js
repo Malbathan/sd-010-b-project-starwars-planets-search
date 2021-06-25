@@ -6,7 +6,7 @@ import store, { initialState } from './store';
 const Provider = ({ children }) => {
   const [state, setState] = useState(initialState);
   const { isFetching, data, dataFiltered, filters } = state;
-  const { filterOn, renderColumn, renderComparison, options } = filters;
+  const { filterOn, details, operator, options } = filters;
   const { filterByName, filterByTypes } = options;
 
   const getPlanets = async () => {
@@ -54,17 +54,17 @@ const Provider = ({ children }) => {
     }
   };
 
-  const filterByNumber = (column, comparison, number) => {
+  const filterByNumber = (Column, Comparison, number) => {
     const planetsFiltered = data
       .filter((planet) => {
-        if (comparison === 'maior que') {
-          return (parseInt(planet[column], 10) > parseInt(number, 10));
+        if (Comparison === 'maior que') {
+          return (parseInt(planet[Column], 10) > parseInt(number, 10));
         }
-        if (comparison === 'menor que') {
-          return (parseInt(planet[column], 10) < parseInt(number, 10));
+        if (Comparison === 'menor que') {
+          return (parseInt(planet[Column], 10) < parseInt(number, 10));
         }
-        if (comparison === 'igual a') {
-          return (parseInt(planet[column], 10) === parseInt(number, 10));
+        if (Comparison === 'igual a') {
+          return (parseInt(planet[Column], 10) === parseInt(number, 10));
         }
         return data;
       });
@@ -76,16 +76,21 @@ const Provider = ({ children }) => {
   };
 
   const handleClick = () => {
+    const { column } = filterByTypes;
+    const newDetails = details.filter((detail) => detail !== column);
+
     setState({ ...state,
       filters: { ...filters,
         filterOn: true,
+        details: newDetails,
         options: { ...options,
           filterByTypes: { ...filterByTypes, filterTypesOn: true } } } });
   };
 
   const filterPlanets = () => {
     const { name, filterNameOn } = filterByName;
-    const { column, comparison, number, filterTypesOn } = filterByTypes;
+    const { column, comparison,
+      number, filterTypesOn } = filterByTypes;
 
     if (filterNameOn) filterByNamE(name);
     if (filterTypesOn) filterByNumber(column, comparison, number);
@@ -101,8 +106,8 @@ const Provider = ({ children }) => {
   const contextValue = {
     data,
     dataFiltered,
-    renderColumn,
-    renderComparison,
+    details,
+    operator,
     handleChange,
     handleClick,
   };

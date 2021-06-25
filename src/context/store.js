@@ -5,24 +5,18 @@ export const initialState = {
   data: [],
   dataFiltered: undefined,
   filters: {
-    renderColumn: ['population', 'orbital_period', 'diameter',
-      'rotation_period', 'surface_water'],
-    renderComparison: ['maior que', 'menor que', 'igual a'],
     filterOn: false,
+    details: ['population', 'orbital_period', 'diameter',
+      'rotation_period', 'surface_water'],
+    operator: ['maior que', 'menor que', 'igual a'],
     options: {
       filterByName: {
         name: '', filterNameOn: false,
       },
       filterByTypes: {
-        column: '', comparison: '', number: 0, filterTypesOn: false,
-      } },
-    filterByNumericValues: [
-      {
-        column: [],
-        comparison: [],
-        value: null,
+        column: 'population', comparison: 'maior que', number: 0, filterTypesOn: false,
       },
-    ],
+    },
   },
 };
 
