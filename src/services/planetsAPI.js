@@ -1,6 +1,9 @@
-const BASE_URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
+const BASE_URL = 'https://swapi-trybe.herokuapp.com/api/planets';
 
-export default fetchPlanetsAPI = async () => {
-  const result = await fetch(BASE_URL);
-  return result.json();
+const fetchPlanetsAPI = async () => {
+  const fecthAPI = await fetch(BASE_URL);
+  const response = await fecthAPI.json();
+  return response;
 };
+
+export default fetchPlanetsAPI;
