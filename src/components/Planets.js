@@ -104,7 +104,7 @@ function Planets() {
                       ))}
                     </td>
                     <td>
-                      {`${edited.match(/\d*:\d*/)}
+                      {`${created.match(/\d*:\d*/)}
                     ${created.match(/^\d*-\d*-\d*/)[0].split('-').reverse().join('/')}`}
                     </td>
                     <td>
