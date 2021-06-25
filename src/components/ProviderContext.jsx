@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import giveMePlanets from '../services/giveMePlanets';
 import planetsContext from '../contextAPI/planetsContext';
+import arrayOperatorOptions from '../services/arrayOperatorOptions';
 
 function ProviderContext({ children }) {
   const [planets, setPlanets] = useState([]);
   const [tableElements, setTableElements] = useState([]);
   const [planetsAfterFilter, setPlanetsAfterFilter] = useState([]);
+  const [operatorOptions, setOperatorOptions] = useState([...arrayOperatorOptions]);
   const [filter, setFilter] = useState({});
 
   const handleName = ({ value }) => {
@@ -22,6 +24,27 @@ function ProviderContext({ children }) {
     setFilter({ ...filter, filterByName });
   };
 
+  const handleNumericFilter = (header, operator, number) => {
+    const newObject = {
+      column: header,
+      comparison: operator,
+      value: number,
+    };
+
+    if (filter.filterByNumericValues) {
+      const newFilter = {
+        ...filter,
+        filterByNumericValues: [
+          ...filter.filterByNumericValues,
+          { ...newObject },
+        ],
+      };
+      setFilter(newFilter);
+    } else {
+      setFilter({ ...filter, filterByNumericValues: [{ ...newObject }] });
+    }
+  };
+
   const handleOperatorFilter = (header, operator, rawNumber) => {
     const number = Number(rawNumber);
     let result = [];
@@ -34,6 +57,7 @@ function ProviderContext({ children }) {
     if (operator === 'igual a') {
       result = planetsAfterFilter.filter((planet) => Number(planet[header]) === number);
     }
+    handleNumericFilter(header, operator, rawNumber);
     setPlanetsAfterFilter(result);
   };
 
@@ -56,14 +80,18 @@ function ProviderContext({ children }) {
     tableElements: {
       tableElements,
     },
-    planetsAfterFilter,
+    operators: {
+      operatorOptions,
+    },
     filter,
+    handleName,
+    handleOperatorFilter,
+    planetsAfterFilter,
     setFilter,
     setPlanets,
     setTableElements,
+    setOperatorOptions,
     setPlanetsAfterFilter,
-    handleName,
-    handleOperatorFilter,
   };
 
   return (
