@@ -1,9 +1,17 @@
 import React from 'react';
 import './App.css';
+import Table from './Components/Table';
+import Provider from './Context/Provider';
+import SetFilter from './Components/SetFilter';
+import FilterByColumn from './Components/FilterByColumn';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <Provider>
+      <SetFilter />
+      <FilterByColumn />
+      <Table />
+    </Provider>
   );
 }
 
