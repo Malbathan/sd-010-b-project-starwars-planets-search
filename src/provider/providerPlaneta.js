@@ -5,14 +5,35 @@ import fetchURL from '../services/api';
 
 function ProviderPlan({ children }) {
   const [data, setData] = useState([]);
-  const state = {
-    data,
-    setData,
-  };
+  const [filters, setFilter] = useState({
 
+    filterByName: {
+      name: '',
+    },
+
+  });
+
+  console.log(filters);
   useEffect(() => {
     fetchURL().then(({ results }) => setData(results));
   }, []);
+
+  function filtered({ value }) {
+    setFilter({ ...filters, filterByName: { name: value } });
+
+    // const filter = beckupData
+    //   .filter((planet) => planet.name.includes(filters.filterByName.name));
+    // setData(filter);
+    // console.log(filter);
+    // console.log(data);
+  }
+  const state = {
+    data,
+    setData,
+    filters,
+    setFilter,
+    filtered,
+  };
 
   return (
     <planContext.Provider value={ state }>

@@ -1,13 +1,14 @@
 import React from 'react';
-import './App.css';
+
+import Filtered from './components/Filtered';
 import Table from './components/Table';
 import ProviderPlan from './provider/providerPlaneta';
 
 function App() {
   return (
     <div>
-      <span>Hello, ola App!</span>
       <ProviderPlan>
+        <Filtered />
         <Table />
       </ProviderPlan>
     </div>
