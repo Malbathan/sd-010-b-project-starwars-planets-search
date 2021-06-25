@@ -11,7 +11,9 @@ export default function FilterByValues() {
     event.preventDefault();
     setFilters({
       ...filters,
-      filterByNumericValues: [{ column, comparison, value: values }] });
+      filterByNumericValues: [
+        ...filters.filterByNumericValues,
+        { column, comparison, value: values }] });
   };
 
   const handleColumn = (event) => {
@@ -28,6 +30,14 @@ export default function FilterByValues() {
     setValues(value);
   };
 
+  const appliedFilters = filters.filterByNumericValues.map((el) => el.column);
+  let filtersLabels = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  appliedFilters.forEach((filter) => {
+    filtersLabels = filtersLabels.filter((label) => label !== filter);
+  });
+
   return (
     <form onSubmit={ sendFilterByValue }>
       <label htmlFor="filterByValues">
@@ -38,11 +48,13 @@ export default function FilterByValues() {
           onChange={ handleColumn }
           data-testid="column-filter"
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {filtersLabels.map((label) => (
+            <option
+              key={ label }
+              value={ label }
+            >
+              {label}
+            </option>))}
         </select>
       </label>
       <select

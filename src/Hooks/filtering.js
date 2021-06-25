@@ -5,28 +5,39 @@ const useFiltering = () => {
   const { data, filters } = useContext(StarWarsContext);
   const [filtered, setFiltered] = useState(data);
 
-  const applyFilters = () => {
+  const filterByName = () => {
     const { name } = filters.filterByName;
-    const filteredByName = (name !== '')
-      ? data.filter((planet) => (planet.name).toLowerCase().includes(name))
-      : data;
+    let filteredByName = data;
+    if (filtered.length > 0) { filteredByName = filtered; }
+    // if (name !== '') {
+    filteredByName = data.filter((planet) => (planet.name)
+      .toLowerCase().includes(name));
+    // }
+
+    return filteredByName;
+  };
+
+  const applyFilters = () => {
+    const filteredByName = filterByName();
     if (filters.filterByNumericValues !== undefined) {
-      const { column } = filters.filterByNumericValues[0];
-      const { comparison } = filters.filterByNumericValues[0];
-      const { value } = filters.filterByNumericValues[0];
-      const filteredByValue = (value !== 0 && column !== '' && comparison !== '')
-        ? filteredByName.filter((planet) => {
-          if (comparison === 'maior que') {
-            return parseFloat(planet[column])
+      filters.filterByNumericValues.map((el) => {
+        const { column } = el;
+        const { comparison } = el;
+        const { value } = el;
+        const filteredByValue = (value !== 0 && column !== '' && comparison !== '')
+          ? filteredByName.filter((planet) => {
+            if (comparison === 'maior que') {
+              return parseFloat(planet[column])
             > parseFloat(value);
-          }
-          if (comparison === 'igual a') {
-            return parseFloat(planet[column]) === parseFloat(value);
-          }
-          return parseFloat(planet[column]) < parseFloat(value);
-        })
-        : filteredByName;
-      setFiltered(filteredByValue);
+            }
+            if (comparison === 'igual a') {
+              return parseFloat(planet[column]) === parseFloat(value);
+            }
+            return parseFloat(planet[column]) < parseFloat(value);
+          })
+          : filteredByName;
+        return setFiltered(filteredByValue);
+      });
     }
   };
 
