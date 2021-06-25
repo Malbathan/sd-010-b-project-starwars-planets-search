@@ -27,7 +27,8 @@ function Filters() {
 
   const clickFilter = () => {
     const newvalues = { column, comparison, value };
-    setFilter({ ...filter, filterByNumericValues: [...filter.filterByNumericValues, newvalues] });
+    setFilter({ ...filter,
+      filterByNumericValues: [...filter.filterByNumericValues, newvalues] });
     setNewFilter([...newFilter, [`${column} ${comparison} ${value}`]]);
   };
 
