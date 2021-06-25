@@ -8,9 +8,15 @@ export default function FilterByName(data) {
   return data.filter((planet) => planet.name.toLowerCase().includes(name));
 }
 
+// Source https://github.com/tryber/sd-010-b-project-starwars-planets-search/tree/daniel-roberto-starwars
 export function FilterByNumericValues(data) {
   const { filters } = useContext(PlanetsContext);
   const { filterByNumericValues } = filters;
-  const { column, comparison, value } = filterByNumericValues;
-  return data.filter((planet) => planet.column);
+  const { column, comparison, value } = filterByNumericValues[0];
+
+  return data.filter((planet) => {
+    if (comparison === 'maior que') return Number(planet[column]) > Number(value);
+    if (comparison === 'igual a') return Number(planet[column]) === Number(value);
+    return Number(planet[column]) < Number(value);
+  });
 }

@@ -4,8 +4,8 @@ import PlanetsContext from '../context/PlanetsContext';
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
 
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('rotation_period');
+  const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
 
   const selectOptions = () => {
