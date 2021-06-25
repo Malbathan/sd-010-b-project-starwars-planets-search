@@ -3,7 +3,6 @@ import StarWarsContext from '../context/StarWars';
 
 function Table() {
   const { data } = useContext(StarWarsContext);
-  console.log(typeof(data));
   return (
     <div>
       <table>
