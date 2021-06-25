@@ -29,6 +29,7 @@ function TableProvider({ children }) {
 
   const filterPlanet = () => {
     const { column, comparison, value } = filters.filterByNumericValues;
+    console.log(filters.filterByNumericValues);
     switch (comparison) {
     case 'maior que':
       return setData(data.filter((planet) => planet[column] > Number(value)));
