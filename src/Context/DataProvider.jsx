@@ -4,7 +4,13 @@ import DataContext from './DataContext';
 
 const { Provider } = DataContext;
 
+const filterByName = {
+  filterByName: '',
+  filterByNumericValues: [],
+};
+
 function DataProvider({ children }) {
+  const [filters, setFilters] = useState(filterByName);
   const [data, setData] = useState([]);
   useEffect(() => {
     function fetchPlanets() {
@@ -14,16 +20,14 @@ function DataProvider({ children }) {
     fetchPlanets().then(({ results }) => setData(results));
   }, []);
   return (
-    <Provider value={ { data } }>
+    <Provider value={ { data, filters, setFilters } }>
       { children }
     </Provider>
   );
 }
 
 DataProvider.propTypes = {
-  children: PropTypes.shape({
-    type: PropTypes.func,
-  }).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default DataProvider;

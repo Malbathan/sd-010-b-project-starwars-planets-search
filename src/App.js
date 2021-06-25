@@ -6,11 +6,10 @@ import Filters from './Components/Filters';
 
 function App() {
   return (
-    <Filters>
-      <DataProvider>
-        <Table />
-      </DataProvider>
-    </Filters>
+    <DataProvider>
+      <Filters />
+      <Table />
+    </DataProvider>
   );
 }
 
