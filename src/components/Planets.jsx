@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { DataContext } from '../context/PlanetsContext';
 
 export default function Planets() {
-  const planets = React.useContext(DataContext);
+  const { planets, filteredName } = React.useContext(DataContext);
+  const filteredPlanets = planets
+    .filter((planet) => planet.name.toLowerCase().includes(filteredName));
   return (
     <table>
       <thead>
@@ -25,7 +27,7 @@ export default function Planets() {
         </tr>
       </thead>
       <tbody>
-        {planets.map((planet) => (
+        {filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
