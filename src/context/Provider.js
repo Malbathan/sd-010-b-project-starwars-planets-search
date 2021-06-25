@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getPlanets from '../API/getPlanets';
 import Context from './Context';
@@ -6,27 +6,19 @@ import Context from './Context';
 function Provider({ children }) {
   // states
   const [planetsList, setPlanetsList] = useState([]);
-  const [fetching, setFetching] = useState(false);
-  const [headersList, setHeadersList] = useState([]);
-
-  const filterHeaders = (planets) => {
-    const headers = Object.keys(planets[0]);
-    setHeadersList(headers);
-    console.log(headers);
-  };
 
   const fetchPlanets = async () => {
     const planetsApi = await getPlanets();
-    filterHeaders(planetsApi);
     setPlanetsList(planetsApi);
-    setFetching(true);
     console.log(planetsApi);
   };
+  // tirei o useEffect da table e deixei no provider pois estava dando loop infinito de requisicoes a api
+  useEffect(() => {
+    fetchPlanets();
+  }, []);
 
   const context = {
     planetsList,
-    fetching,
-    headersList,
     fetchPlanets,
   };
 

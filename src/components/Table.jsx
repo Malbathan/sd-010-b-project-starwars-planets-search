@@ -1,48 +1,35 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Table() {
   const {
     planetsList,
-    fetching,
-    fetchPlanets,
-    headersList,
   } = useContext(Context);
 
-  useEffect(
-    fetchPlanets(), [],
-  );
-
-  // const table = (
-  //   <table>
-  //     <thead>
-  //       <tr>
-  //         {headersList.map((header, index) => <th key={ index }>{ header }</th>)}
-  //       </tr>
-  //     </thead>
-  //     <tbody>
-  //       {planetsList.map((planet, index) => (<td key={ index }>{planet}</td>))}
-  //     </tbody>
-  //   </table>
-  // );
-
-  // if (fetching) {
-  //   return <h2>Loading...</h2>;
-  // }
-
   return (
-    <div>
-      <table>
+    !planetsList.length ? <h2>Loading...</h2>
+      : <table>
         <thead>
           <tr>
-            {headersList.map((header, index) => <th key={ index }>{ header }</th>)}
+            {
+              Object.keys(planetsList[0]).map(
+                (eachKey) => <th key={ eachKey }>{eachKey}</th>,
+              )
+            }
           </tr>
         </thead>
         <tbody>
-          {/* {planetsList.map((planet, index) => (<td key={ index }>{planet}</td>))} */}
+          {planetsList.map((eachElement) => (
+            <tr key={ eachElement.name }>
+              {Object.values(eachElement).map((eachValue) => (
+                <td key={ eachValue }>
+                  {eachValue}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
-      </table>
-    </div>
+        </table>
   );
 }
 
