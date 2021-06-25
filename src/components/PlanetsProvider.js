@@ -8,6 +8,7 @@ const { Provider, Consumer } = Context;
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({});
 
   useEffect(() => {
     const awaitRequest = async () => {
