@@ -4,7 +4,7 @@ import useLogicalFilter from '../Hooks/useLogicalFilter';
 
 const TableBody = () => {
   const { data, filters: { filterByNumericValues } } = useContext(SwContext);
-
+  console.log(filterByNumericValues);
   const { planets } = useLogicalFilter(data, filterByNumericValues);
 
   const renderFilms = (films) => films.map((film) => film).join(',');

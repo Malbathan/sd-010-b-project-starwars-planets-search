@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SwContext from '../contexts/swContext';
 import '../styles/FilterByNum.css';
 
@@ -16,7 +16,6 @@ const FilterByNum = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setcomparison] = useState('maior que');
   const [amount, setAmount] = useState('');
-  const [options, setOptions] = useState(OPTIONS);
 
   const renderOptions = (opts) => opts
     .map((opt, i) => <option key={ i } value={ opt }>{opt}</option>);
@@ -24,12 +23,12 @@ const FilterByNum = () => {
   const { handleFilter } = useContext(SwContext);
 
   const handleClick = () => {
+    if (!amount) return;
     handleFilter({ column, comparison, amount });
-    const index = options.findIndex((el) => el === column);
-    const arr = options;
-    arr.splice(index, 1);
-    setColumn(arr[0]);
-    setOptions(arr);
+    const index = OPTIONS.findIndex((el) => el === column);
+    console.log(OPTIONS);
+    OPTIONS.splice(index, 1);
+    setColumn(OPTIONS[0]);
   };
 
   return (
@@ -43,7 +42,7 @@ const FilterByNum = () => {
             data-testid="column-filter"
             onChange={ ({ target: { value } }) => setColumn(value) }
           >
-            {renderOptions(options)}
+            {renderOptions(OPTIONS)}
           </select>
         </label>
       </div>
