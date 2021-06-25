@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import store from '../context/store';
 
 export default function Inputs() {
-  const { handleChange, renderColumn, renderComparison } = useContext(store);
+  const { renderColumn, renderComparison, handleChange, handleClick } = useContext(store);
 
   const rendNameInput = () => (
     <input
@@ -41,7 +41,7 @@ export default function Inputs() {
     <button
       type="button"
       data-testid="button-filter"
-      // onClick={ handleClick }
+      onClick={ handleClick }
     >
       Filtrar
     </button>

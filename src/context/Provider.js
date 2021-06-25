@@ -7,7 +7,7 @@ const Provider = ({ children }) => {
   const [state, setState] = useState(initialState);
   const { isFetching, data, dataFiltered, filters } = state;
   const { filterOn, renderColumn, renderComparison, options } = filters;
-  const { filterByTypes } = options;
+  const { filterByName, filterByTypes } = options;
 
   const getPlanets = async () => {
     const planets = await fetchPlanets();
@@ -20,40 +20,75 @@ const Provider = ({ children }) => {
       setState({ ...state,
         filters: { ...filters,
           filterOn: true,
-          options: { filterByName: { [name]: value, filterNameOn: true } } } });
+          options: { ...options,
+            filterByName: { [name]: value, filterNameOn: true } } } });
     } else {
       setState({ ...state,
         filters: { ...filters,
-          options: { filterByTypes: {
-            ...filterByTypes,
-            [name]: value,
-            filterTypesOn: true } } } });
+          options: { ...options,
+            filterByTypes: { ...filterByTypes, [name]: value } } } });
     }
   };
 
-  const filterPlanets = () => {
-    const { filterByName: { name, filterNameOn } } = options;
-    if (filterNameOn) {
-      if (name !== '') {
-        let planetsFiltered = data
-          .filter((planets) => planets.name.includes(name));
+  const filterByNamE = (name) => {
+    if (name !== '') {
+      let planetsFiltered = data
+        .filter((planets) => planets.name.includes(name));
 
-        if (!planetsFiltered.length) {
-          planetsFiltered = data
-            .filter((planets) => planets.name.includes((name.length === 1) ? (
-              name) : name[0].toUpperCase()));
-        }
-        setState({ ...state,
-          dataFiltered: planetsFiltered,
-          filters: { ...filters,
-            filterOn: false,
-            options: { filterByName: { filterNameOn: false } } } });
-      } else {
-        setState({ ...state,
-          dataFiltered: undefined,
-          filters: { ...filters, filterOn: false } });
+      if (!planetsFiltered.length) {
+        planetsFiltered = data
+          .filter((planets) => planets.name.includes((name.length === 1) ? (
+            name) : name[0].toUpperCase()));
       }
+      setState({ ...state,
+        dataFiltered: planetsFiltered,
+        filters: { ...filters,
+          filterOn: false,
+          options: { ...options, filterByName: { name: '', filterNameOn: false } } } });
+    } else {
+      setState({ ...state,
+        dataFiltered: undefined,
+        filters: { ...filters,
+          filterOn: false,
+          options: { ...options, filterByName: { name: '', filterNameOn: false } } } });
     }
+  };
+
+  const filterByNumber = (column, comparison, number) => {
+    const planetsFiltered = data
+      .filter((planet) => {
+        if (comparison === 'maior que') {
+          return (parseInt(planet[column], 10) > parseInt(number, 10));
+        }
+        if (comparison === 'menor que') {
+          return (parseInt(planet[column], 10) < parseInt(number, 10));
+        }
+        if (comparison === 'igual a') {
+          return (parseInt(planet[column], 10) === parseInt(number, 10));
+        }
+        return data;
+      });
+    setState({ ...state,
+      dataFiltered: planetsFiltered,
+      filters: { ...filters,
+        filterOn: false,
+        options: { ...options, filterByTypes: { filterTypesOn: false } } } });
+  };
+
+  const handleClick = () => {
+    setState({ ...state,
+      filters: { ...filters,
+        filterOn: true,
+        options: { ...options,
+          filterByTypes: { ...filterByTypes, filterTypesOn: true } } } });
+  };
+
+  const filterPlanets = () => {
+    const { name, filterNameOn } = filterByName;
+    const { column, comparison, number, filterTypesOn } = filterByTypes;
+
+    if (filterNameOn) filterByNamE(name);
+    if (filterTypesOn) filterByNumber(column, comparison, number);
   };
 
   useEffect(() => {
@@ -69,6 +104,7 @@ const Provider = ({ children }) => {
     renderColumn,
     renderComparison,
     handleChange,
+    handleClick,
   };
 
   //---------------------------------------------------------------------
