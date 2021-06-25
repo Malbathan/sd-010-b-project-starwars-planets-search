@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import StarWarsContext from '../Context/StarWarsContext';
 import useFetchApiPlanets from '../Hooks/apiPlanets';
 import useFiltering from '../Hooks/filtering';
