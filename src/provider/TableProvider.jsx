@@ -7,6 +7,7 @@ import TableContext from '../context/TableContext';
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
   const [titles, setTitles] = useState([]);
+  const [filterName, setFilterName] = useState([]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -21,7 +22,11 @@ function TableProvider({ children }) {
     getPlanets();
   }, []);
 
-  const myContext = { data, titles };
+  const handleChange = ({ target: { value } }) => {
+    setFilterName(value);
+  };
+
+  const myContext = { data, titles, filterName, handleChange };
 
   return (
     <TableContext.Provider value={ myContext }>
