@@ -28,7 +28,7 @@ const mockFetch = () => {
     }));
 }
 
-describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
+describe.only('1 - Faça uma requisição para o endpoint `/planets` da API de Star Wars e preencha uma tabela com os dados retornados, com exceção dos da coluna `residents`', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
@@ -102,6 +102,8 @@ describe('2 - Filtre a tabela através de um texto, inserido num *campo de texto
 
     const input = await screen.findByTestId(INPUT_FILTER_NAME_SELECTOR);
     fireEvent.change(input, { target: { value: 'o' } });
+    // const batata = await screen.findAllByRole(ROW_ROLE_SELECTOR)
+    // console.log(batata.length)
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(8);
     const planetNames = ['Coruscant', 'Dagobah', 'Endor', 'Hoth', 'Kamino', 'Naboo', 'Tatooine'];
     for (let planetName of planetNames) {
