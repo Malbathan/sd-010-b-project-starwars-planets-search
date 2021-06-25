@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StarWarsContext from '../Context/StarWarsContext';
 import useFetchApiPlanets from '../Hooks/apiPlanets';
 import './table.css';
 
 export default function Table() {
   const { data, setData, filters } = useContext(StarWarsContext);
+  const [filtered, setFiltered] = useState(data);
   const { results } = useFetchApiPlanets();
   let tableHeads = [];
 
@@ -16,10 +17,27 @@ export default function Table() {
     tableHeads = Object.keys(data[0]);
   }
 
-  const { name } = filters.filters.filterByName;
-  const filtered = (name !== '')
-    ? data.filter((planet) => (planet.name).toLowerCase().includes(name))
-    : data;
+  useEffect(() => {
+    const { name } = filters.filterByName;
+    let filteredNow = (name !== '')
+      ? data.filter((planet) => (planet.name).toLowerCase().includes(name))
+      : data;
+    console.log(filters.filterByNumericValues);
+    if (filters.filterByNumericValues !== undefined) {
+      const { column } = filters.filterByNumericValues[0];
+      const { comparison } = filters.filterByNumericValues[0];
+      const { value } = filters.filterByNumericValues[0];
+      console.log(column, comparison, value);
+      filteredNow = (value !== 0 && column !== '' && comparison !== '')
+        ? data.filter((planet) => {
+          if (comparison === 'maior que') return planet[column] > value;
+          if (comparison === 'igual') return planet[column] === value;
+          return planet[column] < value;
+        })
+        : data;
+      setFiltered(filteredNow);
+    }
+  }, [data, filters]);
 
   return (
 

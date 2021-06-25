@@ -4,7 +4,9 @@ import StarWarsContext from '../Context/StarWarsContext';
 export default function FilterByName() {
   const { filters, setFilters } = useContext(StarWarsContext);
   const sendFilterByName = ({ target }) => {
-    setFilters({ ...filters, filters: { filterByName: { name: target.value } } });
+    setFilters({
+      ...filters,
+      filterByName: { name: target.value } });
   };
 
   return (

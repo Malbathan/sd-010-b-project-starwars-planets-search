@@ -4,21 +4,18 @@ import StarWarsContext from './StarWarsContext';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [dataFiltered, setDataFiltered] = useState([]);
   const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: 0,
+      },
+    ],
   });
-
-  // if (Object.keys(data).length > 0) {
-  //   const dataFiltered = data.filter(
-  //     (planet) => planet.name.includes(filters.filters.filterByName.name),
-  //   );
-  //   setData(dataFiltered);
-  // }
 
   return (
     <StarWarsContext.Provider
@@ -26,9 +23,7 @@ function StarWarsProvider({ children }) {
         data,
         setData,
         filters,
-        setFilters,
-        dataFiltered,
-        setDataFiltered } }
+        setFilters } }
     >
       { children }
     </StarWarsContext.Provider>
