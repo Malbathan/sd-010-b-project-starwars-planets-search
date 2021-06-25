@@ -32,33 +32,35 @@ function Table() {
         <tbody>
           {data.length > 0
             && data
-              .filter((response) => response.name.includes(filters)).map(({ name,
-                rotation_period: rotationPeriod,
-                orbital_period: orbitalPeriod,
-                diameter,
-                climate,
-                gravity,
-                terrain,
-                surface_water: surfaceWater,
-                population,
-                created,
-                edited,
-                url,
-              }, index) => (
-                <tr key={ index }>
-                  <td>{ name }</td>
-                  <td>{ rotationPeriod }</td>
-                  <td>{ orbitalPeriod }</td>
-                  <td>{ diameter }</td>
-                  <td>{ climate }</td>
-                  <td>{ gravity }</td>
-                  <td>{ terrain }</td>
-                  <td>{ surfaceWater }</td>
-                  <td>{ population }</td>
-                  <td>{ created }</td>
-                  <td>{ edited }</td>
-                  <td>{ url }</td>
-                </tr>))}
+              .filter((response) => (filters
+                ? response.name.includes(filters)
+                : response.map(({ name,
+                  rotation_period: rotationPeriod,
+                  orbital_period: orbitalPeriod,
+                  diameter,
+                  climate,
+                  gravity,
+                  terrain,
+                  surface_water: surfaceWater,
+                  population,
+                  created,
+                  edited,
+                  url,
+                }, index) => (
+                  <tr key={ index }>
+                    <td>{ name }</td>
+                    <td>{ rotationPeriod }</td>
+                    <td>{ orbitalPeriod }</td>
+                    <td>{ diameter }</td>
+                    <td>{ climate }</td>
+                    <td>{ gravity }</td>
+                    <td>{ terrain }</td>
+                    <td>{ surfaceWater }</td>
+                    <td>{ population }</td>
+                    <td>{ created }</td>
+                    <td>{ edited }</td>
+                    <td>{ url }</td>
+                  </tr>))))}
         </tbody>
       </table>
     </div>
