@@ -5,6 +5,7 @@ import Context from './Context';
 
 function Provider({ children }) {
   // states
+
   const [planetsList, setPlanetsList] = useState([]);
 
   const fetchPlanets = async () => {
