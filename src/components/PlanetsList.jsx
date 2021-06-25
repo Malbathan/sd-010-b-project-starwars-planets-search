@@ -8,8 +8,9 @@ function PlanetsList() {
   const { filters: { filterByName: { name: searchText } } } = search;
 
   useEffect(() => {
+    const searchRegex = new RegExp(searchText, 'i');
     setPlanets(
-      data.filter((planet) => (searchText ? planet.name.includes(searchText) : true)),
+      data.filter((planet) => searchRegex.test(planet.name)),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
