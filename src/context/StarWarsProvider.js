@@ -5,6 +5,7 @@ import fetchApi from '../services/Api/StarWarsApi';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const getApi = async () => {
@@ -16,6 +17,8 @@ function StarWarsProvider({ children }) {
 
   const context = {
     data,
+    setFilter,
+    filters: { filterByName: { name: filter } },
   };
 
   return (
