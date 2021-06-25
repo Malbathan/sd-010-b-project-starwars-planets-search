@@ -4,18 +4,28 @@ import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [dataSearch, setDataSearch] = useState([]);
 
   useEffect(() => {
     const getPlanets = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const results = await fetch(endpoint).then((planets) => planets.json());
       setData(results.results);
+      setDataSearch(results.results);
     };
     getPlanets();
   }, []);
 
+  // if (search.length > 0) {
+  //   setData(dataSearch);
+  // } else {
+  //   setData(dataAPI);
+  // }
+
   const contextValue = {
     data,
+    dataSearch,
+    setDataSearch,
   };
 
   return (
