@@ -13,7 +13,7 @@ function App() {
     filterByNumericValues: [
       {
         column: 'population',
-        comparison: 'bigger_than',
+        comparison: 'maior que',
         value: 0,
       },
     ],

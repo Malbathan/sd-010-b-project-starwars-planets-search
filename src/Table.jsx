@@ -4,7 +4,7 @@ import TableContext from './TableContext';
 
 function Table() {
   const [columnFilter, setColumnFilter] = useState('diameter');
-  const [comparisonFilter, setComparisonFilter] = useState('bigger_than');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
   return (
     <TableContext.Consumer>
@@ -27,21 +27,18 @@ function Table() {
           }
           function setFiltersInState() {
             const { column, comparison, value } = filterByNumericValues[0];
-            console.log('teste');
-            console.log(1);
-            console.log(value);
             setColumnFilter(column);
             setComparisonFilter(comparison);
             setValueFilter(parseInt(value, 10));
           }
           function filterByNumbers(planet) {
-            if (comparisonFilter === 'bigger_than') {
+            if (comparisonFilter === 'maior que') {
               return parseInt(planet[columnFilter], 10) > valueFilter;
             }
-            if (comparisonFilter === 'less_than') {
+            if (comparisonFilter === 'menor que') {
               return parseInt(planet[columnFilter], 10) < valueFilter;
             }
-            if (comparisonFilter === 'equal_to') {
+            if (comparisonFilter === 'igual a') {
               return parseInt(planet[columnFilter], 10) === valueFilter;
             }
             return false;
@@ -77,9 +74,9 @@ function Table() {
                 data-testid="comparison-filter"
                 onChange={ handleNumericFilterChange }
               >
-                <option value="bigger_than">maior que</option>
-                <option value="less_than">menor que</option>
-                <option value="equal_to">igual a</option>
+                <option value="maior que">maior que</option>
+                <option value="menor que">menor que</option>
+                <option value="igual a">igual a</option>
               </select>
               <input
                 type="number"
