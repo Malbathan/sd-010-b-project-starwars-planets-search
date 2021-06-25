@@ -4,9 +4,13 @@ import StarWarsContext from '../../context/StarWarsContext';
 function InputFilterName() {
   const { filters, setFilters } = useContext(StarWarsContext);
 
-  function handleSearchInput({ target }) {
+  function handleSearchInputName({ target }) {
     const newValue = target.value;
-    setFilters({ filterByName: { name: newValue } });
+    setFilters({
+      ...filters,
+      filterByName: {
+        name: newValue,
+      } });
   }
 
   const { filterByName: { name } } = filters;
@@ -20,7 +24,7 @@ function InputFilterName() {
           id="planets"
           type="text"
           placeholder="Digite o nome do planeta"
-          onChange={ handleSearchInput }
+          onChange={ handleSearchInputName }
         />
       </label>
     </div>

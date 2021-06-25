@@ -3,9 +3,22 @@ import { PropTypes } from 'prop-types';
 import requestApi from '../services/apiService';
 import StarWarsContext from './StarWarsContext';
 
+const initialState = {
+  filterByName: {
+    name: '',
+  },
+  filterByNumericValues: [
+    {
+      column: 'population',
+      comparison: 'maior que',
+      value: '0',
+    },
+  ],
+};
+
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({ filterByName: { name: '' } });
+  const [filters, setFilters] = useState(initialState);
 
   useEffect(() => {
     async function getStarWars() {
