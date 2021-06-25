@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
-function Table() {
+export default function Table() {
   const INITIAL_STATE = {
     filters: {
       filterByName: {
@@ -16,6 +16,8 @@ function Table() {
   const [{ filters }, setFilters] = useState(INITIAL_STATE);
   const nameInputState = filters.filterByName.name;
 
+  const [dataFilteredByName, setDataFilteredByName] = useState([]);
+
   // functions and Hooks
   useEffect(fetchAPI, []);
 
@@ -23,13 +25,75 @@ function Table() {
     setFilters({ ...filters, filters: { filterByName: { name: value } } });
   };
 
-  const [dataFilteredByName, setDataFilteredByName] = useState([]);
   useEffect(() => {
     // filteredByName
     const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
-    console.log(countriesFilteredByName);
     setDataFilteredByName(countriesFilteredByName);
   }, [data, nameInputState]);
+
+  const conditionalRendering = () => {
+    // conditional depending on the filters
+    if (dataFilteredByName) {
+      return (
+        dataFilteredByName.map(({
+          name: namePlanet,
+          rotation_period: rotationPeriod,
+          orbital_period: orbitalPeriod,
+          diameter,
+          climate,
+          gravity,
+          terrain,
+          surface_water: surfaceWater,
+          population,
+          created,
+          edited,
+          url,
+        }, index) => (
+          <tr key={ index }>
+            <td>{ namePlanet }</td>
+            <td>{ rotationPeriod }</td>
+            <td>{ orbitalPeriod }</td>
+            <td>{ diameter }</td>
+            <td>{ climate }</td>
+            <td>{ gravity }</td>
+            <td>{ terrain }</td>
+            <td>{ surfaceWater }</td>
+            <td>{ population }</td>
+            <td>{ created }</td>
+            <td>{ edited }</td>
+            <td>{ url }</td>
+          </tr>))
+      );
+    }
+    data.map(({
+      name: namePlanet,
+      rotation_period: rotationPeriod,
+      orbital_period: orbitalPeriod,
+      diameter,
+      climate,
+      gravity,
+      terrain,
+      surface_water: surfaceWater,
+      population,
+      created,
+      edited,
+      url,
+    }, index) => (
+      <tr key={ index }>
+        <td>{ namePlanet }</td>
+        <td>{ rotationPeriod }</td>
+        <td>{ orbitalPeriod }</td>
+        <td>{ diameter }</td>
+        <td>{ climate }</td>
+        <td>{ gravity }</td>
+        <td>{ terrain }</td>
+        <td>{ surfaceWater }</td>
+        <td>{ population }</td>
+        <td>{ created }</td>
+        <td>{ edited }</td>
+        <td>{ url }</td>
+      </tr>));
+  };
 
   // render
   return (
@@ -62,38 +126,9 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map(({
-            name: namePlanet,
-            rotation_period: rotationPeriod,
-            orbital_period: orbitalPeriod,
-            diameter,
-            climate,
-            gravity,
-            terrain,
-            surface_water: surfaceWater,
-            population,
-            created,
-            edited,
-            url,
-          }, index) => (
-            <tr key={ index }>
-              <td>{ namePlanet }</td>
-              <td>{ rotationPeriod }</td>
-              <td>{ orbitalPeriod }</td>
-              <td>{ diameter }</td>
-              <td>{ climate }</td>
-              <td>{ gravity }</td>
-              <td>{ terrain }</td>
-              <td>{ surfaceWater }</td>
-              <td>{ population }</td>
-              <td>{ created }</td>
-              <td>{ edited }</td>
-              <td>{ url }</td>
-            </tr>))}
+          {conditionalRendering()}
         </tbody>
       </table>
     </div>
   );
 }
-
-export default Table;
