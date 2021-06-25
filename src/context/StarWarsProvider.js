@@ -12,9 +12,11 @@ class StarWarsProvider extends React.Component {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     };
     this.fetchPlanets = this.fetchPlanets.bind(this);
     this.saveFilter = this.saveFilter.bind(this);
+    this.filterNUmbers = this.filterNUmbers.bind(this);
   }
 
   componentDidMount() {
@@ -44,11 +46,46 @@ class StarWarsProvider extends React.Component {
     });
   }
 
+  filterNUmbers(filter) {
+    this.setState((prevState) => ({
+      filterByNumericValues: [...prevState.filterByNumericValues, filter],
+    }), () => {
+      const { filterByNumericValues, dataOriginal } = this.state;
+      if (filterByNumericValues !== []) {
+        const dataFilter = filterByNumericValues.map(({
+          column,
+          value,
+          comparison }) => {
+          const filtro = dataOriginal.filter((planet) => {
+            switch (comparison) {
+            case 'maior que':
+              return parseInt(planet[column], 10) > parseInt(value, 10);
+            case 'menor que':
+              return parseInt(planet[column], 10) < parseInt(value, 10);
+            case 'igual a':
+              console.log(parseInt(planet[column], 10) === parseInt(value, 10));
+              return parseInt(planet[column], 10) === parseInt(value, 10);
+            default:
+              break;
+            }
+            return false;
+          });
+          return filtro;
+        });
+        this.setState({ data: dataFilter[0] });
+      } else {
+        this.setState({ data: dataOriginal });
+      }
+    });
+  }
+
   render() {
     const { children } = this.props;
     return (
       <StarWarsContext.Provider
-        value={ { ...this.state, saveFilter: this.saveFilter } }
+        value={ { ...this.state,
+          saveFilter: this.saveFilter,
+          filterNUmbers: this.filterNUmbers } }
       >
         {children}
       </StarWarsContext.Provider>
