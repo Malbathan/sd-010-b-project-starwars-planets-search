@@ -2,33 +2,33 @@ import React, { useContext, useState } from 'react';
 import SwContext from '../contexts/swContext';
 import '../styles/FilterByNum.css';
 
-const OPTIONS = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
 const LOGICAL_OPERATORS = ['maior que', 'menor que', 'igual a'];
 
 const FilterByNum = () => {
   const [column, setColumn] = useState('population');
   const [comparison, setcomparison] = useState('maior que');
   const [amount, setAmount] = useState('');
+  const [options, setOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   const renderOptions = (opts) => opts
     .map((opt, i) => <option key={ i } value={ opt }>{opt}</option>);
 
   const { handleFilter } = useContext(SwContext);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!amount) return;
     handleFilter({ column, comparison, amount });
-    const index = OPTIONS.findIndex((el) => el === column);
-    console.log(OPTIONS);
-    OPTIONS.splice(index, 1);
-    setColumn(OPTIONS[0]);
+    const index = options.findIndex((el) => el === column);
+
+    options.splice(index, 1);
+    await setColumn(options[0]);
+    await setOptions(options.filter((el) => el !== column));
   };
 
   return (
@@ -42,7 +42,7 @@ const FilterByNum = () => {
             data-testid="column-filter"
             onChange={ ({ target: { value } }) => setColumn(value) }
           >
-            {renderOptions(OPTIONS)}
+            {renderOptions(options)}
           </select>
         </label>
       </div>
