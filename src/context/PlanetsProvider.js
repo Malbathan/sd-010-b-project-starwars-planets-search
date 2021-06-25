@@ -19,13 +19,9 @@ const PlanetsProvider = ({ children }) => {
         ? setPlanets(planetsList)
         : setPlanets(testData.results);
     };
-
+    console.log('render');
     getPlanets();
-  });
-
-  useEffect(() => {
-    // console.log(filterByValue);
-  }, [filterByValue]);
+  }, []);
 
   const filters = {
     filterByName: {
