@@ -16,8 +16,9 @@ function FiltersInsert() {
 
   return (
     <>
+      <h4>Filter</h4>
       <label htmlFor="name-filter">
-        Filter by Name:
+        by Name:
         <input
           type="text"
           data-testid="name-filter"
@@ -27,7 +28,7 @@ function FiltersInsert() {
         />
       </label>
       <label htmlFor="column-filter">
-        Filter by Column:
+        by Column:
         <select
           data-testid="column-filter"
         >
@@ -35,7 +36,7 @@ function FiltersInsert() {
         </select>
       </label>
       <label htmlFor="comparison-filter">
-        Filter by Comparison:
+        by Comparison:
         <select
           data-testid="comparison-filter"
         >
@@ -44,6 +45,14 @@ function FiltersInsert() {
           <option value="igual a">igual a</option>
         </select>
       </label>
+      <label htmlFor="value-filter">
+        by Value:
+        <input
+          type="number"
+          data-testid="value-filter"
+        />
+      </label>
+      <button type="button" data-testid="button-filter">Filter</button>
     </>
   );
 }
