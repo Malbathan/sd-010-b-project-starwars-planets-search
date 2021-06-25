@@ -21,8 +21,7 @@ function StarWarsProvider({ children }) {
   };
 
   useEffect(() => {
-    if (!filters.filterByName.name) getPlanets();
-    else {
+    if (filters.filterByName.name) {
       const filteredPlanets = planets
         .filter(({ name }) => name.toLowerCase().includes(filters.filterByName.name));
       setPlanets(filteredPlanets);
@@ -35,6 +34,7 @@ function StarWarsProvider({ children }) {
   const filterNumequal = (c, v) => planets.filter((p) => Number(p[c]) === Number(v));
 
   useEffect(() => {
+    getPlanets();
     const { filterByNumericValues } = filters;
     filterByNumericValues.forEach(({ column, comparison, value }) => {
       if (comparison === 'maior que') setPlanets(filterNumMore(column, value));

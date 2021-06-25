@@ -5,6 +5,7 @@ function InputsSearch() {
   const [opColumn, setOpColumn] = useState(
     ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
   );
+  const [applyedFilters, setApplyedFilters] = useState([]);
   const [column, setColumn] = useState('population');
   const [comp, setComp] = useState('maior que');
   const [valueFilter, setValueFilter] = useState('');
@@ -18,8 +19,19 @@ function InputsSearch() {
     callBack(value);
   };
 
+  const removeFilter = (apply) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((fil) => fil.column !== apply),
+    });
+    setApplyedFilters(applyedFilters.filter((a) => a !== apply));
+    setOpColumn([...opColumn, apply]);
+  };
+
   const ApplyFilter = () => {
     setOpColumn(opColumn.filter((op) => op !== column));
+    setApplyedFilters([...applyedFilters, column]);
     setFilters({
       ...filters,
       filterByNumericValues: [...filters.filterByNumericValues,
@@ -62,6 +74,16 @@ function InputsSearch() {
       >
         Filtrar
       </button>
+      { applyedFilters.map((apply) => (
+        <p key={ apply } data-testid="filter">
+          {apply}
+          <button
+            type="button"
+            onClick={ () => removeFilter(apply) }
+          >
+            x
+          </button>
+        </p>)) }
     </section>
   );
 }
