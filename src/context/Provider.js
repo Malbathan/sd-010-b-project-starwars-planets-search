@@ -30,7 +30,7 @@ const Provider = ({ children }) => {
   // };
 
   const [data, setData] = useState([]);
-  // const [data2, setData2] = useState('data2');
+  const [data2, setData2] = useState('a');
   const [filterData, setFilterData] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [filterNumber, setFilterNumber] = useState(numbersDefault);
@@ -177,8 +177,8 @@ const Provider = ({ children }) => {
   };
 
   const requestSort = () => {
+    if (data2 === 'a') { setData2('b'); } else { setData2('a'); } // unbugger hook for rendering new filterData
     setSortedTable(generateCorrectOrder(filterData, sortColumnFilter));
-    // dont why but this fixes the bug of requestSort not being able to setFilterData appropriately
   };
 
   const newFilteredResultsAfterDelete = (newFiltersAfterDelete) => {
