@@ -9,9 +9,11 @@ import OPTIONS from './services/options/options';
 
 function App() {
   const [swPlanets, setSwPlanets] = useState([]);
-  const { filteredByNameData, filterName, setFilterName } = useNameFilter(swPlanets);
   const [filterList, setFilterList] = useState([]);
   const [options, setOptions] = useState([...OPTIONS]);
+  const [order, setOrder] = useState({ column: 'name', sort: 'ASC' });
+
+  const { filteredByNameData, filterName, setFilterName } = useNameFilter(swPlanets);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -40,7 +42,10 @@ function App() {
   const swContext = { data: filteredByNameData,
     filters: {
       filterByName: { name: filterName },
-      filterByNumericValues: filterList },
+      filterByNumericValues: filterList,
+      order,
+    },
+    setOrder,
     handleFilter,
     setFilterName,
     removeFilter,

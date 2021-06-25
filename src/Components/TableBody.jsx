@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import SwContext from '../contexts/swContext';
 import useLogicalFilter from '../Hooks/useLogicalFilter';
+import useOrderFilter from '../Hooks/useOrderFilter';
 
 const TableBody = () => {
-  const { data, filters: { filterByNumericValues } } = useContext(SwContext);
-  const { planets } = useLogicalFilter(data, filterByNumericValues);
+  const { data, filters: { filterByNumericValues, order } } = useContext(SwContext);
+  const { sorted } = useOrderFilter(data, order);
+  const { planets } = useLogicalFilter(sorted, filterByNumericValues);
 
   const renderFilms = (films) => films.map((film) => film).join(',');
   const renderTableElements = () => planets.map((element, index) => {
@@ -14,7 +16,7 @@ const TableBody = () => {
       created, edited, url } = element;
     return (
       <tr key={ index }>
-        <td>{pName}</td>
+        <td data-testid="planet-name">{pName}</td>
         <td>{rotationPeriod}</td>
         <td>{orbitalPeriod}</td>
         <td>{diameter}</td>
