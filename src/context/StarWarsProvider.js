@@ -66,7 +66,6 @@ function StarWarsProvider({ children }) {
         setFilteredPlanet(data);
       }
     };
-    filtroEspecial();
     filterPlanets();
   }, [data, filter]);
 
