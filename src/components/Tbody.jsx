@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import PlanetsContext from '../context/PlanetsContext';
+
+import FilterByName from './Filters';
 
 function Tbody({ data }) {
+  const { filters } = useContext(PlanetsContext);
+  const { filterByName } = filters;
+  const { name } = filterByName;
+
+  const planetsArr = () => {
+    if (name) {
+      return FilterByName(data);
+    }
+    return data;
+  };
+
   return (
     <tbody>
-      {data.map((planet, index) => (
+      {planetsArr().map((planet, index) => (
         <tr key={ index }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
