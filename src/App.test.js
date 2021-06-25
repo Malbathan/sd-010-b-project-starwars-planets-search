@@ -163,7 +163,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
-  it('Renderize o filtro de coluna', async () => {
+  it.only('Renderize o filtro de coluna', async () => {
     await act(async () => {
       render(<App />);
     });

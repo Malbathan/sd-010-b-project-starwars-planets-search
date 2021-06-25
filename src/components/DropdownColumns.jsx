@@ -8,6 +8,7 @@ function DropdownColumns() {
       Filtre por coluna:
       <select
         id="columns"
+        data-testid="column-filter"
         onChange={ ({ target: { value } }) => setColumn({
           filters: {
             filterByNumericValues: [
