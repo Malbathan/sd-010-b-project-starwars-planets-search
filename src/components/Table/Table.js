@@ -1,19 +1,15 @@
 import React, { useContext } from 'react';
 import TableContext from '../../context/TableContext';
-import Loading from '../Loading/Loading';
 import CreateListTable from './CreateListTable';
 
 function Table() {
-  const { data } = useContext(TableContext);
+  const { data, namePlanet } = useContext(TableContext);
 
-  if (data) {
-    return (
-      <table>
-        <CreateListTable planets={ data } />
-      </table>
-    );
-  }
-  return <Loading />;
+  return (
+    <table>
+      <CreateListTable planets={ data } namePlanet={ namePlanet } />
+    </table>
+  );
 }
 
 export default Table;

@@ -5,16 +5,17 @@ import fetchApi from '../services';
 
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
+  const [namePlanet, setNamePlanet] = useState('');
 
   useEffect(() => {
-    async function fetchPlanets() {
+    const fetchPlanets = async () => {
       const planetsResult = await fetchApi();
       setData(planetsResult);
-    }
+    };
     fetchPlanets();
   }, []);
 
-  const context = { data, setData };
+  const context = { data, setData, namePlanet, setNamePlanet };
 
   return (
     <TableContext.Provider value={ context }>
