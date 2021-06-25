@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data, filter } = useContext(StarWarsContext);
   console.log(data);
   const thirteenColumns = [
     'name',
@@ -20,6 +20,8 @@ function Table() {
     'url',
   ];
 
+  const showFilteredPlanets = (filter === [] ? data : filter);
+
   return (
     <div>
       <table>
@@ -32,7 +34,7 @@ function Table() {
         </thead>
 
         <tbody>
-          {data.map((item, index) => (
+          {showFilteredPlanets.map((item, index) => (
             <tr key={ index }>
               <td>{item.name}</td>
               <td>{item.rotation_period}</td>
