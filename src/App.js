@@ -6,7 +6,6 @@ import StarwarsProvider from './context/starwarsProvider';
 function App() {
   return (
     <StarwarsProvider>
-      <span>Hello, App!</span>
       <Table />
     </StarwarsProvider>
   );
