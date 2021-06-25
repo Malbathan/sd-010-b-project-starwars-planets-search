@@ -8,21 +8,19 @@ import StarWarsContext from './StarWarsContext';
 export default function StarWarsProvider({ children }) {
   const [isLoading, setLoader] = useState(false);
   const [data, setData] = useState([]);
-  const [headers, setHeaders] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [filter, setFilter] = useState(
-    { filters:
-      {
-        filterByName: {
-          name: '',
-        },
-        filterByNumericValues: [
-          {
-            column: '',
-            comparison: '',
-            value: '',
-          },
-        ],
+    {
+      filterByName: {
+        name: '',
       },
+      filterByNumericValues: [
+        {
+          column: '',
+          comparison: '',
+          value: '',
+        },
+      ],
     },
   );
 
@@ -33,39 +31,36 @@ export default function StarWarsProvider({ children }) {
       setLoader(true);
       const planets = await getAPIPlanetsInfo();
       setData(planets);
-      setHeaders(Object.keys(planets[0]));
       setLoader(false);
     }
     fetchPlanetsList();
   }, []);
 
+  useEffect(() => {
+    const filteredSearch = data
+      .filter((info) => info.name.toLowerCase().includes(filter.filterByName.name));
+    setFiltered(filteredSearch);
+  }, [filter, data]);
+
   const handleNameFilter = ({ target }) => {
-    setFilter({ filters:
-      { filterByName: { name: target.value } } });
+    const { value } = target;
+    setFilter({ ...filter, filterByName: { name: value } });
   };
 
   const filterByNumericValues = (column, comparison, value) => {
-    setFilter({ filters:
-      {
-        filterByName: {
-          name: '',
-        },
-        filterByNumericValues: [
-          {
-            column,
-            comparison,
-            value,
-          },
-        ],
+    setFilter({ ...filter,
+      filterByName: {
+        name: '',
       },
+      filterByNumericValues: [
+        {
+          column,
+          comparison,
+          value,
+        },
+      ],
     });
   };
-
-  // async function fetchPlanetsList() {
-  //   setLoader(true);
-  //   setterList(mochResolved.results);
-  //   setLoader(false);
-  // }
 
   // PropTypes pesquisado em: https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children
 
@@ -81,10 +76,11 @@ export default function StarWarsProvider({ children }) {
       value={ {
         isLoading,
         data,
-        headers,
         handleNameFilter,
         filterByNumericValues,
-        filter } }
+        filtered,
+        filter,
+      } }
     >
       {children}
     </StarWarsContext.Provider>

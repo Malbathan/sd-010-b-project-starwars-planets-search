@@ -6,11 +6,13 @@ export default function Filters() {
     handleNameFilter,
     filter,
     filterByNumericValues } = useContext(StarWarsContext);
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
-  const [value, setValue] = useState('');
+  const [local, setFilter] = useState({ column: '', comparison: '', value: 0 });
 
-  const nameFilter = filter.filters.filterByName.name;
+  const nameFilter = filter.filterByName.name;
+  const handleLocalStates = ({ target }) => {
+    const { id, value } = target;
+    setFilter({ [id]: value });
+  };
 
   return (
     <form>
@@ -26,9 +28,9 @@ export default function Filters() {
       <label htmlFor="column-filter">
         <select
           data-testid="column-filter"
-          value={ column }
+          value={ local.column }
           id="column"
-          onChange={ (e) => setColumn(e.target.value) }
+          onChange={ (e) => handleLocalStates(e) }
         >
           <option>orbital_period</option>
           <option>diameter</option>
@@ -39,28 +41,30 @@ export default function Filters() {
       <label htmlFor="comparison-filter">
         <select
           data-testid="comparison-filter"
-          value={ comparison }
+          value={ local.comparison }
           id="comparison"
-          onChange={ (e) => setComparison(e.target.value) }
+          onChange={ (e) => handleLocalStates(e) }
         >
           <option value=">">maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          <option value="<">menor que</option>
+          <option value="=">igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">
         <input
-          value={ value }
+          min="0"
+          value={ local.value }
           type="number"
           data-testid="value-filter"
           id="value"
-          onChange={ (e) => setValue(e.target.value) }
+          onChange={ (e) => handleLocalStates(e) }
         />
       </label>
       <label htmlFor="btn">
         <button
           id="btn"
-          onClick={ () => filterByNumericValues(column, comparison, value) }
+          onClick={ () => (
+            filterByNumericValues(local.column, local.comparison, local.value)) }
           data-testid="button-filter"
           type="button"
         >
