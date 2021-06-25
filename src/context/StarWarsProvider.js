@@ -11,6 +11,7 @@ function StarWarsProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: { column: 'Name', sort: 'ASC' },
   });
 
   const getPlanets = async () => {
@@ -21,7 +22,8 @@ function StarWarsProvider({ children }) {
   };
 
   useEffect(() => {
-    if (filters.filterByName.name) {
+    if (!filters.filterByName.name) getPlanets();
+    else {
       const filteredPlanets = planets
         .filter(({ name }) => name.toLowerCase().includes(filters.filterByName.name));
       setPlanets(filteredPlanets);
@@ -29,6 +31,7 @@ function StarWarsProvider({ children }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.filterByName]);
 
+  // deixar genérico o operador
   const filterNumMore = (c, v) => planets.filter((p) => Number(p[c]) > Number(v));
   const filterNumLess = (c, v) => planets.filter((p) => Number(p[c]) < Number(v));
   const filterNumequal = (c, v) => planets.filter((p) => Number(p[c]) === Number(v));
