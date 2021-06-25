@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import store from '../context/store';
 
 export default function Inputs() {
-  const { details, operator, handleChange, handleClick } = useContext(store);
+  const { details, operator, number: num, filteredByNumbers,
+    handleChange, handleClick, clearFilter } = useContext(store);
 
   const rendNameInput = () => (
     <input
@@ -30,6 +31,7 @@ export default function Inputs() {
   const rendNumberInput = () => (
     <input
       name="number"
+      value={ num }
       data-testid="value-filter"
       type="number"
       onChange={ handleChange }
@@ -46,6 +48,17 @@ export default function Inputs() {
     </button>
   );
 
+  const rendFilterButton = () => (
+    filteredByNumbers.map(({ id, column, comparison, number }) => (
+      <div key={ id }>
+        <p data-testid="filter">
+          { `Filtrado por ${column} ${comparison} ${number}` }
+          <button type="button" onClick={ () => clearFilter(id) }>X</button>
+        </p>
+      </div>
+    ))
+  );
+
   return (
     <div>
       { rendNameInput() }
@@ -53,6 +66,8 @@ export default function Inputs() {
       { rendColumnComparison('comparison', operator, 'comparison-filter') }
       { rendNumberInput() }
       { rendButton() }
+      <h4>Filtros:</h4>
+      { rendFilterButton() }
     </div>
   );
 }

@@ -7,7 +7,8 @@ const Provider = ({ children }) => {
   const [state, setState] = useState(initialState);
   const { isFetching, data, dataFiltered, filters } = state;
   const { filterOn, details, operator, options } = filters;
-  const { filterByName, filterByTypes } = options;
+  const { filterByName, filterByTypes, filteredByNumbers } = options;
+  const { column, comparison, number, filterTypesOn } = filterByTypes;
 
   const getPlanets = async () => {
     const planets = await fetchPlanets();
@@ -54,8 +55,9 @@ const Provider = ({ children }) => {
     }
   };
 
-  const filterByNumber = (Column, Comparison, number) => {
-    const planetsFiltered = data
+  const filterByNumber = (Column, Comparison) => {
+    const renderPlanets = dataFiltered || data;
+    const planetsFiltered = renderPlanets
       .filter((planet) => {
         if (Comparison === 'maior que') {
           return (parseInt(planet[Column], 10) > parseInt(number, 10));
@@ -72,28 +74,43 @@ const Provider = ({ children }) => {
       dataFiltered: planetsFiltered,
       filters: { ...filters,
         filterOn: false,
-        options: { ...options, filterByTypes: { filterTypesOn: false } } } });
+        options: { ...options,
+          filterByTypes: { ...filterByTypes, number: '', filterTypesOn: false } } } });
   };
 
   const handleClick = () => {
-    const { column } = filterByTypes;
     const newDetails = details.filter((detail) => detail !== column);
 
     setState({ ...state,
       filters: { ...filters,
+        filterBtn: true,
         filterOn: true,
         details: newDetails,
         options: { ...options,
-          filterByTypes: { ...filterByTypes, filterTypesOn: true } } } });
+          filterByTypes: { ...filterByTypes, filterTypesOn: true },
+          filteredByNumbers: [...filteredByNumbers,
+            { id: filteredByNumbers.length, column, comparison, number }],
+        },
+      } });
   };
 
   const filterPlanets = () => {
     const { name, filterNameOn } = filterByName;
-    const { column, comparison,
-      number, filterTypesOn } = filterByTypes;
 
     if (filterNameOn) filterByNamE(name);
-    if (filterTypesOn) filterByNumber(column, comparison, number);
+    if (filterTypesOn) filterByNumber(column, comparison);
+  };
+
+  const clearFilter = (id) => {
+    const removedFilter = filteredByNumbers.filter((item) => item.id !== id);
+
+    setState({ ...state,
+      dataFiltered: undefined,
+      filters: { ...filters,
+        options: { ...options,
+          filteredByNumbers: removedFilter,
+        },
+      } });
   };
 
   useEffect(() => {
@@ -108,8 +125,11 @@ const Provider = ({ children }) => {
     dataFiltered,
     details,
     operator,
+    number,
+    filteredByNumbers,
     handleChange,
     handleClick,
+    clearFilter,
   };
 
   //---------------------------------------------------------------------

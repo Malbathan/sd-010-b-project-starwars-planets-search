@@ -14,8 +14,9 @@ export const initialState = {
         name: '', filterNameOn: false,
       },
       filterByTypes: {
-        column: 'population', comparison: 'maior que', number: 0, filterTypesOn: false,
+        column: 'population', comparison: 'maior que', number: '', filterTypesOn: false,
       },
+      filteredByNumbers: [],
     },
   },
 };
