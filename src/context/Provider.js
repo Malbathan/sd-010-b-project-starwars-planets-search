@@ -7,6 +7,11 @@ const AuthProvider = (props) => {
   const { children } = props;
   const [data, setData] = useState([]);
   const [searchName, setSearchName] = useState('');
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  });
 
   async function API() {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -24,10 +29,34 @@ const AuthProvider = (props) => {
     setSearchName(e.target.value);
   }
 
+  function handleChangeFilter(e) {
+    setFilterByNumericValues({
+      ...filterByNumericValues,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  function handleClick() {
+    const { column, comparison, value } = filterByNumericValues;
+    const newFilter = data.filter((item) => {
+      if (comparison === 'maior que') {
+        return parseInt(item[column], 10) > parseInt(value, 10);
+      }
+      if (comparison === 'menor que') {
+        return parseInt(item[column], 10) < parseInt(value, 10);
+      }
+      return parseInt(item[column], 10) === parseInt(value, 10);
+    });
+    return setData(newFilter);
+  }
+
   const aux = {
     data,
     searchName,
     handleChange,
+    filterByNumericValues,
+    handleClick,
+    handleChangeFilter,
   };
 
   return (

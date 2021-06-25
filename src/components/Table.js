@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import StarWarsContext from '../context/StarWars';
 
 function Table() {
-  const { data, handleChange, searchName } = useContext(StarWarsContext);
+  const { data, handleChange,
+    searchName, handleClick, handleChangeFilter } = useContext(StarWarsContext);
   return (
     <div>
       <label htmlFor="searchName">
@@ -12,7 +13,35 @@ function Table() {
           onChange={ handleChange }
         />
       </label>
-
+      <select name="column" data-testid="column-filter" onChange={ handleChangeFilter }>
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        name="comparison"
+        data-testid="comparison-filter"
+        onChange={ handleChangeFilter }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        type="number"
+        name="value"
+        data-testid="value-filter"
+        onChange={ handleChangeFilter }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleClick }
+      >
+        Button
+      </button>
       <hr />
       <table>
         <thead>
