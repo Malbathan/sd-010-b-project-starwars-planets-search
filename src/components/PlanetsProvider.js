@@ -20,23 +20,49 @@ function PlanetsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (Object.keys(filters).length > 0) {
+    if (filters.filterByName) {
       const planetNameRegex = new RegExp(filters.filterByName.name, 'i');
       const planets = getPlanets();
       const filteredplanets = planets.filter(({ name }) => planetNameRegex.test(name));
       setData(filteredplanets);
     }
-  }, [filters]);
+  }, [filters.filterByName]);
 
-  const setFilterByName = async (filter, name) => {
-    setFilters({ ...filters, [filter]: { name } });
+  const setFilterByName = ({ name, value }) => {
+    setFilters({ ...filters, [name]: { name: value } });
   };
 
-  const setMultipleFilters = async ({ name, value }) => {
-    await setFilterByName(name, value);
+  const setFilterByNumericValues = ({ name, value }) => {
+    setFilters({
+      ...filters,
+      filterByNumericValues: { ...filters.filterByNumericValues, [name]: value },
+    });
   };
 
-  return <Provider value={ { data, setMultipleFilters } }>{children}</Provider>;
+  const filterByNumericValues = () => {
+    const planets = getPlanets();
+    const { filterByNumericValues: { column, comparison, value } } = filters;
+    const filteredplanets = planets.filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      default:
+        return Number(planet[column]) === Number(value);
+      }
+    });
+    setData(filteredplanets);
+  };
+
+  const state = {
+    data,
+    setFilterByName,
+    setFilterByNumericValues,
+    filterByNumericValues,
+  };
+
+  return <Provider value={ state }>{children}</Provider>;
 }
 
 PlanetsProvider.propTypes = {
