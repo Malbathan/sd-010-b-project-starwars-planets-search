@@ -19,7 +19,24 @@ function PlanetsProvider({ children }) {
     awaitRequest();
   }, []);
 
-  return <Provider value={ { data } }>{children}</Provider>;
+  useEffect(() => {
+    if (Object.keys(filters).length > 0) {
+      const planetNameRegex = new RegExp(filters.filterByName.name, 'i');
+      const planets = getPlanets();
+      const filteredplanets = planets.filter(({ name }) => planetNameRegex.test(name));
+      setData(filteredplanets);
+    }
+  }, [filters]);
+
+  const setFilterByName = async (filter, name) => {
+    setFilters({ ...filters, [filter]: { name } });
+  };
+
+  const setMultipleFilters = async ({ name, value }) => {
+    await setFilterByName(name, value);
+  };
+
+  return <Provider value={ { data, setMultipleFilters } }>{children}</Provider>;
 }
 
 PlanetsProvider.propTypes = {
