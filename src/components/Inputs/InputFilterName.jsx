@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import StarWarsContext from '../../context/StarWarsContext';
 
-function InputFilter() {
+function InputFilterName() {
   const { filters, setFilters } = useContext(StarWarsContext);
 
   function handleSearchInput({ target }) {
@@ -27,4 +27,4 @@ function InputFilter() {
   );
 }
 
-export default InputFilter;
+export default InputFilterName;
