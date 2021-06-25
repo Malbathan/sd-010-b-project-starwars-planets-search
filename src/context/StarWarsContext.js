@@ -5,10 +5,18 @@ const StarWarsContext = createContext();
 
 const StarWarsProvider = ({ children }) => {
   const [planets, setPlanets] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [columns, setColumns] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [name, setName] = useState('');
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -30,6 +38,8 @@ const StarWarsProvider = ({ children }) => {
 
   const context = {
     planets,
+    filteredPlanets,
+    setFilteredPlanets,
     columns,
     isFetching,
     setName,
@@ -40,6 +50,8 @@ const StarWarsProvider = ({ children }) => {
       },
       filterByNumericValues,
     },
+    columnOptions,
+    setColumnOptions,
   };
 
   return (

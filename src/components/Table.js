@@ -1,10 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 export default function Table() {
-  const { planets, columns, filters, isFetching } = useContext(StarWarsContext);
+  const {
+    planets,
+    columns,
+    filters,
+    isFetching,
+    filteredPlanets,
+    setFilteredPlanets,
+  } = useContext(StarWarsContext);
   const { filterByName, filterByNumericValues } = filters;
-  const [filteredPlanets, setFilteredPlanets] = useState(planets);
 
   useEffect(() => {
     setFilteredPlanets(planets);
@@ -15,28 +21,31 @@ export default function Table() {
       if (filterByNumericValues.length === 0) {
         return;
       }
-      const { column, comparison, value } = filterByNumericValues[0];
-      switch (comparison) {
-      case 'maior que': {
-        const filtered = filteredPlanets
-          .filter((planet) => Number(planet[column]) > Number(value));
-        setFilteredPlanets(filtered);
-        break;
-      }
-      case 'menor que': {
-        const filtered = filteredPlanets
-          .filter((planet) => Number(planet[column]) < Number(value));
-        setFilteredPlanets(filtered);
-        break;
-      }
-      case 'igual a': {
-        const filtered = filteredPlanets
-          .filter((planet) => Number(planet[column]) === Number(value));
-        setFilteredPlanets(filtered);
-        break;
-      }
-      default: break;
-      }
+
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        switch (comparison) {
+        case 'maior que': {
+          const filtered = filteredPlanets
+            .filter((planet) => Number(planet[column]) > Number(value));
+          setFilteredPlanets(filtered);
+          break;
+        }
+        case 'menor que': {
+          const filtered = filteredPlanets
+            .filter((planet) => Number(planet[column]) < Number(value));
+          setFilteredPlanets(filtered);
+          console.log('menor que');
+          break;
+        }
+        case 'igual a': {
+          const filtered = filteredPlanets
+            .filter((planet) => Number(planet[column]) === Number(value));
+          setFilteredPlanets(filtered);
+          break;
+        }
+        default: break;
+        }
+      });
     }
     filter();
   }, [filterByNumericValues]);

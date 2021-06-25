@@ -2,19 +2,15 @@ import React, { useContext, useState } from 'react';
 import { StarWarsContext } from '../context/StarWarsContext';
 
 export default function FilterByNumericValues() {
-  const { setFilterByNumericValues } = useContext(StarWarsContext);
+  const {
+    setFilterByNumericValues,
+    columnOptions,
+    setColumnOptions,
+  } = useContext(StarWarsContext);
 
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-
-  const [columns, setColumns] = useState([
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ]);
 
   const comparisons = ['maior que', 'menor que', 'igual a'];
 
@@ -35,7 +31,7 @@ export default function FilterByNumericValues() {
     .map((option) => <option key={ option }>{option}</option>);
 
   const renderSelect = (type) => {
-    const data = type === 'column' ? columns : comparisons;
+    const data = type === 'column' ? columnOptions : comparisons;
     const text = type === 'column' ? 'Column' : 'Comparison';
     return (
       <label htmlFor={ type }>
@@ -55,7 +51,7 @@ export default function FilterByNumericValues() {
   };
 
   const handleClick = () => {
-    setColumns(columns.filter((item) => item !== column));
+    setColumnOptions(columnOptions.filter((item) => item !== column));
     setFilterByNumericValues(
       (prevState) => [...prevState, {
         column,
