@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
-import TableContext from '../../context/TableContext';
+import React from 'react';
+
 import CreateListTable from './CreateListTable';
 
 function Table() {
-  const { data, namePlanet } = useContext(TableContext);
-
   return (
     <table>
-      <CreateListTable planets={ data } namePlanet={ namePlanet } />
+      <CreateListTable />
     </table>
   );
 }

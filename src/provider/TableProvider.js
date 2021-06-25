@@ -4,8 +4,20 @@ import TableContext from '../context/TableContext';
 import fetchApi from '../services';
 
 function TableProvider({ children }) {
+  // const [planetsFilters, setPlanetsFilters] = useState([]);
   const [data, setData] = useState([]);
-  const [namePlanet, setNamePlanet] = useState('');
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ],
+  });
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -15,7 +27,23 @@ function TableProvider({ children }) {
     fetchPlanets();
   }, []);
 
-  const context = { data, setData, namePlanet, setNamePlanet };
+  const filterPlanet = () => {
+    const { column, comparison, value } = filters.filterByNumericValues;
+    switch (comparison) {
+    case 'maior que':
+      return setData(data.filter((planet) => planet[column] > Number(value)));
+    case 'menor que':
+      return setData(data.filter((planet) => planet[column] < Number(value)));
+    case 'igual a':
+      return setData(data.filter((planet) => Number(planet[column]) === Number(value)));
+
+    default:
+      return data;
+    }
+  };
+
+  const context = {
+    data, setData, filters, setFilters, filterPlanet };
 
   return (
     <TableContext.Provider value={ context }>

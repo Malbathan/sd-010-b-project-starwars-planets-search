@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Loading from '../Loading/Loading';
+import TableContext from '../../context/TableContext';
 
-function CreateListTable(props) {
-  const { planets, namePlanet } = props;
+function CreateListTable() {
+  const { data, filters } = useContext(TableContext);
 
-  const filterPlanets = planets
-    .filter(({ name }) => name.toUpperCase().includes(namePlanet.toUpperCase()));
+  const { name: namePlanet } = filters.filterByName;
 
-  if (planets) {
+  const filterPlanets = data
+    .filter(({ name }) => name.toUpperCase()
+      .includes(namePlanet.toUpperCase()));
+
+  if (data) {
     return (
       <tbody>
         <tr>
