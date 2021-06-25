@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function PlanetList() {
-  const { values: { data, data2, filterName } } = useContext(PlanetContext);
-  console.log(data2);
+  const { values: {
+    data, data2, filterName, Select, filterSelect, selectFilter,
+  } } = useContext(PlanetContext);
 
   function list() {
     if (data2.length > 0) {
@@ -52,6 +53,39 @@ function PlanetList() {
         data-testid="name-filter"
         onChange={ (event) => filterName(event.target.value) }
       />
+      <select
+        data-testid="column-filter"
+        name="status"
+        onChange={ ({ target }) => Select(target) }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        name="operator"
+        onChange={ ({ target }) => Select(target) }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        type="number"
+        data-testid="value-filter"
+        name="value"
+        onChange={ ({ target }) => Select(target) }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ () => filterSelect(selectFilter) }
+      >
+        Buscar
+      </button>
       <table border="1px">
         <tr>
           <th>name</th>
