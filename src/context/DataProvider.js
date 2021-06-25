@@ -16,7 +16,7 @@ export default function DataProvider({ children }) {
 
   return (
     <main>
-      <MyContext.Provider value={ { data } }>
+      <MyContext.Provider value={ { data, setData } }>
         { children }
       </MyContext.Provider>
     </main>
