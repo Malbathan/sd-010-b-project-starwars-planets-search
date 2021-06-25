@@ -94,10 +94,29 @@ function Planets() {
                     <td>{terrain}</td>
                     <td>{surfaceWater}</td>
                     <td>{population}</td>
-                    <td>{films}</td>
-                    <td>{created}</td>
-                    <td>{edited}</td>
-                    <td>{url}</td>
+                    <td>
+                      {films.map((film, i) => (
+                        <p key={ i }>
+                          <a href={ film }>
+                            {`Filme ${i + 1}`}
+                          </a>
+                        </p>
+                      ))}
+                    </td>
+                    <td>
+                      {`${edited.match(/\d*:\d*/)}
+                    ${created.match(/^\d*-\d*-\d*/)[0].split('-').reverse().join('/')}`}
+                    </td>
+                    <td>
+                      {`${edited.match(/\d*:\d*/)}
+                    ${edited.match(/^\d*-\d*-\d*/)[0].split('-').reverse().join('/')}`}
+                    </td>
+                    <td>
+                      <a href={ url }>
+                        {`Link to ${name}`}
+                      </a>
+
+                    </td>
                   </tr>
                 ),
               )}
