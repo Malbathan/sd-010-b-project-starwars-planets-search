@@ -18,23 +18,21 @@ function Table() {
     const { name } = filtraNome.filterByName;
     const filtraPeloNome = (name !== '')
       ? data.filter((planeta) => (planeta.name).toLowerCase().includes(name)) : data;
-    if (filtraNome.filterByNumericValues !== undefined) {
-      const { column } = filtraNome.filterByNumericValues[0];
-      const { comparision } = filtraNome.filterByNumericValues[0];
-      const { value } = filtraNome.filterByNumericValues[0];
-      const filtraDados = (value !== 0 && column !== '' && comparision !== '')
-        ? filtraPeloNome.filter((planeta) => {
-          if (comparision === 'maior que') {
-            return parseFloat(planeta[column]) > parseFloat(value);
-          }
-          if (comparision === 'igual a') {
-            return parseFloat(planeta[column]) === parseFloat(value);
-          }
-          return parseFloat(planeta[column]) < parseFloat(value);
-        })
-        : filtraPeloNome;
-      setFiltrar(filtraDados);
-    }
+    const { column } = filtraNome.filterByNumericValues[0];
+    const { comparision } = filtraNome.filterByNumericValues[0];
+    const { value } = filtraNome.filterByNumericValues[0];
+    const filtraDados = (value !== 0)
+      ? filtraPeloNome.filter((planeta) => {
+        if (comparision === 'maior que') {
+          return parseFloat(planeta[column]) > parseFloat(value);
+        }
+        if (comparision === 'igual a') {
+          return parseFloat(planeta[column]) === parseFloat(value);
+        }
+        return parseFloat(planeta[column]) < parseFloat(value);
+      })
+      : filtraPeloNome;
+    setFiltrar(filtraDados);
   }, [data, filtraNome.filterByName, filtraNome.filterByNumericValues]);
 
   let titulo = [];
