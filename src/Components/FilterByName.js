@@ -14,7 +14,12 @@ export default function FilterByName() {
     <label htmlFor="filterByName">
       Filter by Name
       {' '}
-      <input type="text" name="filterByName" onChange={ sendFilterByName } />
+      <input
+        type="text"
+        name="filterByName"
+        onChange={ sendFilterByName }
+        data-testid="name-filter"
+      />
     </label>
 
   );

@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import StarWarsContext from '../Context/StarWarsContext';
 
 export default function FilterByValues() {
-  const [column, setColumn] = useState('');
-  const [comparison, setComparison] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
   const [values, setValues] = useState(0);
   const { filters, setFilters } = useContext(StarWarsContext);
 
@@ -38,11 +38,11 @@ export default function FilterByValues() {
           onChange={ handleColumn }
           data-testid="column-filter"
         >
-          <option value="population">Population</option>
-          <option value="orbital_period">Orbital Period</option>
-          <option value="diameter">Diameter</option>
-          <option value="rotation_period">Rotation Period</option>
-          <option value="surface_water">Surface Water</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
         </select>
       </label>
       <select
@@ -50,11 +50,16 @@ export default function FilterByValues() {
         onChange={ handleComparison }
         data-testid="comparison-filter"
       >
-        <option value="maior que">greater than</option>
-        <option value="igual">equal to</option>
-        <option value="menor que">lesser than</option>
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
       </select>
-      <input type="number" name="values" onChange={ handleValues } />
+      <input
+        type="number"
+        name="values"
+        onChange={ handleValues }
+        data-testid="value-filter"
+      />
       <button
         type="submit"
         onClick={ sendFilterByValue }

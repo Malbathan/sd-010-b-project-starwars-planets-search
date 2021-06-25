@@ -3,13 +3,17 @@ import './App.css';
 import Table from './Components/Table';
 import FilterByName from './Components/FilterByName';
 import FilterByValues from './Components/FilterByValues';
+import StarWarsProvider from './Context/StarWarsProvider';
 
 function App() {
   return (
     <div>
-      <FilterByName />
-      <FilterByValues />
-      <Table />
+      <StarWarsProvider>
+        <FilterByName />
+        <FilterByValues />
+        <Table />
+      </StarWarsProvider>
+
     </div>
 
   );

@@ -10,8 +10,8 @@ function StarWarsProvider({ children }) {
     },
     filterByNumericValues: [
       {
-        column: '',
-        comparison: '',
+        column: 'population',
+        comparison: 'maior que',
         value: 0,
       },
     ],
