@@ -7,6 +7,19 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [search, setSearch] = useState({ filters: { filterByName: { name: '' } } });
+
+  const searchOnChange = ({ target: { value } }) => {
+    setSearch({
+      ...search,
+      filters: {
+        filterByName: {
+          name: value,
+        },
+      },
+    });
+  };
+
   const fetchPlanets = async () => {
     // setLoading(true);
     // const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
@@ -27,7 +40,7 @@ function PlanetsProvider({ children }) {
   }, []);
 
   return (
-    <PlanetsContext.Provider value={ { data, loading, fetchPlanets } }>
+    <PlanetsContext.Provider value={ { data, loading, search, searchOnChange, setData } }>
       { children }
     </PlanetsContext.Provider>
   );

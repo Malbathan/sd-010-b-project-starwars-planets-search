@@ -1,13 +1,26 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import Filter from './Filter';
 
 function PlanetsList() {
-  const { data, loading, fetchPlanets } = useContext(PlanetsContext);
+  const { data, loading, search } = useContext(PlanetsContext);
+  const [planets, setPlanets] = useState(data);
+  const { filters: { filterByName: { name: searchText } } } = search;
 
-  // didMount
+  useEffect(() => {
+    setPlanets(
+      data.filter((planet) => (searchText ? planet.name.includes(searchText) : true)),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+
+  useEffect(() => {
+    setPlanets(data);
+  }, [data]);
 
   return (
     <section>
+      <Filter />
       {
         loading
           ? <p>Loading...</p>
@@ -26,8 +39,8 @@ function PlanetsList() {
               </thead>
               <tbody>
                 {
-                  data.length
-                    ? data.map((planet) => (
+                  planets.length
+                    ? planets.map((planet) => (
                       <tr key={ planet.name }>
                         {
                           Object.values(planet).map((planetInfo) => (
@@ -38,7 +51,6 @@ function PlanetsList() {
                     ))
                     : null
                 }
-
               </tbody>
             </table>
           )
