@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import issContent from '../Content/ISSContent';
 
-const { Provider } = issContent; // tive que fazer nessa destruturação pro lint não incomodar. Desse jeito eu aciono o PROVIDER que veio do createContext
+const { Provider } = issContent; // tive que fazer nessa destruturação pro lint não incomodar. Desse jeito eu aciono o PROVIDER que veio do createContext.
 
 function GetDataPlanets({ children }) { // NECESSÁRIO colocar CHILDREN nos ()
   const [data, setData] = useState([]); // começa como uma lista vazia. OBS: O requisito pede pra usar o nome data. O DATA vai ser a informação que vou passar pro TABLE.JSX
@@ -30,7 +30,7 @@ function GetDataPlanets({ children }) { // NECESSÁRIO colocar CHILDREN nos ()
     <Provider value={ { data } }>
       { children }
     </Provider>
-  ); // aqui é FUNDAMENTAL. Assim eu posso passar o data(que tá carregando a requisição dos planetas vindas da API).  PRECISO COLOCAR ESSE CHILDREN. Ele vai fazer com que qualquer componente que for FILHO do Provider receba o que está dentro do Value={}.
+  ); // aqui é FUNDAMENTAL. Assim eu posso passar o data(que tá carregando a requisição dos planetas vindas da API).  PRECISO COLOCAR ESSE CHILDREN. Ele vai fazer com que qualquer componente que for FILHO do Provider(na verdade, filho da função GetDataPlanets) receba o que está dentro do Value={}.
   // RESUMINDO: Lá em APP.JS eu coloco Table como filha de GetDataPlanets. Isso vai fazer com que TABLE receba esse value ={ { data }}, ou seja, vai receber a requisição da API.
   // Abaixo é a forma de fazer as props deste children.
 }
