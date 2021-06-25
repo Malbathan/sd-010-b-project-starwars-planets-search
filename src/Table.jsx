@@ -27,19 +27,22 @@ function Table() {
           }
           function setFiltersInState() {
             const { column, comparison, value } = filterByNumericValues[0];
+            console.log('teste');
+            console.log(1);
+            console.log(value);
             setColumnFilter(column);
             setComparisonFilter(comparison);
             setValueFilter(parseInt(value, 10));
           }
           function filterByNumbers(planet) {
             if (comparisonFilter === 'bigger_than') {
-              return planet[columnFilter] > valueFilter;
+              return parseInt(planet[columnFilter], 10) > valueFilter;
             }
             if (comparisonFilter === 'less_than') {
-              return planet[columnFilter] < valueFilter;
+              return parseInt(planet[columnFilter], 10) < valueFilter;
             }
             if (comparisonFilter === 'equal_to') {
-              return planet[columnFilter] === valueFilter;
+              return parseInt(planet[columnFilter], 10) === valueFilter;
             }
             return false;
           }
