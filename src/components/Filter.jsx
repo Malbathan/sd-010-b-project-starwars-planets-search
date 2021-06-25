@@ -6,7 +6,12 @@ function Filter() {
   const { filters: { filterByName: { name: searchText } } } = search;
 
   return (
-    <input value={ searchText } onChange={ searchOnChange } placeholder="Search a planet" />
+    <input
+      value={ searchText }
+      onChange={ searchOnChange }
+      placeholder="Search a planet"
+      data-testid="name-filter"
+    />
   );
 }
 
