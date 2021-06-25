@@ -26,7 +26,7 @@ function Table() {
       case 'maior que': return parseFloat(planeta[column]) > parseFloat(value);
       case 'igual a': return parseFloat(planeta[column]) === parseFloat(value);
       case 'menor que': return parseFloat(planeta[column]) < parseFloat(value);
-      default: return false;
+      default: return true;
       }
     });
     setFiltrar(filtraDados);
