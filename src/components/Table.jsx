@@ -2,7 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 function Table() {
-  const { data, column, select, filterName, filter, selectComp, buttonFilter } = useContext(AppContext);
+  const {
+    data,
+    column,
+    select,
+    filterName,
+    filter,
+    selectComp,
+    buttonFilter,
+    range } = useContext(AppContext);
+
   const [keys, setKeys] = useState([]);
 
   useEffect(() => {
@@ -50,7 +59,13 @@ function Table() {
           data-testid="value-filter"
           onChange={ ({ target }) => selectComp(target) }
         />
-        <button type="button" data-testid="button-filter" onClick={ () => }>botao</button>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ () => buttonFilter(range) }
+        >
+          Search
+        </button>
       </label>
       <table border="1px">
         <tr>

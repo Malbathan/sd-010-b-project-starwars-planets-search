@@ -20,7 +20,6 @@ function Provider({ children }) {
       },
     },
   });
-  const [selectedFilter, setSelectedFilter] = useState([]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -38,7 +37,6 @@ function Provider({ children }) {
 
   const selectComp = ({ name, value }) => {
     setRange({ ...range, [name]: value });
-    console.log(range);
   };
 
   const buttonFilter = (ranges) => {
@@ -83,3 +81,5 @@ Provider.propTypes = {
 };
 
 export default Provider;
+
+// Agradecimentos a Daniel Roberto Turma 10 Tribo B por ter me orientado na logica do Desafio 3
