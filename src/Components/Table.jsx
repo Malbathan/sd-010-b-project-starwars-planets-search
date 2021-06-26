@@ -1,10 +1,12 @@
 // O userContext funciona como um CONSUMER*****
 import React, { useContext } from 'react';
 import issContent from '../Content/ISSContent';
+import { contextoDoFiltro } from './Filters';
 // Essa parte da tabela eu tive a ajudado meu colega Gabriel Miranda. Link do PR dele: https://github.com/tryber/sd-010-b-project-starwars-planets-search/pull/67/commits/e0cbd69ca01e7156ec04e1383035be84c44a3ff2
 
 function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, senão dá erro.
   const { data } = useContext(issContent); // OBRIGATÓRIO. isso aqui me faz não precisar usar o issContent. Consumer. Fazendo isso aqui, eu estou pegando(consumindo) as informações de DATA que vieram lá do FETCHPROVEDOR, só que não precisei cobrir tudo com o consumer.
+  const { filters: { filterByName } } = useContext(contextoDoFiltro); // fiz a desconstrução aqui porque o que eu quero usar no FILTER e MAP lá embaixo é somente o filterByName(que é quem eu atualizo depois que digito algo no input).
 
   // na minha função abaixo, irei colocar dentro dela mais duas funções.
   function cabecalhoTabela() { // . Essas funções de dentro começam com letra minúscula, senão dá erro também.        Essa aqui cria o cabeçalho(header)
@@ -26,13 +28,15 @@ function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, 
           <th>url</th>
         </tr>
       </thead>
-    );
+    ); // o requisito 1 pede pra não colocar residentes na tabela *****
   }
-  function conteudoTabela() { // cria o resto da tabela. IMPORTANTE: Os do map logo abaixo  PRECISAM ser em Inglês, porque são nomes que estão no data pela requisição que fiz pra aquela API. Então precisa ser IDÊNTICO, todas letras minúsculas tb
+  function conteudoTabela() {
+    // cria o resto da tabela. IMPORTANTE: Os do map logo abaixo  PRECISAM ser em Inglês, porque são nomes que estão no data pela requisição que fiz pra aquela API. Então precisa ser IDÊNTICO sobre como vem da API, todas letras minúsculas também
+
     return (
       <tbody>
         {
-          data.map((planeta, index) => (
+          data.filter(({ name }) => name.includes(filterByName)).map((planeta, index) => (
             <tr key={ index }>
               <td>{planeta.name}</td>
               <td>{planeta.rotation_period}</td>
@@ -51,7 +55,8 @@ function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, 
           ))
         }
       </tbody>
-    );
+    ); // ****** OBS MUITO IMPORTANTE:  a lógica do FILTER e MAP: eu vou pegar os planetas pelo data(vieram pela API), aí faço uma FILTRAGEM(uso o filter), e ai terei retorno de um ou mais planetas que passarem pelo filtro. Usei o NAME(nome de planetas) porque é o name que vem da API.
+    // o filter me retorna um name(que veio da API), ou seja, planetas que passem pelo seguinte critério: o nome precisa conter o que está escrito no input, ou seja, no filterByName(o name precisa incluir o que tá escrito no input/filterByName). Depois que atender esse critério, aí faz um MAP pra esses planetas que passaram no critério, aí o map vai rodar o data e vai rolar todos esses TD's que botei na tabela, e então será feita a tabela preenchida todinha somente com os planetas depois do filtro.
   }
   return (
     <table>
