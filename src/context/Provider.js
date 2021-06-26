@@ -6,7 +6,9 @@ import StarWarsContext from './StarWars';
 const AuthProvider = (props) => {
   const { children } = props;
   const [data, setData] = useState([]);
+  const [auxData, setAuxData] = useState([]);
   const [searchName, setSearchName] = useState('');
+  /* const [auxFilter, setAuxFilter] = useState([]); */
   const [filterByNumericValues, setFilterByNumericValues] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -19,6 +21,7 @@ const AuthProvider = (props) => {
     const response = await fetch(url);
     const aux = await response.json();
     setData(aux.results);
+    setAuxData(aux.results);
   }
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const AuthProvider = (props) => {
 
   function handleClick() {
     const { column, comparison, value } = filterByNumericValues;
-    const newFilter = data.filter((item) => {
+    const newFilter = auxData.filter((item) => {
       if (comparison === 'maior que') {
         return parseInt(item[column], 10) > parseInt(value, 10);
       }
@@ -50,6 +53,11 @@ const AuthProvider = (props) => {
     return setData(newFilter);
   }
 
+  function handlgeClickClear() {
+    console.log('object');
+    return setData(auxData);
+  }
+
   const aux = {
     data,
     searchName,
@@ -57,6 +65,7 @@ const AuthProvider = (props) => {
     filterByNumericValues,
     handleClick,
     handleChangeFilter,
+    handlgeClickClear,
   };
 
   return (

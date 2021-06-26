@@ -3,45 +3,68 @@ import StarWarsContext from '../context/StarWars';
 
 function Table() {
   const { data, handleChange,
-    searchName, handleClick, handleChangeFilter } = useContext(StarWarsContext);
+    searchName, handleClick,
+    handleChangeFilter, handlgeClickClear } = useContext(StarWarsContext);
   return (
-    <div>
-      <label htmlFor="searchName">
-        <input
-          data-testid="name-filter"
-          id="searchName"
-          onChange={ handleChange }
-        />
-      </label>
-      <select name="column" data-testid="column-filter" onChange={ handleChangeFilter }>
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-      </select>
-      <select
-        name="comparison"
-        data-testid="comparison-filter"
-        onChange={ handleChangeFilter }
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        type="number"
-        name="value"
-        data-testid="value-filter"
-        onChange={ handleChangeFilter }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
-        Button
-      </button>
+    <>
+      <div className="d-flex justify-content-around flex-wrap">
+        <div className="border border-primary">
+          <label htmlFor="searchName">
+            <input
+              data-testid="name-filter"
+              id="searchName"
+              onChange={ handleChange }
+            />
+          </label>
+        </div>
+        <div className="border border-primary">
+          <select
+            name="column"
+            data-testid="column-filter"
+            onChange={ handleChangeFilter }
+          >
+            <option value="population">population</option>
+            <option value="orbital_period">orbital_period</option>
+            <option value="diameter">diameter</option>
+            <option value="rotation_period">rotation_period</option>
+            <option value="surface_water">surface_water</option>
+          </select>
+          <select
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={ handleChangeFilter }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+          <input
+            type="number"
+            name="value"
+            data-testid="value-filter"
+            onChange={ handleChangeFilter }
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ handleClick }
+          >
+            Button
+          </button>
+        </div>
+        <div className="border border-primary">
+          <div>
+            <p>Filtros</p>
+            <button
+              type="button"
+              data-testid="filter"
+              onClick={ handlgeClickClear }
+            >
+              X
+            </button>
+          </div>
+        </div>
+      </div>
       <hr />
       <table>
         <thead>
@@ -82,7 +105,7 @@ function Table() {
             ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 }
 
