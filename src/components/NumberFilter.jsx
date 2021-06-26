@@ -2,12 +2,28 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function NumberFilter() {
-  const { numericFilter, setNumericFilter } = useContext(Context);
+  const {
+    numericFilter,
+    setNumericFilter,
+    nameFilter,
+    setNameFilter,
+  } = useContext(Context);
 
   const handleChange = ({ target: { name, value } }) => {
     setNumericFilter({
       ...numericFilter,
       [name]: value,
+    });
+  };
+
+  const handleClick = () => {
+    console.log('oieee');
+    setNameFilter({
+      ...nameFilter,
+      filterByNumericValues: [
+        ...nameFilter.filterByNumericValues,
+        numericFilter,
+      ],
     });
   };
 
@@ -74,6 +90,7 @@ function NumberFilter() {
       <button
         data-testid="button-filter"
         type="button"
+        onClick={ handleClick }
       >
         Aplicar filtro
       </button>
