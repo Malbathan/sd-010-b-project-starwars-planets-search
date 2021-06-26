@@ -2,15 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 function Table() {
-  const { data } = useContext(AppContext);
+  const { data, column, select, filterName, filter, selectComp } = useContext(AppContext);
   const [keys, setKeys] = useState([]);
-  const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
-  });
 
   useEffect(() => {
     if (data.length) {
@@ -18,11 +11,6 @@ function Table() {
       setKeys(allKey.filter((key) => key !== 'residents'));
     }
   }, [data]);
-
-  // console.log(keys);
-  const filterName = ({ value }) => {
-    setFilter({ ...filter, filters: { filterByName: { name: value } } });
-  };
 
   return (
     <div>
@@ -33,6 +21,36 @@ function Table() {
           onChange={ ({ target }) => filterName(target) }
           data-testid="name-filter"
         />
+
+        <select
+          data-testid="column-filter"
+          name="status"
+          onChange={ ({ target }) => selectComp(target) }
+        >
+          {column.map((coluna) => (
+            <option key={ coluna } value={ coluna }>
+              {coluna}
+            </option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          name="operator"
+          onChange={ ({ target }) => selectComp(target) }
+        >
+          {select.map((seletor) => (
+            <option key={ seletor } value={ seletor }>
+              {seletor}
+            </option>
+          ))}
+        </select>
+        <input
+          name="value"
+          type="number"
+          data-testid="value-filter"
+          onChange={ ({ target }) => selectComp(target) }
+        />
+        <button type="button" data-testid="button-filter">botao</button>
       </label>
       <table border="1px">
         <tr>
