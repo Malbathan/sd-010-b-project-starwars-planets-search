@@ -1,9 +1,11 @@
 import React from 'react';
-import './App.css';
+import AppContext from './context/AppContext';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <AppContext.Provider>
+      <span>Hello, App!</span>
+    </AppContext.Provider>
   );
 }
 
