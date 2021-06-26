@@ -1,24 +1,23 @@
 import React from 'react';
+import * as ReactBootStrap from 'react-bootstrap';
 import StarWarsProvider from './context/StarWarsProvider';
 import './App.css';
 import TableHeader from './components/TableHeader';
-import TableData from './components/TableData';
+import Name from './components/Name';
 
 function App() {
   return (
     <StarWarsProvider>
-      <table>
+      <ReactBootStrap.Table>
         <thead>
           <tr>
             <TableHeader />
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <TableData />
-          </tr>
+          <Name />
         </tbody>
-      </table>
+      </ReactBootStrap.Table>
     </StarWarsProvider>
   );
 }
