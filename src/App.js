@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import newPlanets from './Components/newPlanets';
 import renderTB from './Components/tableBody';
 import SWStateContext from './context/SWContext';
-import Filters from './Components/FilterByName';
+import Filter from './Components/Filter';
 import './App.css';
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
   return (
     <SWStateContext>
       <main className="App">
-        <Filters />
+        <Filter />
         <table className="table">
           <thead>
             { renderTH(tableHead) }
