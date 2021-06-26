@@ -20,6 +20,7 @@ function Provider({ children }) {
       },
     },
   });
+  const [selectedFilter, setSelectedFilter] = useState([]);
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -40,6 +41,23 @@ function Provider({ children }) {
     console.log(range);
   };
 
+  const buttonFilter = (ranges) => {
+    let list = [];
+    if (ranges.operator === 'menor que') {
+      list = data.filter((itens) => (
+        Number(itens[ranges.status]) < Number(ranges.value)));
+    }
+    if (ranges.operator === 'maior que') {
+      list = data.filter((itens) => (
+        Number(itens[ranges.status]) > Number(ranges.value)));
+    }
+    if (ranges.operator === 'igual a') {
+      list = data.filter((itens) => (
+        Number(itens[ranges.status]) === Number(ranges.value)));
+    }
+    setData(list);
+  };
+
   const contextValue = {
     data,
     column,
@@ -50,6 +68,7 @@ function Provider({ children }) {
     filter,
     filterName,
     selectComp,
+    buttonFilter,
   };
 
   return (
