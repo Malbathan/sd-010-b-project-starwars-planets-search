@@ -6,23 +6,19 @@ import fetchApiStarwars from '../services/fetchApi';
 function Provider({ children }) {
   const [data, setData] = useState([{}]);
   const [fetching, setFetching] = useState(false);
+  const [options] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   });
-
-    const fetchApi = async () => {
-      const response = await  fetchApiStarwars();
-      setData(response)
-    }
 
   useEffect(() => {
     // const fetchApiStarwars = () => {
@@ -31,35 +27,21 @@ function Provider({ children }) {
     //     .then(({ results }) => setData(results));
     // };
     const fetchApi = async () => {
-      const response = await  fetchApiStarwars();
-      setData(response)
-    }
+      const response = await fetchApiStarwars();
+      setData(response);
+    };
 
     fetchApi();
   }, [fetching]);
 
-  // const addNewFilter = () => {
-  //   if (filters.filterByName.name !== '') {
-  //    const filter = filters.filterByName.name
-  //    setData(data.filter(({ name }) => name.includes(filter)))  
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (filters.filterByName.name !== '') {
-  //     addNewFilter(filters.filterByName.name)
-  //   }
-  // }, [filters.filterByName.name, addNewFilter])
-  
-  const newFilter = (value ) => {
+  const newFilter = (value) => {
     setFilters({
       ...filters,
       filterByName: {
-        name: value
-      }
-    })
-  }
-
+        name: value,
+      },
+    });
+  };
 
   const contextValue = {
     data,
@@ -69,7 +51,7 @@ function Provider({ children }) {
     filters,
     setFilters,
     newFilter,
-    fetchApi,
+    options,
   };
 
   return (

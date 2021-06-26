@@ -13,7 +13,7 @@ export default function Table() {
       return setFetching(!fetching);
     }
 
-    newFilter(value)
+    newFilter(value);
     const filteredPlanet = data.filter(({ name }) => name.includes(value));
     if (filteredPlanet.length > 0) {
       setData(filteredPlanet);
@@ -24,14 +24,14 @@ export default function Table() {
     <div>
       <input
         data-testid="name-filter"
-        onChange={filterPlanet}
+        onChange={ filterPlanet }
       />
       <table>
         <thead>
           <tr>
             {
               Object.keys(data[0]).filter((infos) => infos !== 'residents')
-                .map((res) => <th key={res}>{res}</th>)
+                .map((res) => <th key={ res }>{ res }</th>)
             }
           </tr>
         </thead>
@@ -39,10 +39,10 @@ export default function Table() {
         <tbody>
           {
             data.map((planet) => (
-              <tr key={planet}>
+              <tr key={ planet }>
                 {Object.keys(planet)
                   .filter((res) => res !== 'residents')
-                  .map((infos) => <td key={infos}>{planet[infos]}</td>)}
+                  .map((infos) => <td key={ infos }>{ planet[infos] }</td>)}
               </tr>
             ))
           }
