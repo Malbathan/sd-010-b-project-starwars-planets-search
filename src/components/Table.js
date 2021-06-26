@@ -20,20 +20,27 @@ function Table() {
     }
   };
 
-  function filterPlanets() {
-    if (planets) {
-      const filterColumn = filterInsert.column;
-      const planetsFiltered = (planets[0])[filterColumn];
-      console.log(planetsFiltered);
-    }
-  }
+  // function filterPlanets() {
+  //   if (planets) {
+  //     const filterValue = filterInsert.value;
+  //     console.log(filterValue);
+  //     const filterColumn = filterInsert.column;
+  //     const planetsFiltered = planets
+  //       .filter((planet) => planet[filterColumn] === filterValue.toString());
+  //     console.log(planetsFiltered);
+  //     return planetsFiltered;
+  //   }
+  // }
 
-  filterPlanets();
+  const filterValue = filterInsert.value;
+  const filterColumn = filterInsert.column;
+
+  // filterPlanets();
 
   const tableBody = () => (
     planets
       && planets
-        .filter((planet) => (nameToFilter ? planet.name.includes(nameToFilter) : planet))
+        .filter((planet) => (nameToFilter ? planet.name.includes(nameToFilter) : planet)).filter((planet) => planet[filterColumn] === filterValue.toString())
         .map((planet, index) => (
           <tr key={ index }>
             <td>{planet.name}</td>
