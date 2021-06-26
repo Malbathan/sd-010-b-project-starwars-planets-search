@@ -7,6 +7,7 @@ export default function Table() {
       filterByName: {
         name: '',
       },
+      filterByNumericValues: [],
     },
   };
 
@@ -21,7 +22,7 @@ export default function Table() {
   // functions and Hooks
   useEffect(fetchAPI, []);
 
-  const handleChange = ({ target: { value } }) => {
+  const handleChangeForName = ({ target: { value } }) => {
     setFilters({ filters: { filterByName: { name: value } } });
   };
 
@@ -33,7 +34,6 @@ export default function Table() {
 
   const conditionalRendering = () => {
     // conditional depending on the filters
-    console.log(data);
     if (dataFilteredByName) {
       return (
         dataFilteredByName.map(({
@@ -46,7 +46,6 @@ export default function Table() {
           terrain,
           surface_water: surfaceWater,
           population,
-          residents,
           films,
           created,
           edited,
@@ -62,7 +61,6 @@ export default function Table() {
             <td>{ terrain }</td>
             <td>{ surfaceWater }</td>
             <td>{ population }</td>
-            <td>{ residents }</td>
             <td>{ films }</td>
             <td>{ created }</td>
             <td>{ edited }</td>
@@ -80,7 +78,6 @@ export default function Table() {
       terrain,
       surface_water: surfaceWater,
       population,
-      residents,
       films,
       created,
       edited,
@@ -96,7 +93,6 @@ export default function Table() {
         <td>{ terrain }</td>
         <td>{ surfaceWater }</td>
         <td>{ population }</td>
-        <td>{ residents }</td>
         <td>{ films }</td>
         <td>{ created }</td>
         <td>{ edited }</td>
@@ -107,15 +103,39 @@ export default function Table() {
   // render
   return (
     <div>
-      <label htmlFor="name-filtre">
-        filtre por nome
-        <input
-          type="text"
-          id="name-filtre"
-          onChange={ handleChange }
-          data-testid="name-filter"
-        />
-      </label>
+      <form>
+        <h2>Filtros</h2>
+        <label htmlFor="name-filtre">
+          <input
+            type="text"
+            id="name-filtre"
+            onChange={ handleChangeForName }
+            data-testid="name-filter"
+            placeholder="Filtering by name"
+          />
+        </label>
+        <select name="column" id="column" data-testid="column-filter">
+          <option defaultValue="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <select
+          name="condition"
+          id="condition"
+          data-testid="comparison-filter"
+        >
+          <option defaultValue="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input type="number" data-testid="value-filter" />
+        <button type="button" data-testid="button-filter">
+          Filtrar
+        </button>
+
+      </form>
       <table>
         <thead>
           <tr>
@@ -128,7 +148,6 @@ export default function Table() {
             <th>Terrain</th>
             <th>Surface Water</th>
             <th>Population</th>
-            <th>Residents</th>
             <th>Films</th>
             <th>Created</th>
             <th>Edited</th>
