@@ -1,14 +1,30 @@
 import React, { useContext } from 'react';
 // import PlanetProvider from '../context/PlanetProvider';
 import PlanetContext from '../context/PlanetContext';
+// import Header from './Header';
 
 function Table() {
-  const { planets } = useContext(PlanetContext);
+  const { planets, nameFilter: { filter: { filterByName: { name } } },
+    setFilterByName } = useContext(PlanetContext);
   console.log(planets);
+
+  const dataOfPlanets = planets.filter((planet) => planet.name.includes(name));
+
   if (planets.length > 0) {
     return (
       <div>
         <h1>StarWars Planets</h1>
+        <input
+          type="text"
+          value={ name }
+          onChange={ (event) => setFilterByName({
+            filter: { filterByName: {
+              name: event.target.value,
+            },
+            },
+          }) }
+        />
+        {/* <Header /> */}
         <table>
           <thead>
             <tr>
@@ -18,9 +34,9 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {planets.map((planet, index) => (
+            {dataOfPlanets.map((planet, index) => (
               <tr key={ index }>
-                <td key={ index }>{planet.name}</td>
+                <td key={ index }>{ planet.name}</td>
                 <td key={ index }>{planet.rotation_period}</td>
                 <td key={ index }>{planet.orbital_period}</td>
                 <td key={ index }>{planet.diameter}</td>
