@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
 import fetchApi from '../services/Api/StarWarsApi';
+import ColumnOptions from '../components/ColumnOptions';
 
 function StarWarsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
+  const [columnOptions, setColumnOptions] = useState(ColumnOptions);
+  // const [clearFilter, setClearFilter] = useState(false);
   const [filterByNumeric, setFilterByNumeric] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -27,9 +30,15 @@ function StarWarsProvider({ children }) {
     });
   };
 
+  const removeOption = (e) => {
+    const filterColumn = columnOptions.filter((item) => item !== e);
+    setColumnOptions(
+      filterColumn,
+    );
+  };
+
   const aplyFilter = () => {
     const { comparison, value, column } = filterByNumeric;
-    console.log(comparison, value, column);
     let newData = data;
     if (comparison === 'maior que') {
       newData = data.filter((item) => (Number(item[column]) > Number(value)));
@@ -41,6 +50,7 @@ function StarWarsProvider({ children }) {
       newData = data.filter((item) => Number(item[column]) === Number(value));
     }
     setData(newData);
+    removeOption(column);
   };
 
   const context = {
@@ -49,6 +59,7 @@ function StarWarsProvider({ children }) {
     aplyFilter,
     data,
     filterByNumeric,
+    columnOptions,
     filters: {
       filterByName: { name: filter },
     },

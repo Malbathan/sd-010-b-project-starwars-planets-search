@@ -4,6 +4,7 @@ import StarWarsContext from '../context/StarWarsContext';
 const FilterName = () => {
   const { setFilter,
     filterNumeric,
+    columnOptions,
     aplyFilter,
     filters: { filterByName: { name } } } = useContext(StarWarsContext);
   return (
@@ -20,11 +21,14 @@ const FilterName = () => {
         name="column"
         onChange={ filterNumeric }
       >
-        <option>population</option>
+        {
+          columnOptions.map((item, index) => <option key={ index }>{item}</option>)
+        }
+        {/* <option>population</option>
         <option>orbital_period</option>
         <option>diameter</option>
         <option>rotation_period</option>
-        <option>surface_water</option>
+        <option>surface_water</option> */}
       </select>
 
       <select
@@ -43,7 +47,6 @@ const FilterName = () => {
         name="value"
         data-testid="value-filter"
       />
-
       <button
         type="button"
         data-testid="button-filter"
