@@ -2,7 +2,12 @@ import React, { useContext, useState } from 'react';
 import ContextStarWars from '../context/ContextStarWars';
 
 function TableFilter() {
-  const { filters, addNameFilter, addSelectFilter } = useContext(ContextStarWars);
+  const {
+    filters,
+    addNameFilter,
+    addSelectFilter,
+    listFilter,
+  } = useContext(ContextStarWars);
   const [comparasionColum, setComparasionColum] = useState({
     column: 'population',
     coparasion: 'maior que',
@@ -20,7 +25,6 @@ function TableFilter() {
   };
 
   const handleChange = ({ target: { name, value } }) => {
-    console.log(name);
     setComparasionColum({
       ...comparasionColum,
       [name]: value,
@@ -48,11 +52,9 @@ function TableFilter() {
           onChange={ handleChange }
           value={ comparasionColum.column }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {listFilter.map((filter) => (
+            <option key={ filter } value={ filter }>{filter}</option>
+          ))}
         </select>
 
         <select
