@@ -1,20 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
   const { filterByNumericValues } = filters;
 
-  const [column, setColumn] = useState('rotation_period');
+  const [column, setColumn] = useState('');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [options, setOptions] = useState([]);
 
-  const selectOptions = () => {
-    if (data.length) {
-      const options = Object.keys(data[0]).filter((key) => key !== 'name');
-      return options;
-    }
-  };
+  useEffect(() => {
+    const selectOptions = (coluna) => {
+      if (data.length) {
+        if (filterByNumericValues.length !== 0) {
+          console.log('Aquiiii')
+          const newOptions = options.filter((key) => key !== 'name' && key !== coluna);
+          setOptions(newOptions);
+          console.log(newOptions)
+        }
+        const filterOptions = Object.keys(data[0]).filter((key) => key !== 'name');
+        setOptions(filterOptions);
+      }
+    };
+    selectOptions(column);
+  }, [data, filterByNumericValues]);
 
   const setFilterByNumericValues = () => {
     setFilter({ ...filters,
@@ -31,8 +41,8 @@ function SelectForm() {
           name="column"
           onChange={ (event) => setColumn(event.target.value) }
         >
-          { selectOptions() ? selectOptions().map((option, index) => (
-            <option key={ index }>{option}</option>)) : null }
+          { options.map((option, index) => (
+            <option key={ index }>{option}</option>)) }
         </select>
       </label>
 
