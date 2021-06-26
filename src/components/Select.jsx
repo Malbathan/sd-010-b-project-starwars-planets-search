@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filters;
 
   const [column, setColumn] = useState('rotation_period');
   const [comparison, setComparison] = useState('maior que');
@@ -13,6 +14,12 @@ function SelectForm() {
       const options = Object.keys(data[0]).filter((key) => key !== 'name');
       return options;
     }
+  };
+
+  const setFilterByNumericValues = () => {
+    setFilter({ ...filters,
+      filterByNumericValues: [...filterByNumericValues, { column, comparison, value }],
+    });
   };
 
   return (
@@ -54,10 +61,7 @@ function SelectForm() {
       <button
         type="button"
         data-testid="button-filter"
-        onClick={ () => (
-          setFilter({ ...filters,
-            filterByNumericValues: [{ column, comparison, value }],
-          })) }
+        onClick={ () => setFilterByNumericValues() }
       >
         Enviar
       </button>
