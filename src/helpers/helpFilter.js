@@ -1,8 +1,4 @@
-export default function helperFilter(objFilter, objData) {
-  const { column } = objFilter;
-  const { comparison } = objFilter;
-  const { value } = objFilter;
-
+export default function helperFilter({ column, comparison, value }, objData) {
   switch (comparison) {
   case 'maior que':
     return Number(objData[column]) > Number(value);
