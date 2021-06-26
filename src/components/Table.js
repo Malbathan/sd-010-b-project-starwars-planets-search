@@ -23,7 +23,7 @@ function Table() {
   function filterPlanets() {
     if (planets) {
       const filterColumn = filterInsert.column;
-      const planetsFiltered = planets.filter((planet) => planet === filterColumn);
+      const planetsFiltered = (planets[0])[filterColumn];
       console.log(planetsFiltered);
     }
   }
