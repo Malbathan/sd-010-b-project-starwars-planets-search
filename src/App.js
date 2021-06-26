@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Routes from './routes/routes';
 import PlanetsContext from './context/PlanetsContext';
+import Home from './pages/Home';
 /*
   Para este projeto usei como base o repositório do colega Rodrigo Farias Silva
   da turma 09. Todas as pastas e arquivos ficaram muito bem organizados e estruturados
@@ -11,7 +11,7 @@ import PlanetsContext from './context/PlanetsContext';
 function App() {
   return (
     <PlanetsContext>
-      <Routes />
+      <Home />
     </PlanetsContext>
   );
 }

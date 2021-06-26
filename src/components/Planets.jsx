@@ -1,12 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as a } from 'react-router-dom';
 import { DataContext } from '../context/PlanetsContext';
 
 export default function Planets() {
-  const { planets, filteredName } = React.useContext(DataContext);
+  const {
+    planets,
+    filters: { filterByName: { name },
+      filterByNumericValues },
+  } = React.useContext(DataContext);
+
+  const {
+    column,
+    comparison,
+    value } = filterByNumericValues[filterByNumericValues.length - 1];
+
   const filteredPlanets = planets
-    .filter((planet) => planet.name.toLowerCase().includes(filteredName));
+    .filter((planet) => planet.name.toLowerCase().includes(name))
+    .filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return (+planet[column] > +value);
+      case 'menor que':
+        return (+planet[column] < +value);
+      case 'igual a':
+        return (+planet[column] === +value);
+      default:
+        return planet;
+      }
+    });
   return (
     <table>
       <thead>
@@ -40,12 +62,15 @@ export default function Planets() {
             <td>{planet.population}</td>
             <td>
               {planet.films.map((film) => (
-                <Link
-                  to={ film }
-                  key={ film }
-                >
-                  {film}
-                </Link>))}
+                <div key={ film }>
+                  <a
+                    href={ film }
+                  >
+                    link
+                  </a>
+                  <br />
+                </div>
+              ))}
             </td>
             <td>{planet.created}</td>
             <td>{planet.edited}</td>
