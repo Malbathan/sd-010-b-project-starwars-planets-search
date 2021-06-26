@@ -8,7 +8,7 @@ export default function StarWarsProvider({ children }) {
   const [isLoading, setLoader] = useState(false);
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [filter, setFilter] = useState(
+  const [filters, setFilter] = useState(
     {
       filterByName: {
         name: '',
@@ -36,20 +36,38 @@ export default function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const inputSearch = data
-      .filter((info) => info.name.toLowerCase().includes(filter.filterByName.name));
-    // const btnSearch = data.filter()
-
+    const { name } = filters.filterByName;
+    const inputSearch = data.filter((info) => info.name.toLowerCase().includes(name));
     setFiltered(inputSearch);
-  }, [filter, data]);
+
+    const selectSearch = data.filter((obj) => {
+      if (filters.filterByNumericValues.length === 0) return data;
+      const { column, comparison, value } = filters.filterByNumericValues[0];
+      switch (comparison) {
+      case 'maior que':
+        return Number(obj[column]) > Number(value);
+      case 'menor que':
+        return Number(obj[column]) < Number(value);
+      case 'igual a':
+        return Number(obj[column]) === Number(value);
+      default:
+        return data;
+      }
+    });
+
+    const search = name.length === 0
+      ? selectSearch
+      : inputSearch;
+    setFiltered(search);
+  }, [filters, data]);
 
   const handleNameFilter = ({ target }) => {
     const { value } = target;
-    setFilter({ ...filter, filterByName: { name: value } });
+    setFilter({ ...filters, filterByName: { name: value } });
   };
 
-  const filterByNumericValues = (column, comparison, value) => {
-    setFilter({ ...filter,
+  const filterByValues = (column, comparison, value) => {
+    setFilter({ ...filters,
       filterByNumericValues: [
         {
           column,
@@ -75,9 +93,9 @@ export default function StarWarsProvider({ children }) {
         isLoading,
         data,
         handleNameFilter,
-        filterByNumericValues,
+        filterByValues,
         filtered,
-        filter,
+        filters,
       } }
     >
       {children}

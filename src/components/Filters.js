@@ -4,11 +4,13 @@ import StarWarsContext from '../contex/StarWarsContext';
 export default function Filters() {
   const {
     handleNameFilter,
-    filter,
-    filterByNumericValues } = useContext(StarWarsContext);
-  const [local, setFilter] = useState({ column: '', comparison: '', value: 0 });
+    filters,
+    filterByValues } = useContext(StarWarsContext);
+  const [local, setFilter] = useState(
+    { column: 'population', comparison: 'maior que', value: 0 },
+  );
 
-  const nameFilter = filter.filterByName.name;
+  const nameFilter = filters.filterByName.name;
   const handleLocalStates = ({ target }) => {
     const { id, value } = target;
     setFilter({ ...local, [id]: value });
@@ -46,9 +48,9 @@ export default function Filters() {
           id="comparison"
           onChange={ (e) => handleLocalStates(e) }
         >
-          <option value=">">maior que</option>
-          <option value="<">menor que</option>
-          <option value="=">igual a</option>
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">
@@ -65,7 +67,7 @@ export default function Filters() {
         <button
           id="btn"
           onClick={ () => (
-            filterByNumericValues(local.column, local.comparison, local.value)) }
+            filterByValues(local.column, local.comparison, local.value)) }
           data-testid="button-filter"
           type="button"
         >
