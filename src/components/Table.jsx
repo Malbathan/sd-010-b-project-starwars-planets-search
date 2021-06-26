@@ -19,7 +19,7 @@ function Table() {
   );
 
   const filterPlanetsByName = () => {
-    const { filterByName: { name }, filterByNumericValues: [] } = nameFilter;
+    const { filterByName: { name } } = nameFilter;
     if (planetsList) {
       const filterPlanets = planetsList.filter(({
         name: planet,

@@ -16,8 +16,8 @@ function Provider({ children }) {
   );
 
   const [numericFilter, setNumericFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
+    column: '',
+    comparison: '',
     value: '',
   });
 
