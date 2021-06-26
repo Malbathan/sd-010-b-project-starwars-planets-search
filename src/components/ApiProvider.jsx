@@ -3,24 +3,35 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function ApiProvider({ children }) {
+  // const obj = {
+  //   filters: {
+  //     filterByName: {
+  //       name,
+  //     },
+  //   },
+  // };
   const [resultApi, setResultApi] = useState();
-  console.log(children);
+  const [filterApi, setFilterApi] = useState('');
 
   useEffect(() => {
     const getApi = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const response = await fetch(endpoint).then((data) => data.json());
-      setResultApi(response);
+      const apiFiltrada = response.results
+        .filter((planet) => planet.name.includes(filterApi));
+      if (!filterApi) {
+        setResultApi(response.results);
+      }
+      console.log(apiFiltrada);
+      setResultApi(apiFiltrada);
     };
     getApi();
-  }, []);
+  }, [filterApi]);
 
   return (
-    <main>
-      <MyContext.Provider value={ { resultApi } }>
-        { children }
-      </MyContext.Provider>
-    </main>
+    <MyContext.Provider value={ { resultApi, setFilterApi } }>
+      { children }
+    </MyContext.Provider>
   );
 }
 
