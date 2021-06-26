@@ -1,28 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  // useState([]) - pega os setPlanets e coloca dentro de planets
-  const [planets, setPlanets] = useState([]);
   // useContext() - retorna o valor atual do contexto. O valor de contexto atual é determinado pela prop value
-  const { data } = useContext(PlanetContext);
-
-  // didMount -
-  useEffect(() => { // função a ser execultada
-    if (data.length) {
-      const result = Object.keys(data[0]);
-      setPlanets(result.filter((key) => key !== 'url'));
-    }
-  }, [data]); // [data] - array para receber os componentes renderizados
+  const { data, isFetching, filterSearch } = useContext(PlanetContext);
+  // isFetching (true) para renderizar um rótulo “Carregando ...”
+  if (isFetching) {
+    return <h2>Carregando...</h2>;
+  }
 
   return (
     <table className="table" border="1">
       <thead>
         <tr>
           {/* https://fb.me/react-warning-keys */}
-          {planets.map((key) => <th key={ key }>{key}</th>)}
+          {/* Object.keys() retorna um array de prop enumeraveis c/ se fosse um for in */}
+          {/* https://pt-br.reactjs.org/docs/lists-and-keys.html */}
+          {data && Object.keys(data[0]).map((key) => <th key={ key }>{key}</th>)}
         </tr>
-        {data.map((results) => (
+      </thead>
+      <tbody>
+        {filterSearch.map((results) => (
           <tr key={ results.name }>
             <td>{results.name}</td>
             <td>{results.rotation_period}</td>
@@ -39,7 +37,7 @@ function Table() {
             <td>{results.edited}</td>
           </tr>
         ))}
-      </thead>
+      </tbody>
     </table>
   );
 }
