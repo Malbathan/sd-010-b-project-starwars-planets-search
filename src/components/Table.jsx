@@ -16,6 +16,7 @@ function Table() {
         <h1>StarWars Planets</h1>
         <input
           type="text"
+          data-testid="name-filter"
           value={ name }
           onChange={ (event) => setFilterByName({
             filter: { filterByName: {
