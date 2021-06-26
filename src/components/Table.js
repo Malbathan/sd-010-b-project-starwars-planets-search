@@ -6,7 +6,10 @@ function Table() {
     data,
     getPlanets,
     handleChange,
-    filters: { filterByName: { name } } } = useContext(TableContext);
+    filters: { filterByName: { name } },
+    handleInput,
+    handleClick,
+  } = useContext(TableContext);
 
   useEffect(() => {
     getPlanets();
@@ -14,6 +17,41 @@ function Table() {
 
   return (
     <div>
+      <select
+        id=""
+        name="column"
+        data-testid="column-filter"
+        onChange={ handleInput }
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+      <select
+        id=""
+        name="comparison"
+        data-testid="comparison-filter"
+        onChange={ handleInput }
+      >
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
+      </select>
+      <input
+        name="number"
+        type="number"
+        data-testid="value-filter"
+        onChange={ handleInput }
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleClick }
+      >
+        Filtro
+      </button>
       <input type="text" data-testid="name-filter" onChange={ handleChange } />
       <table>
         <thead>
