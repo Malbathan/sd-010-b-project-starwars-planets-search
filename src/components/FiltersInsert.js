@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function FiltersInsert() {
-  const { planets,
+  const { planets, filterByValue, setFilterByValue,
     setFilterByName, filterInsert, setFilterInsert } = useContext(TableContext);
   const createColumnOptions = () => {
     if (planets) {
@@ -17,6 +17,12 @@ function FiltersInsert() {
   const saveFilter = ({ target: { value, name } }) => {
     setFilterInsert({ ...filterInsert, [name]: value });
   };
+
+  function increaseFilterCount() {
+    setFilterByValue(1);
+  }
+
+  console.log(filterByValue);
 
   return (
     <>
@@ -62,7 +68,13 @@ function FiltersInsert() {
           onChange={ saveFilter }
         />
       </label>
-      <button type="button" data-testid="button-filter">Filter</button>
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ increaseFilterCount }
+      >
+        Filter
+      </button>
     </>
   );
 }

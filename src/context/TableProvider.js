@@ -6,7 +6,7 @@ import getPlanetsFromAPI from '../services';
 function TableProvider({ children }) {
   const [planets, setPlanets] = useState('');
   const [filterByName, setFilterByName] = useState('');
-  const [filterByValue, setFilterByValue] = useState([]);
+  const [filterByValue, setFilterByValue] = useState(0);
   const [filterInsert, setFilterInsert] = useState({
     column: '',
     comparison: '',
@@ -34,6 +34,7 @@ function TableProvider({ children }) {
   const context = { planets,
     filters,
     setFilterByName,
+    filterByValue,
     setFilterByValue,
     filterInsert,
     setFilterInsert };

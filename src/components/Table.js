@@ -8,6 +8,7 @@ function Table() {
       filterByName: { name: nameToFilter },
     },
     filterInsert,
+    filterByValue,
   } = useContext(TableContext);
 
   const tableHead = () => {
@@ -37,10 +38,38 @@ function Table() {
 
   // filterPlanets();
 
-  const tableBody = () => (
-    planets
+  const tableBody = () => {
+    if (filterByValue === 1) {
+      return (
+        planets
+        && planets
+          .filter((planet) => (nameToFilter
+            ? planet.name.includes(nameToFilter) : planet))
+          .filter((planet) => planet[filterColumn] === filterValue.toString())
+          .map((planet, index) => (
+            <tr key={ index }>
+              <td>{planet.name}</td>
+              <td>{planet.rotation_period}</td>
+              <td>{planet.orbital_period}</td>
+              <td>{planet.diameter}</td>
+              <td>{planet.climate}</td>
+              <td>{planet.gravity}</td>
+              <td>{planet.terrain}</td>
+              <td>{planet.surface_water}</td>
+              <td>{planet.population}</td>
+              <td>{planet.films}</td>
+              <td>{planet.created}</td>
+              <td>{planet.edited}</td>
+              <td>{planet.url}</td>
+            </tr>
+          ))
+      );
+    }
+    return (
+      planets
       && planets
-        .filter((planet) => (nameToFilter ? planet.name.includes(nameToFilter) : planet)).filter((planet) => planet[filterColumn] === filterValue.toString())
+        .filter((planet) => (nameToFilter
+          ? planet.name.includes(nameToFilter) : planet))
         .map((planet, index) => (
           <tr key={ index }>
             <td>{planet.name}</td>
@@ -58,7 +87,8 @@ function Table() {
             <td>{planet.url}</td>
           </tr>
         ))
-  );
+    );
+  };
 
   return (
     <>
