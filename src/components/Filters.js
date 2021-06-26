@@ -11,7 +11,7 @@ export default function Filters() {
   );
 
   const nameFilter = filters.filterByName.name;
-  const [isDisabled, setDisabled] = useState(
+  const [isHidden, setHidden] = useState(
     { population: false,
       orbital_period: false,
       diameter: false,
@@ -25,16 +25,14 @@ export default function Filters() {
     setFilter({ ...local, [id]: value });
   };
 
-  const { column } = local;
-  const { comparison } = local;
+  const { column, comparison } = local;
   const handleBtnClick = () => {
     filterByValues({
       column,
       comparison,
       value: local.value,
     });
-    console.log(column);
-    setDisabled({ ...isDisabled[column] = true, ...isDisabled });
+    setHidden({ ...isHidden[column] = true, ...isHidden });
   };
 
   return (
@@ -55,11 +53,11 @@ export default function Filters() {
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
-          <option disabled={ isDisabled.population }>population</option>
-          <option disabled={ isDisabled.orbital_period }>orbital_period</option>
-          <option disabled={ isDisabled.diameter }>diameter</option>
-          <option disabled={ isDisabled.rotation_period }>rotation_period</option>
-          <option disabled={ isDisabled.surface_water }>surface_water</option>
+          <option hidden={ isHidden.population }>population</option>
+          <option hidden={ isHidden.orbital_period }>orbital_period</option>
+          <option hidden={ isHidden.diameter }>diameter</option>
+          <option hidden={ isHidden.rotation_period }>rotation_period</option>
+          <option hidden={ isHidden.surface_water }>surface_water</option>
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -87,13 +85,14 @@ export default function Filters() {
       <label htmlFor="btn">
         <button
           id="btn"
-          onClick={ () => handleBtnClick() }
+          onClick={ handleBtnClick }
           data-testid="button-filter"
           type="button"
         >
           {' '}
           Send Comparison
         </button>
+        <button type="button" data-testid="filter">x</button>
       </label>
     </form>
   );
