@@ -1,8 +1,20 @@
-import React, { useContext } from 'react';
-import { StarWarsContext } from '../provider/Provider';
+import React, { useContext, useState } from 'react';
+import { ContextFromPlanets } from '../provider/Provider';
 
 function Table() {
-  const { data } = useContext(StarWarsContext);
+  const { data } = useContext(ContextFromPlanets);
+  const [search, setSearch] = useState('');
+
+  const handleChange = (e) => (
+    setSearch(e.target.value.toLowerCase())
+  );
+
+  const inputSearch = () => (
+    <input
+      data-testid="name-filter"
+      onChange={ handleChange }
+    />
+  );
 
   if (!data.length) return <div>Loading..</div>;
 
@@ -17,11 +29,12 @@ function Table() {
 
   const bodyTable = () => (
     <tbody>
-      {data.map((element) => (
-        <tr key={ element }>
-          {Object.values(element)
-            .map((item) => <td key={ item }>{item}</td>)}
-        </tr>))}
+      {data.filter((planet) => planet.name.toLowerCase().includes(search))
+        .map((element) => (
+          <tr key={ element }>
+            {Object.values(element)
+              .map((value) => <td key={ value }>{value}</td>)}
+          </tr>))}
     </tbody>
   );
 
@@ -29,6 +42,7 @@ function Table() {
     <table>
       {headerTable()}
       {bodyTable()}
+      {inputSearch()}
     </table>
   );
 }
