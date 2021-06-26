@@ -1,9 +1,16 @@
 import React from 'react';
+
+import DataProvider from './Provider/DataProvider';
+import Table from './components/Table';
 import './App.css';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <section>
+      <DataProvider>
+        <Table />
+      </DataProvider>
+    </section>
   );
 }
 
