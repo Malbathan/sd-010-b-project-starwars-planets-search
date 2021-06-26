@@ -14,13 +14,13 @@ function PlanetsProvider({ children }) {
     filterByNumericValues: [],
   });
 
-  async function fetchApi() {
-    const planets = await getPlanets();
-    planets.map((planet) => delete planet.residents);
-    setData(planets);
-  }
-
   useEffect(() => {
+    async function fetchApi() {
+      const planets = await getPlanets();
+      planets.map((planet) => delete planet.residents);
+      setData(planets);
+    }
+
     fetchApi();
   }, []);
 
