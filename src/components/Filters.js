@@ -11,7 +11,7 @@ export default function Filters() {
   const nameFilter = filter.filterByName.name;
   const handleLocalStates = ({ target }) => {
     const { id, value } = target;
-    setFilter({ [id]: value });
+    setFilter({ ...local, [id]: value });
   };
 
   return (
@@ -32,6 +32,7 @@ export default function Filters() {
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
+          <option>population</option>
           <option>orbital_period</option>
           <option>diameter</option>
           <option>rotation_period</option>

@@ -36,9 +36,11 @@ export default function StarWarsProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    const filteredSearch = data
+    const inputSearch = data
       .filter((info) => info.name.toLowerCase().includes(filter.filterByName.name));
-    setFiltered(filteredSearch);
+    // const btnSearch = data.filter()
+
+    setFiltered(inputSearch);
   }, [filter, data]);
 
   const handleNameFilter = ({ target }) => {
