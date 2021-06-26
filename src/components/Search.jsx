@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
 
 function Search() {
-  const { data, setDataSearch, filter, setFilter } = useContext(AppContext);
+  const { data, setDataSearch, filter, setFilter,
+    arrFilter, setArrFilter, coluna, setColuna } = useContext(AppContext);
 
   const handleChange = ({ target }) => {
     const result = data.filter((planet) => planet.name.includes(target.value));
@@ -10,23 +11,38 @@ function Search() {
   };
 
   const filterPerNumber = () => {
-    const { coluna, sinal, numero } = filter;
+    // console.log(e.target);
+    setColuna(coluna.filter((col) => col !== filter.coluna));
+    setArrFilter([...arrFilter, filter]);
+  };
+
+  const aplyFilter = () => {
+    const { sinal } = filter;
     let result = data;
-    console.log(sinal);
-    switch (sinal) {
-    case 'maior que':
-      result = data.filter((planet) => planet[coluna] > Number(numero));
-      break;
-    case 'menor que':
-      result = data.filter((planet) => planet[coluna] < Number(numero));
-      break;
-    case 'igual a':
-      result = data.filter((planet) => planet[coluna] === numero);
-      break;
-    default:
-      result = data;
-      break;
-    }
+    arrFilter.forEach((arr) => {
+      switch (sinal) {
+      case 'maior que':
+        result = data.filter((planet) => planet[arr.coluna] > Number(arr.numero));
+        break;
+      case 'menor que':
+        result = data.filter((planet) => planet[arr.coluna] < Number(arr.numero));
+        break;
+      case 'igual a':
+        result = data.filter((planet) => planet[arr.coluna] === arr.numero);
+        break;
+      default:
+        result = data;
+        break;
+      }
+      setDataSearch(result);
+    });
+  };
+
+  useEffect(aplyFilter, [arrFilter]);
+
+  const removeFilter = (e) => {
+    const position = e.target.parentNode.id;
+    const result = arrFilter.splice(position, 1);
     setDataSearch(result);
   };
 
@@ -43,11 +59,12 @@ function Search() {
         onChange={ ({ target }) => setFilter({ ...filter, coluna: target.value }) }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
+        { coluna.map((col) => <option key={ col } value={ col }>{ col }</option>)}
+        {/* <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
       <select
         onChange={ ({ target }) => setFilter({ ...filter, sinal: target.value }) }
@@ -69,6 +86,12 @@ function Search() {
       >
         Aplicar filtro
       </button>
+      { arrFilter.map((arr, position) => (
+        <p id={ position } key={ `${arr.coluna} ${arr.numero}` }>
+          <button onClick={ removeFilter } type="button">X</button>
+          {`Filter ${position}`}
+        </p>
+      ))}
     </header>
   );
 }

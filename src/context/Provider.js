@@ -5,6 +5,10 @@ import AppContext from './AppContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
+  const [arrFilter, setArrFilter] = useState([]);
+  const [coluna, setColuna] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filter, setFilter] = useState({
     coluna: 'population',
     sinal: 'maior que',
@@ -27,6 +31,10 @@ function Provider({ children }) {
     setDataSearch,
     filter,
     setFilter,
+    arrFilter,
+    setArrFilter,
+    coluna,
+    setColuna,
   };
 
   return (
