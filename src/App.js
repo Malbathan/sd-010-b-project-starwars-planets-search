@@ -1,13 +1,14 @@
 import React from 'react';
+import Table from './components/Table';
+import TableProv from './provider/TableProv';
 import './App.css';
 
 function App() {
   return (
-    <span>
-      <h1>
-      Hello, App!
-      </h1>
-    </span>
+    <TableProv>
+      <Table />
+    </TableProv>
+
   );
 }
 
