@@ -6,9 +6,14 @@ import helperFilter from '../helpers/helpFilter';
 function ProviderStarWars({ children }) {
   const [data, setData] = useState([]);
   const [dataFilted, setDataFilted] = useState([]);
+  const [listFilter, setListFilter] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filters, setfilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{ column: '', comparison: '', value: '' }],
+    filterByNumericValues: [
+      { column: 'population', comparison: '', value: '' },
+    ],
   });
 
   useEffect(() => {
@@ -34,10 +39,8 @@ function ProviderStarWars({ children }) {
           arraTruOrFalse.push(helperFilter(objFilter, objPlanet));
         });
 
-        const allArrayIsTrue = arraTruOrFalse.every((ele) => ele === true);
         const nameIsTrue = objPlanet.name.includes(filters.filterByName.name);
-
-        console.log(allArrayIsTrue);
+        const allArrayIsTrue = arraTruOrFalse.every((ele) => ele === true);
 
         // condicional
         if (nameIsTrue && allArrayIsTrue) {
@@ -51,18 +54,18 @@ function ProviderStarWars({ children }) {
   }, [data, filters]);
 
   const addNameFilter = (filter, name) => {
-    console.log(name);
     setfilters({
       ...filters,
       [filter]: { name },
     });
   };
 
-  const addSelectFilter = (obj) => {
-    console.log(obj);
+  const addSelectFilter = (objFilter) => {
+    const newArrayFilter = listFilter.filter((filter) => filter !== objFilter.column);
+    setListFilter(newArrayFilter);
     setfilters({
       ...filters,
-      filterByNumericValues: [obj],
+      filterByNumericValues: [...filters.filterByNumericValues, objFilter],
     });
   };
 
@@ -73,6 +76,7 @@ function ProviderStarWars({ children }) {
     addNameFilter,
     dataFilted,
     addSelectFilter,
+    listFilter,
   };
 
   return (
