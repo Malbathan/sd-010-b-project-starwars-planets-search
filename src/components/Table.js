@@ -2,16 +2,21 @@ import React, { useContext } from 'react';
 import MyContext from './MyContext';
 
 export default function Table() {
-  const { data, setData, fetching, setFetching } = useContext(MyContext);
+  const { setData, data, fetching, setFetching, newFilter } = useContext(MyContext);
+
+  // useEffect(() => {
+  //   fetchApi();
+  // }, [fetchApi])
 
   const filterPlanet = ({ target: { value } }) => {
     if (value === '') {
       return setFetching(!fetching);
     }
+
+    newFilter(value)
     const filteredPlanet = data.filter(({ name }) => name.includes(value));
-    console.log(filteredPlanet);
     if (filteredPlanet.length > 0) {
-      return setData(filteredPlanet);
+      setData(filteredPlanet);
     }
   };
 
@@ -19,14 +24,14 @@ export default function Table() {
     <div>
       <input
         data-testid="name-filter"
-        onChange={ filterPlanet }
+        onChange={filterPlanet}
       />
       <table>
         <thead>
           <tr>
             {
               Object.keys(data[0]).filter((infos) => infos !== 'residents')
-                .map((res) => <th key={ res }>{ res }</th>)
+                .map((res) => <th key={res}>{res}</th>)
             }
           </tr>
         </thead>
@@ -34,10 +39,10 @@ export default function Table() {
         <tbody>
           {
             data.map((planet) => (
-              <tr key={ planet }>
+              <tr key={planet}>
                 {Object.keys(planet)
                   .filter((res) => res !== 'residents')
-                  .map((infos) => <td key={ infos }>{ planet[infos] }</td>)}
+                  .map((infos) => <td key={infos}>{planet[infos]}</td>)}
               </tr>
             ))
           }

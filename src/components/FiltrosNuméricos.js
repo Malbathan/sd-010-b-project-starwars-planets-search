@@ -2,13 +2,23 @@ import React, { useContext, useState } from 'react';
 import MyContext from './MyContext';
 
 function FiltrosNuméricos() {
-  const { data, setData } = useContext(MyContext);
+  const { data, setData, setFilters, filters } = useContext(MyContext);
   const [comparison, setComparison] = useState('maior que');
   const [columnFilter, setColumnFilter] = useState('population');
   const [newInput, setNewInput] = useState('');
   // console.log(comparison, columnFilter, newInput)
 
   const handleClick = () => {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [
+          {
+            column: columnFilter,
+            comparison: comparison,
+            value: newInput,
+          },
+        ],
+      })
     const arrData = Object.keys(data[0]);
     const resp = arrData.filter((name) => name === columnFilter);
 
