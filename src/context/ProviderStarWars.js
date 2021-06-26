@@ -11,9 +11,7 @@ function ProviderStarWars({ children }) {
   ]);
   const [filters, setfilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [
-      { column: 'population', comparison: '', value: '' },
-    ],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
