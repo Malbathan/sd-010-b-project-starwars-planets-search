@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import TableContext from '../context/TableContext';
 
 function FiltersInsert() {
-  const { planets, setFilterByName } = useContext(TableContext);
-
+  const { planets,
+    setFilterByName, filterInsert, setFilterInsert } = useContext(TableContext);
   const createColumnOptions = () => {
     if (planets) {
       const keys = Object.keys(planets[0]);
@@ -12,6 +12,10 @@ function FiltersInsert() {
         <option key={ index } value={ plan }>{plan}</option>
       ));
     }
+  };
+
+  const saveFilter = ({ target: { value, name } }) => {
+    setFilterInsert({ ...filterInsert, [name]: value });
   };
 
   return (
@@ -30,7 +34,9 @@ function FiltersInsert() {
       <label htmlFor="column-filter">
         by Column:
         <select
+          name="column"
           data-testid="column-filter"
+          onChange={ saveFilter }
         >
           {createColumnOptions()}
         </select>
@@ -38,7 +44,9 @@ function FiltersInsert() {
       <label htmlFor="comparison-filter">
         by Comparison:
         <select
+          name="comparison"
           data-testid="comparison-filter"
+          onChange={ saveFilter }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -48,8 +56,10 @@ function FiltersInsert() {
       <label htmlFor="value-filter">
         by Value:
         <input
+          name="value"
           type="number"
           data-testid="value-filter"
+          onChange={ saveFilter }
         />
       </label>
       <button type="button" data-testid="button-filter">Filter</button>

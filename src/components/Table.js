@@ -7,6 +7,7 @@ function Table() {
     filters: {
       filterByName: { name: nameToFilter },
     },
+    filterInsert,
   } = useContext(TableContext);
 
   const tableHead = () => {
@@ -18,6 +19,16 @@ function Table() {
       ));
     }
   };
+
+  function filterPlanets() {
+    if (planets) {
+      const filterColumn = filterInsert.column;
+      const planetsFiltered = planets.filter((planet) => planet === filterColumn);
+      console.log(planetsFiltered);
+    }
+  }
+
+  filterPlanets();
 
   const tableBody = () => (
     planets

@@ -7,6 +7,11 @@ function TableProvider({ children }) {
   const [planets, setPlanets] = useState('');
   const [filterByName, setFilterByName] = useState('');
   const [filterByValue, setFilterByValue] = useState([]);
+  const [filterInsert, setFilterInsert] = useState({
+    column: '',
+    comparison: '',
+    value: '',
+  });
 
   const getPlanets = async () => {
     const result = await getPlanetsFromAPI();
@@ -26,7 +31,12 @@ function TableProvider({ children }) {
     filterByValue,
   };
 
-  const context = { planets, filters, setFilterByName, setFilterByValue };
+  const context = { planets,
+    filters,
+    setFilterByName,
+    setFilterByValue,
+    filterInsert,
+    setFilterInsert };
 
   return (
     <TableContext.Provider value={ context }>
