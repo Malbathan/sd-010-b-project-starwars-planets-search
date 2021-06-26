@@ -22,7 +22,7 @@ export default function Table() {
   useEffect(fetchAPI, []);
 
   const handleChange = ({ target: { value } }) => {
-    setFilters({ ...filters, filters: { filterByName: { name: value } } });
+    setFilters({ filters: { filterByName: { name: value } } });
   };
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export default function Table() {
 
   const conditionalRendering = () => {
     // conditional depending on the filters
+    console.log(data);
     if (dataFilteredByName) {
       return (
         dataFilteredByName.map(({
@@ -45,6 +46,8 @@ export default function Table() {
           terrain,
           surface_water: surfaceWater,
           population,
+          residents,
+          films,
           created,
           edited,
           url,
@@ -59,6 +62,8 @@ export default function Table() {
             <td>{ terrain }</td>
             <td>{ surfaceWater }</td>
             <td>{ population }</td>
+            <td>{ residents }</td>
+            <td>{ films }</td>
             <td>{ created }</td>
             <td>{ edited }</td>
             <td>{ url }</td>
@@ -75,11 +80,13 @@ export default function Table() {
       terrain,
       surface_water: surfaceWater,
       population,
+      residents,
+      films,
       created,
       edited,
       url,
-    }, index) => (
-      <tr key={ index }>
+    }) => (
+      <tr key={ namePlanet }>
         <td>{ namePlanet }</td>
         <td>{ rotationPeriod }</td>
         <td>{ orbitalPeriod }</td>
@@ -89,6 +96,8 @@ export default function Table() {
         <td>{ terrain }</td>
         <td>{ surfaceWater }</td>
         <td>{ population }</td>
+        <td>{ residents }</td>
+        <td>{ films }</td>
         <td>{ created }</td>
         <td>{ edited }</td>
         <td>{ url }</td>
@@ -119,6 +128,7 @@ export default function Table() {
             <th>Terrain</th>
             <th>Surface Water</th>
             <th>Population</th>
+            <th>Residents</th>
             <th>Films</th>
             <th>Created</th>
             <th>Edited</th>
