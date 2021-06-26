@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import requestApi from '../services/api';
 import { getPlanets } from '../services/localStorage';
+// import hookUpdateColumns from '../hooks/updateColumns';
 
 const Context = createContext();
 const { Provider, Consumer } = Context;
@@ -9,6 +10,14 @@ const { Provider, Consumer } = Context;
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({});
+  const [filterByNumericValues, setFilterByNumericValues] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
+  });
+  const [columns, setColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   useEffect(() => {
     const awaitRequest = async () => {
@@ -28,20 +37,49 @@ function PlanetsProvider({ children }) {
     }
   }, [filters.filterByName]);
 
+  const updateColumns = () => {
+    if (filters.filterByNumericValues) {
+      const addedColumnsInFilters = filters.filterByNumericValues.map(
+        ({ column }) => column,
+      );
+      const newColumns = columns.filter(
+        (column) => !addedColumnsInFilters.includes(column),
+      );
+      setColumns(newColumns);
+    }
+  };
+
+  useEffect(updateColumns, [filters.filterByNumericValues]);
+
   const setFilterByName = ({ name, value }) => {
     setFilters({ ...filters, [name]: { name: value } });
   };
 
-  const setFilterByNumericValues = ({ name, value }) => {
-    setFilters({
-      ...filters,
-      filterByNumericValues: { ...filters.filterByNumericValues, [name]: value },
+  const editFilterByNumericValues = ({ name, value }) => {
+    setFilterByNumericValues({
+      ...filterByNumericValues,
+      [name]: value,
     });
   };
 
-  const filterByNumericValues = () => {
+  const addFilterByNumericValues = () => {
+    if (!filters.filterByNumericValues) {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [filterByNumericValues],
+      });
+    } else {
+      setFilters({
+        ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues],
+      });
+    }
+  };
+
+  const filtrateByNumericValues = () => {
+    addFilterByNumericValues();
     const planets = getPlanets();
-    const { filterByNumericValues: { column, comparison, value } } = filters;
+    const { column, comparison, value } = filterByNumericValues;
     const filteredplanets = planets.filter((planet) => {
       switch (comparison) {
       case 'maior que':
@@ -58,8 +96,10 @@ function PlanetsProvider({ children }) {
   const state = {
     data,
     setFilterByName,
-    setFilterByNumericValues,
+    editFilterByNumericValues,
     filterByNumericValues,
+    filtrateByNumericValues,
+    columns,
   };
 
   return <Provider value={ state }>{children}</Provider>;
