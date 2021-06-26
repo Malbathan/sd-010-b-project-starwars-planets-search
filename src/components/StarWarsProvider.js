@@ -5,6 +5,12 @@ import StarWarsContext from './StarWarsContext';
 function Provider({ children }) {
   const [planetNames, setplanetNames] = useState([]);
   const [nameSearch, setNameSearch] = useState('');
+  const [filterNumber, setFilterNumber] = useState({
+    name: '',
+    number: 0,
+    column: 'population',
+    comparison: 'maior que',
+  });
 
   const fetchAPI = () => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/?format=json')
@@ -41,14 +47,59 @@ function Provider({ children }) {
     // setPlanetsFiltered(planetsSearch);
   };
 
+  const handleButtonFilter = () => {
+    const { number, column, comparison } = filterNumber;
+
+    const filteredNumbers = planetNames.filter((planet) => {
+      // retorna os planetas de acordo com o filtro selecionado
+
+      switch (comparison) {
+      case 'maior que':
+        return parseInt(planet[column], 10) > parseInt(number, 10);
+      case 'menor que':
+        return parseInt(planet[column], 10) < parseInt(number, 10);
+      case 'igual a':
+        return parseInt(planet[column], 10) === parseInt(number, 10);
+      default:
+        return 0;
+      }
+    });
+    setplanetNames(filteredNumbers);
+  };
+
+  const changeColumnFilter = ({ target: { name, value } }) => {
+    setFilterNumber({
+      ...filterNumber,
+      [name]: value,
+    });
+  };
+
+  const filterNameSearch = () => (
+    planetNames.filter((filter) => filter.name.includes(nameSearch)));
+
   const values = {
     planetNames,
     handleInputSearch,
+    handleButtonFilter,
+    changeColumnFilter,
+    filterNameSearch,
     filters: {
       filterByName: {
         name: nameSearch,
       },
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+      {
+        column: 'diameter',
+        comparison: 'menor que',
+        value: '8000',
+      },
+    ],
   };
 
   return (

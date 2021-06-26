@@ -2,14 +2,49 @@ import React, { useContext } from 'react';
 import StarWarsContext from './StarWarsContext';
 
 function Table() {
-  const { planetNames, handleInputSearch, filters: {
-    filterByName: {
-      name: nameSearch,
-    },
-  } } = useContext(StarWarsContext);
+  const { handleInputSearch, handleButtonFilter, filterNameSearch,
+    changeColumnFilter } = useContext(StarWarsContext);
+
   return (
     <section>
       <input type="text" data-testid="name-filter" onChange={ handleInputSearch } />
+
+      <select
+        onChange={ changeColumnFilter }
+        name="column"
+        id="column"
+        data-testid="column-filter"
+      >
+        <option value="population">population</option>
+        <option value="orbital_period">orbital_period</option>
+        <option value="diameter">diameter</option>
+        <option value="rotation_period">rotation_period</option>
+        <option value="surface_water">surface_water</option>
+      </select>
+
+      <select
+        name="comparison"
+        id="comparison"
+        data-testid="comparison-filter"
+        onChange={ changeColumnFilter }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        onChange={ changeColumnFilter }
+        type="number"
+        name="number"
+        data-testid="value-filter"
+      />
+      <button
+        type="button"
+        data-testid="button-filter"
+        onClick={ handleButtonFilter }
+      >
+        Filtrar
+      </button>
       <table border="1">
         <thead>
           <tr>
@@ -29,7 +64,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planetNames.filter((filter) => filter.name.includes(nameSearch))
+          {filterNameSearch()
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
