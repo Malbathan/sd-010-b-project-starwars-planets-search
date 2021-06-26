@@ -14,6 +14,7 @@ function NumberFilter() {
       ...numericFilter,
       [name]: value,
     });
+    console.log(numericFilter);
   };
 
   const handleClick = () => {
@@ -25,6 +26,7 @@ function NumberFilter() {
         numericFilter,
       ],
     });
+    console.log(nameFilter);
   };
 
   return (
