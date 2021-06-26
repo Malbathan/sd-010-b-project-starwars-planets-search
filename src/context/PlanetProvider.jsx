@@ -20,7 +20,6 @@ function PlanetProvider({ children }) {
       // const planetArrayApi = await getApi();
       // const planetsApi = planetArrayApi.results;
       // planetsApi.forEach((planet) => delete planet.residents);
-      // delete planetApi.residents;
       // setPlanets(planetsApi);
       // response.results.forEach((planet) => delete planet.residents);
       setPlanets(response.results);
