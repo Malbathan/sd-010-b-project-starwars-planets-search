@@ -42,7 +42,8 @@ export default function StarWarsProvider({ children }) {
 
     const selectSearch = data.filter((obj) => {
       if (filters.filterByNumericValues.length === 0) return data;
-      const { column, comparison, value } = filters.filterByNumericValues[0];
+      const { column, comparison, value } = filters
+        .filterByNumericValues[filters.filterByNumericValues.length - 1];
       switch (comparison) {
       case 'maior que':
         return Number(obj[column]) > Number(value);
@@ -66,15 +67,10 @@ export default function StarWarsProvider({ children }) {
     setFilter({ ...filters, filterByName: { name: value } });
   };
 
-  const filterByValues = (column, comparison, value) => {
+  const filterByValues = ({ column, comparison, value }) => {
     setFilter({ ...filters,
-      filterByNumericValues: [
-        {
-          column,
-          comparison,
-          value,
-        },
-      ],
+      filterByNumericValues:
+      [...filters.filterByNumericValues, { column, comparison, value }],
     });
   };
 

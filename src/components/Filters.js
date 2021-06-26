@@ -11,9 +11,30 @@ export default function Filters() {
   );
 
   const nameFilter = filters.filterByName.name;
+  const [isDisabled, setDisabled] = useState(
+    { population: false,
+      orbital_period: false,
+      diameter: false,
+      rotation_period: false,
+      surface_water: false,
+    },
+  );
+
   const handleLocalStates = ({ target }) => {
     const { id, value } = target;
     setFilter({ ...local, [id]: value });
+  };
+
+  const { column } = local;
+  const { comparison } = local;
+  const handleBtnClick = () => {
+    filterByValues({
+      column,
+      comparison,
+      value: local.value,
+    });
+    console.log(column);
+    setDisabled({ ...isDisabled[column] = true, ...isDisabled });
   };
 
   return (
@@ -30,21 +51,21 @@ export default function Filters() {
       <label htmlFor="column-filter">
         <select
           data-testid="column-filter"
-          value={ local.column }
+          value={ column }
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          <option disabled={ isDisabled.population }>population</option>
+          <option disabled={ isDisabled.orbital_period }>orbital_period</option>
+          <option disabled={ isDisabled.diameter }>diameter</option>
+          <option disabled={ isDisabled.rotation_period }>rotation_period</option>
+          <option disabled={ isDisabled.surface_water }>surface_water</option>
         </select>
       </label>
       <label htmlFor="comparison-filter">
         <select
           data-testid="comparison-filter"
-          value={ local.comparison }
+          value={ comparison }
           id="comparison"
           onChange={ (e) => handleLocalStates(e) }
         >
@@ -66,8 +87,7 @@ export default function Filters() {
       <label htmlFor="btn">
         <button
           id="btn"
-          onClick={ () => (
-            filterByValues(local.column, local.comparison, local.value)) }
+          onClick={ () => handleBtnClick() }
           data-testid="button-filter"
           type="button"
         >
