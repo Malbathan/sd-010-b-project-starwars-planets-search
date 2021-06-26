@@ -5,6 +5,10 @@ import TableContext from '../context/tablecontext';
 
 function Table() {
   const [filter, setFilter] = useState(['']);
+  const selectFilter = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ];
+  const [selectFilterState, setSelectFilterState] = useState(selectFilter);
   const [collumsFilter, setCollumsFilter] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [numberComparison, setNumberComparison] = useState(0);
@@ -18,32 +22,42 @@ function Table() {
           (planet.name.match(filter))))))), [data, filter]);
   // rei dos parenteses
 
-  // function submitFilter() {
-  //   if (comparison === 'maior que') {
-  //     return setFilteredPlanets(filteredPlanets.filter((planet) => planet[collumsFilter] > numberComparison));
-  //   }
-  //   if (comparison === 'menor que') {
-  //     return setFilteredPlanets(filteredPlanets.filter((planet) => planet[collumsFilter] < numberComparison));
-  //   }
-  //   if (comparison === 'igual a') {
-  //     return setFilteredPlanets(filteredPlanets.filter((planet) => planet[collumsFilter] === numberComparison));
-  //   }
-  // }
+  const removeFilterDropdown = () => {
+    if (comparison === 'maior que') {
+      setFilteredPlanets(filteredPlanets.filter((planet) => (
+        Number(planet[collumsFilter]) > Number(numberComparison))));
+      const noFilter = selectFilter.filter((thead) => thead !== collumsFilter);
+      setSelectFilterState(noFilter);
+    }
+    if (comparison === 'menor que') {
+      setFilteredPlanets(filteredPlanets.filter((planet) => (
+        Number(planet[collumsFilter]) < Number(numberComparison))));
+      const noFilter = selectFilter.filter((thead) => thead !== collumsFilter);
+      setSelectFilterState(noFilter);
+    }
+    if (comparison === 'igual a') {
+      setFilteredPlanets(filteredPlanets.filter((planet) => (
+        Number(planet[collumsFilter]) === Number(numberComparison))));
+      const noFilter = selectFilter.filter((thead) => thead !== collumsFilter);
+      setSelectFilterState(noFilter);
+    }
+  };
 
   function submitFilter() {
     switch (comparison) {
     case 'maior que':
-      return setFilteredPlanets(data.filter((planet) => (
-        Number(planet[collumsFilter]) > Number(numberComparison))));
+      return removeFilterDropdown();
     case 'menor que':
-      return setFilteredPlanets(data.filter((planet) => (
-        Number(planet[collumsFilter]) < Number(numberComparison))));
+      return removeFilterDropdown();
     case 'igual a':
-      return setFilteredPlanets(data.filter((planet) => (
-        Number(planet[collumsFilter]) === Number(numberComparison))));
+      return removeFilterDropdown();
     default:
       return (data);
     }
+  }
+  function reset() {
+    setSelectFilterState(selectFilter);
+    setFilteredPlanets(data);
   }
 
   return (
@@ -61,11 +75,8 @@ function Table() {
             data-testid="column-filter"
             onChange={ ({ target: { value } }) => setCollumsFilter(value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {selectFilterState.map((option, i) => (
+              <option key={ i } value={ option }>{option}</option>))}
           </select>
           <select
             name="comparison-filter"
@@ -87,6 +98,13 @@ function Table() {
             onClick={ submitFilter }
           >
             Filtrar
+          </button>
+          <button
+            type="button"
+            data-testid="filter"
+            onClick={ reset }
+          >
+            x
           </button>
           <table border="1">
             <thead>
