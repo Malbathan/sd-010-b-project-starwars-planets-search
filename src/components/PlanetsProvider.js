@@ -13,7 +13,7 @@ function PlanetsProvider({ children }) {
   const [filterByNumericValues, setFilterByNumericValues] = useState({
     column: 'population',
     comparison: 'maior que',
-    value: '0',
+    value: '',
   });
   const [columns, setColumns] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
@@ -46,6 +46,11 @@ function PlanetsProvider({ children }) {
         (column) => !addedColumnsInFilters.includes(column),
       );
       setColumns(newColumns);
+      setFilterByNumericValues({
+        ...filterByNumericValues,
+        column: newColumns[0],
+        value: '',
+      });
     }
   };
 
@@ -80,7 +85,7 @@ function PlanetsProvider({ children }) {
     addFilterByNumericValues();
     const planets = getPlanets();
     const { column, comparison, value } = filterByNumericValues;
-    const filteredplanets = planets.filter((planet) => {
+    const filteredPlanets = planets.filter((planet) => {
       switch (comparison) {
       case 'maior que':
         return Number(planet[column]) > Number(value);
@@ -90,7 +95,31 @@ function PlanetsProvider({ children }) {
         return Number(planet[column]) === Number(value);
       }
     });
-    setData(filteredplanets);
+    setData(filteredPlanets);
+  };
+
+  const restoreColumn = (newColumn) => {
+    setColumns([...columns, newColumn]);
+    const newNumericFilters = filters.filterByNumericValues.filter(
+      (filterObj) => filterObj.column !== newColumn,
+    );
+    setFilters({
+      ...filters,
+      filterByNumericValues: newNumericFilters,
+    });
+    const planets = getPlanets();
+    const { filterByNumericValues: { column, comparison, value } } = filters;
+    const filteredPlanets = planets.filter((planet) => {
+      switch (comparison) {
+      case 'maior que':
+        return Number(planet[column]) > Number(value);
+      case 'menor que':
+        return Number(planet[column]) < Number(value);
+      default:
+        return Number(planet[column]) === Number(value);
+      }
+    });
+    setData(filteredPlanets);
   };
 
   const state = {
@@ -100,6 +129,8 @@ function PlanetsProvider({ children }) {
     filterByNumericValues,
     filtrateByNumericValues,
     columns,
+    filters,
+    restoreColumn,
   };
 
   return <Provider value={ state }>{children}</Provider>;

@@ -8,6 +8,8 @@ function Filters() {
     filterByNumericValues: { column, comparison, value },
     filtrateByNumericValues,
     columns,
+    filters: { filterByNumericValues },
+    restoreColumn,
   } = useContext(Context);
 
   return (
@@ -59,6 +61,20 @@ function Filters() {
         >
           adicionar filtro
         </button>
+      </div>
+      <div>
+        {filterByNumericValues && filterByNumericValues.map((filter) => (
+          <span key={ filter.column }>
+            {`${filter.column} ${filter.comparison} ${filter.value}`}
+            <button
+              type="button"
+              onClick={ () => restoreColumn(filter.column) }
+              data-testid="filter"
+            >
+              X
+            </button>
+          </span>
+        )) }
       </div>
     </>
   );
