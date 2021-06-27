@@ -3,10 +3,12 @@ import React from 'react';
 import Provider from './context/ProviderContext';
 import Table from './Pages/Table';
 
+import './App.css';
+
 function App() {
   return (
     <Provider>
-      <div>
+      <div className="App-header">
         <Table />
       </div>
     </Provider>

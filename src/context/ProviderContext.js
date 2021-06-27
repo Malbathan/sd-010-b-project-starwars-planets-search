@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import context from './context';
 
+import Options from '../services/helpers';
+
 function Provider({ children }) {
   const [Planet, setInput] = useState('');
   const [responseAPI, setResponseAPI] = useState([]);
+  const [del, setDel] = useState({ alvo: '', coluna: '' });
+  const [options, setOptions] = useState(Options);
+  const [aux, setAux] = useState([]);
   const [filters, setFilters] = useState({
-    name: '',
     number: 0,
     column: 'population',
     comparison: 'maior que',
   });
+  // console.log(options);
+
+  // useEffect(() => {
+  //   const { alvo } = del;
+  //   console.log(alvo);
+  //   const optionFilter = options.filter((cur) => alvo !== cur);
+  //   setOptions(optionFilter);
+  // }, [del, options]);
 
   const fetchAPI = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets/');
     const responseJson = await response.json();
     setResponseAPI(responseJson.results);
+    setAux(responseJson.results);
   };
-  // console.log(responseAPI)
+  // console.log(responseAPI);
 
   useEffect(() => {
     fetchAPI();
@@ -26,19 +39,28 @@ function Provider({ children }) {
   const handleChangePlanet = (event) => {
     setInput(event.target.value);
   };
-  // console.log(`planet aqui${Planet}`)
+
+  const colum = ({ target: { name, value } }) => {
+    setFilters({
+      ...filters,
+      [name]: value,
+    });
+    setDel({ alvo: value });
+  };
 
   const changefilteredByNumber = ({ target: { name, value } }) => {
     setFilters({
       ...filters,
       [name]: value,
     });
+    // console.log(value);
   };
 
   const handleButtonFilterClick = () => {
     const { number, column, comparison } = filters;
+    console.log(aux);
 
-    const filteredData = responseAPI.filter((planet) => {
+    const filteredData = aux.filter((planet) => {
       if (comparison === 'maior que') {
         return parseInt(planet[column], 10) > parseInt(number, 10);
       }
@@ -49,23 +71,30 @@ function Provider({ children }) {
 
       return parseInt(planet[column], 10) === parseInt(number, 10);
     });
+    console.log(aux);
     setResponseAPI(filteredData);
+    const { alvo } = del;
+    const optionFilter = options.filter((cur) => alvo !== cur);
+    setOptions(optionFilter);
   };
 
   const GLOBAL_STATE = {
     responseAPI,
     handleChangePlanet,
     changefilteredByNumber,
+    colum,
     handleButtonFilterClick,
+    del,
+    options,
     filters: {
       filterByName: {
         name: Planet,
       },
       filterByNumericValues: [
         {
-          column: 'population',
-          comparison: 'maior que',
-          value: '100000',
+          column: filters.column,
+          comparison: filters.comparison,
+          value: filters.number,
         },
       ],
     },
