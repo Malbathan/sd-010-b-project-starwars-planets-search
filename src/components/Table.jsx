@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import TableContext from '../context/contexto';
 import TableLine from './TableLine';
+import Filters from './Filters';
 
 function Table() {
   const { planets } = useContext(TableContext);
@@ -11,6 +12,7 @@ function Table() {
   }
   return (
     <div>
+      <Filters />
       <table>
         <tr>
           {tags.map((tag, i) => <th key={ i }>{tag}</th>)}

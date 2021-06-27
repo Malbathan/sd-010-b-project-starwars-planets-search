@@ -5,6 +5,11 @@ import getPlanets from '../service/api';
 
 export default function TableProv({ children }) {
   const [planets, setplanets] = useState([]);
+  const [filterText, setfilterText] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const planetAPI = async () => {
     const { results } = await getPlanets();
@@ -18,10 +23,8 @@ export default function TableProv({ children }) {
     planetAPI();
   }, []);
 
-  const contextoGlobal = {
-    // junta todos os useStates para jogar no value
-    planets,
-  };
+  // junta todos os useStates para jogar no value
+  const contextoGlobal = { planets, filterText, setfilterText };
   return (
     <TableContext.Provider value={ contextoGlobal }>
       {children}
