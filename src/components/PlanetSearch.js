@@ -39,6 +39,7 @@ const PlanetSearch = () => {
         valor:
         <input data-testid="value-filter" type="number" name="number" id="number" />
       </label>
+      <button data-testid="button-filter" type="button">Filtrar</button>
     </div>
   );
 };
