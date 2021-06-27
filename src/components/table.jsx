@@ -5,14 +5,14 @@ import { Context } from './Provider/Provider';
 
 const RenderTable = () => {
   const batata = useContext(Context);
-  const { data, filtername: { filterByName: { name } } } = batata;
+  const { data, screenNumbers, filterOptions, filterNumeric: { numbers: { column, comparison, value } }, filtername: { filterByName: { name } } } = batata;
 
   return (
     <table>
       <Thead />
       <tbody>
         { data
-          .filter((planet) => planet.name.includes(name))
+          .filter((planet) => filterOptions(planet, column, comparison, Number(value))) // planet, column, comparison, value
           .map((item, index) => (
             <tr key={ index }>
               <td>
@@ -56,6 +56,7 @@ const RenderTable = () => {
               </td>
             </tr>))}
       </tbody>
+      {/* {console.log(column, comparison, value, 'eu aqui')} */}
     </table>
   );
 };

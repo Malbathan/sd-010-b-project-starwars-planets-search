@@ -4,7 +4,12 @@ import RenderTable from './table';
 import { Context } from './Provider/Provider';
 
 const Home = () => {
-  const { filterInput, data, handleClick } = useContext(Context);
+  const { filterInput, data, handleChange, handleClick, filterNumeric: { numbers: { column, comparison, value } } } = useContext(Context);
+
+  const verify = () => {
+    if (column.length === 0 || comparison.length === 0 || value.length === 0) { return true; }
+    return false;
+  };
 
   return (
     <div>
@@ -12,7 +17,7 @@ const Home = () => {
       <select
         id="batata"
         name="column"
-        onClick={ handleClick }
+        onClick={ handleChange }
         data-testid="column-filter"
       >
         <option>population</option>
@@ -21,7 +26,7 @@ const Home = () => {
         <option>rotation_period</option>
         <option>surface_water</option>
       </select>
-      <select name="comparison" onClick={ handleClick } data-testid="comparison-filter">
+      <select name="comparison" onClick={ handleChange } data-testid="comparison-filter">
         <option>maior que</option>
         <option>menor que</option>
         <option>igual a</option>
@@ -31,12 +36,13 @@ const Home = () => {
         name="value"
         placeholder="...numeros"
         data-testid="value-filter"
-        onChange={ handleClick }
+        onChange={ handleChange }
       />
 
       <button
         type="button"
         onClick={ handleClick }
+        disabled={ verify() }
         data-testid="button-filter"
       >
         botão

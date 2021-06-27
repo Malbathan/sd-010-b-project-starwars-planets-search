@@ -7,18 +7,17 @@ const Provider = ({ children }) => {
     filterByName: {
       name: '',
     },
-    filterByNumericValues:
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    // data: [],
+    numbers: {
+      column: '',
+      comparison: '',
+      value: '',
+    },
   };
 
   const [data, setData] = useState([]);
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
+  const [screenNumbers, setScreenNumbers] = useState(false);
 
   const filterInput = ({ target: { value } }) => {
     setName({
@@ -26,22 +25,42 @@ const Provider = ({ children }) => {
       filterByName: {
         name: value,
       },
-    }); console.log(filtername);
+    });
   };
-  const handleClick = ({ target: { value, name } }) => {
-    // console.log('batata');
-    console.log(value);
-    console.log(name);
-
-    const { filterByNumericValues } = filters;
-    filterByNumericValues[name] = value;
+  const handleChange = ({ target: { value, name } }) => {
+    const { numbers } = filterNumeric;
 
     setNumeric({
       ...filterNumeric,
-      filterByNumericValues: { ...filterByNumericValues, filterByNumericValues },
+      numbers: { ...numbers, [name]: value },
     });
-    console.log(filterByNumericValues);
-    console.log(filterNumeric);
+  };
+
+  const handleClick = () => {
+    setScreenNumbers(!screenNumbers);
+  };
+
+  const filterOptions = (planet, column, comparison, value) => {
+    const { filterByName: { name } } = filters;
+    if (screenNumbers === true) {
+      if (comparison === 'maior que') {
+        return planet[column] > value;
+      // console.log(value);
+      }
+
+      if (comparison === 'menor que') {
+        console.log(planet[column], planet[column] < value);
+        console.log(value);
+        if (planet[column] === 'unknown') return planet[column];
+        return planet[column] < value;
+      }
+
+      if (comparison === 'igual a') {
+        return planet[column] < value;
+      }
+    }
+
+    return planet.name.includes(name);
   };
 
   useEffect(() => {
@@ -51,7 +70,7 @@ const Provider = ({ children }) => {
   }, []);
 
   const context = {
-    filterInput, data, filtername, setData, handleClick,
+    filterInput, data, handleClick, screenNumbers, filterOptions, filtername, filterNumeric, setData, handleChange,
   };
 
   return (
