@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import DataContext from '../Context/DataContext';
+import useData from '../Context/UseData';
 
 function Table() {
   const { data, filters: { filterByName,
@@ -26,18 +27,6 @@ function Table() {
     return newData;
   };
 
-  function renderData() {
-    return filterPlanets().map((planet) => {
-      const attributes = Object.values(planet);
-      return (
-        <tr key={ planet.name }>
-          { attributes.map((attribute, index) => <td key={ index }>{ attribute }</td>) }
-        </tr>
-      );
-    });
-  }
-
-  if (data.length < 1) return <div>...Carregando</div>;
   return (
     <table>
       <thead>
@@ -58,7 +47,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { renderData() }
+        { useData(filterPlanets) }
       </tbody>
     </table>
   );

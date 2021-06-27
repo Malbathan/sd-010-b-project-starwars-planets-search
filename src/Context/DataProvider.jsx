@@ -7,6 +7,10 @@ const { Provider } = DataContext;
 const filterByName = {
   filterByName: '',
   filterByNumericValues: [],
+  order: {
+    column: 'name',
+    sort: 'ASC',
+  },
 };
 
 function DataProvider({ children }) {

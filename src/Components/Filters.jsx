@@ -8,6 +8,10 @@ function Filters() {
       comparison: 'maior que',
       value: '',
     },
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   };
 
   const { filters: filtersGlobal,
@@ -76,6 +80,33 @@ function Filters() {
     ));
   };
 
+  const onSelectSortCategory = ({ target }) => {
+    setFilters({
+      ...filters,
+      order: {
+        ...filters.order,
+        column: target.value,
+      },
+    });
+  };
+
+  const onSelectInputSort = ({ target }) => {
+    setFilters({
+      ...filters,
+      order: {
+        ...filters.order,
+        sort: target.value,
+      },
+    });
+  };
+
+  const onClickSortBtn = () => {
+    setFiltersGlobal({
+      ...filtersGlobal,
+      order: filters.order,
+    });
+  };
+
   return (
     <form>
       <h2>Filtros</h2>
@@ -119,6 +150,58 @@ function Filters() {
         disabled={ value === '' }
       >
         Filtrar
+      </button>
+      <label htmlFor="sort">
+        Ordene por Categoria
+        <select
+          data-testid="column-sort"
+          id="sort"
+          onChange={ (e) => onSelectSortCategory(e) }
+        >
+          <option>name</option>
+          <option>rotation_period</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>climate</option>
+          <option>gravity</option>
+          <option>terrain</option>
+          <option>surface_water</option>
+          <option>population</option>
+          <option>films</option>
+          <option>created</option>
+          <option>edited</option>
+          <option>url</option>
+        </select>
+      </label>
+      <span>Ordem</span>
+      <label htmlFor="asc">
+        ASC
+        <input
+          id="asc"
+          name="sort"
+          type="radio"
+          data-testid="column-sort-input-asc"
+          value="ASC"
+          onChange={ (e) => onSelectInputSort(e) }
+        />
+      </label>
+      <label htmlFor="desc">
+        DESC
+        <input
+          id="desc"
+          name="sort"
+          type="radio"
+          data-testid="column-sort-input-desc"
+          value="DESC"
+          onChange={ (e) => onSelectInputSort(e) }
+        />
+      </label>
+      <button
+        type="button"
+        onClick={ onClickSortBtn }
+        data-testid="column-sort-button"
+      >
+        Ordenar
       </button>
       <h4>Filtros aplicados</h4>
       { renderFilters() }
