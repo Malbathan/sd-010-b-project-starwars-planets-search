@@ -1,13 +1,13 @@
 import React from 'react';
 import PlanetsProvider from './context/PlanetsProvider';
-import SearchBar from './components/SearchBar';
-import Table from './components/Table';
-import './App.css';
+import { Header, SearchBar, Filters, Table } from './components';
 
 function App() {
   return (
     <PlanetsProvider>
+      <Header />
       <SearchBar />
+      <Filters />
       <Table />
     </PlanetsProvider>
   );

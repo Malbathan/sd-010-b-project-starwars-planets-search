@@ -30,12 +30,21 @@ function PlanetsProvider({ children }) {
     });
   }
 
+  function delFilter(column) {
+    setFilters({
+      ...filters,
+      filterByNumericValues: filters.filterByNumericValues
+        .filter((fil) => fil.column !== column),
+    });
+  }
+
   useEffect(() => { getData(); }, []);
   const contextValue = {
     data,
     filters,
     handleName,
     addFilter,
+    delFilter,
   };
 
   return (
