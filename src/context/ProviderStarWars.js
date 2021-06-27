@@ -13,6 +13,11 @@ function ProviderStarWars({ children }) {
     filterByName: { name: '' },
     filterByNumericValues: [],
   });
+  const [comparasionColum, setComparasionColum] = useState({
+    column: 'population',
+    coparasion: 'maior que',
+    value: 0,
+  });
 
   useEffect(() => {
     async function featchPlanets() {
@@ -61,9 +66,28 @@ function ProviderStarWars({ children }) {
   const addSelectFilter = (objFilter) => {
     const newArrayFilter = listFilter.filter((filter) => filter !== objFilter.column);
     setListFilter(newArrayFilter);
+
+    setComparasionColum({
+      ...comparasionColum,
+      column: newArrayFilter[0],
+    });
+
+    if (objFilter.column) {
+      setfilters({
+        ...filters,
+        filterByNumericValues: [...filters.filterByNumericValues, objFilter],
+      });
+    }
+  };
+
+  const removeFilter = (column) => {
+    const newArrayFilters = filters.filterByNumericValues
+      .filter(({ column: coluAfter }) => coluAfter !== column);
+    setListFilter([...listFilter, column]);
+
     setfilters({
       ...filters,
-      filterByNumericValues: [...filters.filterByNumericValues, objFilter],
+      filterByNumericValues: newArrayFilters,
     });
   };
 
@@ -75,6 +99,9 @@ function ProviderStarWars({ children }) {
     dataFilted,
     addSelectFilter,
     listFilter,
+    comparasionColum,
+    setComparasionColum,
+    removeFilter,
   };
 
   return (

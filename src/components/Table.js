@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ContextStarWars from '../context/ContextStarWars';
 
 function Table() {
-  const { dataFilted: data } = useContext(ContextStarWars);
+  const { dataFilted, data } = useContext(ContextStarWars);
 
   let arrayHeaders = null;
 
@@ -18,7 +18,7 @@ function Table() {
     return tableHeaders;
   };
 
-  const getdata = () => data.map((obj) => (
+  const getdata = () => dataFilted.map((obj) => (
     <tr key={ obj.name }>
       {arrayHeaders.map((key) => <td key={ key }>{obj[key]}</td>)}
     </tr>
