@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 export default function FilterByName(data) {
@@ -19,4 +19,20 @@ export function FilterByNumericValues(data) {
     if (comparison === 'igual a') return Number(planet[column]) === Number(value);
     return Number(planet[column]) < Number(value);
   });
+}
+
+export function SelectedNumericFilters() {
+  const { filters } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filters;
+
+  return (
+    <section>
+      {filterByNumericValues.map((filter, index) => (
+        <div key={ index } data-testid="filter">
+          {`${filter.column} ${filter.comparison} ${filter.value}`}
+          <button type="button">X</button>
+        </div>
+      ))}
+    </section>
+  );
 }
