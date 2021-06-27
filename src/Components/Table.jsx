@@ -3,11 +3,11 @@ import DataContext from '../Context/DataContext';
 import useData from '../Context/UseData';
 
 function Table() {
-  const { data, filters: {
+  const { data, filters: { filterByName,
     filterByNumericValues } } = useContext(DataContext);
 
   const filterPlanets = () => {
-    let newData = data;
+    let newData = data.filter(({ name }) => name.includes(filterByName));
     filterByNumericValues.forEach(({ column, comparison, value }) => {
       const filter = newData
         .filter((planet) => {
