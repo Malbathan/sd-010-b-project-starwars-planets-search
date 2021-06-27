@@ -5,7 +5,7 @@ function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
   const { filterByNumericValues } = filters;
 
-  const [column, setColumn] = useState('');
+  const [column, setColumn] = useState('rotation_period');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [options, setOptions] = useState([]);
@@ -14,13 +14,13 @@ function SelectForm() {
     const selectOptions = (coluna) => {
       if (data.length) {
         if (filterByNumericValues.length !== 0) {
-          console.log('Aquiiii')
           const newOptions = options.filter((key) => key !== 'name' && key !== coluna);
+          setColumn(newOptions[0]);
           setOptions(newOptions);
-          console.log(newOptions)
+        } else {
+          const filterOptions = Object.keys(data[0]).filter((key) => key !== 'name');
+          setOptions(filterOptions);
         }
-        const filterOptions = Object.keys(data[0]).filter((key) => key !== 'name');
-        setOptions(filterOptions);
       }
     };
     selectOptions(column);
@@ -42,7 +42,7 @@ function SelectForm() {
           onChange={ (event) => setColumn(event.target.value) }
         >
           { options.map((option, index) => (
-            <option key={ index }>{option}</option>)) }
+            <option value={ option } key={ index }>{option}</option>)) }
         </select>
       </label>
 
