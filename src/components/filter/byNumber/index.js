@@ -61,6 +61,11 @@ function Filtros() {
     setFiltrar(false);
   };
 
+  const options = [
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+    ['maior que', 'igual a', 'menor que'],
+  ];
+
   return (
     <form>
       <label htmlFor="filterByColumn">
@@ -72,11 +77,10 @@ function Filtros() {
           data-testid="column-filter"
           onChange={ handleValues }
         >
-          <option value="population"> population </option>
-          <option value="orbital_period"> orbital_period </option>
-          <option value="diameter"> diameter </option>
-          <option value="rotation_period"> rotation_period </option>
-          <option value="surface_water"> surface_water </option>
+          {
+            options[0].map((item, index) => (
+              <option key={ index } value={ item }>{item}</option>))
+          }
         </select>
       </label>
       <select
@@ -85,9 +89,10 @@ function Filtros() {
         value={ Rcomparison }
         onChange={ handleValues }
       >
-        <option value="maior que">maior que</option>
-        <option value="igual a">igual a</option>
-        <option value="menor que">menor que</option>
+        {
+          options[1].map((item, index) => (
+            <option key={ index } value={ item }>{item}</option>))
+        }
       </select>
       <input
         value={ Rvalue }
