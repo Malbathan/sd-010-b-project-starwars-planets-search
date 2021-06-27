@@ -3,13 +3,13 @@ import DataContext from '../Context/DataContext';
 import useData from '../Context/UseData';
 
 function Table() {
-  const { data, filters: { filterByName,
+  const { data, filters: {
     filterByNumericValues } } = useContext(DataContext);
 
   const filterPlanets = () => {
     let newData = data;
     filterByNumericValues.forEach(({ column, comparison, value }) => {
-      const filter = newData.filter(({ name }) => name.includes(filterByName))
+      const filter = newData
         .filter((planet) => {
           if (comparison === 'maior que') {
             return parseInt(planet[column], 10) > parseInt(value, 10);

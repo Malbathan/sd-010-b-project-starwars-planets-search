@@ -3,11 +3,12 @@ import DataContext from './DataContext';
 
 function useData(callback) {
   const {
-    filters: { order: { column: sortedColumn, sort } },
+    filters: { filterByName, order: { column: sortedColumn, sort } },
   } = useContext(DataContext);
   // if (data.length < 1) return <tr><td>...Carregando</td></tr>;
   const comparison = 1;
   return callback()
+    .filter(({ name }) => name.includes(filterByName))
     .sort((planetA, planetB) => {
       if (!parseInt(planetA[sortedColumn], 10)) {
         if (sort === 'ASC') {
