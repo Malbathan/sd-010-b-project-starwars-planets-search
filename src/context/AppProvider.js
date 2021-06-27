@@ -16,7 +16,7 @@ function AppProvider({ children }) {
     const fetchAPI = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const { results } = await fetch(endpoint).then((result) => result.json());
-      const newResults = results.map(({ name }) => name);
+      const newResults = results.map((result) => result);
       setData(newResults);
       setLoading(false);
     };
