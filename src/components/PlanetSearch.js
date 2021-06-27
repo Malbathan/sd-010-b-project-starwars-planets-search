@@ -15,7 +15,7 @@ const PlanetSearch = () => {
     <div>
       <h1>Star wars planets</h1>
       <label htmlFor="search">
-        search
+        {'search: '}
         <input
           data-testid="name-filter"
           id="search"
