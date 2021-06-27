@@ -35,6 +35,10 @@ const PlanetSearch = () => {
         <option value="igual a">igual a</option>
         <option value="menor que">menor que</option>
       </select>
+      <label htmlFor="number">
+        valor:
+        <input data-testid="value-filter" type="number" name="number" id="number" />
+      </label>
     </div>
   );
 };
