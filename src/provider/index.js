@@ -6,7 +6,21 @@ import DataContext from '../context';
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [table, setTable] = useState([]);
-  const [filtro, setFiltro] = useState({ filterByName: '' });
+  const [filtrar, setFiltrar] = useState(false);
+  const [filtro, setFiltro] = useState(
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '0',
+        },
+      ],
+    },
+  );
 
   useEffect(() => {
     async function fetchApi() {
@@ -24,7 +38,15 @@ function DataProvider({ children }) {
   }, []);
 
   // Monta um objeto com as informação para enviar para o context
-  const contextValue = { data, setData, table, filtro, setFiltro };
+  const contextValue = {
+    data,
+    setData,
+    table,
+    filtro,
+    setFiltro,
+    filtrar,
+    setFiltrar,
+  };
 
   return (
     <DataContext.Provider value={ contextValue }>

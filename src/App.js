@@ -2,14 +2,16 @@ import React from 'react';
 
 import DataProvider from './provider';
 import Table from './components/table';
-import Filtro from './components/filter';
+import FiltroNome from './components/filter/byName';
+import FiltroNumero from './components/filter/byNumber';
 import './App.css';
 
 function App() {
   return (
     <section>
       <DataProvider>
-        <Filtro />
+        <FiltroNome />
+        <FiltroNumero />
         <Table />
       </DataProvider>
     </section>

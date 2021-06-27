@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import DataContext from '../../context';
+import DataContext from '../../../context';
 
 export default function FilterName() {
-  const { setFiltro } = useContext(DataContext);
+  const { setFiltro, filtro } = useContext(DataContext);
   return (
     <label htmlFor="filterByName">
       Name:
@@ -11,7 +11,11 @@ export default function FilterName() {
         id="filterByName"
         data-testid="name-filter"
         onChange={ ({ target }) => {
-          setFiltro({ filterByName: target.value });
+          const { filterByNumericValues } = filtro;
+          setFiltro({
+            filterByName: { name: target.value },
+            filterByNumericValues,
+          });
         } }
       />
     </label>

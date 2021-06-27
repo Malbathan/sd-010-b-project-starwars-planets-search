@@ -3,10 +3,26 @@ import React, { useContext } from 'react';
 import DataContext from '../../context';
 
 function Table() {
-  const { table, data, filtro } = useContext(DataContext);
+  const { table, data, filtro, filtrar } = useContext(DataContext);
 
-  const dataFilter = data.filter((planet) => planet.name
-    .toUpperCase().includes(filtro.filterByName.toUpperCase()));
+  // Faz o filtro com o parametro recebido via context do input
+  let dataFilter = data.filter((planet) => planet.name
+    .toUpperCase().includes(filtro.filterByName.name.toUpperCase()));
+
+  if (filtrar) {
+    const { column, comparison, value } = filtro.filterByNumericValues[0];
+
+    if (comparison === 'maior que') {
+      dataFilter = data.filter(({ [`${column}`]: columnRef }) => parseInt(columnRef, 10)
+      > parseInt(value, 10));
+    } if (comparison === 'menor que') {
+      dataFilter = data.filter(({ [`${column}`]: columnRef }) => parseInt(columnRef, 10)
+      < parseInt(value, 10));
+    } if (comparison === 'igual a') {
+      dataFilter = data.filter(({ [`${column}`]: columnRef }) => parseInt(columnRef, 10)
+      === parseInt(value, 10));
+    }
+  }
 
   function TableContent() {
     if (data) {
