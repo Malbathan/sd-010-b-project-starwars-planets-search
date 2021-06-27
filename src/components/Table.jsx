@@ -4,11 +4,11 @@ import TableLine from './TableLine';
 import Filters from './Filters';
 
 function Table() {
-  const { planets } = useContext(TableContext);
+  const { planetsFilter } = useContext(TableContext);
   let tags = [];
 
-  if (planets.length !== 0) {
-    tags = Object.keys(planets[0]);
+  if (planetsFilter.length !== 0) {
+    tags = Object.keys(planetsFilter[0]);
   }
   return (
     <div>
@@ -17,7 +17,11 @@ function Table() {
         <tr>
           {tags.map((tag, i) => <th key={ i }>{tag}</th>)}
         </tr>
-        {planets.map((planet, i) => <TableLine i={ i } key={ i } planet={ planet } />)}
+        {planetsFilter.map((planet, i) => (<TableLine
+          i={ i }
+          key={ i }
+          planet={ planet }
+        />))}
 
       </table>
     </div>

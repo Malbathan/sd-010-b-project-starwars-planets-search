@@ -3,17 +3,18 @@ import React, { useContext } from 'react';
 import TableContext from '../context/contexto';
 
 function Filters() {
-  const { filterText, setfilterText } = useContext(TableContext);
+  const { setfilterText } = useContext(TableContext);
   return (
     <form>
-      {console.log(filterText)}
+      {/* {console.log(filterText)} */}
       <label htmlFor="name-filter">
+        Filtrar por texto
         <input
           type="text"
           id="name-filter"
           data-testid="name-filter"
           onChange={ (event) => setfilterText({ filterByName: {
-            name: event.target.value,
+            name: event.target.value.toLowerCase(),
           } }) }
         />
       </label>

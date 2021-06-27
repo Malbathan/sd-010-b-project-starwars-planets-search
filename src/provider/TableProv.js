@@ -5,6 +5,7 @@ import getPlanets from '../service/api';
 
 export default function TableProv({ children }) {
   const [planets, setplanets] = useState([]);
+  const [planetsFilter, setplanetsFilter] = useState([]);
   const [filterText, setfilterText] = useState({
     filterByName: {
       name: '',
@@ -20,11 +21,23 @@ export default function TableProv({ children }) {
   };
 
   useEffect(() => {
+    const { name } = filterText.filterByName;
+    if (name !== '') {
+      const filteredPlanets = planets.filter((planet) => planet.name
+        .toLowerCase()
+        .includes(name));
+      setplanetsFilter(filteredPlanets);
+    } else {
+      setplanetsFilter(planets);
+    }
+  }, [filterText, planets]);
+
+  useEffect(() => {
     planetAPI();
   }, []);
 
   // junta todos os useStates para jogar no value
-  const contextoGlobal = { planets, filterText, setfilterText };
+  const contextoGlobal = { planetsFilter, filterText, setfilterText };
   return (
     <TableContext.Provider value={ contextoGlobal }>
       {children}
