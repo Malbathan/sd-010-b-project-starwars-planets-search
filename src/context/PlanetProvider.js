@@ -10,6 +10,13 @@ function PlanetProvider({ children }) {
   const [isFetching, setIsFetching] = useState(true);
   const [name, setName] = useState('');
   const [filterSearch, setFilterSearch] = useState([]);
+  const [columnOptions, setcolumnOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
+  const [column, setCollums] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState();
+  const [filterNumber, setFilterNumber] = useState([]);
 
   // didMount -
   useEffect(() => { // função a ser execultada
@@ -28,6 +35,26 @@ function PlanetProvider({ children }) {
     );
   }, [name, data]);
 
+  const search = () => {
+    setFilterSearch([]);
+    if (comparison === 'maior que') {
+      setFilterNumber(
+        data.filter((results) => Number(results[column]) > value),
+      );
+    }
+    if (comparison === 'menor que') {
+      setFilterNumber(
+        data.filter((results) => Number(results[column]) < value),
+      );
+    }
+    if (comparison === 'igual a') {
+      setFilterNumber(
+        data.filter((planet) => Number(planet[column]) === Number(value)),
+      );
+    }
+    setcolumnOptions(columnOptions.filter((item) => item !== column));
+  };
+
   return (
     // data - componentes que terão acesso aos states
     // children - tudo que fica dentro desse provider será repassado no children (filhos)
@@ -37,7 +64,14 @@ function PlanetProvider({ children }) {
         isFetching,
         setName,
         filterSearch,
-        filters: { filterByName: { name } },
+        columnOptions,
+        filters: { filterByName: { name },
+          filterByNumericValues: [{ column, comparison, value }] },
+        setCollums,
+        setComparison,
+        setValue,
+        filterNumber,
+        search,
       } }
     >
       {children}

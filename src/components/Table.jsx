@@ -3,7 +3,7 @@ import PlanetContext from '../context/PlanetContext';
 
 function Table() {
   // useContext() - retorna o valor atual do contexto. O valor de contexto atual é determinado pela prop value
-  const { data, isFetching, filterSearch } = useContext(PlanetContext);
+  const { data, isFetching, filterSearch, filterNumber } = useContext(PlanetContext);
   // isFetching (true) para renderizar um rótulo “Carregando ...”
   if (isFetching) {
     return <h2>Carregando...</h2>;
@@ -37,6 +37,13 @@ function Table() {
             <td>{results.edited}</td>
           </tr>
         ))}
+        {
+          filterNumber.map((results, index) => (
+            <tr key={ index }>
+              {Object.values(results).map((value, idx) => (<td key={ idx }>{value}</td>))}
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   );
