@@ -1,6 +1,15 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../contex/StarWarsContext';
 
+const selectColumnOptions = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water'];
+
+const comparisons = ['maior que', 'menor que', 'igual a'];
+
 export default function Filters() {
   const {
     handleNameFilter,
@@ -12,40 +21,28 @@ export default function Filters() {
     { column: 'population', comparison: 'maior que', value: 0 },
   );
 
-  const nameFilter = filters.filterByName.name;
-  const [isHidden, setHidden] = useState(
-    { population: false,
-      orbital_period: false,
-      diameter: false,
-      rotation_period: false,
-      surface_water: false,
-    },
-  );
+  const [columnList, setColumn] = useState(selectColumnOptions);
+
+  const { name } = filters.filterByName;
+  const { column, comparison } = local;
 
   function handleLocalStates({ target }) {
     const { id, value } = target;
     setLocalFilter({ ...local, [id]: value });
   }
 
-  const { column, comparison } = local;
   function handleBtnClick() {
     filterByValues({
       column,
       comparison,
       value: local.value,
     });
-    setHidden({ ...isHidden[column] = true, ...isHidden });
+    setColumn(columnList.filter((col) => col !== column));
   }
 
   function handleFilterRemoval(e) {
     e.preventDefault();
     setFilter({ ...filters, filterByNumericValues: [] });
-    setHidden({ population: false,
-      orbital_period: false,
-      diameter: false,
-      rotation_period: false,
-      surface_water: false,
-    });
   }
 
   return (
@@ -55,7 +52,7 @@ export default function Filters() {
           data-testid="name-filter"
           id="filter"
           type="text"
-          value={ nameFilter }
+          value={ name }
           onChange={ (e) => handleNameFilter(e) }
         />
       </label>
@@ -66,11 +63,7 @@ export default function Filters() {
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
-          <option hidden={ isHidden.population }>population</option>
-          <option hidden={ isHidden.orbital_period }>orbital_period</option>
-          <option hidden={ isHidden.diameter }>diameter</option>
-          <option hidden={ isHidden.rotation_period }>rotation_period</option>
-          <option hidden={ isHidden.surface_water }>surface_water</option>
+          {columnList.map((col, i) => <option key={ i }>{col}</option>)}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -80,9 +73,7 @@ export default function Filters() {
           id="comparison"
           onChange={ (e) => handleLocalStates(e) }
         >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          {comparisons.map((comp, i) => <option key={ i }>{comp}</option>)}
         </select>
       </label>
       <label htmlFor="value-filter">
@@ -112,7 +103,6 @@ export default function Filters() {
             data-testid="filter"
           >
             x
-
           </button>)}
       </label>
     </form>
