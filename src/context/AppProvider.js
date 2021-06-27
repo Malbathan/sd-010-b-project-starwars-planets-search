@@ -10,6 +10,11 @@ function AppProvider({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: '',
+      comparison: '',
+      value: '',
+    }],
   });
   const myContextValues = {
     loading,
