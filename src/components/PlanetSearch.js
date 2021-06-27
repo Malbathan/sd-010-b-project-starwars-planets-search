@@ -30,6 +30,11 @@ const PlanetSearch = () => {
         <option value="rotation_period">rotation_period</option>
         <option value="surface_water">surface_water</option>
       </select>
+      <select data-testid="comparison-filter">
+        <option value="maior que">maior que</option>
+        <option value="igual a">igual a</option>
+        <option value="menor que">menor que</option>
+      </select>
     </div>
   );
 };
