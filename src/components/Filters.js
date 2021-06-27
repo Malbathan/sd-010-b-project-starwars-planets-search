@@ -5,8 +5,10 @@ export default function Filters() {
   const {
     handleNameFilter,
     filters,
-    filterByValues } = useContext(StarWarsContext);
-  const [local, setFilter] = useState(
+    filterByValues,
+    setFilter,
+  } = useContext(StarWarsContext);
+  const [local, setLocalFilter] = useState(
     { column: 'population', comparison: 'maior que', value: 0 },
   );
 
@@ -20,20 +22,31 @@ export default function Filters() {
     },
   );
 
-  const handleLocalStates = ({ target }) => {
+  function handleLocalStates({ target }) {
     const { id, value } = target;
-    setFilter({ ...local, [id]: value });
-  };
+    setLocalFilter({ ...local, [id]: value });
+  }
 
   const { column, comparison } = local;
-  const handleBtnClick = () => {
+  function handleBtnClick() {
     filterByValues({
       column,
       comparison,
       value: local.value,
     });
     setHidden({ ...isHidden[column] = true, ...isHidden });
-  };
+  }
+
+  function handleFilterRemoval(e) {
+    e.preventDefault();
+    setFilter({ ...filters, filterByNumericValues: [] });
+    setHidden({ population: false,
+      orbital_period: false,
+      diameter: false,
+      rotation_period: false,
+      surface_water: false,
+    });
+  }
 
   return (
     <form>
@@ -92,7 +105,15 @@ export default function Filters() {
           {' '}
           Send Comparison
         </button>
-        <button type="button" data-testid="filter">x</button>
+        {filters.filterByNumericValues.length - 1 > 0 && (
+          <button
+            type="button"
+            onClick={ (e) => handleFilterRemoval(e) }
+            data-testid="filter"
+          >
+            x
+
+          </button>)}
       </label>
     </form>
   );

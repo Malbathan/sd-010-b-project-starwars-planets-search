@@ -90,6 +90,7 @@ export default function StarWarsProvider({ children }) {
         data,
         handleNameFilter,
         filterByValues,
+        setFilter,
         filtered,
         filters,
       } }
