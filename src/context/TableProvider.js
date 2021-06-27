@@ -31,7 +31,8 @@ function TableProvider({ children }) {
     filterByValue,
   };
 
-  const context = { planets,
+  const context = {
+    planets,
     filters,
     setFilterByName,
     filterByValue,
