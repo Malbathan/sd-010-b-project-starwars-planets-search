@@ -9,9 +9,9 @@ const StarWarsProvider = ({ children }) => {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: '',
+    column: '',
+    comparison: '',
+    value: 0,
   });
 
   useEffect(() => {
@@ -51,10 +51,24 @@ const StarWarsProvider = ({ children }) => {
     }));
   }
 
+  function comparing(planet) {
+    const { column, comparison, value } = filters;
+    if (comparison === 'maior que') {
+      console.log('maior que');
+      return planet[column] > value;
+    }
+
+    if (comparison === 'menor que') {
+      console.log('menor que');
+      return planet[column] < value;
+    }
+    return planet[column] === value;
+  }
+
   function handleClick() {
-    setFilteredPlanets(data.map((planet) => (
-      [planet.population > 20]
-    )));
+    setFilteredPlanets(data.filter(
+      (planet) => (comparing(planet)),
+    ));
   }
 
   function clearFilters() {
@@ -87,7 +101,7 @@ StarWarsProvider.propTypes = {
 };
 
 StarWarsProvider.defaultProps = {
-  children: {},
+  children: undefined,
 };
 
 export default StarWarsProvider;

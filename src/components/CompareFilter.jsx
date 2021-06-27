@@ -6,19 +6,19 @@ function filtersColumns(handleChange, handleClick) {
     <>
       Filter by numeric Values
       <label htmlFor="column-filter">
-        <select select="column-filter" name="column" onChange={ handleChange }>
-          <option>Population</option>
-          <option>Orbital Period</option>
-          <option>Diameter</option>
-          <option>Rotation Period</option>
-          <option>Surface Water</option>
+        <select data-testid="column-filter" name="column" onChange={ handleChange }>
+          <option>population</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>rotation_period</option>
+          <option>surface_water</option>
         </select>
       </label>
       <label htmlFor="comparison-filter">
-        <select select="comparison-filter" data-testid="comparison-filter" name="comparison" onChange={ handleChange }>
-          <option>Maior que</option>
-          <option>Menor que</option>
-          <option>Igual a</option>
+        <select data-testid="comparison-filter" data-testid="comparison-filter" name="comparison" onChange={ handleChange }>
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">

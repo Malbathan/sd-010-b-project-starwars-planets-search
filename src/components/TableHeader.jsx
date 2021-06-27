@@ -3,7 +3,7 @@ import StarWarsContext from '../context/StarWarsContext';
 
 function renderTableHeader(keys, index) {
   return (
-    <td key={ index }>{keys}</td>
+    <th key={ index }>{keys}</th>
   );
 }
 
