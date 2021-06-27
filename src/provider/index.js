@@ -16,7 +16,7 @@ function DataProvider({ children }) {
         {
           column: 'population',
           comparison: 'maior que',
-          value: '0',
+          value: '',
         },
       ],
     },

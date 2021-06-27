@@ -11,7 +11,6 @@ function Table() {
 
   if (filtrar) {
     const { column, comparison, value } = filtro.filterByNumericValues[0];
-
     if (comparison === 'maior que') {
       dataFilter = data.filter(({ [`${column}`]: columnRef }) => parseInt(columnRef, 10)
       > parseInt(value, 10));

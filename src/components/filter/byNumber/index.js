@@ -57,7 +57,7 @@ function Filtros() {
       filterByNumericValues: [{
         column: 'population',
         comparision: 'maior que',
-        value: 0 }],
+        value: '' }],
     }));
     setFiltrar(false);
   };
@@ -89,6 +89,7 @@ function Filtros() {
         <option value="menor que">menor que</option>
       </select>
       <input
+        value={ filtro.filterByNumericValues[0].value }
         type="number"
         name="value"
         onChange={ handleValues }
