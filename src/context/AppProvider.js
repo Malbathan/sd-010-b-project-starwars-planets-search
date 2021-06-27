@@ -5,11 +5,18 @@ import AppContext from './AppContext';
 function AppProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
   const myContextValues = {
     data,
     setData,
     loading,
     setLoading,
+    filters,
+    setFilters,
   };
 
   useEffect(() => {
