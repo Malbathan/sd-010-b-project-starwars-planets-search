@@ -17,6 +17,10 @@ export default function Table() {
   }, [planets]);
 
   useEffect(() => {
+    setFilteredPlanets(planets);
+  }, [filterByNumericValues]);
+
+  useEffect(() => {
     function filter() {
       if (filterByNumericValues.length === 0) {
         return;
@@ -34,7 +38,6 @@ export default function Table() {
           const filtered = filteredPlanets
             .filter((planet) => Number(planet[column]) < Number(value));
           setFilteredPlanets(filtered);
-          console.log('menor que');
           break;
         }
         case 'igual a': {
