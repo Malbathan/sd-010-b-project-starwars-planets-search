@@ -3,14 +3,13 @@ import DataContext from '../../../context';
 
 function Filtros() {
   const { filtro, setFiltro, setFiltrar } = useContext(DataContext);
+  const {
+    column: Rcolumn,
+    comparison: Rcomparison,
+    value: Rvalue,
+  } = filtro.filterByNumericValues[0];
 
   const handleValues = (event) => {
-    const {
-      column: Rcolumn,
-      comparison: Rcomparison,
-      value: Rvalue,
-    } = filtro.filterByNumericValues[0];
-
     const { value, name } = event.target;
     if (name === 'column') {
       setFiltro(() => ({
@@ -69,6 +68,7 @@ function Filtros() {
         {' '}
         <select
           name="column"
+          value={ Rcolumn }
           data-testid="column-filter"
           onChange={ handleValues }
         >
@@ -82,6 +82,7 @@ function Filtros() {
       <select
         name="comparison"
         data-testid="comparison-filter"
+        value={ Rcomparison }
         onChange={ handleValues }
       >
         <option value="maior que">maior que</option>
@@ -89,7 +90,7 @@ function Filtros() {
         <option value="menor que">menor que</option>
       </select>
       <input
-        value={ filtro.filterByNumericValues[0].value }
+        value={ Rvalue }
         type="number"
         name="value"
         onChange={ handleValues }
