@@ -2,14 +2,31 @@ import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
 const PlanetTable = () => {
-  const { planets, loading } = useContext(AppContext);
+  const { data, loading } = useContext(AppContext);
   return (
     <div>
       {
         loading
-          ? 'Carregando...'
+          ? (<h2>Carregando...</h2>)
           : (
-            planets.map((planet) => <li key={ planet }>{planet}</li>)
+            <table>
+              <thead>
+                <tr>
+                  <th>PLANETA</th>
+                  <th>PLANETA</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  data.map((planet) => (
+                    <tr key={ planet }>
+                      <td>primeiro</td>
+                      <td>segundo</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
           )
       }
     </div>

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import AppContext from './AppContext';
 
 function AppProvider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const myContextValues = {
-    planets,
-    setPlanets,
+    data,
+    setData,
     loading,
     setLoading,
   };
@@ -15,9 +15,9 @@ function AppProvider({ children }) {
   useEffect(() => {
     const fetchAPI = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-      const { results } = await fetch(endpoint).then((data) => data.json());
+      const { results } = await fetch(endpoint).then((result) => result.json());
       const newResults = results.map(({ name }) => name);
-      setPlanets(newResults);
+      setData(newResults);
       setLoading(false);
     };
     fetchAPI();
