@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
-import { SWContext } from '../context/SWContext';
+import SWContext from '../context/SWContext';
 
 export default function Filter() {
-  const { setFilteredName } = useContext(SWContext);
-  function handleNameChange(e) {
-    const { value } = e.target;
-    setFilteredName(value);
-  }
+  const { filters, setFilters } = useContext(SWContext);
+
+  const filterName = ({ target }) => {
+    setFilters({ ...filters, filterByName: { name: target.value } });
+  };
+
   return (
     <div>
       <input
         type="text"
-        onChange={ handleNameChange }
-        placeholder="Filtre por nome do planeta"
+        onChange={ filterName }
+        placeholder="Search"
         data-testid="name-filter"
       />
     </div>
