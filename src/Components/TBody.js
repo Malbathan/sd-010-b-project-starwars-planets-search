@@ -20,12 +20,9 @@ export default function TBody() {
   useEffect(() => {
     const { name } = filters.filterByName;
     const fliteredList = (name)
-    // filtra a lista baseado no texto vindo do estado 'filters'
       ? planets
         .filter((planet) => (planet.name).toLowerCase().includes(name)) : planets;
-    // seta a lista filtrada no estado deste component
     setNewPlanets(fliteredList);
-    // dependencias que, caso mudem, reativam a função
   }, [planets, filters.filterByName]);
 
   // condicional criada p/ remover a key residents da lista

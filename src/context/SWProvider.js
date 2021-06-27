@@ -10,6 +10,8 @@ export default function SWProvider(props) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [{
+      column: '', comparison: '', value: 0 }],
   });
 
   const context = {
