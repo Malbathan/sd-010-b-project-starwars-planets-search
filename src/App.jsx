@@ -1,23 +1,16 @@
+// https://www.youtube.com/watch?v=nV7Mf77GiOc video de referência para renderizar a tabela.
+
 import React from 'react';
-import * as ReactBootStrap from 'react-bootstrap';
 import StarWarsProvider from './context/StarWarsProvider';
 import './App.css';
-import TableHeader from './components/TableHeader';
-import Name from './components/Name';
+import Table from './components/Table';
+import FilterByText from './components/FilterByText';
 
 function App() {
   return (
     <StarWarsProvider>
-      <ReactBootStrap.Table>
-        <thead>
-          <tr>
-            <TableHeader />
-          </tr>
-        </thead>
-        <tbody>
-          <Name />
-        </tbody>
-      </ReactBootStrap.Table>
+      <FilterByText />
+      <Table />
     </StarWarsProvider>
   );
 }

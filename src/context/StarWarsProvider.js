@@ -5,6 +5,9 @@ import StarWarsContext from './StarWarsContext';
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [keys, setKeys] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -14,6 +17,7 @@ const StarWarsProvider = ({ children }) => {
         delete result.residents
       ));
       setData(results);
+      setLoading(!loading);
       const colNames = () => {
         const keysNames = Object.keys(results[0]);
         setKeys(keysNames);
@@ -23,9 +27,24 @@ const StarWarsProvider = ({ children }) => {
     fetchPlanets();
   }, []);
 
+  useEffect(() => {
+    setFilteredPlanets(
+      data.filter(
+        (planet) => (
+          planet.name.toLowerCase().includes(search.toLocaleLowerCase())
+        ),
+      ),
+    );
+  }, [search, data]);
+
+  if (loading) {
+    return <span>Loading Planets</span>;
+  }
+
   const toConsume = {
-    data,
     keys,
+    setSearch,
+    filteredPlanets,
   };
 
   return (
@@ -43,4 +62,5 @@ StarWarsProvider.propTypes = {
 StarWarsProvider.defaultProps = {
   children: {},
 };
+
 export default StarWarsProvider;

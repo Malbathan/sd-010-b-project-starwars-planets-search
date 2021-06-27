@@ -21,13 +21,13 @@ function renderPlanets(data, index) {
   );
 }
 
-const Name = () => (
+const TableContent = () => (
 
   <StarWarsContext.Consumer>
     {
-      ({ data }) => data.map(renderPlanets)
+      ({ filteredPlanets }) => filteredPlanets.map(renderPlanets)
     }
   </StarWarsContext.Consumer>
 );
 
-export default Name;
+export default TableContent;
