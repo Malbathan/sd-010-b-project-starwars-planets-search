@@ -57,6 +57,19 @@ table td {
 
 .TableFilter {
   background-color: yellow;
-  height: 100px;
+  display: flex;
+  min-height: 120px;
   text-align: center;
+}
+
+.addFilters {
+  margin-left: 50px;
+}
+
+.selected-filters {
+  margin-left: 50px;
+}
+
+.selected-filters h3 {
+  margin: 0;
 }
