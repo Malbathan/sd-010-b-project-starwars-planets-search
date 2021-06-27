@@ -11,9 +11,9 @@ function AppProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [{
-      column: '',
-      comparison: '',
-      value: '',
+      column: 'population',
+      comparison: 'maior que',
+      value: '0',
     }],
   });
   const myContextValues = {

@@ -80,6 +80,7 @@ const PlanetSearch = () => {
           type="number"
           name="value"
           id="number"
+          min="0"
           onChange={ filterByNumericValue }
         />
       </label>
