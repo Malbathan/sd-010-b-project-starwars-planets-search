@@ -41,7 +41,7 @@ function AppProvider({ children }) {
 
   useEffect(() => {
     const { filterByName: { name } } = filters;
-    const newData = dataAPI.filter((obj) => obj.name.includes(name));
+    const newData = dataAPI.filter((planet) => planet.name.includes(name));
     setData(newData);
   }, [dataAPI, filters]);
 
