@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react';
 import ApiContext from '../Context/ApiContext';
 
 function FilterByColumn() {
-  const [filterByNumericValues, setfilterByNumericValues] = useState();
+  const [numericValues, setNumericValues] = useState();
 
   const { filterByComparison, columnOptions } = useContext(ApiContext);
 
   const handleChange = ({ target: { id, value } }) => {
-    setfilterByNumericValues({
-      ...filterByNumericValues,
+    setNumericValues({
+      ...numericValues,
       [id]: value,
     });
   };
@@ -45,7 +45,7 @@ function FilterByColumn() {
       <br />
       <button
         type="button"
-        onClick={ () => filterByComparison(filterByNumericValues) }
+        onClick={ () => filterByComparison(numericValues) }
         data-testid="button-filter"
       >
         Adiciona filtro

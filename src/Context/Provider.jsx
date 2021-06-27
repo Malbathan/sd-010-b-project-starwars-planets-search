@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiContext from './ApiContext';
 import fetchAPI from '../Services';
+import { mappingHeaders, filteringAndMappingData }
+  from '../Functions';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
@@ -21,19 +23,12 @@ function Provider({ children }) {
     'surface_water',
   ]);
 
-  const getPlanetsData = async () => {
-    const planetsData = await fetchAPI();
-    setData(planetsData);
-  };
-
-  const filterByName = ({ target: { value } }) => {
-    setFilters({
-      ...filters,
-      filterByName: {
-        name: value,
-      },
-    });
-  };
+  const filterByName = ({ target: { value } }) => setFilters({
+    ...filters,
+    filterByName: {
+      name: value,
+    },
+  });
 
   const filterByComparison = ({ column, comparison, value }) => {
     setFilters({
@@ -47,16 +42,27 @@ function Provider({ children }) {
         }],
     });
     const index = columnOptions.indexOf(column);
-    const noItemColumnFound = -1;
-    if (index > noItemColumnFound) {
-      columnOptions.splice(index, 1);
-    }
+    columnOptions.splice(index, 1);
     setColumnOptions(columnOptions);
+  };
+
+  const getPlanetsData = async () => {
+    const planetsData = await fetchAPI();
+    setData(planetsData);
   };
 
   useEffect(() => {
     getPlanetsData();
   }, []);
+
+  const [planetsInfo, setPlanetsInfo] = useState();
+
+  useEffect(() => {
+    const planetHeaders = mappingHeaders(data);
+    const filteredPlanets = filteringAndMappingData(data, filters);
+
+    setPlanetsInfo({ planetHeaders, filteredPlanets });
+  }, [data, filters, filters.filterByName.name, filters.filterByNumericValues]);
 
   const context = {
     data,
@@ -64,6 +70,7 @@ function Provider({ children }) {
     filterByName,
     filterByComparison,
     columnOptions,
+    planetsInfo,
   };
 
   return (
