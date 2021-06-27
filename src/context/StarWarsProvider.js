@@ -8,9 +8,9 @@ const StarWarsProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [search, setSearch] = useState('');
-  const [filters, setFilters] = useState({
-    column: '',
-    comparison: '',
+  const [numericFilters, setNumericFilters] = useState({
+    column: 'population',
+    comparison: 'maior que',
     value: 0,
   });
 
@@ -45,30 +45,24 @@ const StarWarsProvider = ({ children }) => {
   function handleChange({ target }) {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    setFilters((oldState) => ({
+    setNumericFilters((oldState) => ({
       ...oldState,
       [name]: value,
     }));
   }
 
-  function comparing(planet) {
-    const { column, comparison, value } = filters;
-    if (comparison === 'maior que') {
-      console.log('maior que');
-      return planet[column] > value;
-    }
-
-    if (comparison === 'menor que') {
-      console.log('menor que');
-      return planet[column] < value;
-    }
-    return planet[column] === value;
-  }
-
   function handleClick() {
-    setFilteredPlanets(data.filter(
-      (planet) => (comparing(planet)),
-    ));
+    const { column, comparison, value } = numericFilters;
+    if (comparison === 'maior que') {
+      console.log('oi');
+      return setFilteredPlanets(data.filter((planet) => planet[column] > value));
+    }
+    if (comparison === 'menor que') {
+      return setFilteredPlanets(data.filter((planet) => planet[column] < value));
+    }
+    if (comparison === 'igual a') {
+      return setFilteredPlanets(data.filter((planet) => planet[column] === value));
+    }
   }
 
   function clearFilters() {

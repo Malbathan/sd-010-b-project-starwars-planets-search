@@ -15,18 +15,27 @@ function filtersColumns(handleChange, handleClick) {
         </select>
       </label>
       <label htmlFor="comparison-filter">
-        <select data-testid="comparison-filter" data-testid="comparison-filter" name="comparison" onChange={ handleChange }>
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ handleChange }
+        >
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
         </select>
       </label>
       <label htmlFor="value-filter">
-        <input type="numeric" data-testid="value-filter" name="value" onChange={ handleChange } />
+        <input
+          type="numeric"
+          data-testid="value-filter"
+          name="value"
+          onChange={ handleChange }
+        />
       </label>
       <button
-        type="button"
-        data-testeid="button-filter"
+        type="submit"
+        data-testid="button-filter"
         onClick={ () => handleClick() }
       >
         Aplicar filtros
