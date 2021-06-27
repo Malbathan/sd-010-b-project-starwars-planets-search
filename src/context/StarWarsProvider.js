@@ -8,6 +8,11 @@ const StarWarsProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '',
+  });
 
   useEffect(() => {
     const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -37,14 +42,36 @@ const StarWarsProvider = ({ children }) => {
     );
   }, [search, data]);
 
+  function handleChange({ target }) {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    setFilters((oldState) => ({
+      ...oldState,
+      [name]: value,
+    }));
+  }
+
+  function handleClick() {
+    setFilteredPlanets(data.map((planet) => (
+      [planet.population > 20]
+    )));
+  }
+
+  function clearFilters() {
+    setFilteredPlanets(data);
+  }
+
   if (loading) {
-    return <span>Loading Planets</span>;
+    return <span>Loading Planets...</span>;
   }
 
   const toConsume = {
+    filteredPlanets,
     keys,
     setSearch,
-    filteredPlanets,
+    handleChange,
+    handleClick,
+    clearFilters,
   };
 
   return (

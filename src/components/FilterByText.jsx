@@ -5,7 +5,7 @@ import StarWarsContext from '../context/StarWarsContext';
 function renderInputText(setSearch) {
   return (
     <label htmlFor="planet">
-      Filter By Planets
+      Filter planets by name
       <input
         data-testid="name-filter"
         name="planet"
