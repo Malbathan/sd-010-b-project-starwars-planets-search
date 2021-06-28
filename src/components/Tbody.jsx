@@ -1,27 +1,13 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
-import PlanetsContext from '../context/PlanetsContext';
+import React, { } from 'react';
 
-import FilterByName, { FilterByNumericValues } from './Filters';
+import useFilters from '../hooks/useFilters';
 
-function Tbody({ data }) {
-  const { filters } = useContext(PlanetsContext);
-  const { filterByName, filterByNumericValues } = filters;
-  const { name } = filterByName;
-
-  const planetsArr = () => {
-    if (name) {
-      return FilterByName(data);
-    }
-    if (filterByNumericValues.length) {
-      return FilterByNumericValues(data);
-    }
-    return data;
-  };
+function Tbody() {
+  const [newData] = useFilters();
 
   return (
     <tbody>
-      {planetsArr().map((planet, index) => (
+      {newData.map((planet, index) => (
         <tr key={ index }>
           <td>{planet.name}</td>
           <td>{planet.rotation_period}</td>
@@ -41,9 +27,5 @@ function Tbody({ data }) {
     </tbody>
   );
 }
-
-Tbody.propTypes = {
-  data: PropTypes.arrayOf(Object).isRequired,
-};
 
 export default Tbody;
