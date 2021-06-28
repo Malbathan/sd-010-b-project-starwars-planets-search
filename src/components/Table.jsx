@@ -3,27 +3,24 @@ import PlanetContext from '../context/PlanetContext';
 
 export default function Table() {
   const INITIAL_STATE = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [],
+    filterByName: {
+      name: '',
     },
+    filterByNumericValues: [],
   };
 
   // states
   const { data, fetchAPI } = useContext(PlanetContext);
-
-  const [{ filters }, setFilters] = useState(INITIAL_STATE);
-  const nameInputState = filters.filterByName.name;
-
+  const [{ filterByName }, setFilters] = useState(INITIAL_STATE);
+  const nameInputState = filterByName.name;
   const [dataFilteredByName, setDataFilteredByName] = useState([]);
+  const [filterByNumeric, setFilterByNumeric] = useState([]);
 
   // functions and Hooks
   useEffect(fetchAPI, []);
 
   const handleChangeForName = ({ target: { value } }) => {
-    setFilters({ filters: { filterByName: { name: value } } });
+    setFilters({ filterByName: { name: value } });
   };
 
   useEffect(() => {
@@ -31,6 +28,20 @@ export default function Table() {
     const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
     setDataFilteredByName(countriesFilteredByName);
   }, [data, nameInputState]);
+
+  const handleChangeSelects = ({ target: { value } }) => {
+    console.log(value);
+
+    // setFilterByNumeric( filterByNumericValues{
+    //   column: ,
+    //   condition: ,
+    //   number: ,
+    // })
+  };
+
+  const handleClick = ({ target }) => {
+
+  };
 
   const conditionalRendering = () => {
     // conditional depending on the filters
@@ -114,7 +125,7 @@ export default function Table() {
             placeholder="Filtering by name"
           />
         </label>
-        <select name="column" id="column" data-testid="column-filter">
+        <select name="column" id="column" onChange={ handleChangeSelects } data-testid="column-filter">
           <option defaultValue="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
@@ -125,13 +136,14 @@ export default function Table() {
           name="condition"
           id="condition"
           data-testid="comparison-filter"
+          onChange={ handleChangeSelects }
         >
           <option defaultValue="maior que">maior que</option>
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <input type="number" data-testid="value-filter" />
-        <button type="button" data-testid="button-filter">
+        <input type="number" data-testid="value-filter" onChange={ handleChangeSelects } />
+        <button type="button" onClick={ handleClick } data-testid="button-filter">
           Filtrar
         </button>
 
