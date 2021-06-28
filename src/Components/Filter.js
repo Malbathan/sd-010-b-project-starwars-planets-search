@@ -18,9 +18,7 @@ export default function Filter() {
     setFilters({
       ...filters,
       filterByNumericValues: [
-        { column, comparison, values },
-      ],
-    });
+        { column, comparison, value: values }] });
   };
 
   // const aplicaFiltro = filters.filterByNumericValues.map((elem) => elem.column);

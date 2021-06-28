@@ -29,12 +29,9 @@ export default function TBody() {
 
     const filterByNumericValues = filterByName.filter((planet) => {
       switch (comparison) {
-      case 'maior que':
-        return (planet[column] > value);
-      case 'menor que':
-        return (planet[column] < value);
-      case 'igual a':
-        return (planet[column] === value);
+      case 'maior que': return parseFloat(planet[column]) > parseFloat(value);
+      case 'menor que': return parseFloat(planet[column]) < parseFloat(value);
+      case 'igual a': return parseFloat(planet[column]) === parseFloat(value);
       default:
         return planet;
       }
