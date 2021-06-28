@@ -20,7 +20,7 @@ const useFilters = () => {
   useEffect(() => {
     if (filterByNumericValues.length) {
       filterByNumericValues.forEach(({ column, comparison, value }) => {
-        setNewData(data.filter((planet) => {
+        setNewData(newData.filter((planet) => {
           if (comparison === 'maior que') return Number(planet[column]) > Number(value);
           if (comparison === 'igual a') return Number(planet[column]) === Number(value);
           return Number(planet[column]) < Number(value);
