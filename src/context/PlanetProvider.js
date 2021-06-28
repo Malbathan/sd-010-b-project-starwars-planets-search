@@ -55,6 +55,15 @@ function PlanetProvider({ children }) {
     setcolumnOptions(columnOptions.filter((item) => item !== column));
   };
 
+  const deletResetFilter = () => {
+    setcolumnOptions([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+      setValue(),
+      setComparison(''),
+      setFilterNumber(data),
+    ]);
+  };
+
   return (
     // data - componentes que terão acesso aos states
     // children - tudo que fica dentro desse provider será repassado no children (filhos)
@@ -72,6 +81,7 @@ function PlanetProvider({ children }) {
         setValue,
         filterNumber,
         search,
+        deletResetFilter,
       } }
     >
       {children}
