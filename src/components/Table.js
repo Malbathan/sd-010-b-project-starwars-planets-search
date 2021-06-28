@@ -26,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((elem) => elem.name.includes(name)).map((elem) => (
+          {data.filter((planet) => planet.name.includes(name)).map((elem) => (
             <tr key={ elem.name }>
               <td>{ elem.name }</td>
               <td>{ elem.rotation_period }</td>
