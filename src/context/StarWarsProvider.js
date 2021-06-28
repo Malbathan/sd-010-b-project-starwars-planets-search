@@ -54,15 +54,12 @@ const StarWarsProvider = ({ children }) => {
   function handleClick() {
     const { column, comparison, value } = numericFilters;
     if (comparison === 'maior que') {
-      console.log('oi');
-      return setFilteredPlanets(data.filter((planet) => planet[column] > value));
+      return setFilteredPlanets(data.filter((planet) => planet[column] > parseInt(value, 10)));
     }
     if (comparison === 'menor que') {
-      return setFilteredPlanets(data.filter((planet) => planet[column] < value));
+      return setFilteredPlanets(data.filter((planet) => planet[column] < parseInt(value, 10)));
     }
-    if (comparison === 'igual a') {
-      return setFilteredPlanets(data.filter((planet) => planet[column] === value));
-    }
+    return setFilteredPlanets(data.filter((planet) => planet[column] === value));
   }
 
   function clearFilters() {
@@ -91,7 +88,7 @@ const StarWarsProvider = ({ children }) => {
 };
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape({}),
+  children: PropTypes.shape([]),
 };
 
 StarWarsProvider.defaultProps = {

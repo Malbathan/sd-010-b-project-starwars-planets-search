@@ -2,16 +2,20 @@ import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function filtersColumns(handleChange, handleClick) {
+  const filterOptions = [
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  const filterComparison = [
+    'maior que', 'menor que', 'igual a'];
+
   return (
     <>
       Filter by numeric Values
       <label htmlFor="column-filter">
         <select data-testid="column-filter" name="column" onChange={ handleChange }>
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {
+            filterOptions.map((option, key) => <option key={ key }>{option}</option>)
+          }
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -20,16 +24,18 @@ function filtersColumns(handleChange, handleClick) {
           name="comparison"
           onChange={ handleChange }
         >
-          <option>maior que</option>
-          <option>menor que</option>
-          <option>igual a</option>
+          {
+            filterComparison.map((comparing, key) => (
+              <option key={ key }>{comparing}</option>))
+          }
         </select>
       </label>
       <label htmlFor="value-filter">
         <input
-          type="numeric"
+          type="number"
           data-testid="value-filter"
           name="value"
+          min="0"
           onChange={ handleChange }
         />
       </label>
