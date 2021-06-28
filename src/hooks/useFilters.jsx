@@ -19,12 +19,13 @@ const useFilters = () => {
   // Source https://github.com/tryber/sd-010-b-project-starwars-planets-search/tree/daniel-roberto-starwars
   useEffect(() => {
     if (filterByNumericValues.length) {
-      const { column, comparison, value } = filterByNumericValues[0];
-      setNewData(data.filter((planet) => {
-        if (comparison === 'maior que') return Number(planet[column]) > Number(value);
-        if (comparison === 'igual a') return Number(planet[column]) === Number(value);
-        return Number(planet[column]) < Number(value);
-      }));
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        setNewData(data.filter((planet) => {
+          if (comparison === 'maior que') return Number(planet[column]) > Number(value);
+          if (comparison === 'igual a') return Number(planet[column]) === Number(value);
+          return Number(planet[column]) < Number(value);
+        }));
+      });
     }
   }, [data, filterByNumericValues]);
 
