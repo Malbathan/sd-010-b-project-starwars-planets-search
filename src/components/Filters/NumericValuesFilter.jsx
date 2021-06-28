@@ -7,7 +7,8 @@ import { infoOptionsToCompare,
 
 function NumericValuesFilter() {
   const { createNumericFilter } = useContext(PlanetsContext);
-  const [column, setColumn] = useState(infoOptionsToCompare[0]);
+  const [columnOptions, setColumnOptions] = useState([...infoOptionsToCompare]);
+  const [column, setColumn] = useState(columnOptions[0]);
   const [comparison, setComparison] = useState(comparisonOperators[0]);
   const [value, setValue] = useState(0);
 
@@ -24,14 +25,13 @@ function NumericValuesFilter() {
   );
 
   const resetFilters = () => {
-    setColumn(infoOptionsToCompare[0]);
+    setColumn(columnOptions[0]);
     setComparison('maior que');
     setValue(0);
   };
 
   const removeSelectedColumnOption = () => {
-    const indexOfOptionToRemove = infoOptionsToCompare.indexOf(column);
-    infoOptionsToCompare.splice(indexOfOptionToRemove, 1);
+    setColumnOptions(columnOptions.filter((option) => option !== column));
   };
 
   const handleFilterButton = () => {
@@ -47,7 +47,7 @@ function NumericValuesFilter() {
         onChange={ (event) => setColumn(event.target.value) }
       >
         {
-          infoOptionsToCompare.map((info) => createInfoToCompareOption(info))
+          columnOptions.map((info) => createInfoToCompareOption(info))
         }
       </select>
       <select
