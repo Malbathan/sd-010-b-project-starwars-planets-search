@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 
 const Table = () => {
+  // let value = [];
   const value = useContext(PlanetsContext);
   console.log(value);
-  return (
+  return value === [] ? null : (
     <table>
       <tr>
         <th>Name</th>
