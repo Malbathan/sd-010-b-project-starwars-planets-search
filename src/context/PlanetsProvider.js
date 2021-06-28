@@ -16,8 +16,8 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
-  const handleChange = ({ value }) => {
-    setFilterByName(value);
+  const handleChange = ({ target }) => {
+    setFilterByName(target.value);
   };
 
   const context = {

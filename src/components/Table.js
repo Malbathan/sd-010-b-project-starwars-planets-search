@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { context: { data, handleChange } } = useContext(PlanetsContext);
+  const { context: { data, handleChange,
+    filters: { filterByName: { name } } } } = useContext(PlanetsContext);
   return (
     <section>
       <input data-testid="name-filter" onChange={ handleChange } />
@@ -25,7 +26,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((elem) => (
+          {data.filter((elem) => elem.name.includes(name)).map((elem) => (
             <tr key={ elem.name }>
               <td>{ elem.name }</td>
               <td>{ elem.rotation_period }</td>
