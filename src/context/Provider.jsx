@@ -44,6 +44,10 @@ function PlanetsProvider({ children }) {
     setColumnOptions(filteredOptions);
   };
 
+  const disableFilters = () => {
+    setWasFilteredByNumber(false);
+  };
+
   // filter by name
   useEffect(() => {
     if (textFilter) {
@@ -81,6 +85,7 @@ function PlanetsProvider({ children }) {
     wasFilteredByNumber,
     handleFilter,
     columnOptions,
+    disableFilters,
   };
 
   return (

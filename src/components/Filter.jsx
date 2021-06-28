@@ -23,6 +23,7 @@ function Filter() {
     numericFilter,
     wasFilteredByNumber,
     columnOptions,
+    disableFilters,
   } = useContext(PlanetsContext);
 
   const [state, setState] = useState({});
@@ -32,10 +33,11 @@ function Filter() {
   };
 
   const renderFilters = () => numericFilter.map((el, idx) => (
-    <section key={ idx }>
+    <section key={ idx } data-testid="filter">
       <span>{el.column}</span>
       <span>{el.comparison}</span>
       <span>{el.value}</span>
+      <button type="button" onClick={ disableFilters }>X</button>
     </section>
   ));
 
