@@ -7,9 +7,23 @@ function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [search, setSearch] = useState({ filters: { filterByName: { name: '' } } });
+  const [
+    search,
+    setSearch,
+  ] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: {
+        column: 'population',
+        comparison: 'maior que',
+        value: '0',
+      },
+    },
+  });
 
-  const searchOnChange = ({ target: { value } }) => {
+  const searchPlanetName = ({ target: { value } }) => {
     setSearch({
       ...search,
       filters: {
@@ -40,7 +54,15 @@ function PlanetsProvider({ children }) {
   }, []);
 
   return (
-    <PlanetsContext.Provider value={ { data, loading, search, searchOnChange, setData } }>
+    <PlanetsContext.Provider
+      value={ {
+        data,
+        loading,
+        search,
+        searchPlanetName,
+        setData,
+      } }
+    >
       { children }
     </PlanetsContext.Provider>
   );
