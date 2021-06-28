@@ -4,6 +4,13 @@ import PlanetContext from './PlanetContext';
 
 function ContextProvider({ children }) {
   const [data, setData] = useState([]);
+  const [dataFilteredByName, setDataFilteredByName] = useState([]);
+  const [dataFilteredBySelects, setDataFilteredBySelects] = useState([]);
+  const [filterByNumeric, setFilterByNumeric] = useState({
+    column: '',
+    condition: '',
+    numberSelect: 0,
+  });
 
   const fetchAPI = () => {
     const URL_ENDPOINT = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -12,8 +19,22 @@ function ContextProvider({ children }) {
         .then((dataAPI) => setData(dataAPI.results)));
   };
 
+  const context = {
+    data,
+    setData,
+    fetchAPI,
+    dataFilteredByName,
+    setDataFilteredByName,
+    filterByNumeric,
+    setFilterByNumeric,
+    dataFilteredBySelects,
+    setDataFilteredBySelects,
+  };
+
   return (
-    <PlanetContext.Provider value={ { data, setData, fetchAPI } }>
+    <PlanetContext.Provider
+      value={ context }
+    >
       {children}
     </PlanetContext.Provider>
   );

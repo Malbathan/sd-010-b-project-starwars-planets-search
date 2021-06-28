@@ -2,19 +2,23 @@ import React, { useEffect, useContext, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 export default function Table() {
-  const INITIAL_STATE = {
+  // states
+  const { data,
+    fetchAPI,
+    dataFilteredByName,
+    setDataFilteredByName,
+    filterByNumeric,
+    setFilterByNumeric,
+    dataFilteredBySelects,
+    setDataFilteredBySelects } = useContext(PlanetContext);
+
+  // filtering by name
+  const [{ filterByName }, setFilters] = useState({
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [],
-  };
-
-  // states
-  const { data, fetchAPI } = useContext(PlanetContext);
-  const [{ filterByName }, setFilters] = useState(INITIAL_STATE);
+  });
   const nameInputState = filterByName.name;
-  const [dataFilteredByName, setDataFilteredByName] = useState([]);
-  const [filterByNumeric, setFilterByNumeric] = useState([]);
 
   // functions and Hooks
   useEffect(fetchAPI, []);
@@ -23,24 +27,33 @@ export default function Table() {
     setFilters({ filterByName: { name: value } });
   };
 
+  // filtering list with name
   useEffect(() => {
-    // filteredByName
+  // filtered By Name
     const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
     setDataFilteredByName(countriesFilteredByName);
-  }, [data, nameInputState]);
+  }, [data, nameInputState, setDataFilteredByName]);
 
-  const handleChangeSelects = ({ target: { value } }) => {
-    console.log(value);
-
-    // setFilterByNumeric( filterByNumericValues{
-    //   column: ,
-    //   condition: ,
-    //   number: ,
-    // })
+  // saving data from selects
+  const handleChangeSelects = ({ target: { name, value } }) => {
+    setFilterByNumeric({ ...filterByNumeric, [name]: value });
   };
 
-  const handleClick = ({ target }) => {
+  // filtering list with selects
+  const handleClick = () => {
+    const { column, condition, numberSelect } = filterByNumeric;
+    const number = Number(numberSelect);
 
+    const filteringListByNumber = data.filter((planet) => {
+      if (condition === 'maior que') {
+        return planet[column] > number;
+      }
+      if (condition === 'menor que') {
+        return planet[column] < number;
+      }
+      return planet[column] === number;
+    });
+    setDataFilteredBySelects(filteringListByNumber);
   };
 
   const conditionalRendering = () => {
@@ -142,7 +155,7 @@ export default function Table() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <input type="number" data-testid="value-filter" onChange={ handleChangeSelects } />
+        <input type="number" name="numberSelect" data-testid="value-filter" onChange={ handleChangeSelects } />
         <button type="button" onClick={ handleClick } data-testid="button-filter">
           Filtrar
         </button>
