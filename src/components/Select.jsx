@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import SelectedNumericFilters from './Filters';
+import useRenderFilters from '../hooks/useRenderFilters';
+// import SelectedNumericFilters from './Filters';
 
 function SelectForm() {
   const { filters, setFilter, data } = useContext(PlanetsContext);
@@ -77,7 +78,7 @@ function SelectForm() {
         Enviar
       </button>
       <div>
-        {filterByNumericValues.length !== 0 ? SelectedNumericFilters() : null}
+        { useRenderFilters() }
       </div>
     </form>
 
