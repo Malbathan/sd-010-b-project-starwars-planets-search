@@ -14,11 +14,7 @@ function PlanetsProvider({ children }) {
   const [filteredByNumber, setFilteredByNumber] = useState([]);
   const [textFilter, setTextFilter] = useState('');
   const [wasFilteredByNumber, setWasFilteredByNumber] = useState(false);
-  const [numericFilter, setNumericFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    numericFilter: '',
-  });
+  const [numericFilter] = useState([]);
 
   // didMount
   useEffect(() => {
@@ -34,12 +30,9 @@ function PlanetsProvider({ children }) {
     setTextFilter(value);
   };
 
-  const handleSelect = ({ target: { name, value } }) => {
-    setNumericFilter({ ...numericFilter, [name]: value });
-  };
-
-  const handleFilter = () => {
+  const handleFilter = (state) => {
     setWasFilteredByNumber(true);
+    numericFilter.push(state);
   };
 
   // filter by name
@@ -58,8 +51,8 @@ function PlanetsProvider({ children }) {
 
   // filter by numeric value
   useEffect(() => {
-    const { column, comparison, value } = numericFilter;
-    if (numericFilter) {
+    if (wasFilteredByNumber) {
+      const { column, comparison, value } = numericFilter[0];
       const filterByNumber = data.filter(
         (el) => comparisonFunc[comparison](parseFloat(el[column]), parseFloat(value)),
       );
@@ -67,7 +60,7 @@ function PlanetsProvider({ children }) {
     } else {
       setWasFilteredByNumber(false);
     }
-  }, [data, numericFilter]);
+  }, [data, numericFilter, wasFilteredByNumber]);
 
   const globalContext = {
     data,
@@ -75,7 +68,6 @@ function PlanetsProvider({ children }) {
     numericFilter,
     filteredByName,
     handleChangeText,
-    handleSelect,
     filteredByNumber,
     wasFilteredByNumber,
     handleFilter,
