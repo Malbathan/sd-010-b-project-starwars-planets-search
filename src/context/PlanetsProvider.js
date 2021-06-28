@@ -6,6 +6,10 @@ import fetchPlanets from '../services/PlanetsApi';
 const initialState = {
   filterByName: { name: '' },
   filterByNumericValues: [],
+  order: {
+    column: 'Name',
+    sort: 'ASC',
+  },
 };
 
 function PlanetsProvider({ children }) {
@@ -38,6 +42,11 @@ function PlanetsProvider({ children }) {
     });
   }
 
+  function setOrder(order) {
+    setFilters({
+      ...filters, order });
+  }
+
   useEffect(() => { getData(); }, []);
   const contextValue = {
     data,
@@ -45,6 +54,7 @@ function PlanetsProvider({ children }) {
     handleName,
     addFilter,
     delFilter,
+    setOrder,
   };
 
   return (

@@ -9,7 +9,8 @@ export default async function fetchPlanets() {
   // planetsObj.results.forEach((planet) => {
   //   delete planet.residents;
   //   planet.films.forEach((EP, index) => {
-  //     planet.films[index] = filmesNameObj.results.find((film) => EP === film.url).title;
+  //     planet.films[index] = `${filmesNameObj.results
+  //       .find((film) => EP === film.url).title}\n`;
   //   });
   // });
   // ~> Fetch Planet Names ;)

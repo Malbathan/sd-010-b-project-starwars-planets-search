@@ -1,5 +1,8 @@
-.App-header {
+html {
   background-image: url('./img/space-bg.png');
+}
+
+.App-header {
   color: white;
   font-size: calc(10px + 2vmin);
   justify-content: center;
@@ -76,4 +79,82 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.App-search-bar {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.App-search-bar input, select, button {
+  background-color: white;
+  border: 2px solid #ffe81f;
+  border-radius: 9999em;
+  margin: 5px 2px;
+}
+
+.App-order-bar {
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+.filter-display {
+  display: flex;
+  justify-content: center;
+}
+
+.filter-display span {
+  background-color: black;
+  border: 2px solid #ffe81f;
+  border-radius: 9999em;
+  color: white;
+  margin: 8px 3px 16px;
+  padding: 0 8px;
+}
+
+.filter-display button {
+  background-color: red;
+  font-weight: 600;
+}
+
+.loading {
+  color: #ffe81f;
+  font-size: 100px;
+  font-weight: 600;
+  margin-top: 70px;
+  text-align: center;
+}
+
+.App-table {
+  justify-self: center;
+  margin: auto;
+}
+
+.table-head th {
+  background-color: black;
+  border: 2px solid #ffe81f;
+  border-radius: 9999em;
+  color: #ffe81f;
+  padding: 1px 15px;
+}
+
+.table-body td {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 2px;
+  max-width: 100px;
+  opacity: 0.8;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table-body td:hover {
+  overflow: auto;
+  text-overflow: inherit;
+  white-space: pre-line;
 }

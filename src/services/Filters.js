@@ -18,3 +18,7 @@ export function byNumeric(arrayPlanets, arrayFilters) {
   });
   return arrayFilters.length > 0 ? filtredPlanets : arrayPlanets;
 }
+
+export function byOrder() {
+
+}

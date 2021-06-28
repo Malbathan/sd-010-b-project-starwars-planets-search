@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { ByName, byNumeric } from '../services/Filters';
+import '../App.css';
 
 function Table() {
   const {
@@ -10,17 +11,17 @@ function Table() {
       filterByNumericValues,
     },
   } = useContext(PlanetsContext);
-  if (!results) return <div>loading</div>;
+  if (!results) return <div className="loading">loading</div>;
   return (
-    <table>
-      <thead>
+    <table className="App-table">
+      <thead className="table-head">
         <tr>
           {Object.keys(results[0]).map((key) => (
-            <th key={ key }>{key}</th>
+            <th key={ key }>{`${key.replace('_', ' ')}`}</th>
           ))}
         </tr>
       </thead>
-      <tbody>
+      <tbody className="table-body">
         {byNumeric(ByName(results, name), filterByNumericValues).map(
           (planet, i) => (
             <tr key={ i }>

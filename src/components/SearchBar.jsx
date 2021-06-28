@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import '../App.css';
 
 function SearchBar() {
   const {
+    data: { results },
     handleName,
     addFilter,
+    setOrder,
     filters: { filterByNumericValues },
   } = useContext(PlanetsContext);
 
@@ -22,73 +25,110 @@ function SearchBar() {
     comparison: 'maior que',
     value: 0,
   };
-  const handleFilter = ({ target: { id, value } }) => {
-    console.log(filter);
-    filter[id] = value;
-    console.log(filter);
+
+  const order = {
+    column: 'name',
+    sort: 'ASC',
   };
 
-  const nameInput = (func) => (
-    <input type="text" id="name" data-testid="name-filter" onChange={ func } />
+  const handleFilter = ({ target: { id, value } }) => {
+    filter[id] = value;
+  };
+
+  const handleOrder = ({ target: { name, value } }) => {
+    console.log(order);
+    order[name] = value;
+    console.log(order);
+  };
+
+  const filterForms = () => (
+    <form className="App-search-bar">
+      <input type="text" id="name" data-testid="name-filter" onChange={ handleName } />
+      <select
+        data-testid="column-filter"
+        id="column"
+        defaultValue={ filter.column }
+        onChange={ handleFilter }
+      >
+        {columns.map((column, index) => (
+          <option key={ index } value={ column }>
+            {column}
+          </option>
+        ))}
+      </select>
+      <select
+        data-testid="comparison-filter"
+        id="comparison"
+        defaultValue={ filter.comparison }
+        onChange={ handleFilter }
+      >
+        <option value="maior que">maior que</option>
+        <option value="menor que">menor que</option>
+        <option value="igual a">igual a</option>
+      </select>
+      <input
+        style={ { width: 100 } }
+        data-testid="value-filter"
+        id="value"
+        value={ filter.value }
+        type="number"
+        onChange={ handleFilter }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+        disabled={ !columns.length > 0 }
+        onClick={ () => addFilter(filter) }
+      >
+        Filtrar
+      </button>
+    </form>
   );
 
-  const columnsInput = (columnList) => (
-    <select
-      data-testid="column-filter"
-      id="column"
-      defaultValue={ filter.column }
-      onChange={ handleFilter }
-    >
-      {columnList.map((column, index) => (
-        <option key={ index } value={ column }>
-          {column}
-        </option>
-      ))}
-    </select>
-  );
-
-  const comparisonInput = () => (
-    <select
-      data-testid="comparison-filter"
-      id="comparison"
-      defaultValue={ filter.comparison }
-      onChange={ handleFilter }
-    >
-      <option value="maior que">maior que</option>
-      <option value="menor que">menor que</option>
-      <option value="igual a">igual a</option>
-    </select>
-  );
-
-  const valueInput = () => (
-    <input
-      style={ { width: 100 } }
-      data-testid="value-filter"
-      id="value"
-      defaultValue={ filter.value }
-      type="number"
-      onChange={ handleFilter }
-    />
-  );
-
-  const filterBtn = (func) => (
-    <button
-      data-testid="button-filter"
-      type="button"
-      onClick={ () => func(filter) }
-    >
-      Filtrar
-    </button>
+  const sortForms = () => (
+    results && (
+      <form className="App-order-bar">
+        <select
+          data-testid="column-sort"
+          name="column"
+          onChange={ handleOrder }
+        >
+          {Object.keys(results[0]).map((item) => (
+            <option key={ item } value={ item }>{item}</option>))}
+        </select>
+        <input
+          checked
+          type="radio"
+          testid="column-sort-input-asc"
+          value="ASC"
+          name="sort"
+          onChange={ handleOrder }
+        />
+        ASC
+        <input
+          type="radio"
+          testid="column-sort-input-desc"
+          value="DESC"
+          name="sort"
+          onChange={ handleOrder }
+        />
+        DESC
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => setOrder(order) }
+        >
+          Ordenar
+        </button>
+      </form>
+    )
   );
 
   return (
-    <form>
-      {nameInput(handleName)}
-      {columnsInput(columns)}
-      {comparisonInput()}
-      {valueInput()}
-      {filterBtn(addFilter)}
-    </form>
+    <div>
+      {filterForms()}
+      {sortForms()}
+    </div>
   );
 }
 
