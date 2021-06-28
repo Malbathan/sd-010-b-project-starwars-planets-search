@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { context: { data } } = useContext(PlanetsContext);
+  const { context: { data, handleChange } } = useContext(PlanetsContext);
   return (
     <section>
+      <input data-testid="name-filter" onChange={ handleChange } />
       <table>
         <thead>
           <tr>
