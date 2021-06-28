@@ -33,11 +33,10 @@ function Filter() {
   };
 
   const renderFilters = () => numericFilter.map((el, idx) => (
-    <section key={ idx } data-testid="filter">
+    <section key={ idx }>
       <span>{el.column}</span>
       <span>{el.comparison}</span>
       <span>{el.value}</span>
-      <button type="button" onClick={ disableFilters }>X</button>
     </section>
   ));
 
@@ -102,9 +101,10 @@ function Filter() {
           Filtrar
         </button>
       </form>
-      <section>
+      <section data-testid="filter">
         <h3>Filtros</h3>
         {wasFilteredByNumber && renderFilters() }
+        <button type="button" onClick={ disableFilters }>Limpar filtros</button>
       </section>
     </>
   );
