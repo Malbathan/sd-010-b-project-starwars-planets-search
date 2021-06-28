@@ -11,32 +11,39 @@ function DropdownColumns() {
   const { column } = filterByNumericValues[0];
 
   const newOptions = options.filter((option) => option !== column);
-  const optionsFiltered = isFiltered ? newOptions : options;
+  let optionsFiltered = isFiltered ? newOptions : options;
+
+  function removeFilter() {
+    optionsFiltered = options;
+  }
 
   return (
-    <label htmlFor="columns">
-      Filtre por coluna:
-      <select
-        data-testid="column-filter"
-        id="columns"
-        onChange={ ({ target: { value } }) => setColumn({
-          filters: {
-            filterByNumericValues: [
-              {
-                column: value,
-              },
-            ],
-          },
-        }) }
-      >
+    <>
+      <label htmlFor="columns">
+        Filtre por coluna:
+        <select
+          data-testid="column-filter"
+          id="columns"
+          onChange={ ({ target: { value } }) => setColumn({
+            filters: {
+              filterByNumericValues: [
+                {
+                  column: value,
+                },
+              ],
+            },
+          }) }
+        >
 
-        {
-          optionsFiltered.map((option, index) => (
-            <option key={ index } value={ option }>{option}</option>
-          ))
-        }
-      </select>
-    </label>
+          {
+            optionsFiltered.map((option, index) => (
+              <option key={ index } value={ option }>{option}</option>
+            ))
+          }
+        </select>
+      </label>
+      <button type="button" onClick={ () => removeFilter() }>X</button>
+    </>
   );
 }
 

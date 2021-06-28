@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsProvider';
 
 function InputName() {
-  const { setName } = useContext(StarWarsContext);
+  const { setNamePlanet } = useContext(StarWarsContext);
+
   return (
     <label htmlFor="name">
       Planeta:
@@ -11,12 +12,8 @@ function InputName() {
         id="name"
         data-testid="name-filter"
         placeholder="digite o nome do planeta"
-        onChange={ ({ target: { value } }) => setName({
-          filters: {
-            filterByName: {
-              name: value,
-            },
-          },
+        onChange={ ({ target: { value } }) => setNamePlanet({
+          name: value,
         }) }
       />
     </label>

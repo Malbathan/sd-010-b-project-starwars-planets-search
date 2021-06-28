@@ -3,6 +3,7 @@ import { StarWarsContext } from '../context/StarWarsProvider';
 
 function InputValue() {
   const { setValue } = useContext(StarWarsContext);
+
   return (
     <label htmlFor="value-number">
       Valor:
@@ -12,13 +13,7 @@ function InputValue() {
         data-testid="value-filter"
         min="0"
         onChange={ ({ target: { value } }) => setValue({
-          filters: {
-            filterByNumericValues: [
-              {
-                value,
-              },
-            ],
-          },
+          value,
         }) }
       />
     </label>

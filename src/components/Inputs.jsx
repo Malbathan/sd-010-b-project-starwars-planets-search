@@ -1,21 +1,21 @@
 import React from 'react';
 
-import DropdownColumns from './DropdownColumns';
+import InputColumns from './InputColumns';
 import InputName from './InputName';
-import Comparison from './Comparison';
+import InputComparison from './InputComparison';
 import InputValue from './InputValue';
-import ButtonFilter from './ButtonFilter';
+import Button from './Button';
 
 function Inputs() {
   return (
     <div>
       <form>
         <InputName />
-        <DropdownColumns />
-        <Comparison />
+        <InputColumns />
+        <InputComparison />
         <InputValue />
       </form>
-      <ButtonFilter />
+      <Button />
     </div>
   );
 }

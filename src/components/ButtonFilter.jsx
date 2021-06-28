@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StarWarsContext } from '../context/StarWarsProvider';
 
 function ButtonFilter() {
-  const { setIsFiltered, setFilters, filters } = useContext(StarWarsContext);
+  const { setIsFiltered, setFilters, filters, setColumn } = useContext(StarWarsContext);
 
   const { column: { filters: { filterByNumericValues } } } = useContext(StarWarsContext);
   const { column } = filterByNumericValues[0];
