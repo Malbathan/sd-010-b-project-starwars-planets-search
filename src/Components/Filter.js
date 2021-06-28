@@ -8,8 +8,8 @@ export default function Filter() {
   const [values, setValues] = useState(0);
 
   // Name:
-  const filterName = ({ target }) => {
-    setFilters({ ...filters, filterByName: { name: target.value } });
+  const filterName = ({ target: { value } }) => {
+    setFilters({ ...filters, filterByName: { name: value } });
   };
 
   // Numeric Values:
@@ -17,30 +17,10 @@ export default function Filter() {
     e.preventDefault();
     setFilters({
       ...filters,
-      filterByNumericValues: [{
-        column,
-        comparison,
-        values,
-      }],
+      filterByNumericValues: [
+        { column, comparison, values },
+      ],
     });
-  };
-
-  // Comparison:
-  const handleComparison = (e) => {
-    const { value } = e.target;
-    setComparison(value);
-  };
-
-  // Column:
-  const handleColumn = (e) => {
-    const { value } = e.target;
-    setColumn(value);
-  };
-
-  // Value:
-  const handleValues = (e) => {
-    const { value } = e.target;
-    setValues(value);
   };
 
   // const aplicaFiltro = filters.filterByNumericValues.map((elem) => elem.column);
@@ -51,6 +31,18 @@ export default function Filter() {
   // aplicaFiltro.forEach((filtro) => {
   //   filterOption = filterOption.filter((option) => option !== filtro);
   // });
+
+  const removeFilters = (e) => {
+    e.preventDefault();
+    setFilters({
+      ...filters,
+      filterByNumericValues: [{
+        column: '',
+        comparison: '',
+        values: 0,
+      }],
+    });
+  };
 
   return (
     <div>
@@ -64,7 +56,7 @@ export default function Filter() {
         <h4>Search by numeric value: </h4>
         <select
           data-testid="column-filter"
-          onChange={ handleColumn }
+          onChange={ (e) => setColumn(e.target.value) }
         >
           { filterOption.map((el, i) => (
             <option value={ el } key={ i }>
@@ -75,7 +67,7 @@ export default function Filter() {
         <select
           name="setComparision"
           data-testid="comparison-filter"
-          onChange={ handleComparison }
+          onChange={ (e) => setComparison(e.target.value) }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -84,7 +76,7 @@ export default function Filter() {
         <input
           data-testid="value-filter"
           type="number"
-          onChange={ handleValues }
+          onChange={ (e) => setValues(e.target.value) }
         />
         <button
           type="submit"
@@ -92,6 +84,9 @@ export default function Filter() {
           data-testid="button-filter"
         >
           Filtrar
+        </button>
+        <button type="button" onClick={ removeFilters }>
+          X
         </button>
       </form>
     </div>
