@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import planetsContext from '../contextAPI/planetsContext';
+import DeleteFilters from './DeleteFilters';
 
 function Inputs() {
   const {
@@ -14,7 +15,11 @@ function Inputs() {
     numberForComparison: 0,
   });
 
-  const sendStateToFilter = () => {
+  const sendStateToFilter = (deleting, object) => {
+    if (deleting) {
+      const { column, comparison, value } = object;
+      return handleOperatorFilter(column, comparison, value);
+    }
     const { columnHeader, operator, numberForComparison } = moreOrLessFilter;
     return handleOperatorFilter(columnHeader, operator, numberForComparison);
   };
@@ -86,6 +91,9 @@ function Inputs() {
         >
           Filtrar
         </button>
+      </section>
+      <section>
+        <DeleteFilters />
       </section>
     </header>
   );

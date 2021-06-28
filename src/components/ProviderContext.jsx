@@ -9,7 +9,9 @@ function ProviderContext({ children }) {
   const [tableElements, setTableElements] = useState([]);
   const [planetsAfterFilter, setPlanetsAfterFilter] = useState([]);
   const [operatorOptions, setOperatorOptions] = useState([...arrayOperatorOptions]);
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState({
+    filterByNumericValues: [],
+  });
 
   const handleName = ({ value }) => {
     const planetsFound = planets.filter((planet) => {
@@ -31,6 +33,11 @@ function ProviderContext({ children }) {
       value: number,
     };
 
+    if (operator === 'clear') {
+      setFilter({ ...filter, filterByNumericValues: [] });
+      return;
+    }
+
     if (filter.filterByNumericValues) {
       const newFilter = {
         ...filter,
@@ -48,6 +55,11 @@ function ProviderContext({ children }) {
   const handleOperatorFilter = (header, operator, rawNumber) => {
     const number = Number(rawNumber);
     let result = [];
+    if (operator === 'clear') {
+      setPlanetsAfterFilter(planets);
+      handleNumericFilter(null, 'clear', null);
+      return;
+    }
     if (operator === 'maior que') {
       result = planetsAfterFilter.filter((planet) => Number(planet[header]) > number);
     }
@@ -73,6 +85,15 @@ function ProviderContext({ children }) {
     makeRequest();
   }, []);
 
+  function delFilter(column) {
+    handleOperatorFilter(null, 'clear', null);
+    setFilter({
+      ...filter,
+      filterByNumericValues: filter.filterByNumericValues
+        .filter((fil) => fil.column !== column),
+    });
+  }
+
   const state = {
     planets: {
       planets,
@@ -92,6 +113,7 @@ function ProviderContext({ children }) {
     setTableElements,
     setOperatorOptions,
     setPlanetsAfterFilter,
+    delFilter,
   };
 
   return (
