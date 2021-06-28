@@ -6,7 +6,7 @@ import getPlanetsApi from '../Services/PlanetsAPI';
 function PlanetsProvider({ children }) {
   const [data, setPlanets] = useState([]);
   useEffect(() => {
-    setPlanets(getPlanetsApi);
+    setPlanets(getPlanetsApi());
   }, [data]);
 
   return (
