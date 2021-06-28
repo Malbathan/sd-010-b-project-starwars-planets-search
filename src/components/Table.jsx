@@ -5,7 +5,8 @@ import RenderRowTable from './RenderRowTable';
 const NOVE = 9;
 
 export default function Table() {
-  const { data: { results } } = useContext(StarWarsContext);
+  const { data: { results }, filters: { filterByName,
+    filterByNumericValues, condicaoFilter } } = useContext(StarWarsContext);
 
   if (results !== undefined) {
     const chaves = Object.keys(results[0]);
@@ -33,11 +34,12 @@ export default function Table() {
         </thead>
         <tbody>
           {
-            RenderRowTable(results, false).map((planets) => (
-              <tr key={ planets.name }>
-                {chaves.map((chave) => (<td key={ chave }>{planets[chave]}</td>))}
-              </tr>
-            ))
+            RenderRowTable(results, filterByName, filterByNumericValues, condicaoFilter)
+              .map((planets) => (
+                <tr key={ planets.name }>
+                  {chaves.map((chave) => (<td key={ chave }>{planets[chave]}</td>))}
+                </tr>
+              ))
           }
         </tbody>
       </table>

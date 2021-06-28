@@ -1,21 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../hooks/StarWarsContext';
 import RenderRowTable from './RenderRowTable';
 
-const CHAVE_CONTEXT = 'filterByNumericValues';
-
 export default function FilterNumber() {
   const { setFilters, filters, data } = useContext(StarWarsContext);
+  const [filterNumeric, setFilterNumeric] = useState({});
 
   const changeSetFilters = ({ target }) => {
-    const copia = { ...filters };
-    copia[CHAVE_CONTEXT][0] = { ...copia[CHAVE_CONTEXT][0], [target.id]: [target.value] };
-    setFilters(copia);
+    setFilterNumeric({ ...filterNumeric, [target.id]: target.value });
   };
 
   const clickPesquisar = (e) => {
     e.preventDefault();
-    RenderRowTable(data.results, true);
+    setFilters({ ...filters,
+      filterByNumericValues: [...filters.filterByNumericValues, filterNumeric],
+      condicaoFilter: !filters.condicaoFilter });
+    RenderRowTable(data.results,
+      filters.filterByName, filters.filterByNumericValues, filters.condicaoFilter);
   };
 
   return (
@@ -41,9 +42,9 @@ export default function FilterNumber() {
           id="comparison"
           onChange={ changeSetFilters }
         >
-          <option value=">">maior que</option>
-          <option value="<">menor que</option>
-          <option value="===">igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="value">
