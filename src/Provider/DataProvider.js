@@ -6,6 +6,9 @@ import DataContext from '../context/DataContext';
 function DataProvider({ children }) {
   const [data, setData] = useState([]);
   const [tableHead, setTableHead] = useState([]);
+  const [filter, setFilter] = useState({
+    filters: { filterByName: { name: '' } },
+  });
 
   useEffect(() => {
     async function fetchApia() {
@@ -19,7 +22,13 @@ function DataProvider({ children }) {
     fetchApia();
   }, []);
 
-  const contextValue = { data, setData, tableHead };
+  const contextValue = {
+    data,
+    setData,
+    tableHead,
+    filter,
+    setFilter,
+  };
 
   return (
     <DataContext.Provider value={ contextValue }>
