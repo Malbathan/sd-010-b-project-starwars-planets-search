@@ -3,7 +3,9 @@ import Filtros from './Filtros';
 
 function Header() {
   return (
-    <Filtros />
+    <div>
+      <Filtros />
+    </div>
   );
 }
 
