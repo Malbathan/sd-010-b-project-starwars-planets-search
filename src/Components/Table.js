@@ -5,7 +5,7 @@ const Table = () => {
   // let value = [];
   const value = useContext(PlanetsContext);
   console.log(value);
-  return value === [] ? null : (
+  return value === Promise || value === [] ? <div /> : (
     <table>
       <tr>
         <th>Name</th>

@@ -1,10 +1,12 @@
-// import response from '../testData';
+import response from '../testData';
 
 const PLANETS_API = 'https://swapi-trybe.herokuapp.com/api/planets/';
 
 const getPlanetsApi = async () => fetch(PLANETS_API)
-  .then((response) => response.json());
+  .then((resposta) => resposta.json());
 
-// const getPlanetsApi = response.results;
+console.log(getPlanetsApi());
 
-export default getPlanetsApi;
+const getPlanetsApiTEST = response.results;
+
+export default getPlanetsApiTEST;

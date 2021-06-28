@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
-import getPlanetsApi from '../Services/PlanetsAPI';
+import getPlanetsApiTEST from '../Services/PlanetsAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setPlanets] = useState([]);
   useEffect(() => {
-    setPlanets(getPlanetsApi());
+    setPlanets(getPlanetsApiTEST);
   }, [data]);
 
   return (
