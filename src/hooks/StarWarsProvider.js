@@ -5,7 +5,14 @@ import starWarsAPI from '../services/starWarsAPI';
 
 function StarWarsProvider({ children }) {
   const [data, setPlanets] = useState({});
-  const [filters, setFilters] = useState({ filterByName: '' });
+
+  const [filters, setFilters] = useState(
+    {
+      filterByName: { name: '' },
+      filterByNumericValues: [],
+    },
+  );
+
   const contexValue = {
     data,
     setPlanets,

@@ -3,12 +3,16 @@ import './App.css';
 import Table from './components/Table';
 import StarWarsProvider from './hooks/StarWarsProvider';
 import FilterName from './components/FilterName';
+import FilterNumber from './components/FilterNumber';
 
 function App() {
   return (
     <main>
       <StarWarsProvider>
-        <FilterName />
+        <form>
+          <FilterName />
+          <FilterNumber />
+        </form>
         <Table />
       </StarWarsProvider>
     </main>

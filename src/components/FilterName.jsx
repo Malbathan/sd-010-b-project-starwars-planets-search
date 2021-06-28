@@ -11,7 +11,7 @@ export default function FilterName() {
         id="filterByName"
         data-testid="name-filter"
         onChange={ ({ target }) => {
-          setFilters({ filterByName: target.value });
+          setFilters({ [target.id]: { name: target.value } });
         } }
       />
     </label>

@@ -6,10 +6,11 @@ const NOVE = 9;
 
 export default function Table() {
   const { data: { results } } = useContext(StarWarsContext);
-  // console.log(filterByName);
+
   if (results !== undefined) {
     const chaves = Object.keys(results[0]);
     chaves.splice(NOVE, 2);
+
     return (
       <table>
         <caption>The Planets Star Wars</caption>
@@ -32,7 +33,7 @@ export default function Table() {
         </thead>
         <tbody>
           {
-            RenderRowTable(results).map((planets) => (
+            RenderRowTable(results, false).map((planets) => (
               <tr key={ planets.name }>
                 {chaves.map((chave) => (<td key={ chave }>{planets[chave]}</td>))}
               </tr>
@@ -42,5 +43,6 @@ export default function Table() {
       </table>
     );
   }
+
   return <div>Loading...</div>;
 }

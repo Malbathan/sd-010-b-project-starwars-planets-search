@@ -1,12 +1,31 @@
 import { useContext } from 'react';
 import StarWarsContext from '../hooks/StarWarsContext';
 
-export default function RenderRowTable(results = []) {
+export default function RenderRowTable(results = [], numberFilter) {
   const UM_NEGATIVE = -1;
-  const { filters: { filterByName } } = useContext(StarWarsContext);
+  const { filters: { filterByName,
+    filterByNumericValues } } = useContext(StarWarsContext);
 
-  const resultsFilter = results.filter((planeta) => planeta
-    .name.indexOf(filterByName) !== UM_NEGATIVE);
+  let resultsFilter = results.filter((planeta) => planeta
+    .name.indexOf(filterByName.name) !== UM_NEGATIVE);
+
+  if (numberFilter) {
+    const operador = (filterByNumericValues[0]
+      .comparison[0]);
+    resultsFilter = results
+      .filter((column) => {
+        if (operador === '>') {
+          return column[filterByNumericValues[0]] > filterByNumericValues[0].value[0];
+        }
+        if (operador === '<') {
+          return column[filterByNumericValues[0]] < filterByNumericValues[0].value[0];
+        }
+        if (operador === '===') {
+          return column[filterByNumericValues[0]] === filterByNumericValues[0].value[0];
+        }
+        return results;
+      });
+  }
 
   return resultsFilter;
 }
