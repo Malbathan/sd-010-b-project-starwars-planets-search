@@ -22,6 +22,7 @@ function Filter() {
     handleFilter,
     numericFilter,
     wasFilteredByNumber,
+    columnOptions,
   } = useContext(PlanetsContext);
 
   const [state, setState] = useState({});
@@ -38,10 +39,9 @@ function Filter() {
     </section>
   ));
 
-  numericFilter.forEach((el) => {
-    const index = numberValuesOptions.indexOf(el.column);
-    delete numberValuesOptions[index];
-  });
+  const updateColumnsOptions = () => {
+    delete numberValuesOptions[state.column];
+  };
 
   return (
     <>
@@ -64,8 +64,8 @@ function Filter() {
             data-testid="column-filter"
             onChange={ handleSelect }
           >
-            {numberValuesOptions.map((el, idx) => (
-              <option key={ idx } defaultValue>{el}</option>
+            {columnOptions.map((el, idx) => (
+              <option key={ idx }>{el}</option>
             ))}
           </select>
         </label>
@@ -77,7 +77,7 @@ function Filter() {
         >
           {comparisonFilters.map((el, idx) => {
             if (idx === 0) {
-              return <option key={ idx } defaultValue>{el}</option>;
+              return <option key={ idx }>{el}</option>;
             }
             return <option key={ idx }>{el}</option>;
           })}
@@ -92,7 +92,10 @@ function Filter() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => handleFilter(state) }
+          onClick={ () => {
+            handleFilter(state);
+            updateColumnsOptions();
+          } }
         >
           Filtrar
         </button>

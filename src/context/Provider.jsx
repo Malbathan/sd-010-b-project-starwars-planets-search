@@ -15,6 +15,13 @@ function PlanetsProvider({ children }) {
   const [textFilter, setTextFilter] = useState('');
   const [wasFilteredByNumber, setWasFilteredByNumber] = useState(false);
   const [numericFilter] = useState([]);
+  const [columnOptions, setColumnOptions] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   // didMount
   useEffect(() => {
@@ -33,6 +40,8 @@ function PlanetsProvider({ children }) {
   const handleFilter = (state) => {
     setWasFilteredByNumber(true);
     numericFilter.push(state);
+    const filteredOptions = columnOptions.filter((el) => el !== state.column);
+    setColumnOptions(filteredOptions);
   };
 
   // filter by name
@@ -71,6 +80,7 @@ function PlanetsProvider({ children }) {
     filteredByNumber,
     wasFilteredByNumber,
     handleFilter,
+    columnOptions,
   };
 
   return (
