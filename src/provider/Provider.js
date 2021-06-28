@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import reqPlanets from '../services/servicesApi';
 
 const ContextFromPlanets = createContext();
 
@@ -7,11 +8,7 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    const locationPlanets = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const api = await fetch(locationPlanets);
-    const response = await api.json();
-    const result = response.results;
-    result.forEach((resis) => delete resis.residents);
+    const result = await reqPlanets();
     setData(result);
   };
 
@@ -19,10 +16,10 @@ function Provider({ children }) {
     fetchData();
   }, []);
 
-  const contex = { data };
+  const contextValue = { data };
 
   return (
-    <ContextFromPlanets.Provider value={ contex }>
+    <ContextFromPlanets.Provider value={ contextValue }>
       { children }
     </ContextFromPlanets.Provider>
   );
