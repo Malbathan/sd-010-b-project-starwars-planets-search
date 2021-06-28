@@ -7,12 +7,15 @@ function Provider({ children }) {
   const [column, setColumn] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
+
   const [range, setRange] = useState({
     status: 'population',
     operator: 'maior que',
     value: '0',
   });
+
   const [select] = useState(['maior que', 'menor que', 'igual a']);
+
   const [filter, setFilter] = useState({
     filters: {
       filterByName: {
@@ -25,7 +28,6 @@ function Provider({ children }) {
     const getPlanets = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const { results } = await fetch(endpoint).then((api) => api.json());
-      // console.log(results);
       setData(results);
     };
     getPlanets();
@@ -54,6 +56,10 @@ function Provider({ children }) {
         Number(itens[ranges.status]) === Number(ranges.value)));
     }
     setData(list);
+    const remove = column.filter((joao) => (
+      joao !== ranges.status
+    ));
+    setColumn(remove);
   };
 
   const contextValue = {
