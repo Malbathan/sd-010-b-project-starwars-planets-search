@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Table() {
-  const { tableHead, data, filters, isFilterByNumericValues, setIsFilterByNumericValues } = useContext(DataContext);
+  const { tableHead, data, filters, isFilterByNumericValues } = useContext(DataContext);
 
   function HeadForTable() {
     const headFiltered = tableHead.filter((item) => item !== 'residents');
