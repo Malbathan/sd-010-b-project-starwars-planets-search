@@ -4,11 +4,21 @@ import PropTypes from 'prop-types';
 import DataContext from '../context/DataContext';
 
 function DataProvider({ children }) {
+  const INITAL_STATE_FILTERS = {
+    filterByName: { name: '' },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '',
+      },
+    ],
+  };
+
   const [data, setData] = useState([]);
   const [tableHead, setTableHead] = useState([]);
-  const [filter, setFilter] = useState({
-    filters: { filterByName: { name: '' } },
-  });
+  const [filters, setFilters] = useState(INITAL_STATE_FILTERS);
+  const [isFilterByNumericValues, setIsFilterByNumericValues] = useState(false);
 
   useEffect(() => {
     async function fetchApia() {
@@ -26,8 +36,10 @@ function DataProvider({ children }) {
     data,
     setData,
     tableHead,
-    filter,
-    setFilter,
+    filters,
+    setFilters,
+    isFilterByNumericValues,
+    setIsFilterByNumericValues,
   };
 
   return (
