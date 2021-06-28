@@ -7,6 +7,11 @@ import getPlanets from '../../services/getPlanets';
 function StarwarsProvider({ children }) { // props descontruction
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [filters, setFilters] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   const fetchPlanets = async () => {
     setIsLoading(true);
@@ -20,7 +25,15 @@ function StarwarsProvider({ children }) { // props descontruction
   }, []);
 
   return (
-    <StarwarsContext.Provider value={ { isLoading, data, fetchPlanets } }>
+    <StarwarsContext.Provider
+      value={ {
+        isLoading,
+        data,
+        fetchPlanets,
+        filters,
+        setFilters,
+      } }
+    >
       {children}
     </StarwarsContext.Provider>
   );
