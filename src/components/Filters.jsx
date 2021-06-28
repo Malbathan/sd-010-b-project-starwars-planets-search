@@ -5,8 +5,8 @@ function Filters() {
   const {
     setFilterByName,
     editFilterByNumericValues,
-    filterByNumericValues: { column, comparison, value },
-    filtrateByNumericValues,
+    formDataNumericFilter: { column, comparison, value },
+    addFilterByNumericValues,
     columns,
     filters: { filterByNumericValues },
     restoreColumn,
@@ -57,19 +57,18 @@ function Filters() {
         <button
           type="button"
           data-testid="button-filter"
-          onClick={ () => filtrateByNumericValues() }
+          onClick={ () => addFilterByNumericValues() }
         >
           adicionar filtro
         </button>
       </div>
-      <div>
+      <div data-testid="filter">
         {filterByNumericValues && filterByNumericValues.map((filter) => (
           <span key={ filter.column }>
             {`${filter.column} ${filter.comparison} ${filter.value}`}
             <button
               type="button"
               onClick={ () => restoreColumn(filter.column) }
-              data-testid="filter"
             >
               X
             </button>

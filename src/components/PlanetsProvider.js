@@ -10,7 +10,7 @@ const { Provider, Consumer } = Context;
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filters, setFilters] = useState({});
-  const [filterByNumericValues, setFilterByNumericValues] = useState({
+  const [formDataNumericFilter, setFormDataNumericFilter] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '',
@@ -37,32 +37,61 @@ function PlanetsProvider({ children }) {
     }
   }, [filters.filterByName]);
 
-  const updateColumns = () => {
-    if (filters.filterByNumericValues) {
-      const addedColumnsInFilters = filters.filterByNumericValues.map(
-        ({ column }) => column,
-      );
-      const newColumns = columns.filter(
-        (column) => !addedColumnsInFilters.includes(column),
-      );
-      setColumns(newColumns);
-      setFilterByNumericValues({
-        ...filterByNumericValues,
-        column: newColumns[0],
-        value: '',
+  const filtrateByNumericValues = () => {
+    const planets = getPlanets();
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues.length < 1) {
+      setData(planets);
+    }
+
+    if (filterByNumericValues.length >= 1) {
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        const filteredPlanets = planets.filter((planet) => {
+          switch (comparison) {
+          case 'maior que':
+            return Number(planet[column]) > Number(value);
+          case 'menor que':
+            return Number(planet[column]) < Number(value);
+          default:
+            return Number(planet[column]) === Number(value);
+          }
+        });
+        setData(filteredPlanets);
       });
     }
   };
 
-  useEffect(updateColumns, [filters.filterByNumericValues]);
+  const updateColumns = () => {
+    const addedColumnsInFilters = filters.filterByNumericValues.map(
+      ({ column }) => column,
+    );
+    const newColumns = columns.filter(
+      (column) => !addedColumnsInFilters.includes(column),
+    );
+    setColumns(newColumns);
+    setFormDataNumericFilter({
+      ...formDataNumericFilter,
+      column: newColumns[0],
+      value: '',
+    });
+  };
+
+  const updateDataByNumericFilter = () => {
+    if (filters.filterByNumericValues) {
+      filtrateByNumericValues();
+      updateColumns();
+    }
+  };
+
+  useEffect(updateDataByNumericFilter, [filters.filterByNumericValues]);
 
   const setFilterByName = ({ name, value }) => {
     setFilters({ ...filters, [name]: { name: value } });
   };
 
   const editFilterByNumericValues = ({ name, value }) => {
-    setFilterByNumericValues({
-      ...filterByNumericValues,
+    setFormDataNumericFilter({
+      ...formDataNumericFilter,
       [name]: value,
     });
   };
@@ -71,31 +100,14 @@ function PlanetsProvider({ children }) {
     if (!filters.filterByNumericValues) {
       setFilters({
         ...filters,
-        filterByNumericValues: [filterByNumericValues],
+        filterByNumericValues: [formDataNumericFilter],
       });
     } else {
       setFilters({
         ...filters,
-        filterByNumericValues: [...filters.filterByNumericValues, filterByNumericValues],
+        filterByNumericValues: [...filters.filterByNumericValues, formDataNumericFilter],
       });
     }
-  };
-
-  const filtrateByNumericValues = () => {
-    addFilterByNumericValues();
-    const planets = getPlanets();
-    const { column, comparison, value } = filterByNumericValues;
-    const filteredPlanets = planets.filter((planet) => {
-      switch (comparison) {
-      case 'maior que':
-        return Number(planet[column]) > Number(value);
-      case 'menor que':
-        return Number(planet[column]) < Number(value);
-      default:
-        return Number(planet[column]) === Number(value);
-      }
-    });
-    setData(filteredPlanets);
   };
 
   const restoreColumn = (newColumn) => {
@@ -107,27 +119,14 @@ function PlanetsProvider({ children }) {
       ...filters,
       filterByNumericValues: newNumericFilters,
     });
-    const planets = getPlanets();
-    const { filterByNumericValues: { column, comparison, value } } = filters;
-    const filteredPlanets = planets.filter((planet) => {
-      switch (comparison) {
-      case 'maior que':
-        return Number(planet[column]) > Number(value);
-      case 'menor que':
-        return Number(planet[column]) < Number(value);
-      default:
-        return Number(planet[column]) === Number(value);
-      }
-    });
-    setData(filteredPlanets);
   };
 
   const state = {
     data,
     setFilterByName,
     editFilterByNumericValues,
-    filterByNumericValues,
-    filtrateByNumericValues,
+    formDataNumericFilter,
+    addFilterByNumericValues,
     columns,
     filters,
     restoreColumn,
