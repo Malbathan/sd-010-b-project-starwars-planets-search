@@ -5,8 +5,8 @@ function Table() {
   const { data, getPlanets } = useContext(PlanetsContext);
 
   useEffect(() => {
-    getPlanets();
-  }, [getPlanets]);
+    getPlanets()
+  }, []);
 
   return (
     <div>
@@ -59,7 +59,7 @@ function Table() {
         </tbody>
       </table>
     </div>
-  );
+  )
 }
 
 export default Table;
