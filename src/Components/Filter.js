@@ -83,7 +83,11 @@ export default function Filter() {
         >
           Filtrar
         </button>
-        <button type="button" onClick={ removeFilters }>
+        <button
+          type="button"
+          onClick={ removeFilters }
+          data-testid="filter"
+        >
           X
         </button>
       </form>
