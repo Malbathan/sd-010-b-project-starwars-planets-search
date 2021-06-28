@@ -1,54 +1,82 @@
 import React, { useContext } from 'react';
 import myContext from '../context/myContext';
+import SearchBar from './SearchBar';
+import ActiveFilters from './ActiveFilters';
 
 function Table() {
-  const { isLoading, data, filterByName: { name } } = useContext(myContext);
+  const {
+    isLoading,
+    data,
+    tableHeaders,
+    filterByName: { name },
+    filterByNumericValues,
+  } = useContext(myContext);
 
-  function planetsTable(arr) {
-    return isLoading ? <span>Carregando...</span>
-      : arr.filter((planet) => planet.name.includes(name)).map((planet) => (
-        <tr key={ planet.name }>
-          <td>{planet.name}</td>
-          <td>{planet.terrain}</td>
-          <td>{planet.population}</td>
-          <td>{planet.climate}</td>
-          <td>{planet.diameter}</td>
-          <td>{planet.gravity}</td>
-          <td>{planet.orbital_period}</td>
-          <td>{planet.rotation_period}</td>
-          <td>{planet.surface_water}</td>
-          <td>{planet.created}</td>
-          <td>{planet.edited}</td>
-          <td>{planet.films}</td>
-          <td>{planet.url}</td>
-        </tr>
-      ));
+  console.log(tableHeaders);
+
+  function tableHeader() {
+    return (
+      <tr>
+        { tableHeaders.map((header) => (
+          <th key={ header }>{header}</th>
+        ))}
+      </tr>
+    );
   }
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Terrain</th>
-          <th>Population</th>
-          <th>Climate</th>
-          <th>Diameter</th>
-          <th>Gravity</th>
-          <th>Orbital period</th>
-          <th>Rotation period</th>
-          <th>Surface water</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>Films</th>
-          <th>URL</th>
-        </tr>
-      </thead>
+  function planetsTable() {
+    let planets = data
+      .filter((planet) => planet.name.toUpperCase().includes(name.toUpperCase()));
 
-      <tbody>
-        { planetsTable(data) }
-      </tbody>
-    </table>
+    if (filterByNumericValues.length > 0) {
+      filterByNumericValues.forEach((({ comparison, column, value }) => {
+        if (comparison === 'maior que') {
+          planets = planets.filter((planet) => +(planet[column]) > +(value));
+        }
+
+        if (comparison === 'menor que') {
+          planets = planets.filter((planet) => +(planet[column]) < +(value));
+        }
+
+        if (comparison === 'igual a') {
+          planets = planets.filter((planet) => +(planet[column]) === +(value));
+        }
+      }));
+    }
+
+    return planets.map((planet) => (
+      <tr key={ planet.name }>
+        <td>{planet.name}</td>
+        <td>{planet.terrain}</td>
+        <td>{planet.population}</td>
+        <td>{planet.climate}</td>
+        <td>{planet.diameter}</td>
+        <td>{planet.gravity}</td>
+        <td>{planet.orbital_period}</td>
+        <td>{planet.rotation_period}</td>
+        <td>{planet.surface_water}</td>
+        <td>{planet.created}</td>
+        <td>{planet.edited}</td>
+        <td>{planet.films}</td>
+        <td>{planet.url}</td>
+      </tr>
+    ));
+  }
+
+  return isLoading ? <span>Carregando...</span> : (
+    <div>
+      <SearchBar />
+      <ActiveFilters />
+      <table>
+        <thead>
+          { tableHeader() }
+        </thead>
+
+        <tbody>
+          { planetsTable() }
+        </tbody>
+      </table>
+    </div>
   );
 }
 

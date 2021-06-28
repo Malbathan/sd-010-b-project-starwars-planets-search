@@ -4,14 +4,20 @@ import myContext from './myContext';
 import startwarsApi from '../services/starwarsApi';
 
 function Provider({ children }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
+  const [tableHeaders, setTableHeaders] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [columns, setColumns] = useState(
+    ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'],
+  );
+  const [filterByNumericValues, setFilterByNumericValues] = useState([]);
 
   useEffect(() => {
     async function planetsApi() {
-      const response = await startwarsApi();
-      setData(response);
+      const results = await startwarsApi();
+      setData(results);
+      setTableHeaders(Object.keys(results[0]));
       setIsLoading(false);
     }
     planetsApi();
@@ -20,8 +26,13 @@ function Provider({ children }) {
   const context = {
     data,
     isLoading,
+    tableHeaders,
     filterByName,
     setFilterByName,
+    columns,
+    setColumns,
+    filterByNumericValues,
+    setFilterByNumericValues,
   };
 
   return (
