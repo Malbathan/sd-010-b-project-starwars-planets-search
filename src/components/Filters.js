@@ -42,7 +42,9 @@ export default function Filters() {
 
   function handleFilterRemoval(e) {
     e.preventDefault();
-    setFilter({ ...filters, filterByNumericValues: [] });
+    setFilter({ ...filters,
+      filterByNumericValues:
+      filters.filterByNumericValues.filter((ele) => ele.column !== e.target.value) });
   }
 
   return (
@@ -59,21 +61,21 @@ export default function Filters() {
       <label htmlFor="column-filter">
         <select
           data-testid="column-filter"
-          value={ column }
+          value={ local.column }
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
-          {columnList.map((col, i) => <option key={ i }>{col}</option>)}
+          {columnList.map((col) => <option key={ col }>{col}</option>)}
         </select>
       </label>
       <label htmlFor="comparison-filter">
         <select
           data-testid="comparison-filter"
-          value={ comparison }
           id="comparison"
           onChange={ (e) => handleLocalStates(e) }
+          value={ local.comparison }
         >
-          {comparisons.map((comp, i) => <option key={ i }>{comp}</option>)}
+          {comparisons.map((comp) => <option key={ comp }>{comp}</option>)}
         </select>
       </label>
       <label htmlFor="value-filter">
@@ -96,14 +98,16 @@ export default function Filters() {
           {' '}
           Send Comparison
         </button>
-        {filters.filterByNumericValues.length - 1 > 0 && (
-          <button
-            type="button"
-            onClick={ (e) => handleFilterRemoval(e) }
-            data-testid="filter"
-          >
-            x
-          </button>)}
+        {filters.filterByNumericValues.map((el) => (
+          <div data-testid="filter" key={ el.column }>
+            <button
+              type="button"
+              onClick={ (e) => handleFilterRemoval(e) }
+              value={ el.column }
+            >
+              { `${el.column} X`}
+            </button>
+          </div>))}
       </label>
     </form>
   );
