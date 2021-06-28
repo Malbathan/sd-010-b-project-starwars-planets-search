@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 import StarWarsContext from '../context/StarWarsContext';
 
 function StarWarsProvider({ children }) {
-  const [data, setData] = useState([
-    {
-      name: 'Tatooine',
-      population: '200000',
-      terrain: 'desert',
-    },
-    {
-      name: 'Yavin IV',
-      population: '4000',
-      terrain: 'jungle, rainforests',
-    },
-  ]);
-  const context = { data, setData };
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const context = { data, setData, loading, setLoading };
+
+  // async function fetchApi() {
+  //   const planets = await getAPI();
+  //   planets.map((planet) => delete planet.residents);
+  //   setData(planets);
+  //   setLoading(true);
+  // }
+
+  // useEffect(() => { fetchApi(); });
 
   return (
     <StarWarsContext.Provider value={ context }>
