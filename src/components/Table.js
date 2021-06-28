@@ -20,7 +20,7 @@ function Table() {
       : (
         setFilteredPlanets(data.filter((planet) => (
           (planet.name.match(filter))))))), [data, filter]);
-  // rei dos parenteses
+  /// acima! Estou usando filter para fazer o mecanismo de busca
 
   const removeFilterDropdown = () => {
     if (comparison === 'maior que') {
@@ -42,6 +42,8 @@ function Table() {
       setSelectFilterState(noFilter);
     }
   };
+  /// acima! Estou fazendo um filtro condicional, esta e uma função auxiliar
+  // a submitFilter
 
   function submitFilter() {
     switch (comparison) {
@@ -55,10 +57,12 @@ function Table() {
       return (data);
     }
   }
-  function reset() {
+  function removeFilter() {
     setSelectFilterState(selectFilter);
     setFilteredPlanets(data);
   }
+
+  // Meu Reset mas infelizmente não funciona como esperado pelo teste
 
   return (
     loading === true ? <h1>...Loading</h1>
@@ -99,13 +103,15 @@ function Table() {
           >
             Filtrar
           </button>
-          <button
-            type="button"
-            data-testid="filter"
-            onClick={ reset }
-          >
-            x
-          </button>
+          <div data-testid="filter">
+
+            <button
+              type="button"
+              onClick={ removeFilter }
+            >
+              X
+            </button>
+          </div>
           <table border="1">
             <thead>
               <tr>
