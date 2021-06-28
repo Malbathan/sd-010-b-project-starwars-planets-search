@@ -25,10 +25,22 @@ function PlanetsProvider({ children }) {
 
   const searchPlanetName = ({ target: { value } }) => {
     setSearch({
-      ...search,
       filters: {
+        ...search.filters,
         filterByName: {
           name: value,
+        },
+      },
+    });
+  };
+
+  const searchByNumericValues = ({ target: { value, name } }) => {
+    setSearch({
+      filters: {
+        ...search.filters,
+        filterByNumericValues: {
+          ...search.filters.filterByNumericValues,
+          [name]: value,
         },
       },
     });
@@ -61,6 +73,7 @@ function PlanetsProvider({ children }) {
         search,
         searchPlanetName,
         setData,
+        searchByNumericValues,
       } }
     >
       { children }
