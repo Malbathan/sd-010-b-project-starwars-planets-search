@@ -51,15 +51,20 @@ const StarWarsProvider = ({ children }) => {
     }));
   }
 
-  function handleClick() {
+  function handleNumericFilters() {
     const { column, comparison, value } = numericFilters;
-    if (comparison === 'maior que') {
-      return setFilteredPlanets(data.filter((planet) => planet[column] > parseInt(value, 10)));
-    }
-    if (comparison === 'menor que') {
-      return setFilteredPlanets(data.filter((planet) => planet[column] < parseInt(value, 10)));
-    }
-    return setFilteredPlanets(data.filter((planet) => planet[column] === value));
+
+    const GreaterThan = (planet) => planet[column] > parseInt(value, 10);
+    const LessThan = (planet) => planet[column] < parseInt(value, 10);
+    const EqualsThan = (planet) => planet[column] === value;
+
+    const comparing = {
+      'maior que': () => setFilteredPlanets(data.filter(GreaterThan)),
+      'menor que': () => setFilteredPlanets(data.filter(LessThan)),
+      'igual a': () => setFilteredPlanets(data.filter(EqualsThan)),
+    };
+
+    return comparing[comparison]();
   }
 
   function clearFilters() {
@@ -75,7 +80,7 @@ const StarWarsProvider = ({ children }) => {
     keys,
     setSearch,
     handleChange,
-    handleClick,
+    handleNumericFilters,
     clearFilters,
   };
 
