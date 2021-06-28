@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
+import '../App.css';
 
 function Search() {
   const { data, setDataSearch, filter, setFilter,
@@ -11,24 +12,29 @@ function Search() {
   };
 
   const filterPerNumber = () => {
-    // console.log(e.target);
-    setColuna(coluna.filter((col) => col !== filter.coluna));
+    const result = coluna.filter((col) => col !== filter.coluna);
+    setColuna(result);
     setArrFilter([...arrFilter, filter]);
+    setFilter({
+      coluna: coluna[0],
+      sinal: 'maior que',
+      numero: '',
+    });
   };
 
   const aplyFilter = () => {
-    const { sinal } = filter;
     let result = data;
     arrFilter.forEach((arr) => {
+      const { sinal } = arr;
       switch (sinal) {
       case 'maior que':
-        result = data.filter((planet) => planet[arr.coluna] > Number(arr.numero));
+        result = result.filter((planet) => planet[arr.coluna] > Number(arr.numero));
         break;
       case 'menor que':
-        result = data.filter((planet) => planet[arr.coluna] < Number(arr.numero));
+        result = result.filter((planet) => planet[arr.coluna] < Number(arr.numero));
         break;
       case 'igual a':
-        result = data.filter((planet) => planet[arr.coluna] === arr.numero);
+        result = result.filter((planet) => planet[arr.coluna] === arr.numero);
         break;
       default:
         result = data;
@@ -38,13 +44,18 @@ function Search() {
     });
   };
 
-  useEffect(aplyFilter, [arrFilter]);
-
   const removeFilter = (e) => {
-    const position = e.target.parentNode.id;
-    const result = arrFilter.splice(position, 1);
-    setDataSearch(result);
+    const { id } = e.target.parentNode;
+    console.log(id);
+    const index = arrFilter.filter((arr) => id !== arr.coluna);
+    setArrFilter(index);
+    if (arrFilter.length !== 0) {
+      setDataSearch(data);
+    }
+    // aplyFilter();
   };
+
+  useEffect(aplyFilter, [arrFilter]);
 
   return (
     <header>
@@ -60,11 +71,6 @@ function Search() {
         data-testid="column-filter"
       >
         { coluna.map((col) => <option key={ col } value={ col }>{ col }</option>)}
-        {/* <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option> */}
       </select>
       <select
         onChange={ ({ target }) => setFilter({ ...filter, sinal: target.value }) }
@@ -86,12 +92,14 @@ function Search() {
       >
         Aplicar filtro
       </button>
-      { arrFilter.map((arr, position) => (
-        <p id={ position } key={ `${arr.coluna} ${arr.numero}` }>
-          <button onClick={ removeFilter } type="button">X</button>
-          {`Filter ${position}`}
-        </p>
-      ))}
+      <div className="filters">
+        { arrFilter.map((arr) => (
+          <p data-testid="filter" id={ arr.coluna } key={ `${arr.coluna} ${arr.numero}` }>
+            <button onClick={ removeFilter } type="button">X</button>
+            {` Filter ${arr.coluna}`}
+          </p>
+        ))}
+      </div>
     </header>
   );
 }

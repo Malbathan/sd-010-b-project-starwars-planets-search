@@ -2,9 +2,13 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.filters {
+  display: flex;
+  flex-direction: row;
+}
+
+.filters p {
+  margin-right: 17px;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
