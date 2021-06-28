@@ -1,13 +1,14 @@
 import React from 'react';
-import './App.css';
-import ApiData from './contexts/ApiData';
+import AppProvider from './contexts/AppProvider';
+import Table from './components/Table';
 import Search from './components/Search';
 
 function App() {
   return (
-    <ApiData>
+    <AppProvider>
       <Search />
-    </ApiData>
+      <Table />
+    </AppProvider>
   );
 }
 
