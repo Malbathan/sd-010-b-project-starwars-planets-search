@@ -6,6 +6,7 @@ export default function SWProvider(props) {
   const { children } = props;
 
   const [planets, setPlanets] = useState([]);
+  const [newPlanets, setNewPlanets] = useState(planets);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -15,6 +16,8 @@ export default function SWProvider(props) {
   });
 
   const context = {
+    newPlanets,
+    setNewPlanets,
     planets,
     setPlanets,
     filters,
