@@ -1,12 +1,13 @@
 // O userContext funciona como um CONSUMER*****
 import React, { useContext } from 'react';
 import issContent from '../Content/ISSContent';
-import { contextoDoFiltro } from './Filters';
 // Essa parte da tabela eu tive a ajudado meu colega Gabriel Miranda. Link do PR dele: https://github.com/tryber/sd-010-b-project-starwars-planets-search/pull/67/commits/e0cbd69ca01e7156ec04e1383035be84c44a3ff2
 
 function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, senão dá erro.
-  const { data } = useContext(issContent); // OBRIGATÓRIO. isso aqui me faz não precisar usar o issContent. Consumer. Fazendo isso aqui, eu estou pegando(consumindo) as informações de DATA que vieram lá do FETCHPROVEDOR, só que não precisei cobrir tudo com o consumer.
-  const { filters: { filterByName } } = useContext(contextoDoFiltro); // fiz a desconstrução aqui porque o que eu quero usar no FILTER e MAP lá embaixo é somente o filterByName(que é quem eu atualizo depois que digito algo no input).
+  const { data, filterGeral:
+    { filters: { filterByName, filterByNumericValues } } } = useContext(issContent);
+
+  // OBRIGATÓRIO. isso aqui me faz não precisar usar o issContent. Consumer. Fazendo isso aqui, eu estou pegando(consumindo) as informações de DATA que vieram lá do FETCHPROVEDOR, só que não precisei cobrir tudo com o consumer.
 
   // na minha função abaixo, irei colocar dentro dela mais duas funções.
   function cabecalhoTabela() { // . Essas funções de dentro começam com letra minúscula, senão dá erro também.        Essa aqui cria o cabeçalho(header)
@@ -33,10 +34,31 @@ function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, 
   function conteudoTabela() {
     // cria o resto da tabela. IMPORTANTE: Os do map logo abaixo  PRECISAM ser em Inglês, porque são nomes que estão no data pela requisição que fiz pra aquela API. Então precisa ser IDÊNTICO sobre como vem da API, todas letras minúsculas também
 
+    function filtragem() {
+      let novosDados = data;
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        const filtro = novosDados.filter(({ name }) => name.includes(filterByName))
+          .filter((planeta) => {
+            if (comparison === 'maior que') {
+              console.log('aqui');
+              return parseInt(planeta[column], 10) > parseInt(value, 10);
+            }
+            if (comparison === 'menor que') {
+              return parseInt(planeta[column], 10) < parseInt(value, 10);
+            }
+            if (comparison === 'igual a') {
+              return parseInt(planeta[column], 10) === parseInt(value, 10);
+            }
+            return planeta;
+          });
+        novosDados = filtro;
+      });
+      return (novosDados);
+    }
     return (
       <tbody>
         {
-          data.filter(({ name }) => name.includes(filterByName)).map((planeta, index) => (
+          filtragem().map((planeta, index) => (
             <tr key={ index }>
               <td>{planeta.name}</td>
               <td>{planeta.rotation_period}</td>

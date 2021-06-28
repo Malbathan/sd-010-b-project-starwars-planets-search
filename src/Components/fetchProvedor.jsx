@@ -4,7 +4,14 @@ import issContent from '../Content/ISSContent';
 
 const { Provider } = issContent; // tive que fazer nessa destruturação pro lint não incomodar. Desse jeito eu aciono o PROVIDER que veio do createContext.
 
-function GetDataPlanets({ children }) { // NECESSÁRIO colocar CHILDREN nos ()
+function GetDataPlanets({ children }) {
+  const [filterGeral, setFilterGeral] = useState({
+    filters: {
+      filterByName: '',
+      filterByNumericValues: [],
+    },
+  });
+  // NECESSÁRIO colocar CHILDREN nos ()
   const [data, setData] = useState([]); // começa como uma lista vazia. OBS: O requisito pede pra usar o nome data. O DATA vai ser a informação que vou passar pro TABLE.JSX
 
   //   useEffect(() => {
@@ -27,7 +34,7 @@ function GetDataPlanets({ children }) { // NECESSÁRIO colocar CHILDREN nos ()
   }, []); // esse useEffect e um array vazio no final é como fazer o componentDidmount, ou seja, faz a requisição pra API logo no comecinho.
 
   return ( // esse enfim é o Retorno da função GetDataPlanets.
-    <Provider value={ { data } }>
+    <Provider value={ { data, setFilterGeral, filterGeral } }>
       { children }
     </Provider>
   ); // aqui é FUNDAMENTAL. Assim eu posso passar o data(que tá carregando a requisição dos planetas vindas da API).  PRECISO COLOCAR ESSE CHILDREN. Ele vai fazer com que qualquer componente que for FILHO do Provider(na verdade, filho da função GetDataPlanets) receba o que está dentro do Value={}.
