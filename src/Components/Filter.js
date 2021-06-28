@@ -13,7 +13,6 @@ export default function Filter() {
   };
 
   // Numeric Values:
-
   const filterNumeric = (e) => {
     e.preventDefault();
     setFilters({
@@ -44,8 +43,14 @@ export default function Filter() {
     setValues(value);
   };
 
-  const filtraOption = [
+  // const aplicaFiltro = filters.filterByNumericValues.map((elem) => elem.column);
+
+  const filterOption = [
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
+  // aplicaFiltro.forEach((filtro) => {
+  //   filterOption = filterOption.filter((option) => option !== filtro);
+  // });
 
   return (
     <div>
@@ -55,13 +60,13 @@ export default function Filter() {
         placeholder="Search by name"
         data-testid="name-filter"
       />
-      <form>
+      <form onSubmit={ filterNumeric }>
         <h4>Search by numeric value: </h4>
         <select
           data-testid="column-filter"
           onChange={ handleColumn }
         >
-          { filtraOption.map((el, i) => (
+          { filterOption.map((el, i) => (
             <option value={ el } key={ i }>
               { el }
             </option>
@@ -73,8 +78,8 @@ export default function Filter() {
           onChange={ handleComparison }
         >
           <option value="maior que">maior que</option>
-          <option value="igual a">igual a</option>
           <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         <input
           data-testid="value-filter"
@@ -82,7 +87,7 @@ export default function Filter() {
           onChange={ handleValues }
         />
         <button
-          type="button"
+          type="submit"
           onClick={ filterNumeric }
           data-testid="button-filter"
         >
