@@ -6,19 +6,15 @@ const optionsDefault = ['population', 'orbital_period',
 
 function DropdownColumns() {
   const { setColumnFiltered,
-    columnFiltered, isFiltered, setIsFiltered } = useContext(StarWarsContext);
+    columnFiltered, isFiltered } = useContext(StarWarsContext);
   const { column } = columnFiltered;
 
   const options = optionsDefault.filter((option) => option !== column);
 
   const newOptions = isFiltered ? options : optionsDefault;
 
-  function setDefault() {
-    setIsFiltered(false);
-  }
-
   return (
-    <label htmlFor="columns" data-testid="filter">
+    <label htmlFor="columns">
       Filtre por coluna:
       <select
         data-testid="column-filter"
@@ -34,12 +30,7 @@ function DropdownColumns() {
           ))
         }
       </select>
-      <button
-        type="button"
-        onClick={ () => setDefault() }
-      >
-        X
-      </button>
+
     </label>
   );
 }
