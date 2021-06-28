@@ -53,9 +53,10 @@ function Table() {
   }
 
   function search(obj) {
-    const magicNumber = -1;
+    const numberDefault = -1;
     const { filters: { filterByName: { name } } } = filter;
-    const renderState = obj.filter((item) => item.name.toLowerCase().indexOf(name) > magicNumber);
+    const renderState = obj
+      .filter((item) => item.name.toLowerCase().indexOf(name) > numberDefault);
     return TableStructure(renderState);
   }
 
