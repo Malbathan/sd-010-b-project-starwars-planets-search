@@ -1,10 +1,9 @@
 import React from 'react';
+import Filtros from './Filtros';
 
 function Header() {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <Filtros />
   );
 }
 
