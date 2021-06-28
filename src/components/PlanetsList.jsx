@@ -5,7 +5,15 @@ import Filter from './Filter';
 function PlanetsList() {
   const { data, loading, search } = useContext(PlanetsContext);
   const [planets, setPlanets] = useState(data);
-  const { filters: { filterByName: { name: searchText } } } = search;
+  const {
+    filters: {
+      filterByName: { name: searchText },
+      filterByNumericValues: { column, comparison, value: quantity },
+    } } = search;
+
+  useEffect(() => {
+    setPlanets(data);
+  }, [data]);
 
   useEffect(() => {
     const searchRegex = new RegExp(searchText, 'i');
@@ -15,13 +23,22 @@ function PlanetsList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
-  useEffect(() => {
-    setPlanets(data);
-  }, [data]);
+  const filterByNumber = () => {
+    setPlanets(
+      data.filter((planet) => {
+        const numericValue = parseInt(quantity, 10);
+        const numericColumn = parseInt(planet[column], 10);
+        if (comparison === 'maior que') return numericColumn > numericValue;
+        if (comparison === 'menor que') return numericColumn < numericValue;
+        if (comparison === 'igual a') return numericColumn === numericValue;
+        return true;
+      }),
+    );
+  };
 
   return (
     <section>
-      <Filter />
+      <Filter filterByNumber={ filterByNumber } />
       {
         loading
           ? <p>Loading...</p>

@@ -4,9 +4,9 @@ import PlanetsContext from './PlanetsContext';
 import testData from '../testData';
 
 function PlanetsProvider({ children }) {
+  // ---------- States ----------
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [
     search,
     setSearch,
@@ -22,7 +22,8 @@ function PlanetsProvider({ children }) {
       },
     },
   });
-
+  // ----------------------------
+  // ---------- Search Functions ----------
   const searchPlanetName = ({ target: { value } }) => {
     setSearch({
       filters: {
@@ -45,6 +46,7 @@ function PlanetsProvider({ children }) {
       },
     });
   };
+  // --------------------------------------
 
   const fetchPlanets = async () => {
     // setLoading(true);
