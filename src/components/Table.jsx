@@ -55,7 +55,8 @@ function Table() {
   function search(obj) {
     const magicNumber = -1;
     const { filters: { filterByName: { name } } } = filter;
-    return obj.filter((item) => item.name.toLowerCase().indexOf(name) > magicNumber);
+    const renderState = obj.filter((item) => item.name.toLowerCase().indexOf(name) > magicNumber);
+    return TableStructure(renderState);
   }
 
   return (
@@ -64,7 +65,7 @@ function Table() {
         <tr>
           {HeadForTable()}
         </tr>
-        {TableStructure(search(data))}
+        {search(data)}
       </table>
     </section>
   );

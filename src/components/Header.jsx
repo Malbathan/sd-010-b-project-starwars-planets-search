@@ -3,12 +3,15 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Header() {
-  const { setFilter, filter, setWasTyped } = useContext(DataContext);
+  const { setFilter, filter } = useContext(DataContext);
 
   function handleChange({ target: { value } }) {
     if (value.length > 0) {
-      setWasTyped(true);
       setFilter({ filters: { filterByName: { name: value } } });
+    }
+
+    if (value.length === 0) {
+      setFilter({ filters: { filterByName: { name: '' } } });
     }
   }
 
