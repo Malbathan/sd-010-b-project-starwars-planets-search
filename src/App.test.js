@@ -211,7 +211,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findByTestId(BUTTON_FILTER_SELECTOR)).toHaveProperty('nodeName', 'BUTTON');
   });
 
-  it.only('Filtre utilizando a comparação "menor que"', async () => {
+  it('Filtre utilizando a comparação "menor que"', async () => {
     await act(async () => {
       render(<App />);
     });
@@ -251,7 +251,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
   });
 });
 
-describe('4 - Não utilize filtros repetidos', () => {
+describe.only('4 - Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 

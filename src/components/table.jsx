@@ -5,14 +5,18 @@ import { Context } from './Provider/Provider';
 
 const RenderTable = () => {
   const batata = useContext(Context);
-  const { data, screenNumbers, filterOptions, filterNumeric: { numbers: { column, comparison, value } }, filtername: { filterByName: { name } } } = batata;
+  const { data, filterOptions,
+    filterNumeric: { filterByNumericValues } } = batata;
+  const { column, comparison, value,
+  } = filterByNumericValues[filterByNumericValues.length - 1];
+  console.log(column, comparison, value);
 
   return (
     <table>
       <Thead />
       <tbody>
         { data
-          .filter((planet) => filterOptions(planet, column, comparison, Number(value))) // planet, column, comparison, value
+          .filter((planet) => filterOptions(planet, column, comparison, Number(value))) // planet, column, comparison, Number(value)
           .map((item, index) => (
             <tr key={ index }>
               <td>
@@ -56,7 +60,6 @@ const RenderTable = () => {
               </td>
             </tr>))}
       </tbody>
-      {/* {console.log(column, comparison, value, 'eu aqui')} */}
     </table>
   );
 };

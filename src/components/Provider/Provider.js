@@ -7,17 +7,22 @@ const Provider = ({ children }) => {
     filterByName: {
       name: '',
     },
-    numbers: {
+    filterByNumericValues: [{
       column: '',
       comparison: '',
       value: '',
-    },
+    }],
+  };
+
+  const currentFilter = {
+    column: '',
+    comparison: '',
+    value: '',
   };
 
   const [data, setData] = useState([]);
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
-  const [screenNumbers, setScreenNumbers] = useState(false);
 
   const filterInput = ({ target: { value } }) => {
     setName({
@@ -28,36 +33,34 @@ const Provider = ({ children }) => {
     });
   };
   const handleChange = ({ target: { value, name } }) => {
-    const { numbers } = filterNumeric;
+    currentFilter[name] = value;
+  };
+  useEffect(() => console.log(filterNumeric), [filterNumeric]);
+
+  const handleClick = () => {
+    const { filterByNumericValues } = filterNumeric;
 
     setNumeric({
       ...filterNumeric,
-      numbers: { ...numbers, [name]: value },
+      filterByNumericValues: [...filterByNumericValues, currentFilter],
     });
-  };
-
-  const handleClick = () => {
-    setScreenNumbers(!screenNumbers);
   };
 
   const filterOptions = (planet, column, comparison, value) => {
     const { filterByName: { name } } = filters;
-    if (screenNumbers === true) {
-      if (comparison === 'maior que') {
-        return planet[column] > value;
-      // console.log(value);
-      }
+    if (comparison === 'maior que') {
+      return planet[column] > value;
+    }
 
-      if (comparison === 'menor que') {
-        console.log(planet[column], planet[column] < value);
-        console.log(value);
-        if (planet[column] === 'unknown') return planet[column];
-        return planet[column] < value;
-      }
+    if (comparison === 'menor que') {
+      console.log(planet[column], planet[column] < value);
+      console.log(value);
+      if (planet[column] === 'unknown') return planet[column];
+      return planet[column] < value;
+    }
 
-      if (comparison === 'igual a') {
-        return planet[column] < value;
-      }
+    if (comparison === 'igual a') {
+      return planet[column] < value;
     }
 
     return planet.name.includes(name);
@@ -70,7 +73,15 @@ const Provider = ({ children }) => {
   }, []);
 
   const context = {
-    filterInput, data, handleClick, screenNumbers, filterOptions, filtername, filterNumeric, setData, handleChange,
+    filterInput,
+    data,
+    handleClick,
+    screenNumbers,
+    filterOptions,
+    filtername,
+    filterNumeric,
+    setData,
+    handleChange,
   };
 
   return (
