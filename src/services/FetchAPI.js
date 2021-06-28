@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export default function FetchPlanetAPI() {
-  const API = 'https://swapi-trybe.herokuapp.com/api/planets/';
-
+export default function FetchAPI() {
+  const ENDPOINT = 'https://swapi-trybe.herokuapp.com/api/planets/';
   const [listPlanet, setListPlanet] = useState({});
-
   const searchAPI = () => {
-    fetch(API)
+    fetch(ENDPOINT)
       .then((response) => response.json())
       .then(setListPlanet);
   };
-
   useEffect(searchAPI, []);
 
   return listPlanet;

@@ -42,24 +42,14 @@ export default function TBody() {
     setNewPlanets(filterByNumericValues);
   }, [planets, filters.filterByName, filters.filterByNumericValues, setNewPlanets]);
 
-  // useEffect(() => {
-  //   const { name } = filters.filterByName;
-  //   const { column, comparison, value } = filters.filterByNumericValues[0];
-
-  //   const filterByName = (name)
-  //     ? planets
-  //       .filter((planet) => (planet.name).toLowerCase().includes(name)) : planets;
-
-  //   const filterByNumericValues = filterByName.filter((planet) => {
-  //     switch (comparison) {
-  //     case 'maior que': return parseFloat(planet[column]) > parseFloat(value);
-  //     case 'menor que': return parseFloat(planet[column]) < parseFloat(value);
-  //     case 'igual a': return parseFloat(planet[column]) === parseFloat(value);
-  //     default: return planet;
-  //     }
-  //   });
-  //   setNewPlanets(filterByNumericValues);
-  // }, [planets, filters.filterByName, filters.filterByNumericValues, setNewPlanets]);
+  // const filterByNumericValues = filterByName.filter((planet) => {
+  //   switch (comparison) {
+  //   case 'maior que': return parseFloat(planet[column]) > parseFloat(value);
+  //   case 'menor que': return parseFloat(planet[column]) < parseFloat(value);
+  //   case 'igual a': return parseFloat(planet[column]) === parseFloat(value);
+  //   default: return planet;
+  //   }
+  // });
 
   // remover key 'residents' da lista
   if (results) {
