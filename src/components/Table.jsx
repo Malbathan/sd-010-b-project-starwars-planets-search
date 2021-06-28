@@ -88,7 +88,7 @@ function Table() {
     );
   };
 
-  const xablau = () => {
+  const addFilterOptions = () => {
     if (filters.filterByNumericValues.length === 0) {
       return data;
     }
@@ -178,7 +178,7 @@ function Table() {
   };
 
   useEffect(() => {
-    xablau();
+    addFilterOptions();
   }, [filters]);
 
   if (!data.length) return <h1>Loading...</h1>;
