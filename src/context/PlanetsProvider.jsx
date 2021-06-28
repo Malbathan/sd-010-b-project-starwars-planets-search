@@ -7,6 +7,9 @@ function PlanetsProvider({ children }) {
   // ---------- States ----------
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [categories] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [
     search,
     setSearch,
@@ -73,6 +76,7 @@ function PlanetsProvider({ children }) {
         data,
         loading,
         search,
+        categories,
         searchPlanetName,
         setData,
         searchByNumericValues,

@@ -3,8 +3,9 @@ import PlanetsContext from '../context/PlanetsContext';
 import Filter from './Filter';
 
 function PlanetsList() {
-  const { data, loading, search } = useContext(PlanetsContext);
+  const { data, loading, search, categories } = useContext(PlanetsContext);
   const [planets, setPlanets] = useState(data);
+  const [categoriesFilter, setCategoriesFilter] = useState(categories);
   const {
     filters: {
       filterByName: { name: searchText },
@@ -24,6 +25,10 @@ function PlanetsList() {
   }, [search]);
 
   const filterByNumber = () => {
+    const columnIndex = categoriesFilter.indexOf(column);
+    const categoriesCopy = [...categoriesFilter];
+    categoriesCopy.splice(columnIndex, 1);
+
     setPlanets(
       data.filter((planet) => {
         const numericValue = parseInt(quantity, 10);
@@ -34,11 +39,12 @@ function PlanetsList() {
         return true;
       }),
     );
+    setCategoriesFilter(categoriesCopy);
   };
 
   return (
     <section>
-      <Filter filterByNumber={ filterByNumber } />
+      <Filter filterByNumber={ filterByNumber } categories={ categoriesFilter } />
       {
         loading
           ? <p>Loading...</p>

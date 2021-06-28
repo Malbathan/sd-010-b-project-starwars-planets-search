@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 import Select from './Select';
 
-function Filter({ filterByNumber }) {
+function Filter({ filterByNumber, categories }) {
   const { search, searchPlanetName, searchByNumericValues } = useContext(PlanetsContext);
   const {
     filters: {
@@ -11,9 +11,6 @@ function Filter({ filterByNumber }) {
       filterByNumericValues: { value: quantity },
     } } = search;
 
-  const QUANTITY_FILTER = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
   const VALUE_RANGE = [
     'maior que', 'menor que', 'igual a',
   ];
@@ -30,7 +27,7 @@ function Filter({ filterByNumber }) {
       <Select
         name="column"
         testid="column-filter"
-        dataOptions={ QUANTITY_FILTER }
+        dataOptions={ categories }
         onChange={ searchByNumericValues }
       />
       <Select
@@ -59,6 +56,7 @@ function Filter({ filterByNumber }) {
 
 Filter.propTypes = {
   filterByNumber: PropTypes.func.isRequired,
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Filter;
