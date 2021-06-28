@@ -1,10 +1,7 @@
 import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function filtersColumns(handleChange, handleNumericFilters) {
-  const filterOptions = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-
+function filtersColumns(handleChange, handleNumericFilters, filterOptions) {
   const filterComparison = [
     'maior que', 'menor que', 'igual a'];
 
@@ -44,19 +41,19 @@ function filtersColumns(handleChange, handleNumericFilters) {
         data-testid="button-filter"
         onClick={ () => handleNumericFilters() }
       >
-        Aplicar filtros
+        Aplicar filtro
       </button>
     </>
   );
 }
 
-const CompareFilter = () => (
+const NumericFilters = () => (
   <StarWarsContext.Consumer>
     {
-      (({ handleChange, handleNumericFilters }) => (
-        filtersColumns(handleChange, handleNumericFilters)))
+      (({ handleChange, handleNumericFilters, filterOptions }) => (
+        filtersColumns(handleChange, handleNumericFilters, filterOptions)))
     }
   </StarWarsContext.Consumer>
 );
 
-export default CompareFilter;
+export default NumericFilters;

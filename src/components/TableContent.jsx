@@ -1,22 +1,22 @@
 import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function renderPlanets(data, index) {
+function renderPlanets(planet, index) {
   return (
     <tr key={ index }>
-      <td>{data.name}</td>
-      <td>{data.rotation_period}</td>
-      <td>{data.orbital_period}</td>
-      <td>{data.diameter}</td>
-      <td>{data.climate}</td>
-      <td>{data.gravity}</td>
-      <td>{data.terrain}</td>
-      <td>{data.surface_water}</td>
-      <td>{data.population}</td>
-      <td>{data.films}</td>
-      <td>{data.created}</td>
-      <td>{data.edited}</td>
-      <td>{data.url}</td>
+      <td>{planet.name}</td>
+      <td>{planet.rotation_period}</td>
+      <td>{planet.orbital_period}</td>
+      <td>{planet.diameter}</td>
+      <td>{planet.climate}</td>
+      <td>{planet.gravity}</td>
+      <td>{planet.terrain}</td>
+      <td>{planet.surface_water}</td>
+      <td>{planet.population}</td>
+      <td>{planet.films}</td>
+      <td>{planet.created}</td>
+      <td>{planet.edited}</td>
+      <td>{planet.url}</td>
     </tr>
   );
 }

@@ -4,10 +4,12 @@ import StarWarsContext from './StarWarsContext';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
-  const [keys, setKeys] = useState([]);
+  const [colHeaders, setColHeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [search, setSearch] = useState('');
+  const [filterOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [numericFilters, setNumericFilters] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -24,8 +26,8 @@ const StarWarsProvider = ({ children }) => {
       setData(results);
       setLoading(!loading);
       const colNames = () => {
-        const keysNames = Object.keys(results[0]);
-        setKeys(keysNames);
+        const keysName = Object.keys(results[0]);
+        setColHeaders(keysName);
       };
       colNames();
     };
@@ -77,8 +79,9 @@ const StarWarsProvider = ({ children }) => {
 
   const toConsume = {
     filteredPlanets,
-    keys,
+    colHeaders,
     setSearch,
+    filterOptions,
     handleChange,
     handleNumericFilters,
     clearFilters,

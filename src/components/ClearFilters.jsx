@@ -5,13 +5,15 @@ const ClearFilters = () => (
   <StarWarsContext.Consumer>
     {
       (({ clearFilters }) => (
-        <button
-          data-testid="filter"
-          type="button"
-          onClick={ () => clearFilters() }
-        >
-          X
-        </button>))
+        <div data-testid="filter">
+          <button
+            type="button"
+            onClick={ () => clearFilters() }
+          >
+            X
+          </button>
+        </div>
+      ))
     }
   </StarWarsContext.Consumer>
 );

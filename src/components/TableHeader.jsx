@@ -1,15 +1,15 @@
 import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function renderTableHeader(keys, index) {
+function renderTableHeader(colHeaders, index) {
   return (
-    <th key={ index }>{keys}</th>
+    <th key={ index }>{colHeaders}</th>
   );
 }
 
 const TableHeader = () => (
   <StarWarsContext.Consumer>
-    {({ keys }) => keys.map(renderTableHeader) }
+    {({ colHeaders }) => colHeaders.map(renderTableHeader) }
   </StarWarsContext.Consumer>
 );
 

@@ -5,14 +5,14 @@ import StarWarsProvider from './context/StarWarsProvider';
 import './App.css';
 import Table from './components/Table';
 import FilterByText from './components/FilterByText';
-import CompareFilter from './components/CompareFilter';
+import NumericFilter from './components/NumericFilters';
 import ClearFilters from './components/ClearFilters';
 
 function App() {
   return (
     <StarWarsProvider>
       <FilterByText />
-      <CompareFilter />
+      <NumericFilter />
       <ClearFilters />
       <Table />
     </StarWarsProvider>
