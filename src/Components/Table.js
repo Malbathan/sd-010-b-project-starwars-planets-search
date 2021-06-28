@@ -3,7 +3,7 @@ import PlanetsContext from '../Context/PlanetsContext';
 
 const Table = () => {
   const value = useContext(PlanetsContext);
-  // console.log(value);
+  console.log(value);
   return value === undefined || value === [] ? <div /> : (
     <table>
       <tr>
