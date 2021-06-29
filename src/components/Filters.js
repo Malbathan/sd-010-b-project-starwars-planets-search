@@ -24,14 +24,14 @@ export default function Filters() {
   const [columnList, setColumn] = useState(selectColumnOptions);
 
   useEffect(() => {
-    setLocalFilter((prevState) => ({ ...prevState, column: columnList ? columnList[0] : prevState.column }));
+    setLocalFilter((prevState) => ({ ...prevState,
+      column: columnList[0] }));
   }, [columnList]);
 
   const { name } = filters.filterByName;
   const { column } = local;
 
-  function handleLocalStates({ target }) {
-    const { id, value } = target;
+  function handleLocalStates({ target: { id, value } }) {
     setLocalFilter({ ...local, [id]: value });
   }
 
@@ -49,16 +49,16 @@ export default function Filters() {
 
   return (
     <form>
-      <label htmlFor="filter">
+      <label htmlFor="name">
         <input
           data-testid="name-filter"
-          id="filter"
+          id="name"
           type="text"
           value={ name }
-          onChange={ (e) => handleNameFilter(e) }
+          onChange={ handleNameFilter }
         />
       </label>
-      <label htmlFor="column-filter">
+      <label htmlFor="column">
         <select
           data-testid="column-filter"
           id="column"
@@ -76,7 +76,7 @@ export default function Filters() {
           {comparisons.map((comp, i) => <option value={ comp } key={ i }>{comp}</option>)}
         </select>
       </label>
-      <label htmlFor="value-filter">
+      <label htmlFor="value">
         <input
           min="0"
           value={ local.value }
