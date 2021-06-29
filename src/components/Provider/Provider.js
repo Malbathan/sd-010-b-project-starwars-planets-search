@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const Context = createContext();
 
@@ -12,6 +13,9 @@ const Provider = ({ children }) => {
       comparison: '',
       value: '',
     }],
+    filterByColumn: [
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ],
   };
 
   const currentFilter = {
@@ -23,6 +27,7 @@ const Provider = ({ children }) => {
   const [data, setData] = useState([]);
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
+  const [filterByColumn, setColumn] = useState(filters.filterByColumn);
 
   const filterInput = ({ target: { value } }) => {
     setName({
@@ -35,7 +40,6 @@ const Provider = ({ children }) => {
   const handleChange = ({ target: { value, name } }) => {
     currentFilter[name] = value;
   };
-  useEffect(() => console.log(filterNumeric), [filterNumeric]);
 
   const handleClick = () => {
     const { filterByNumericValues } = filterNumeric;
@@ -44,6 +48,11 @@ const Provider = ({ children }) => {
       ...filterNumeric,
       filterByNumericValues: [...filterByNumericValues, currentFilter],
     });
+    const { column } = currentFilter;
+
+    const filteredColumn = filterByColumn.filter((el) => el !== column);
+    console.log(filteredColumn);
+    setColumn([...filteredColumn]);
   };
 
   const filterOptions = (planet, column, comparison, value) => {
@@ -55,7 +64,6 @@ const Provider = ({ children }) => {
     if (comparison === 'menor que') {
       console.log(planet[column], planet[column] < value);
       console.log(value);
-      if (planet[column] === 'unknown') return planet[column];
       return planet[column] < value;
     }
 
@@ -76,17 +84,21 @@ const Provider = ({ children }) => {
     filterInput,
     data,
     handleClick,
-    screenNumbers,
     filterOptions,
     filtername,
     filterNumeric,
     setData,
     handleChange,
+    filterByColumn,
   };
 
   return (
     <Context.Provider value={ context }>{children}</Context.Provider>
   );
+};
+
+Provider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export { Provider, Context };

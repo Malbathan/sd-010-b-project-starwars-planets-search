@@ -6,7 +6,7 @@ import { Context } from './Provider/Provider';
 const Home = () => {
   const { filterInput,
     data,
-    handleChange, handleClick,
+    handleChange, handleClick, filterByColumn,
   } = useContext(Context);
 
   return (
@@ -15,16 +15,19 @@ const Home = () => {
       <select
         id="batata"
         name="column"
-        onClick={ handleChange }
+        onChange={ handleChange }
         data-testid="column-filter"
       >
-        <option value="population">population</option>
+        {console.log(filterByColumn.length)}
+        {filterByColumn
+          .map((el, index) => <option key={ index } value={ el }>{el}</option>) }
+        {/* <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
-      <select name="comparison" onClick={ handleChange } data-testid="comparison-filter">
+      <select name="comparison" onChange={ handleChange } data-testid="comparison-filter">
         <option value="maior que">maior que</option>
         <option value="menor que">menor que</option>
         <option value="igual a">igual a</option>
