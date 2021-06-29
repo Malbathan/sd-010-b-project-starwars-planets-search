@@ -4,9 +4,10 @@ import PlanetContext from '../context/PlanetContext';
 import SearchBox from './SearchBox';
 
 function Home() {
-  const { planets, tableTitles, filterName } = useContext(PlanetContext);
-  const filteredPlanets = planets.filter(
-    (planet) => planet.name.toLowerCase().includes(filterName.toLowerCase()));
+  const { tableTitles, filter, filteredPlanets } = useContext(PlanetContext);
+  const { name } = filter.filterByName;
+  const allFilteredPlanets = filteredPlanets.filter(
+    (planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
 
   function generateTableHeader() {
     return (<>
@@ -21,7 +22,7 @@ function Home() {
   function generateTableBody() {
     return (
       <tbody>
-          { filteredPlanets.map(({ 
+          { allFilteredPlanets.map(({ 
             name,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,

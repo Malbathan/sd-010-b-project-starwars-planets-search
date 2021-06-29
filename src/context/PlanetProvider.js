@@ -5,7 +5,21 @@ import { fetchPlanets } from '../services/planetsAPI';
 function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [tableTitles, setTableTitles] = useState([]);
-  const [filterName, setFilterName] = useState('');
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [filter, setFilter] = useState(
+    {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '0',
+        },
+      ],
+    },
+  );
 
   useEffect(() => {
     getPlanets();
@@ -15,7 +29,7 @@ function PlanetProvider({ children }) {
   // Guarda todos os planetas
   async function getPlanets() {
     const planets = await fetchPlanets();
-
+    setFilteredPlanets(planets);
     setPlanets(planets);
   };
 
@@ -32,8 +46,10 @@ function PlanetProvider({ children }) {
   const planetContext = {
     planets,
     tableTitles,
-    filterName,
-    setFilterName,
+    filter,
+    setFilter,
+    filteredPlanets,
+    setFilteredPlanets,
   }
 
   return (
