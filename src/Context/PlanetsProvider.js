@@ -14,8 +14,16 @@ function PlanetsProvider({ children }) {
     // setPlanets(getPlanetsApi().results);
   }, []);
 
+  const [filter, setFilter] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
+
   return (
-    <PlanetsContext.Provider value={ data }>
+    <PlanetsContext.Provider value={ { data, filter, setFilter } }>
       {children}
     </PlanetsContext.Provider>
   );
