@@ -4,14 +4,13 @@ import StarWarsContext from '../contex/StarWarsContext';
 export default function Table() {
   const { isLoading, filtered } = useContext(StarWarsContext);
 
+  // PERGUNTAR NUM PLANTAO COMO RESOLVER COM FOR-IN:
   const generateTableHeaders = (object1) => {
     if (object1) { return Object.keys(object1).map((key) => <th key={ key }>{key}</th>); }
   };
 
-  // PERGUNTAR NUM PLANTAO COMO RESOLVER COM FOR-IN
-
-  const generateTableCollumns = (planetInfo) => (
-    Object.values(planetInfo).map((info, index) => <td key={ index }>{info}</td>));
+  const generateTableLines = (planetInfo) => (
+    Object.values(planetInfo).map((info) => <td key={ info }>{info}</td>));
   return (
     !isLoading
       ? (
@@ -19,7 +18,8 @@ export default function Table() {
           <tbody>
             <tr>{generateTableHeaders(filtered[0])}</tr>
             {filtered
-              .map((planet, i) => (<tr key={ i }>{generateTableCollumns(planet)}</tr>))}
+              .map((planet) => (
+                <tr key={ planet.name }>{generateTableLines(planet)}</tr>))}
           </tbody>
         </table>
       )

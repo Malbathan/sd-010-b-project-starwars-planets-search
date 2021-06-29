@@ -14,6 +14,7 @@ export default function StarWarsProvider({ children }) {
         name: '',
       },
       filterByNumericValues: [],
+      order: {},
     },
   );
 
@@ -32,7 +33,6 @@ export default function StarWarsProvider({ children }) {
   useEffect(() => {
     const { name } = filters.filterByName;
     const inputSearch = data.filter((info) => info.name.toLowerCase().includes(name));
-    setFiltered(inputSearch);
 
     const selectSearch = data.filter((obj) => {
       if (filters.filterByNumericValues.length === 0) return data;
@@ -53,6 +53,15 @@ export default function StarWarsProvider({ children }) {
     const search = name.length === 0
       ? selectSearch
       : inputSearch;
+
+    const { order } = filters;
+    if (order.sort === 'ASC') {
+      search.sort((a, b) => a[order.column] - b[order.column]);
+    }
+    if (order.sort === 'DESC') {
+      search.sort((a, b) => b[order.column] - a[order.column]);
+    }
+
     setFiltered(search);
   }, [filters, data]);
 
@@ -60,17 +69,23 @@ export default function StarWarsProvider({ children }) {
     setFilter({ ...filters, filterByName: { name: value } });
   }
 
-  function filterByValues({ column, comparison, value }) {
+  function filterByValues(filtersState) {
     // setFilter({ ...filters,
     //   filterByNumericValues:
-    //   [...filters.filterByNumericValues, { column, comparison, value }],
+    //   [...filters.filterByNumericValues, filtersLocalState],
     // });
 
     setFilter((prevState) => ({
       ...filters,
       filterByNumericValues:
-      prevState.filterByNumericValues.concat([{ column, comparison, value }]),
+      prevState.filterByNumericValues.concat([filtersState]),
     }));
+  }
+
+  function handleSortClick(sortState) {
+    console.log(sortState);
+
+    setFilter({ ...filters, order: sortState });
   }
 
   // PropTypes pesquisado em: https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children
@@ -92,6 +107,7 @@ export default function StarWarsProvider({ children }) {
         setFilter,
         filtered,
         filters,
+        handleSortClick,
       } }
     >
       {children}
