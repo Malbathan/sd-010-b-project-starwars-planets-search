@@ -80,7 +80,7 @@ function Table() {
     }
     if (comparison === 'igual a') {
       renderFiltered = obj
-        .filter((item) => item[column] === parseInt(value, 10));
+        .filter((item) => parseInt(item[column], 10) === parseInt(value, 10));
     }
 
     return TableStructure(renderFiltered);
