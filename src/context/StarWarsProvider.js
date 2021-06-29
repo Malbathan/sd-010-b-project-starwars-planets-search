@@ -101,11 +101,7 @@ const StarWarsProvider = ({ children }) => {
 };
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape({}),
-};
-
-StarWarsProvider.defaultProps = {
-  children: undefined,
+  children: PropTypes.node.isRequired,
 };
 
 export default StarWarsProvider;
