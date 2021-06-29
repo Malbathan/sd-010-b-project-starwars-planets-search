@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
 function Table() {
-  const { planets } = useContext(StarWarsContext);
+  const { planets, TableThs } = useContext(StarWarsContext);
   const [showPlanets, setShowPlanets] = useState(false);
 
   useEffect(() => {
@@ -10,14 +10,13 @@ function Table() {
   }, [planets]);
 
   const buildThs = (names) => (<tr>{ names.map((n) => <th key={ n }>{n}</th>) }</tr>);
-  // showPlanets && console.log(Object.keys(planets[0]).filter((e) => e !== 'residents'));
 
   return (
     <div>
       { showPlanets && (
         <table>
           <tbody>
-            { buildThs(Object.keys(planets[0]).filter((e) => e !== 'residents')) }
+            { buildThs(TableThs) }
             { planets.map((
               { climate,
                 created,
@@ -35,7 +34,7 @@ function Table() {
               },
             ) => (
               <tr key={ name }>
-                <td>{ name }</td>
+                <td data-testid="planet-name">{ name }</td>
                 <td>{ rotationPeriod }</td>
                 <td>{ orbitalPeriod }</td>
                 <td>{ diameter }</td>
