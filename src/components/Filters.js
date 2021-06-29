@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../contex/StarWarsContext';
 
 const selectColumnOptions = [
@@ -23,8 +23,13 @@ export default function Filters() {
 
   const [columnList, setColumn] = useState(selectColumnOptions);
 
+  useEffect(() => {
+    setLocalFilter({ ...local, column: columnList[0] });
+    // eslint-disable-next-line
+  }, [columnList]);
+
   const { name } = filters.filterByName;
-  const { column, comparison } = local;
+  const { column } = local;
 
   function handleLocalStates({ target }) {
     const { id, value } = target;
@@ -32,11 +37,7 @@ export default function Filters() {
   }
 
   function handleBtnClick() {
-    filterByValues({
-      column,
-      comparison,
-      value: local.value,
-    });
+    filterByValues(local);
     setColumn(columnList.filter((col) => col !== column));
   }
 
@@ -61,11 +62,10 @@ export default function Filters() {
       <label htmlFor="column-filter">
         <select
           data-testid="column-filter"
-          value={ local.column }
           id="column"
           onChange={ (e) => handleLocalStates(e) }
         >
-          {columnList.map((col) => <option key={ col }>{col}</option>)}
+          {columnList.map((col, i) => <option value={ col } key={ i }>{col}</option>)}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -73,9 +73,8 @@ export default function Filters() {
           data-testid="comparison-filter"
           id="comparison"
           onChange={ (e) => handleLocalStates(e) }
-          value={ local.comparison }
         >
-          {comparisons.map((comp) => <option key={ comp }>{comp}</option>)}
+          {comparisons.map((comp, i) => <option value={ comp } key={ i }>{comp}</option>)}
         </select>
       </label>
       <label htmlFor="value-filter">
@@ -98,8 +97,8 @@ export default function Filters() {
           {' '}
           Send Comparison
         </button>
-        {filters.filterByNumericValues.map((el) => (
-          <div data-testid="filter" key={ el.column }>
+        {filters.filterByNumericValues.map((el, i) => (
+          <div data-testid="filter" key={ i }>
             <button
               type="button"
               onClick={ (e) => handleFilterRemoval(e) }

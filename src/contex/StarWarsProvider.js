@@ -62,10 +62,16 @@ export default function StarWarsProvider({ children }) {
   };
 
   const filterByValues = ({ column, comparison, value }) => {
-    setFilter({ ...filters,
+    // setFilter({ ...filters,
+    //   filterByNumericValues:
+    //   [...filters.filterByNumericValues, { column, comparison, value }],
+    // });
+
+    setFilter((prevState) => ({
+      ...filters,
       filterByNumericValues:
-      [...filters.filterByNumericValues, { column, comparison, value }],
-    });
+      prevState.filterByNumericValues.concat([{ column, comparison, value }]),
+    }));
   };
 
   // PropTypes pesquisado em: https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children
