@@ -7,7 +7,7 @@ const Home = () => {
   const { filterInput,
     data,
     handleChange, handleClick, filterByColumn, deletedColumns,
-    removeFromTheDeletedColumns,
+    removeFromTheDeletedColumns, handleOrder,
   } = useContext(Context);
 
   return (
@@ -61,6 +61,46 @@ const Home = () => {
               </button>
             </label>))}
       </section>
+
+      <select data-testid="column-sort" onChange={ handleChange } name="column-sort">
+        {data.length > 0 && Object.keys(data[0])
+          .map((el, index) => (
+            <option key={ index } onChange={ handleChange }>
+              {el}
+            </option>))}
+
+      </select>
+      <label htmlFor="sortASC">
+        ASC
+        <input
+          type="radio"
+          name="sort"
+          id="sortASC"
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          onChange={ handleChange }
+        />
+      </label>
+      <label htmlFor="sortDESC">
+        DESC
+        <input
+          type="radio"
+          id="sortDESC"
+          name="sort"
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ handleChange }
+        />
+      </label>
+      <button
+        type="button"
+        onClick={ handleOrder }
+        data-testid="column-sort-button"
+      >
+        Ordene
+
+      </button>
+
       {data.length === 0 ? <p>carregando</p> : <RenderTable />}
     </div>
   );

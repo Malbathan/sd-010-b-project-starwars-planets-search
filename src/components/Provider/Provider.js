@@ -16,6 +16,10 @@ const Provider = ({ children }) => {
     filterByColumn: [
       'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
     ],
+    order: {
+      column: '',
+      sort: '',
+    },
   };
 
   const currentFilter = {
@@ -23,12 +27,17 @@ const Provider = ({ children }) => {
     comparison: 'maior que',
     value: '',
   };
+  const currentOrder = {
+    column: '',
+    sort: '',
+  };
 
   const [data, setData] = useState([]);
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
   const [filterByColumn, setColumn] = useState(filters.filterByColumn);
   const [deletedColumns, setDeletedColumn] = useState([]);
+  const [orderSort, setOrder] = useState(filters);
 
   const filterInput = ({ target: { value } }) => {
     // console.log(value);
@@ -40,8 +49,29 @@ const Provider = ({ children }) => {
     });
   };
   const handleChange = ({ target: { value, name } }) => {
+    if (name === 'sort') {
+      currentOrder[name] = value; console.log(value, name, currentOrder);
+    } else if (name === 'column-sort') {
+      currentOrder.column = value; console.log(value, currentOrder);
+    }
+
     currentFilter[name] = value;
   };
+
+  const handleOrder = () => {
+    // const { order } = orderSort;
+    setOrder({
+      ...orderSort,
+      order: {
+        column: currentOrder.column,
+        sort: currentOrder.sort },
+    });
+    // console.log(currentOrder);
+    // console.log(orderSort.order);
+    // console.log('eu aqui');
+  };
+
+  // useEffect(() => console.log(filters.order), [filters.order]);
 
   const removeFromTheDeletedColumns = ({ target: { value } }) => {
     // console.log(value);
@@ -81,6 +111,7 @@ const Provider = ({ children }) => {
 
   const filterOptions = (planet, column, comparison, value) => {
     const { filterByName: { name } } = filtername;
+    // console.log(planet.sort());
 
     if (comparison === 'maior que') {
       return planet[column] > value;
@@ -93,7 +124,7 @@ const Provider = ({ children }) => {
     if (comparison === 'igual a') {
       return Number(planet[column]) === value;
     }
-
+    // return planet.sort((a, b) => a.name - b.name);
     return planet.name.includes(name);
   };
   // useEffect(() => console.log(deletedColumns), [deletedColumns]);
@@ -115,6 +146,8 @@ const Provider = ({ children }) => {
     handleChange,
     filterByColumn,
     deletedColumns,
+    orderSort,
+    handleOrder,
     removeFromTheDeletedColumns,
   };
 
