@@ -2,13 +2,17 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Filter() {
-  const { getFilter, filter } = useContext(PlanetContext);
+  const { setFilterByName, filter } = useContext(PlanetContext);
+
+  const searchByText = ({ target: { value } }) => {
+    setFilterByName({ ...filter, filterByName: { name: value } });
+  };
 
   return (
     <section>
       <input
         value={ filter.filterByName.name }
-        onChange={ getFilter }
+        onChange={ searchByText }
         data-testid="name-filter"
       />
     </section>

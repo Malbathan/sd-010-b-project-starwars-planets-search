@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function Table() {
-  const { planetsFilter } = useContext(PlanetContext);
-  if (planetsFilter === undefined) {
+  const { data, filter, planetsFilter } = useContext(PlanetContext);
+  const result = filter.filterByName.name.length === 0 ? data : planetsFilter;
+  if (data === undefined) {
     return (
       <p>carregando</p>
     );
@@ -25,7 +26,7 @@ function Table() {
         <th>editado</th>
         <th>url</th>
       </tr>
-      {planetsFilter.map((planet) => (
+      {result.map((planet) => (
         <tr key={ planet.name }>
           <td>{ planet.name }</td>
           <td>{ planet.rotation_period }</td>

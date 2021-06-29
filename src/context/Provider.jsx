@@ -29,19 +29,24 @@ function PlanetProvider({ children }) {
     getUser();
   }, []);
 
-  function getFilter({ target: { value } }) {
-    if (filter.filterByName.name === '') {
-      setPlanetsFilter(data);
-    } else {
-      setFilterByName({ ...filter, filterByName: { name: value } });
-      console.log(filter.filterByName.name);
+  useEffect(() => {
+    if (filter.filterByName.name) {
+      const filterName = data.filter(
+        ({ name }) => name.toLowerCase().includes(filter.filterByName.name.toLowerCase()),
+      );
+      if (filterName.length > 0) {
+        setPlanetsFilter(filterName);
+      } else {
+        setPlanetsFilter(data);
+      }
     }
-  }
+  }, [data, filter.filterByName.name]);
 
   const globalContext = {
-    planetsFilter,
-    getFilter,
+    data,
+    setFilterByName,
     filter,
+    planetsFilter,
   };
   return (
     <PlanetContext.Provider value={ globalContext }>
