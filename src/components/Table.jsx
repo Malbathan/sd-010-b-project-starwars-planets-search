@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import Header from './Header';
 
 function Table() {
-  const { data, getPlanets } = useContext(PlanetsContext);
-
-  useEffect(() => {
-    getPlanets()
-  }, []);
+  const { data } = useContext(PlanetsContext);
 
   return (
     <div>
+      <Header />
       <table>
         <thead>
           <tr>
@@ -59,7 +57,7 @@ function Table() {
         </tbody>
       </table>
     </div>
-  )
+  );
 }
 
 export default Table;
