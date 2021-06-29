@@ -38,7 +38,7 @@ function Table() {
             <td>{planetName.climate }</td>
             <td>{planetName.gravity }</td>
             <td>{planetName.terrain }</td>
-            <td>{planetName.surfaceWater }</td>
+            <td>{planetName.surface_water }</td>
             <td>{planetName.population }</td>
             <td>{planetName.films }</td>
             <td>{planetName.created }</td>
