@@ -62,7 +62,7 @@ export default function Filters() {
         <select
           data-testid="column-filter"
           id="column"
-          onChange={ (e) => handleLocalStates(e) }
+          onChange={ handleLocalStates }
         >
           {columnList.map((col, i) => <option value={ col } key={ i }>{col}</option>)}
         </select>
@@ -71,7 +71,7 @@ export default function Filters() {
         <select
           data-testid="comparison-filter"
           id="comparison"
-          onChange={ (e) => handleLocalStates(e) }
+          onChange={ handleLocalStates }
         >
           {comparisons.map((comp, i) => <option value={ comp } key={ i }>{comp}</option>)}
         </select>
@@ -83,7 +83,7 @@ export default function Filters() {
           type="number"
           data-testid="value-filter"
           id="value"
-          onChange={ (e) => handleLocalStates(e) }
+          onChange={ handleLocalStates }
         />
       </label>
       <label htmlFor="btn">
@@ -100,7 +100,7 @@ export default function Filters() {
           <div data-testid="filter" key={ i }>
             <button
               type="button"
-              onClick={ (e) => handleFilterRemoval(e) }
+              onClick={ handleFilterRemoval }
               value={ el.column }
             >
               { `${el.column} X`}
