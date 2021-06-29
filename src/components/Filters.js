@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import StarWarsContext from '../contex/StarWarsContext';
 
 const selectColumnOptions = [
@@ -17,16 +17,15 @@ export default function Filters() {
     filterByValues,
     setFilter,
   } = useContext(StarWarsContext);
+
   const [local, setLocalFilter] = useState(
     { column: 'population', comparison: 'maior que', value: 0 },
   );
-
   const [columnList, setColumn] = useState(selectColumnOptions);
 
-  useEffect(() => {
-    setLocalFilter({ ...local, column: columnList[0] });
-    // eslint-disable-next-line
-  }, [columnList]);
+  // useEffect(() => {
+  //   setLocalFilter({ ...local, column: columnList ? columnList[0] : [] });
+  // }, [columnList]);
 
   const { name } = filters.filterByName;
   const { column } = local;
