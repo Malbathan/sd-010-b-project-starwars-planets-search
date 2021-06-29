@@ -3,12 +3,13 @@ import PlanetsContext from '../context/PlanetsContext';
 
 function TableBody() {
   const { data } = useContext(PlanetsContext);
+  console.log(data);
+  console.log(Object.keys(data));
 
   return (
     <tbody>
-      { Object.keys(data).map((
-        { index,
-          name,
+      { data.results.map((
+        { name,
           rotation_period: rotationPeriod,
           orbital_period: orbitalPeriod,
           diameter,
@@ -23,7 +24,7 @@ function TableBody() {
           url,
         },
       ) => (
-        <tr key={ index }>
+        <tr key={ name }>
           <td>{ name }</td>
           <td>{ rotationPeriod }</td>
           <td>{ orbitalPeriod }</td>
@@ -42,5 +43,7 @@ function TableBody() {
     </tbody>
   );
 }
+
+// Agradecimentos especiais à Mariana Mohr, que me ajudou a fazer o map desse requisito que eu fiquei travado por muuito tempo. Valeuuuu Mari!
 
 export default TableBody;
