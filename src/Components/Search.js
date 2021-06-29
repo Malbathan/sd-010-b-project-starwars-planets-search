@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 
 function Search() {
-  const { filter, setFilter } = useContext(PlanetsContext);
+  const { filter, setFilter, clickSelectorFilter } = useContext(PlanetsContext);
 
   const nameFilterChange = ({ target: { value } }) => {
     setFilter((oldState) => ({
@@ -60,7 +60,14 @@ function Search() {
         data-testid="value-filter"
         type="number"
       />
-      <button type="button" data-testid="button-filter">Filter</button>
+      <button
+        onClick={ clickSelectorFilter }
+        type="button"
+        data-testid="button-filter"
+      >
+        Filter
+
+      </button>
     </label>
   );
 }

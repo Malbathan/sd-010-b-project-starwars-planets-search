@@ -4,6 +4,7 @@ import PlanetsContext from '../Context/PlanetsContext';
 const Table = () => {
   const { dataFiltered,
     filter: { filters: { filterByName: { name } } } } = useContext(PlanetsContext);
+  // useEffect(() => null, [dataFiltered]);
   return dataFiltered === undefined || dataFiltered === [] ? <div /> : (
     <table>
       <tr>
