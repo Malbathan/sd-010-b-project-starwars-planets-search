@@ -25,7 +25,7 @@ function Filtered() {
     }
     if (comparison === 'igual a') {
       const resultIgual = beckupData.filter((item) => (
-        item[column] == parseInt(value, 10)
+        item[column] === value
       ));
       return setArrayFiltered(resultIgual);
     }
