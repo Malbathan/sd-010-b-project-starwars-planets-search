@@ -92,8 +92,8 @@ export default function Filters() {
           onClick={ handleBtnClick }
           data-testid="button-filter"
           type="button"
+          disabled={ !columnList.length }
         >
-          {' '}
           Send Comparison
         </button>
         {filters.filterByNumericValues.map((el, i) => (
