@@ -10,6 +10,13 @@ export default function TableProv({ children }) {
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '-1',
+      },
+    ],
   });
 
   const planetAPI = async () => {
@@ -22,15 +29,33 @@ export default function TableProv({ children }) {
 
   useEffect(() => {
     const { name } = filterText.filterByName;
+    const { column, comparison, value } = filterText.filterByNumericValues;
+    let filteredPlanets = planets;
+    switch (comparison) {
+    case 'maior que':
+      filteredPlanets = planetsFilter.filter((planet) => console.log(planet));
+
+      break;
+    case 'menor que':
+
+      break;
+    case 'igual a':
+
+      break;
+
+    default:
+      break;
+    }
+
+    console.log(planets);
     if (name !== '') {
-      const filteredPlanets = planets.filter((planet) => planet.name
+      console.log(column, comparison, value);
+      filteredPlanets = planets.filter((planet) => planet.name
         .toLowerCase()
         .includes(name));
-      setplanetsFilter(filteredPlanets);
-    } else {
-      setplanetsFilter(planets);
     }
-  }, [filterText, planets]);
+    setplanetsFilter(filteredPlanets);
+  }, [filterText, planets, planetsFilter]);
 
   useEffect(() => {
     planetAPI();
