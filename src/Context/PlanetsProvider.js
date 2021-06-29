@@ -41,7 +41,7 @@ function PlanetsProvider({ children }) {
         return (planet[column] < parseInt(value, 10));
       }
       if (comparison === 'igual a') {
-        return (planet[column] === parseInt(value, 10));
+        return (planet[column] === value);
       }
       return false;
     });
