@@ -7,8 +7,12 @@ export default function FilterByName() {
   function filterName(param) {
     setstate({
       ...state,
-      filterByName: {
-        name: param,
+      filters: {
+        ...state.filters,
+        filterByName:
+          {
+            name: param,
+          },
       },
     });
   }
