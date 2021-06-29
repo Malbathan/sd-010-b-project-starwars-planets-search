@@ -1,8 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
+import SearchBox from './SearchBox';
+
 function Home() {
-  const { planets, tableTitles } = useContext(PlanetContext);
+  const { planets, tableTitles, filterName } = useContext(PlanetContext);
+  const filteredPlanets = planets.filter(
+    (planet) => planet.name.toLowerCase().includes(filterName.toLowerCase()));
 
   function generateTableHeader() {
     return (<>
@@ -17,7 +21,7 @@ function Home() {
   function generateTableBody() {
     return (
       <tbody>
-          { planets.map(({ 
+          { filteredPlanets.map(({ 
             name,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,
@@ -49,10 +53,13 @@ function Home() {
   }
 
   return (
-    <table>
-      { generateTableHeader() }
-      { generateTableBody() }
-    </table>
+    <>
+      <SearchBox />
+      <table>
+        { generateTableHeader() }
+        { generateTableBody() }
+      </table>
+    </>
   )
 }
 
