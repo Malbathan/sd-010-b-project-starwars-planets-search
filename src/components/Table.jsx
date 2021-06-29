@@ -54,7 +54,7 @@ function Table() {
           <tbody>
             {!arrayFiltered.length ? filterName() : filterNumber()}
           </tbody>
-        </table>) : <div>Loading</div>
+        </table>) : <div>Looading</div>
   );
 }
 
