@@ -1,8 +1,21 @@
 import React, { useContext } from 'react';
 import ContextTabela from '../context/ContextTabela';
+import FilteredNames from './Filters';
 
 function Table() {
   const { data } = useContext(ContextTabela);
+  const { filters } = useContext(ContextTabela);
+  const { filterByName } = filters;
+  const { name } = filterByName;
+
+  const planetsNames = () => {
+    if (name) {
+      return FilteredNames(data);
+    }
+    return data;
+  };
+  console.log(planetsNames());
+
   return (
     <table>
       <thead>
@@ -23,34 +36,21 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map(({ name,
-          rotation_period: rotationPeriod,
-          orbital_period: orbitalPeriod,
-          diameter,
-          climate,
-          gravity,
-          terrain,
-          surface_water: surfaceWater,
-          population,
-          films,
-          created,
-          edited,
-          url,
-        }, index) => (
+        {planetsNames.map((planetName, index) => (
           <tr key={ index }>
-            <td>{ name }</td>
-            <td>{ rotationPeriod }</td>
-            <td>{ orbitalPeriod }</td>
-            <td>{ diameter }</td>
-            <td>{ climate }</td>
-            <td>{ gravity }</td>
-            <td>{ terrain }</td>
-            <td>{ surfaceWater }</td>
-            <td>{ population }</td>
-            <td>{ films }</td>
-            <td>{ created }</td>
-            <td>{ edited }</td>
-            <td>{ url }</td>
+            <td>{planetName.name }</td>
+            <td>{planetName.rotationPeriod }</td>
+            <td>{planetName.orbitalPeriod }</td>
+            <td>{planetName.diameter }</td>
+            <td>{planetName.climate }</td>
+            <td>{planetName.gravity }</td>
+            <td>{planetName.terrain }</td>
+            <td>{planetName.surfaceWater }</td>
+            <td>{planetName.population }</td>
+            <td>{planetName.films }</td>
+            <td>{planetName.created }</td>
+            <td>{planetName.edited }</td>
+            <td>{planetName.url }</td>
           </tr>))}
       </tbody>
     </table>

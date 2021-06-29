@@ -1,6 +1,7 @@
 import React from 'react';
 import ProviderTabela from './provider/ProviderTabela';
 import Table from './components/Table';
+import SearchBar from './components/SearchBar';
 
 function App() {
   // const [planets, setPlanets] = useState([]);
@@ -18,6 +19,7 @@ function App() {
     <ProviderTabela>
       <div>
         <h1>Star Wars Planets Search</h1>
+        <SearchBar />
         <Table />
       </div>
     </ProviderTabela>

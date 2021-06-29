@@ -5,6 +5,11 @@ import ContextTabela from '../context/ContextTabela';
 
 function ProviderTabela({ children }) {
   const [data, setData] = useState([]);
+  const [filters, setFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     const getPlanets = async () => {
@@ -16,7 +21,7 @@ function ProviderTabela({ children }) {
   }, []);
 
   return (
-    <ContextTabela.Provider value={ { data } }>
+    <ContextTabela.Provider value={ { data, filters, setFilter } }>
       { children }
     </ContextTabela.Provider>
   );
