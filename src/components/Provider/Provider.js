@@ -19,8 +19,8 @@ const Provider = ({ children }) => {
   };
 
   const currentFilter = {
-    column: '',
-    comparison: '',
+    column: 'population',
+    comparison: 'maior que',
     value: '',
   };
 
@@ -28,7 +28,7 @@ const Provider = ({ children }) => {
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
   const [filterByColumn, setColumn] = useState(filters.filterByColumn);
-  // const [deletedColumns, setDeletedColumn] = useState([]);
+  const [deletedColumns, setDeletedColumn] = useState([]);
 
   const filterInput = ({ target: { value } }) => {
     // console.log(value);
@@ -43,6 +43,26 @@ const Provider = ({ children }) => {
     currentFilter[name] = value;
   };
 
+  const removeFromTheDeletedColumns = ({ target: { value } }) => {
+    // console.log(value);
+    const { filterByNumericValues } = filterNumeric;
+
+    const filterDeletedColumns = deletedColumns.filter((el) => el !== value);
+    setColumn([...filterByColumn, value]);
+    setDeletedColumn([...filterDeletedColumns]);
+    // console.log(deletedColumns);
+    const defaultFilter = {
+      column: '',
+      comparison: '',
+      value: '',
+    };
+
+    setNumeric({
+      ...filterNumeric,
+      filterByNumericValues: [...filterByNumericValues, defaultFilter],
+    });
+  };
+
   const handleClick = () => {
     const { filterByNumericValues } = filterNumeric;
 
@@ -53,34 +73,30 @@ const Provider = ({ children }) => {
     const { column } = currentFilter;
 
     const filteredColumn = filterByColumn.filter((el) => (el !== column));
-    // console.log(filteredColumn);
+    // console.log(currentFilter);
+
     setColumn([...filteredColumn]);
+    setDeletedColumn([...deletedColumns, column]);
   };
 
   const filterOptions = (planet, column, comparison, value) => {
     const { filterByName: { name } } = filtername;
-    // console.log(name);
-    // console.log(planet.name.includes(name));
+
     if (comparison === 'maior que') {
-      // console.log('entrei');
       return planet[column] > value;
     }
 
     if (comparison === 'menor que') {
-      // console.log('entrei');
-
       return planet[column] < value;
     }
 
     if (comparison === 'igual a') {
-      // console.log('entrei');
-
-      return planet[column] < value;
+      return Number(planet[column]) === value;
     }
-    // console.log('entrei');
 
     return planet.name.includes(name);
   };
+  // useEffect(() => console.log(deletedColumns), [deletedColumns]);
 
   useEffect(() => {
     fetch('https://swapi-trybe.herokuapp.com/api/planets/')
@@ -98,6 +114,8 @@ const Provider = ({ children }) => {
     setData,
     handleChange,
     filterByColumn,
+    deletedColumns,
+    removeFromTheDeletedColumns,
   };
 
   return (
