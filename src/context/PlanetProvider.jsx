@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import getApi from '../services/api';
+import getApi from '../services/api';
 import PlanetContext from './PlanetContext';
 // import response from '../testData';
 
