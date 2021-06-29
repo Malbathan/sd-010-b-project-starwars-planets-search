@@ -158,7 +158,7 @@ describe('1 - Faça uma requisição para o endpoint `/planets` da API de Star W
     }
   });
 });
-/*
+
 describe('3 - Crie um filtro para valores numéricos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
@@ -248,7 +248,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
   });
 });
-
+/*
 describe('4 - Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
