@@ -1,31 +1,24 @@
 import React from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
-function renderPlanets(planet, index) {
+function renderPlanets(filteredPlanets, colHeaders) {
   return (
-    <tr key={ index }>
-      <td>{planet.name}</td>
-      <td>{planet.rotation_period}</td>
-      <td>{planet.orbital_period}</td>
-      <td>{planet.diameter}</td>
-      <td>{planet.climate}</td>
-      <td>{planet.gravity}</td>
-      <td>{planet.terrain}</td>
-      <td>{planet.surface_water}</td>
-      <td>{planet.population}</td>
-      <td>{planet.films}</td>
-      <td>{planet.created}</td>
-      <td>{planet.edited}</td>
-      <td>{planet.url}</td>
-    </tr>
-  );
+    filteredPlanets.map((planet, key) => (
+      <tr key={ key }>
+        {
+          colHeaders.map((head, idx) => (
+            <td key={ idx }>{planet[head]}</td>
+          ))
+        }
+      </tr>
+    )));
 }
 
 const TableContent = () => (
 
   <StarWarsContext.Consumer>
     {
-      ({ filteredPlanets }) => filteredPlanets.map(renderPlanets)
+      ({ filteredPlanets, colHeaders }) => renderPlanets(filteredPlanets, colHeaders)
     }
   </StarWarsContext.Consumer>
 );
