@@ -17,8 +17,9 @@ function CriaFiltro() {
   // o README me pede pra usar o nome filters.
   const [filters, setFiltro] = useState(filterByNumericValues);// Diferente do que fiz no fetchProvedor, aqui não começa um useState([]). Aqui coloco o filterByName nos (). Ao usar esse useState, o primeiro nome(aqui é filters) já é naturalmente  um objeto. O que eu coloco dentro do () ao lado de useState vai ser o VALOR PADRÃO DENTRO desse objeto. Por isso que eu usar useState(filterByName) IMPLICA EM DIZER QUE filterByName está DENTRO de filters.
 
+  // setFiltersGlobal({ ...filtersGlobal, filterByName: target.value })
   const handleChange = ({ target }) => { // atualizo o geral
-    setFilterGeral({ filters: { filterByName: target.value, ...filterGeral.filters } });
+    setFilterGeral({ filters: { ...filterGeral.filters, filterByName: target.value } });
   }; // o que eu quero mesmo aqui é atualizar esse filterByName(começou vazio). Enquanto vou digitando no input, eu vou atualizando esse filterByName.
 
   // pro req 2 não precisa do spread no filters, mas é pra evitar que, caso precise criar novas chaves dentro desse filters, aí o spread evita que novas informações sobreponham as informações antigas. E os próximos requisitos vão pedir novas chaves sim.

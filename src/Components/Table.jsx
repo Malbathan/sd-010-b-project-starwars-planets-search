@@ -35,12 +35,13 @@ function CriarTabela() { // ESSAS FUNCTION DEVEM COMEÇAR COM LETRA MAÍUSCULA, 
     // cria o resto da tabela. IMPORTANTE: Os do map logo abaixo  PRECISAM ser em Inglês, porque são nomes que estão no data pela requisição que fiz pra aquela API. Então precisa ser IDÊNTICO sobre como vem da API, todas letras minúsculas também
 
     function filtragem() {
-      let novosDados = data;
+      // let novosDados = data;
+      let novosDados = data.filter(({ name }) => name.includes(filterByName));
+      console.log(filterByName);
       filterByNumericValues.forEach(({ column, comparison, value }) => {
-        const filtro = novosDados.filter(({ name }) => name.includes(filterByName))
+        const filtro = novosDados
           .filter((planeta) => {
             if (comparison === 'maior que') {
-              console.log('aqui');
               return parseInt(planeta[column], 10) > parseInt(value, 10);
             }
             if (comparison === 'menor que') {
