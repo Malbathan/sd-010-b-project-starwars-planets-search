@@ -6,8 +6,8 @@ function renderPlanets(filteredPlanets, colHeaders) {
     filteredPlanets.map((planet, key) => (
       <tr key={ key }>
         {
-          colHeaders.map((head, idx) => (
-            <td key={ idx }>{planet[head]}</td>
+          colHeaders.map((head) => (
+            <td key={ head }>{planet[head]}</td>
           ))
         }
       </tr>
