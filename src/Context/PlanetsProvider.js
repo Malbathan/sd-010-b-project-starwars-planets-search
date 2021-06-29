@@ -5,10 +5,12 @@ import getPlanetsApi from '../Services/PlanetsAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setPlanets] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState(data);
   useEffect(() => {
     const getPlanets = async () => {
       const { results } = await getPlanetsApi();
       setPlanets(results);
+      setDataFiltered(results);
     };
     getPlanets();
   }, []);
@@ -29,8 +31,12 @@ function PlanetsProvider({ children }) {
       },
   });
 
+  // const clickSelectorFilter = () => {
+  //   setDataFiltered(data);
+  // };
+
   return (
-    <PlanetsContext.Provider value={ { data, filter, setFilter } }>
+    <PlanetsContext.Provider value={ { dataFiltered, filter, setFilter } }>
       {children}
     </PlanetsContext.Provider>
   );

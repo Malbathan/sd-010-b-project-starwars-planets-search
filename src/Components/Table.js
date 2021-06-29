@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../Context/PlanetsContext';
 
 const Table = () => {
-  const { data,
+  const { dataFiltered,
     filter: { filters: { filterByName: { name } } } } = useContext(PlanetsContext);
-  return data === undefined || data === [] ? <div /> : (
+  return dataFiltered === undefined || dataFiltered === [] ? <div /> : (
     <table>
       <tr>
         <th>Name</th>
@@ -21,7 +21,7 @@ const Table = () => {
         <th>Edited</th>
         <th>URL</th>
       </tr>
-      {data.map((planet, index) => {
+      {dataFiltered.map((planet, index) => {
         delete planet.residents;
         // Source: https://www.w3schools.com/howto/howto_js_remove_property_object.asp
         const planetsArray = Object.values(planet);
