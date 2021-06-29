@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import InputsSearch from './components/InputsSearch'
+import InputsSearch from './components/InputsSearch';
 import Table from './components/Table';
 import StarWarsProvider from './context/StarWarsProvider';
 

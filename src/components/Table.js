@@ -10,6 +10,7 @@ function Table() {
   }, [planets]);
 
   const buildThs = (names) => (<tr>{ names.map((n) => <th key={ n }>{n}</th>) }</tr>);
+  // showPlanets && console.log(Object.keys(planets[0]).filter((e) => e !== 'residents'));
 
   return (
     <div>
