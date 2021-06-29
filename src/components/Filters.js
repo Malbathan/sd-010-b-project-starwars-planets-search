@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import StarWarsContext from '../contex/StarWarsContext';
 
 const selectColumnOptions = [
@@ -23,9 +23,9 @@ export default function Filters() {
   );
   const [columnList, setColumn] = useState(selectColumnOptions);
 
-  // useEffect(() => {
-  //   setLocalFilter({ ...local, column: columnList ? columnList[0] : [] });
-  // }, [columnList]);
+  useEffect(() => {
+    setLocalFilter((prevState) => ({ ...prevState, column: columnList ? columnList[0] : prevState.column }));
+  }, [columnList]);
 
   const { name } = filters.filterByName;
   const { column } = local;
