@@ -9,7 +9,7 @@ const RenderTable = () => {
     filterNumeric: { filterByNumericValues } } = batata;
   const { column, comparison, value,
   } = filterByNumericValues[filterByNumericValues.length - 1];
-  console.log(column, comparison, value);
+  // console.log(column, comparison, value);
 
   return (
     <table>

@@ -18,7 +18,7 @@ const Home = () => {
         onChange={ handleChange }
         data-testid="column-filter"
       >
-        {console.log(filterByColumn.length)}
+        {/* {console.log(filterByColumn.length)} */}
         {filterByColumn
           .map((el, index) => <option key={ index } value={ el }>{el}</option>) }
         {/* <option value="population">population</option>

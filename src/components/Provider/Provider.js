@@ -28,8 +28,10 @@ const Provider = ({ children }) => {
   const [filtername, setName] = useState(filters);
   const [filterNumeric, setNumeric] = useState(filters);
   const [filterByColumn, setColumn] = useState(filters.filterByColumn);
+  // const [deletedColumns, setDeletedColumn] = useState([]);
 
   const filterInput = ({ target: { value } }) => {
+    // console.log(value);
     setName({
       ...filtername,
       filterByName: {
@@ -50,26 +52,32 @@ const Provider = ({ children }) => {
     });
     const { column } = currentFilter;
 
-    const filteredColumn = filterByColumn.filter((el) => el !== column);
-    console.log(filteredColumn);
+    const filteredColumn = filterByColumn.filter((el) => (el !== column));
+    // console.log(filteredColumn);
     setColumn([...filteredColumn]);
   };
 
   const filterOptions = (planet, column, comparison, value) => {
-    const { filterByName: { name } } = filters;
+    const { filterByName: { name } } = filtername;
+    // console.log(name);
+    // console.log(planet.name.includes(name));
     if (comparison === 'maior que') {
+      // console.log('entrei');
       return planet[column] > value;
     }
 
     if (comparison === 'menor que') {
-      console.log(planet[column], planet[column] < value);
-      console.log(value);
+      // console.log('entrei');
+
       return planet[column] < value;
     }
 
     if (comparison === 'igual a') {
+      // console.log('entrei');
+
       return planet[column] < value;
     }
+    // console.log('entrei');
 
     return planet.name.includes(name);
   };
