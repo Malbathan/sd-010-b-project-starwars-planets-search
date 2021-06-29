@@ -1,15 +1,26 @@
-import React from 'react';
-import Inputs from './Inputs';
+import React, { useContext, useEffect, useState } from 'react';
+// import Filters from './Filters';
+import PlanetsContext from '../context/PlanetsContext';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
 
 function Table() {
+  const { data } = useContext(PlanetsContext);
+  const [renderPlanetList, setRenderPlanetList] = useState(false);
+
+  useEffect(() => {
+    setRenderPlanetList(data.length !== 0);
+  }, [data]);
+
   return (
-    <main>
-      <Inputs />
-      <TableHeader />
-      <TableBody />
-    </main>
+    <div>
+      { renderPlanetList && (
+        <table>
+          <TableHeader />
+          <TableBody />
+        </table>
+      ) }
+    </div>
   );
 }
 
