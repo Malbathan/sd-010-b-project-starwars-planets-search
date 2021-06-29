@@ -10,30 +10,35 @@ function ProviderPlan({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
-      },
-    ],
-
+    filterByNumericValues: [{
+      column: '',
+      comparison: 'maior que',
+      value: '',
+    }],
   });
+  const [arrayFiltered, setArrayFiltered] = useState([]);
 
   useEffect(() => {
     fetchURL().then(({ results }) => setData(results));
   }, []);
 
-  function filtered({ value }) {
+  function filterByName({ value }) {
     setFilter({ ...filters, filterByName: { name: value } });
   }
+
+  // function filterByNumericValues({ value }) {
+  //   setFilter({ ...filters, filterByNumericValues: { name: value } });
+  // }
 
   const state = {
     data,
     setData,
     filters,
     setFilter,
-    filtered,
+    filterByName,
+    setArrayFiltered,
+    arrayFiltered,
+
   };
 
   return (
