@@ -11,15 +11,22 @@ function PlanetsProvider({ children }) {
       setPlanets(results);
     };
     getPlanets();
-    // setPlanets(getPlanetsApi().results);
   }, []);
 
   const [filter, setFilter] = useState({
-    filters: {
-      filterByName: {
-        name: '',
+    filters:
+      {
+        filterByName: {
+          name: '',
+        },
+        filterByNumericValues: [
+          {
+            column: 'population',
+            comparison: 'maior que',
+            value: '0',
+          },
+        ],
       },
-    },
   });
 
   return (
