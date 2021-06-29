@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import MyContext from './MyContext';
 
 const Table = () => {
-  const { resultApi } = useContext(MyContext);
-  if (resultApi) {
+  const { resultFiltro } = useContext(MyContext);
+  if (resultFiltro) {
     return (
       <table>
         <thead>
           <tr>
-            { resultApi.length !== 0 && Object.keys(resultApi[0])
+            { resultFiltro.length !== 0 && Object.keys(resultFiltro[0])
               .filter((i) => i !== 'residents')
               .map((element, index) => (
                 <th key={ index }>{ element }</th>
@@ -16,10 +16,10 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          { resultApi.length !== 0 && resultApi
+          { resultFiltro.length !== 0 && resultFiltro
             .map((elementLinha, indexLinha) => (
               <tr key={ indexLinha }>
-                { resultApi.length !== 0 && Object.entries(elementLinha)
+                { resultFiltro.length !== 0 && Object.entries(elementLinha)
                   .filter((i) => i[0] !== 'residents')
                   .map((elementColuna, indexColuna) => (
                     <td key={ indexColuna }>

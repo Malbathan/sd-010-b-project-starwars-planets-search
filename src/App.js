@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 import Table from './components/Table';
 import ApiProvider from './components/ApiProvider';
-import Input from './components/Input';
+import Header from './components/Header';
 
 function App() {
   return (
     <ApiProvider>
-      <Input />
+      <Header />
       <Table />
     </ApiProvider>
   );

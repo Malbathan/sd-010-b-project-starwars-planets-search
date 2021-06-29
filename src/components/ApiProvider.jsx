@@ -3,33 +3,50 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function ApiProvider({ children }) {
-  // const obj = {
-  //   filters: {
-  //     filterByName: {
-  //       name,
-  //     },
-  //   },
-  // };
   const [resultApi, setResultApi] = useState();
-  const [filterApi, setFilterApi] = useState('');
+  const [resultFiltro, setResultFiltro] = useState();
+  const [filters, setfilters] = useState({
+    filterByName: {
+      name: '',
+    },
+    filterByNumericValues: [],
+  });
+
+  useEffect(() => {
+    function comparisonFilter() {
+      const { comparison, column, value } = filters.filterByNumericValues[0];
+      if (comparison === 'maior que') {
+        const result = resultApi.filter((i) => i[column] > parseInt(value, 10));
+        setResultFiltro(result);
+      } else if (comparison === 'menor que') {
+        const result = resultApi.filter((i) => i[column] < parseInt(value, 10));
+        setResultFiltro(result);
+      } else if (comparison === 'igual a') {
+        const result = resultApi.filter((i) => i[column] === value);
+        setResultFiltro(result);
+      }
+    }
+    if (resultApi) {
+      const apiFiltrada = resultApi.filter((planet) => planet.name.toUpperCase()
+        .includes(filters.filterByName.name.toUpperCase()));
+      setResultFiltro(apiFiltrada);
+    }
+    if (resultApi && filters.filterByNumericValues.length > 0) {
+      comparisonFilter();
+    }
+  }, [filters, resultApi]);
 
   useEffect(() => {
     const getApi = async () => {
       const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const response = await fetch(endpoint).then((data) => data.json());
-      const apiFiltrada = response.results
-        .filter((planet) => planet.name.includes(filterApi));
-      if (!filterApi) {
-        setResultApi(response.results);
-      }
-      console.log(apiFiltrada);
-      setResultApi(apiFiltrada);
+      setResultApi(response.results);
     };
     getApi();
-  }, [filterApi]);
+  }, []);
 
   return (
-    <MyContext.Provider value={ { resultApi, setFilterApi } }>
+    <MyContext.Provider value={ { setfilters, filters, resultFiltro } }>
       { children }
     </MyContext.Provider>
   );
