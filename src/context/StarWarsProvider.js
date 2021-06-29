@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import StarWarsContext from './StarWarsContext';
+import LoadScreen from '../components/LoadScreen';
 
 const StarWarsProvider = ({ children }) => {
   const [data, setData] = useState([]);
@@ -8,7 +9,7 @@ const StarWarsProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [search, setSearch] = useState('');
-  const [filterOptions] = useState([
+  const [filterOptions, setFilterOptions] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [numericFilters, setNumericFilters] = useState({
     column: 'population',
@@ -24,7 +25,7 @@ const StarWarsProvider = ({ children }) => {
         delete result.residents
       ));
       setData(results);
-      setLoading(!loading);
+      setLoading(false);
       const colNames = () => {
         const keysName = Object.keys(results[0]);
         setColHeaders(keysName);
@@ -32,7 +33,7 @@ const StarWarsProvider = ({ children }) => {
       colNames();
     };
     fetchPlanets();
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     setFilteredPlanets(
@@ -66,6 +67,10 @@ const StarWarsProvider = ({ children }) => {
       'igual a': () => setFilteredPlanets(data.filter(EqualsThan)),
     };
 
+    setFilterOptions(
+      filterOptions.filter((option) => option !== column),
+    );
+
     return comparing[comparison]();
   }
 
@@ -74,7 +79,7 @@ const StarWarsProvider = ({ children }) => {
   }
 
   if (loading) {
-    return <span>Loading Planets...</span>;
+    return <LoadScreen />;
   }
 
   const toConsume = {
@@ -96,7 +101,7 @@ const StarWarsProvider = ({ children }) => {
 };
 
 StarWarsProvider.propTypes = {
-  children: PropTypes.shape([]),
+  children: PropTypes.shape({}),
 };
 
 StarWarsProvider.defaultProps = {
