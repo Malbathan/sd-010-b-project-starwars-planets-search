@@ -1,5 +1,22 @@
 import { createContext } from 'react';
 
-const Context = createContext();
+const AppContext = createContext();
 
-export default Context;
+// data: [],
+//   filters: {
+//     filterByName: {
+//       name: '',
+//     },
+//     filterByValue: {
+//       column: '',
+//       comparison: '',
+//       value: '',
+//     },
+//   },
+
+// {
+//   Consumer: acessa os valores
+//   Provider: distribui as informações
+// }
+
+export default AppContext;

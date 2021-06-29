@@ -1,10 +1,12 @@
 import React from 'react';
-import Filtros from './Filtros';
+import FilterByName from '../Filters/FilterByName';
+import FilterByValue from '../Filters/FilterByValue';
 
 function Header() {
   return (
     <div>
-      <Filtros />
+      <FilterByName />
+      <FilterByValue />
     </div>
   );
 }
