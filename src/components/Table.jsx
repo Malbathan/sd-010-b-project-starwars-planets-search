@@ -32,8 +32,8 @@ function Table() {
         {filterName.map((planetName, index) => (
           <tr key={ index }>
             <td>{planetName.name }</td>
-            <td>{planetName.rotationPeriod }</td>
-            <td>{planetName.orbitalPeriod }</td>
+            <td>{planetName.rotation_period }</td>
+            <td>{planetName.orbital_period }</td>
             <td>{planetName.diameter }</td>
             <td>{planetName.climate }</td>
             <td>{planetName.gravity }</td>
