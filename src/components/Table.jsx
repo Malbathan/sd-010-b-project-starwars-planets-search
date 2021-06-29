@@ -21,7 +21,7 @@ function Table() {
       <td>{planet.url}</td>
     </tr>
   );
-
+    // ajuda colega de classe Henrique Clementino  ;
   const filterName = () => data
     .filter((planet) => planet.name.toLowerCase()
       .includes(filters.filterByName.name.toLowerCase()))

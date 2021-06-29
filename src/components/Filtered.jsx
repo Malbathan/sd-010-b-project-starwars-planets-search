@@ -24,16 +24,16 @@ function Filtered() {
       return setArrayFiltered(resultMaior);
     }
     if (comparison === 'igual a') {
-      const resultMenor = beckupData.filter((item) => (
-        item[column] > parseInt(value, 10)
-      ));
-      return setArrayFiltered(resultMenor);
-    }
-    if (comparison === 'menor que') {
       const resultIgual = beckupData.filter((item) => (
-        item[column] > parseInt(value, 10)
+        item[column] === parseInt(value, 10)
       ));
       return setArrayFiltered(resultIgual);
+    }
+    if (comparison === 'menor que') {
+      const resultMenor = beckupData.filter((item) => (
+        item[column] < parseInt(value, 10)
+      ));
+      return setArrayFiltered(resultMenor);
     }
   };
 
