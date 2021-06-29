@@ -12,11 +12,13 @@ function Home() {
   const setDropPopulation = ({ target: { value } }) => setDropItem(value);
   const setDropCondition = ({ target: { value } }) => setDropedCondition(value);
   const setNumbered = ({ target: { value } }) => setNumber(value);
-  const onClick = () => setClicked(true);
+
+  // const options = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
 
   useEffect(() => {
     setClicked(false);
   }, [clicked]);
+
   return (
     <section>
       <header>
@@ -40,10 +42,14 @@ function Home() {
             <option>igual a</option>
           </select>
           <input data-testid="value-filter" type="number" onChange={ setNumbered } />
-          <button type="button" data-testid="button-filter" onClick={ onClick }>Filtrar</button>
         </form>
       </header>
-      <Table state={ search } clicked={ clicked } dropItem={ dropItem } dropCondition={ dropCondition } number={ number } />
+      <Table
+        state={ search }
+        dropItem={ dropItem }
+        dropCondition={ dropCondition }
+        number={ number }
+      />
     </section>
   );
 }
