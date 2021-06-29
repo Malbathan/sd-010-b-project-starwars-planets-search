@@ -1,20 +1,13 @@
 import React, { useContext } from 'react';
 import ContextTabela from '../context/ContextTabela';
-import FilteredNames from './Filters';
+// import FilteredNames from './Filters';
 
 function Table() {
   const { data } = useContext(ContextTabela);
   const { filters } = useContext(ContextTabela);
   const { filterByName } = filters;
   const { name } = filterByName;
-
-  const planetsNames = () => {
-    if (name) {
-      return FilteredNames(data);
-    }
-    return data;
-  };
-  console.log(planetsNames());
+  const filterName = data.filter((el) => el.name.toLowerCase().includes(name));
 
   return (
     <table>
@@ -36,7 +29,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planetsNames.map((planetName, index) => (
+        {filterName.map((planetName, index) => (
           <tr key={ index }>
             <td>{planetName.name }</td>
             <td>{planetName.rotationPeriod }</td>

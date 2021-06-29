@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import ContextTabela from '../context/ContextTabela';
 
 function SearchBar() {
-  const { filters, setFilters } = useContext(ContextTabela);
+  const { filters, setFilter } = useContext(ContextTabela);
   const handleChange = ({ target }) => {
-    setFilters({
+    setFilter({
       ...filters,
       filterByName: {
         name: target.value,
@@ -16,7 +16,12 @@ function SearchBar() {
     <label htmlFor="search">
       Search:
       {' '}
-      <input type="text" id="search" onChange={ (e) => handleChange(e) } />
+      <input
+        type="text"
+        id="search"
+        data-testid="name-filter"
+        onChange={ (e) => handleChange(e) }
+      />
     </label>
   );
 }
