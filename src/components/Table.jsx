@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import { ByName, byNumeric } from '../services/Filters';
+import { byName, byNumeric, byOrder } from '../services/Filters';
 import '../App.css';
 
 function Table() {
@@ -9,6 +9,7 @@ function Table() {
     filters: {
       filterByName: { name },
       filterByNumericValues,
+      order,
     },
   } = useContext(PlanetsContext);
   if (!results) return <div className="loading">loading</div>;
@@ -22,11 +23,16 @@ function Table() {
         </tr>
       </thead>
       <tbody className="table-body">
-        {byNumeric(ByName(results, name), filterByNumericValues).map(
+        {byOrder(byNumeric(byName(results, name), filterByNumericValues), order).map(
           (planet, i) => (
             <tr key={ i }>
               {Object.values(planet).map((value) => (
-                <td key={ value }>{value}</td>
+                <td
+                  key={ value }
+                  data-testid={ planet.name === value ? 'planet-name' : null }
+                >
+                  {value}
+                </td>
               ))}
             </tr>
           ),

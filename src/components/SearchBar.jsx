@@ -36,9 +36,7 @@ function SearchBar() {
   };
 
   const handleOrder = ({ target: { name, value } }) => {
-    console.log(order);
     order[name] = value;
-    console.log(order);
   };
 
   const filterForms = () => (
@@ -47,7 +45,7 @@ function SearchBar() {
       <select
         data-testid="column-filter"
         id="column"
-        defaultValue={ filter.column }
+        defaultValue={ columns[0] }
         onChange={ handleFilter }
       >
         {columns.map((column, index) => (
@@ -70,7 +68,7 @@ function SearchBar() {
         style={ { width: 100 } }
         data-testid="value-filter"
         id="value"
-        value={ filter.value }
+        defaultValue={ filter.value }
         type="number"
         onChange={ handleFilter }
       />
@@ -99,7 +97,7 @@ function SearchBar() {
         <input
           checked
           type="radio"
-          testid="column-sort-input-asc"
+          data-testid="column-sort-input-asc"
           value="ASC"
           name="sort"
           onChange={ handleOrder }
@@ -107,7 +105,7 @@ function SearchBar() {
         ASC
         <input
           type="radio"
-          testid="column-sort-input-desc"
+          data-testid="column-sort-input-desc"
           value="DESC"
           name="sort"
           onChange={ handleOrder }
