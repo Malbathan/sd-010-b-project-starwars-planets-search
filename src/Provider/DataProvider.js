@@ -6,19 +6,15 @@ import DataContext from '../context/DataContext';
 function DataProvider({ children }) {
   const INITAL_STATE_FILTERS = {
     filterByName: { name: '' },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '',
-      },
-    ],
+    filterByNumericValues: [],
   };
+  const defaultCount = -1;
 
   const [data, setData] = useState([]);
   const [tableHead, setTableHead] = useState([]);
   const [filters, setFilters] = useState(INITAL_STATE_FILTERS);
   const [isFilterByNumericValues, setIsFilterByNumericValues] = useState(false);
+  const [countIndex, setCountIndex] = useState(defaultCount);
 
   useEffect(() => {
     async function fetchApia() {
@@ -40,6 +36,8 @@ function DataProvider({ children }) {
     setFilters,
     isFilterByNumericValues,
     setIsFilterByNumericValues,
+    countIndex,
+    setCountIndex,
   };
 
   return (

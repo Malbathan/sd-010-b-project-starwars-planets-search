@@ -3,7 +3,13 @@ import React, { useContext } from 'react';
 import DataContext from '../context/DataContext';
 
 function Table() {
-  const { tableHead, data, filters, isFilterByNumericValues } = useContext(DataContext);
+  const {
+    tableHead,
+    data,
+    filters,
+    isFilterByNumericValues,
+    countIndex,
+  } = useContext(DataContext);
 
   function HeadForTable() {
     const headFiltered = tableHead.filter((item) => item !== 'residents');
@@ -61,20 +67,20 @@ function Table() {
   }
 
   function searchByNumericValues(obj) {
-    const { column, comparison, value } = filters.filterByNumericValues[0];
+    const { column, comparison, value } = filters.filterByNumericValues[countIndex];
     let renderFiltered = [];
 
     if (comparison === 'maior que') {
       renderFiltered = obj
-        .filter((item) => parseInt(item[column], 10) > parseInt(value, 10));
+        .filter((item) => item[column] > parseInt(value, 10));
     }
     if (comparison === 'menor que') {
       renderFiltered = obj
-        .filter((item) => parseInt(item[column], 10) < parseInt(value, 10));
+        .filter((item) => item[column] < parseInt(value, 10));
     }
     if (comparison === 'igual a') {
       renderFiltered = obj
-        .filter((item) => parseInt(item[column], 10) === parseInt(value, 10));
+        .filter((item) => item[column] === parseInt(value, 10));
     }
 
     return TableStructure(renderFiltered);
