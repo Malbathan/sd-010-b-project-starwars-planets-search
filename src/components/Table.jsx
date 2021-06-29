@@ -1,31 +1,44 @@
 import React, { useContext } from 'react';
 // import PlanetProvider from '../context/PlanetProvider';
 import PlanetContext from '../context/PlanetContext';
-// import Header from './Header';
+import Header from './Header';
 
 function Table() {
-  const { planets, nameFilter: { filter: { filterByName: { name } } },
-    setFilterByName } = useContext(PlanetContext);
-  console.log(planets);
+  const { planets } = useContext(PlanetContext);
+
+  const { filters: { filter: {
+    filterByName: { name } } } } = useContext(PlanetContext);
+
+  const { numericFilter: { filter: {
+    filterByNumericValues: [{ comparisson,
+      value, column }] } } } = useContext(PlanetContext);
 
   const dataOfPlanets = planets.filter((planet) => planet.name.includes(name));
+
+  const filterByNumber = () => {
+    if (value.length > 1) {
+      console.log(comparisson,
+        value, column);
+      if (comparisson === 'maior que') {
+        return planets.filter((planet) => parseInt(planet[column], 10)
+         > parseInt(value, 10));
+      }
+      if (comparisson === 'menor que') {
+        return planets.filter((planet) => parseInt(planet[column], 10)
+         < parseInt(value, 10));
+      }
+      if (comparisson === 'igual a') {
+        return planets.filter((planet) => parseInt(planet[column], 10)
+         === parseInt(value, 10));
+      }
+    } return dataOfPlanets;
+  };
 
   if (planets.length > 0) {
     return (
       <div>
         <h1>StarWars Planets</h1>
-        <input
-          type="text"
-          data-testid="name-filter"
-          value={ name }
-          onChange={ (event) => setFilterByName({
-            filter: { filterByName: {
-              name: event.target.value,
-            },
-            },
-          }) }
-        />
-        {/* <Header /> */}
+        <Header />
         <table>
           <thead>
             <tr>
@@ -35,21 +48,21 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {dataOfPlanets.map((planet, index) => (
-              <tr key={ index }>
-                <td key={ index }>{ planet.name}</td>
-                <td key={ index }>{planet.rotation_period}</td>
-                <td key={ index }>{planet.orbital_period}</td>
-                <td key={ index }>{planet.diameter}</td>
-                <td key={ index }>{planet.climate}</td>
-                <td key={ index }>{planet.gravity}</td>
-                <td key={ index }>{planet.terrain}</td>
-                <td key={ index }>{planet.surface_water}</td>
-                <td key={ index }>{planet.population}</td>
-                <td key={ index }>{planet.films}</td>
-                <td key={ index }>{planet.created}</td>
-                <td key={ index }>{planet.edited}</td>
-                <td key={ index }>{planet.url}</td>
+            {filterByNumber().map((planet) => (
+              <tr key={ planet.name }>
+                <td>{ planet.name}</td>
+                <td>{planet.rotation_period}</td>
+                <td>{planet.orbital_period}</td>
+                <td>{planet.diameter}</td>
+                <td>{planet.climate}</td>
+                <td>{planet.gravity}</td>
+                <td>{planet.terrain}</td>
+                <td>{planet.surface_water}</td>
+                <td>{planet.population}</td>
+                <td>{planet.films}</td>
+                <td>{planet.created}</td>
+                <td>{planet.edited}</td>
+                <td>{planet.url}</td>
               </tr>
             ))}
           </tbody>
