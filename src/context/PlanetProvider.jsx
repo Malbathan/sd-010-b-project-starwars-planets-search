@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // import getApi from '../services/api';
 import PlanetContext from './PlanetContext';
-import response from '../testData';
+// import response from '../testData';
 
 // import Table from '../components/Table';
 
@@ -36,13 +36,13 @@ function PlanetProvider({ children }) {
 
   useEffect(() => {
     const starWarPlanets = async () => {
-      // const planetArrayApi = await getApi();
-      // const planetsApi = planetArrayApi.results;
-      // planetsApi.forEach((planet) => delete planet.residents);
-      // setPlanets(planetsApi);
-      response.results.forEach((planet) => delete planet.residents);
-      // delete response.results.residents;
-      setPlanets(response.results);
+      const planetArrayApi = await getApi();
+      const planetsApi = planetArrayApi.results;
+      planetsApi.forEach((planet) => delete planet.residents);
+      setPlanets(planetsApi);
+      // response.results.forEach((planet) => delete planet.residents);
+      // // delete response.results.residents;
+      // setPlanets(response.results);
     };
 
     starWarPlanets();
