@@ -1,15 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function SearchBox() {
   const { filter, setFilter, planets, setFilteredPlanets } = useContext(PlanetContext);
+  const [tableTitles, setTableTitles] = useState(['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
 
+
+  // Gera o select de filtro por colunas
   function generateSelectColumnOptions() {
-    const tableTitles = ['population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-
     return tableTitles.map((title) => <option key={ title } value={ title }>{ title }</option>)
   }
 
+  // Remove uma opção do select de colunas
+  function removeColumnOption(column) {
+    const titles = tableTitles;
+    titles.splice(titles.indexOf(column) , 1);
+
+    setTableTitles(titles);
+  }
+
+  // Captura os eventos no form de busca
   function catchFilter({ id, value }) {
     const { filterByNumericValues } = filter;
     const { column: oldColumn, comparison: oldComparasion, value: oldValue } = filterByNumericValues[0];
@@ -32,6 +42,7 @@ function SearchBox() {
     }
   }
 
+  // Filtra os planetas na tabela
   function handleClickFilter() {
     const { filterByNumericValues } = filter;
     const { column, comparison, value } = filterByNumericValues[0];
@@ -55,6 +66,7 @@ function SearchBox() {
     }
 
     setFilteredPlanets(filteredPlanets);
+    removeColumnOption(column);
   }
 
   return (
