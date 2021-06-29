@@ -1,17 +1,115 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Context from '../context/context';
 
 function Table() {
-  const { data, filters, setFilters } = useContext(Context);
-  console.log(data.length);
-  let newData = data;
-  for (let i = 0; i < data.length; i += 1) {
-    if (filters.filters.filterByName.name) {
-      const getNewData = data
-        .filter((planets) => planets.name.includes(filters.filters.filterByName.name));
-      newData = getNewData;
+  const {
+    data,
+    filterByName,
+    filterByNumericValues,
+    filterName, filterNumericValues, setData } = useContext(Context);
+  console.log(data.length, filterByNumericValues);
+  // let newData = data;
+
+  useEffect(() => {
+    const something = () => {
+      for (let i = 0; i < data.length; i += 1) {
+        if (filterByName.name) {
+          const getNewData = data
+            .filter((planets) => planets.name.includes(filterByName.name));
+          setData(getNewData);
+        }
+      }
+    };
+    something();
+  }, [data, filterByName, setData]);
+  // for (let i = 0; i < data.length; i += 1) {
+  //   if (filterByName.name) {
+  //     const getNewData = data
+  //       .filter((planets) => planets.name.includes(filterByName.name));
+  //     newData = getNewData;
+  //   }
+  // }
+
+  // const comparisons = ['maior que', 'menor que', 'igual a'];
+  const column1 = ['population', 'orbital_period', 'diameter'];
+  const column2 = ['rotation_period', 'surface_water'];
+  const columns = [...column1, ...column2];
+
+  const filterByNumeric = () => {
+    for (let i = 0; i < columns.length; i += 1) {
+      // for (let j = 0; j < comparisons.length; j += 1) {
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'maior que'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          > parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+        console.log(data);
+      }
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'menor que'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          < parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+        console.log(data);
+      }
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'igual a'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          === parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+        console.log(data);
+      }
+      // }
     }
-  }
+    // if (filterByNumericValues[0].column === 'population'
+    //     && filterByNumericValues[0].comparison === 'maior que'
+    //       && filterByNumericValues[0].value) {
+    //   const getData = data
+    //     .filter((d) => parseInt(d.population, 10)
+    //       > parseInt(filterByNumericValues[0].value, 10));
+    //   setData(getData);
+    //   // console.log(newData);
+    // }
+    // return newData;
+  };
+
+  // const filterByNumeric = () => {
+  //   if (filterByNumericValues[0].column === 'population'
+  //       && filterByNumericValues[0].comparison === 'maior que'
+  //         && filterByNumericValues[0].value) {
+  //     const getData = data
+  //       .filter((d) => parseInt(d.population, 10)
+  //         > parseInt(filterByNumericValues[0].value, 10));
+  //     setData(getData);
+  //   }
+  // };
+
+  // const filterByNumeric = () => {
+  //   if (filterByNumericValues[0].column === 'population'
+  //     && filterByNumericValues[0].comparison === 'maior que') {
+  //     const getData = data
+  //       .filter((d) => parseInt(d.population, 10)
+  //       > parseInt(filterByNumericValues[0].value, 10));
+  //     newData = getData;
+  //     console.log(newData);
+  //   }
+  //   // return newData;
+  // };
+  // console.log(newData);
+
+  // for (let i = 0; i < data.length; i += 1) {
+  //   if (filterByName.name) {
+  //     const getNewData = data
+  //       .filter((planets) => planets.name.includes(filterByName.name));
+  //     newData = getNewData;
+  //   }
+  // }
 
   const renderTable = () => (
     <table border="1" width="500px">
@@ -30,7 +128,7 @@ function Table() {
         <th>edited</th>
         <th>url</th>
       </tr>
-      {newData.map((planet, i) => (
+      {data.map((planet, i) => (
         <tr key={ i }>
           <td>{ planet.name }</td>
           <td>{ planet.rotation_period }</td>
@@ -50,23 +148,61 @@ function Table() {
   );
   return (
     <div>
-      <form>
+      <form onSubmit={ (e) => e.preventDefault() }>
         <label htmlFor="filter-name">
           Filtrar por nome
           <input
             type="text"
             id="filter-name"
-            name="filter-name"
+            name="name"
             data-testid="name-filter"
-            onChange={ (e) => setFilters({
-              filters: {
-                filterByName: {
-                  name: e.target.value,
-                },
-              },
-            }) }
+            onChange={ filterName }
           />
         </label>
+        <br />
+        <label htmlFor="dropdown-one">
+          Filtrar por valores
+          <select
+            id="dropdown-one"
+            name="column"
+            data-testid="column-filter"
+            onChange={ filterNumericValues }
+          >
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+        </label>
+        <label htmlFor="dropdown-two">
+          <select
+            id="dropdown-two"
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={ filterNumericValues }
+          >
+            <option>maior que</option>
+            <option>menor que</option>
+            <option>igual a</option>
+          </select>
+        </label>
+        <label htmlFor="value">
+          <input
+            type="number"
+            name="value"
+            id="value"
+            data-testid="value-filter"
+            onChange={ filterNumericValues }
+          />
+        </label>
+        <button
+          type="submit"
+          data-testid="button-filter"
+          onClick={ () => filterByNumeric() }
+        >
+          Filtrar
+        </button>
       </form>
       { data && renderTable() }
     </div>

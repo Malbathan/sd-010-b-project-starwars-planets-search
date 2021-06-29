@@ -4,13 +4,30 @@ import Context from './context';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [filters, setFilters] = useState({
-    filters: {
-      filterByName: {
-        name: '',
-      },
-    },
+  const [filterByName, setFilterByName] = useState({
+    name: '',
   });
+  const [filterByNumericValues, setFilterByNumericValues] = useState(
+    [
+      {
+        // caloumn: '',
+        // comparison: '',
+        // value: '',
+      },
+    ],
+  );
+  // const [filters, setFilters] = useState({
+  //   filterByName: {
+  //     name: '',
+  //   },
+  //   filterByNumericValues: [
+  //     {
+  //       caloumn: '',
+  //       comparison: '',
+  //       value: '',
+  //     },
+  //   ],
+  // });
 
   useEffect(() => {
     const getPlanets = () => {
@@ -20,6 +37,30 @@ function Provider({ children }) {
     };
     getPlanets();
   }, []);
+
+  function filterName({ target }) {
+    setFilterByName({
+      ...filterByName,
+      [target.name]: target.value,
+    });
+  }
+
+  function filterNumericValues({ target }) {
+    setFilterByNumericValues(
+      [
+        {
+          ...filterByNumericValues[0],
+          [target.name]: target.value,
+        },
+      ],
+    );
+  }
+  // useEffect(() => {
+  //   setFilters({
+  //     ...filterByName,
+  //     ...filterByNumericValues,
+  //   });
+  // }, [filterByName, filterByNumericValues]);
 
   //   useEffect(() => {
   //     const getPlanets = async () => {
@@ -32,9 +73,12 @@ function Provider({ children }) {
   //   console.log(data)
   const myObj = {
     data,
-    filters,
+    // filters,
     setData,
-    setFilters,
+    filterByName,
+    filterByNumericValues,
+    filterName,
+    filterNumericValues,
   };
   return (
     <Context.Provider value={ { ...myObj } }>
