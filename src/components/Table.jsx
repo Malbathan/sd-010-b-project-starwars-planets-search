@@ -179,6 +179,7 @@ function Table() {
 
   useEffect(() => {
     addFilterOptions();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   if (!data.length) return <h1>Loading...</h1>;
