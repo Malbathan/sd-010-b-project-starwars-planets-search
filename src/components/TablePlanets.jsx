@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 
 import TableContext from '../context/TableContext';
 import FilterByName from './FilterByName';
+import FilterByNumber from './FilterByNumber';
 
 function TablePlanets() {
-  const { data, titles, filterName } = useContext(TableContext);
+  const { data, titles, filters: { filterByName: { name } } } = useContext(TableContext);
 
   return (
     <section>
       <FilterByName />
+      <FilterByNumber />
       <table border="1">
         <thead>
           <tr>
@@ -16,7 +18,8 @@ function TablePlanets() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((planet) => (planet.name.includes(filterName)))
+          {/* filter com ajuda do Edu */}
+          {data.filter((planet) => (planet.name.includes(name)))
             .map((planets, index) => (
               <tr key={ index }>
                 <td>{planets.name}</td>
