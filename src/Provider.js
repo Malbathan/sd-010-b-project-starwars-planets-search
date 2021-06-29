@@ -6,6 +6,7 @@ import ApiContext from './services/ApiContext';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [table, setTable] = useState([]);
+  const [filter, setFilter] = useState(null);
 
   useEffect(() => {
     async function fetchApi() {
@@ -25,10 +26,15 @@ function Provider({ children }) {
     fetchApi();
   }, []);
 
-  const context = { data, setData, table };
+  function filterName(name) {
+    const filteredPlanets = data.filter(
+      (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+    );
+    setFilter(filteredPlanets);
+  }
 
   return (
-    <ApiContext.Provider value={ context }>
+    <ApiContext.Provider value={ { data, setData, table, filter, filterName } }>
       { children }
     </ApiContext.Provider>
   );

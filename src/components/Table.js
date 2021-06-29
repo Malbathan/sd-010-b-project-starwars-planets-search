@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import ApiContext from '../services/ApiContext';
 
 function Table() {
-  const { data, table } = useContext(ApiContext);
+  const { data, table, filter } = useContext(ApiContext);
   const tableLoaded = table.length > 0;
+  const filterLoaded = filter !== null;
 
   return (
     <table>
@@ -17,7 +18,17 @@ function Table() {
         ) }
       </thead>
       <tbody>
-        { data.map((planet) => {
+        { filterLoaded ? (
+          filter.map((planet) => {
+            const planetData = Object.entries(planet);
+            return (
+              <tr key={ planet.name }>
+                { planetData.map(([key, field]) => (
+                  <td key={ key }>{ field }</td>
+                )) }
+              </tr>
+            );
+          })) : (data.map((planet) => {
           const planetData = Object.entries(planet);
           return (
             <tr key={ planet.name }>
@@ -26,7 +37,7 @@ function Table() {
               )) }
             </tr>
           );
-        }) }
+        }))}
       </tbody>
     </table>
   );
