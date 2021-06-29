@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import PlanetContext from './PlanetContext';
-import { fetchPlanets } from '../services/planetsAPI';
+import fetchPlanets from '../services/planetsAPI';
 
 function PlanetProvider({ children }) {
   const [planets, setPlanets] = useState([]);
@@ -21,27 +23,27 @@ function PlanetProvider({ children }) {
     },
   );
 
-  useEffect(() => {
-    getPlanets();
-    getTableTitles();
-  }, []);
-
   // Guarda todos os planetas
   async function getPlanets() {
-    const planets = await fetchPlanets();
-    setFilteredPlanets(planets);
-    setPlanets(planets);
-  };
+    const planetsArray = await fetchPlanets();
+    setFilteredPlanets(planetsArray);
+    setPlanets(planetsArray);
+  }
 
   // Guarda o nome dos titulos das tabelas
   // SOURCE * https://stackoverflow.com/questions/206988/how-do-i-unset-an-element-in-an-array-in-javascript *
   async function getTableTitles() {
-    const planets = await fetchPlanets();
-    const titles = Object.keys(planets[0]);
-    titles.splice(titles.indexOf('residents') , 1);
+    const planetsList = await fetchPlanets();
+    const titles = Object.keys(planetsList[0]);
+    titles.splice(titles.indexOf('residents'), 1);
 
     setTableTitles(titles);
-  };
+  }
+
+  useEffect(() => {
+    getPlanets();
+    getTableTitles();
+  }, []);
 
   const planetContext = {
     planets,
@@ -50,7 +52,7 @@ function PlanetProvider({ children }) {
     setFilter,
     filteredPlanets,
     setFilteredPlanets,
-  }
+  };
 
   return (
     <PlanetContext.Provider value={ planetContext }>
@@ -58,5 +60,9 @@ function PlanetProvider({ children }) {
     </PlanetContext.Provider>
   );
 }
+
+PlanetProvider.propTypes = {
+  children: PropTypes.shape,
+}.isRequired;
 
 export default PlanetProvider;

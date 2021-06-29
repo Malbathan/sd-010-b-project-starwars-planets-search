@@ -7,23 +7,25 @@ function Home() {
   const { tableTitles, filter, filteredPlanets } = useContext(PlanetContext);
   const { name } = filter.filterByName;
   const allFilteredPlanets = filteredPlanets.filter(
-    (planet) => planet.name.toLowerCase().includes(name.toLowerCase()));
+    (planet) => planet.name.toLowerCase().includes(name.toLowerCase()),
+  );
 
   function generateTableHeader() {
-    return (<>
+    return (
       <thead>
         <tr>
           { tableTitles.map((title, index) => <th key={ index }>{ title }</th>) }
         </tr>
       </thead>
-    </>);
+    );
   }
 
   function generateTableBody() {
     return (
       <tbody>
-          { allFilteredPlanets.map(({ 
-            name,
+        {
+          allFilteredPlanets.map(({
+            name: planetName,
             rotation_period: rotationPeriod,
             orbital_period: orbitalPeriod,
             diameter,
@@ -35,22 +37,27 @@ function Home() {
             films,
             created,
             edited,
-            url }, index) => ( <tr key={ index }>
-          <td>{ name }</td>
-          <td>{ rotationPeriod }</td>
-          <td>{ orbitalPeriod }</td>
-          <td>{ diameter }</td>
-          <td>{ climate }</td>
-          <td>{ gravity }</td>
-          <td>{ terrain }</td>
-          <td>{ surfaceWater }</td>
-          <td>{ population }</td>
-          <td>{ films }</td>
-          <td>{ created }</td>
-          <td>{ edited }</td>
-          <td>{ url }</td>
-        </tr>) ) }
-      </tbody>);
+            url,
+          }, index) => (
+            <tr key={ index }>
+              <td>{ planetName }</td>
+              <td>{ rotationPeriod }</td>
+              <td>{ orbitalPeriod }</td>
+              <td>{ diameter }</td>
+              <td>{ climate }</td>
+              <td>{ gravity }</td>
+              <td>{ terrain }</td>
+              <td>{ surfaceWater }</td>
+              <td>{ population }</td>
+              <td>{ films }</td>
+              <td>{ created }</td>
+              <td>{ edited }</td>
+              <td>{ url }</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    );
   }
 
   return (
@@ -61,7 +68,7 @@ function Home() {
         { generateTableBody() }
       </table>
     </>
-  )
+  );
 }
 
 export default Home;
