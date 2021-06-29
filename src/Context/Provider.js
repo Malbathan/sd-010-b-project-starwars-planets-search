@@ -5,31 +5,34 @@ import MyContext from './MyContext';
 import StarWarsAPI from '../Services/StarWarsAPI';
 
 function StarWars({ children }) {
-  const { planets, setPlanets } = useState([]);
-  const { loading, setLoading } = useState(true);
-  const { filt, setFilter } = useState({});
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const [filt, setFilter] = useState({});
 
   useEffect(() => {
     async function api() {
-      const { results } = await StarWarsAPI();
-      setPlanets(results);
+      const obj = await StarWarsAPI();
+      setData(obj.results);
       setLoading(false);
     }
     api();
-  },[setPlanets]);
+  }, []);
 
+  const obj = {
+    data,
+    loading,
+    // filt,
+  };
 
-
-  const obj = {};
   return (
-    <Context.Provider value={ obj }>
+    <MyContext.Provider value={ obj }>
       { children }
-    </Context.Provider>
+    </MyContext.Provider>
   );
 }
 
 StarWars.propTypes = {
-  children: PropTypes.node.isRiquered,
+  children: PropTypes.node.isRequired,
 };
 
 export default StarWars;

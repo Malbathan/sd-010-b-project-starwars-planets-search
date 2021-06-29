@@ -1,7 +1,8 @@
-const APIStarWars = async () => {
-  const url = 'https://swapi-trybe.herokuapp.com/api/planets/?format=api';
-  const result = await fetch(url);
-  return result;
+const StarWarsAPI = async () => {
+  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  const resultFetch = await fetch(url);
+  const resultJson = await resultFetch.json();
+  return resultJson;
 };
 
-export default APIStarWars;
+export default StarWarsAPI;
