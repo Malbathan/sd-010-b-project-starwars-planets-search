@@ -11,7 +11,7 @@ function ProviderPlan({ children }) {
       name: '',
     },
     filterByNumericValues: [{
-      column: '',
+      column: 'population',
       comparison: 'maior que',
       value: '',
     }],
