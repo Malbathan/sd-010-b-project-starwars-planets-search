@@ -6,23 +6,11 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
-
-  useEffect(() => {
-    getPlanets();
-  }, []);
-  
-  const handleChange = ({ target }) => {
-    setFilterText(target.value);
-    console.log(data);
-  };
-  
-  const filterPlanetsByName = {
-    filters: {
-      filterByName: {
-        name: filterText,
-      },
-    },
-  };
+  const [planetFilters, setPlanetFilters] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    number: 0,
+  });
 
   const getPlanets = () => {
     // setData(testData.results);
@@ -32,12 +20,47 @@ function PlanetsProvider({ children }) {
         .then((results) => setData(results.results)));
   };
 
+  useEffect(() => {
+    getPlanets();
+  }, []);
+
+  const handleColumn = ({ target: { name, value } }) => {
+    setPlanetFilters({
+      ...planetFilters,
+      [name]: value,
+    });
+  };
+
+  // function handleClick(column, comparison, number) {
+  // }
+
+  const handleChange = ({ target }) => {
+    setFilterText(target.value);
+    console.log(data);
+  };
+
+  const filterPlanetsByName = {
+    filters: {
+      filterByName: {
+        name: filterText,
+      },
+      filterByNumericValues: [
+        {
+          column: planetFilters.column,
+          comparison: planetFilters.comparison,
+          value: planetFilters.number,
+        },
+      ],
+    },
+  };
+
   const context = {
     data,
-    getPlanets,
     filterPlanetsByName,
+    getPlanets,
     handleChange,
-  }
+    handleColumn,
+  };
 
   return (
     <PlanetsContext.Provider value={ context }>

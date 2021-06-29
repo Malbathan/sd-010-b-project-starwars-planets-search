@@ -3,7 +3,12 @@ import PlanetsContext from '../context/PlanetsContext';
 import Header from './Header';
 
 function Table() {
-  const { data } = useContext(PlanetsContext);
+  const {
+    data,
+    filterPlanetsByName,
+  } = useContext(PlanetsContext);
+
+  const { filters: { filterByName: { name } } } = filterPlanetsByName;
 
   return (
     <div>
@@ -27,33 +32,37 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map(({ name,
-            rotation_period: rotationPeriod,
-            orbital_period: orbitalPeriod,
-            diameter,
-            climate,
-            gravity,
-            terrain,
-            surface_water: surfaceWater,
-            population,
-            created,
-            edited,
-            url,
-          }, index) => (
-            <tr key={ index }>
-              <td>{ name }</td>
-              <td>{ rotationPeriod }</td>
-              <td>{ orbitalPeriod }</td>
-              <td>{ diameter }</td>
-              <td>{ climate }</td>
-              <td>{ gravity }</td>
-              <td>{ terrain }</td>
-              <td>{ surfaceWater }</td>
-              <td>{ population }</td>
-              <td>{ created }</td>
-              <td>{ edited }</td>
-              <td>{ url }</td>
-            </tr>))}
+          {data.filter((filter) => filter.name.includes(name))
+            .map(({
+              name: namePlanet,
+              rotation_period: rotationPeriod,
+              orbital_period: orbitalPeriod,
+              diameter,
+              climate,
+              gravity,
+              terrain,
+              surface_water: surfaceWater,
+              population,
+              films,
+              created,
+              edited,
+              url,
+            }) => (
+              <tr key={ namePlanet }>
+                <td>{ namePlanet }</td>
+                <td>{ rotationPeriod }</td>
+                <td>{ orbitalPeriod }</td>
+                <td>{ diameter }</td>
+                <td>{ climate }</td>
+                <td>{ gravity }</td>
+                <td>{ terrain }</td>
+                <td>{ surfaceWater }</td>
+                <td>{ population }</td>
+                <td>{ films }</td>
+                <td>{ created }</td>
+                <td>{ edited }</td>
+                <td>{ url }</td>
+              </tr>))}
         </tbody>
       </table>
     </div>
