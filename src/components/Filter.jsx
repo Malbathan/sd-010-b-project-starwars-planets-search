@@ -95,21 +95,20 @@ function Filter() {
 
   function renderApplyedFilters() {
     return (
-      <>
+      <div data-testid="filter">
         {applyedFilters.map((filter, index) => filter && (
           <>
             <button
               key={ `${filter}-${index}` }
               type="button"
               onClick={ () => removeFilter(filter, index) }
-              data-testid="filter"
             >
               x
             </button>
             {filter}
           </>
         ))}
-      </>
+      </div>
     );
   }
 
