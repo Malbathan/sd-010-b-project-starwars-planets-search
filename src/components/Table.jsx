@@ -2,13 +2,24 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import Header from './Header';
 
+const compare = {
+  'maior que': (a, b) => a > b,
+  'menor que': (a, b) => a < b,
+  'igual a': (a, b) => a === b,
+};
+
 function Table() {
   const {
     data,
     filterPlanetsByName,
   } = useContext(PlanetsContext);
 
-  const { filters: { filterByName: { name } } } = filterPlanetsByName;
+  const { filters:
+    {
+      filterByName: { name },
+      filterByNumericValues: [{ column, comparison, value }],
+    },
+  } = filterPlanetsByName;
 
   return (
     <div>
@@ -32,7 +43,14 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((filter) => filter.name.includes(name))
+          {data.filter((filter) => {
+            const includesName = filter.name.includes(name);
+            const planetFilter = compare[comparison](
+              Number(filter[column]),
+              Number(value),
+            );
+            return includesName && planetFilter;
+          })
             .map(({
               name: namePlanet,
               rotation_period: rotationPeriod,

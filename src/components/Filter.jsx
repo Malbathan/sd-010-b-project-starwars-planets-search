@@ -1,8 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Filter() {
-  const { handleChange, handleColumn, handleClick } = useContext(PlanetsContext);
+  const [localFilter, setLocalFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    number: 0,
+  });
+
+  const handleClick = ({ name, value }) => {
+    setLocalFilter({
+      ...localFilter,
+      [name]: value,
+    });
+  };
+
+  const { handleChange, handleColumn } = useContext(PlanetsContext);
   return (
     <section>
       <div>
@@ -29,10 +42,14 @@ function Filter() {
           <option value="surface_water">surface_water</option>
         </select>
         {' '}
-        <select data-testid="comparison-filter" name="comparison">
-          <option value="maior-que">maior que</option>
-          <option value="menor-que">menor que</option>
-          <option value="igual-a">igual a</option>
+        <select
+          data-testid="comparison-filter"
+          name="comparison"
+          onChange={ handleColumn }
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
         {' '}
         <input
