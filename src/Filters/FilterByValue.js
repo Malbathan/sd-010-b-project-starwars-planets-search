@@ -6,48 +6,56 @@ import AppContext from '../contextApi/Context';
 export default function FilterByValue() {
   const { listOfContext: { state, setstate } } = useContext(AppContext);
 
-  const filterColumn = ({ value }) => {
+  const filterColumn = (param) => {
     setstate({
       ...state,
-      filterByValue: [
-        {
-          ...state.filterByValue,
-          column: value,
-        },
-      ],
+      filters: {
+        ...state.filters,
+        filterByValue:
+          {
+            ...state.filters.filterByValue,
+            column: param,
+          },
+      },
     });
   };
 
-  const filterComparison = ({ value }) => {
+  const filterComparison = (param) => {
     setstate({
       ...state,
-      filterByValue: [
-        {
-          ...state.filterByValue,
-          comparison: value,
-        },
-      ],
+      filters: {
+        ...state.filters,
+        filterByValue:
+          {
+            ...state.filters.filterByValue,
+            comparison: param,
+          },
+      },
     });
   };
 
-  const filterValue = ({ value }) => {
+  const filterValue = (param) => {
     setstate({
       ...state,
-      filterByValue: [
-        {
-          ...state.filterByValue,
-          value,
-        },
-      ],
+      filters: {
+        ...state.filters,
+        filterByValue:
+          {
+            ...state.filters.filterByValue,
+            value: param,
+          },
+      },
     });
   };
 
   function columnFilter() {
     return (
       <select
+        defaultValue="Chose here"
         data-testid="column-filter"
-        onChange={ (e) => filterColumn(e.target) }
+        onChange={ (e) => filterColumn(e.target.value) }
       >
+        <option disabled hidden>Choose here</option>
         { columnTable.map((curr) => (
           <option key={ curr }>{ curr }</option>
         ))}
@@ -58,9 +66,11 @@ export default function FilterByValue() {
   function comparisonFilter() {
     return (
       <select
+        defaultValue="Chose here"
         data-testid="comparison-filter"
-        onChange={ (e) => filterComparison(e.target) }
+        onChange={ (e) => filterComparison(e.target.value) }
       >
+        <option disabled hidden>Choose here</option>
         { comparisonTable.map((curr) => (
           <option key={ curr }>{ curr }</option>
         ))}
@@ -74,18 +84,29 @@ export default function FilterByValue() {
         <input
           data-testid="value-filter"
           type="number"
-          onChange={ (e) => filterValue(e.target) }
+          onChange={ (e) => filterValue(e.target.value) }
         />
       </label>
     );
   }
+
+  // useEffect(() => {
+  //   console.log(state.filters.filterByValue.column);
+  //   console.log(state.filters.filterByValue.comparison);
+  //   console.log(state.filters.filterByValue.value);
+  // }, [state]);
 
   return (
     <div>
       { columnFilter() }
       { comparisonFilter() }
       { valueFilter() }
-      <buton type="button" data-testid="button-filter">Filtrar</buton>
+      <button
+        type="button"
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
     </div>
   );
 }

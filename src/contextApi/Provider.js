@@ -29,7 +29,6 @@ function AuthProvider({ children }) {
   }, [results]);
 
   const listOfContext = {
-    results,
     state,
     setstate,
   };
