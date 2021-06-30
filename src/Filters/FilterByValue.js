@@ -101,12 +101,6 @@ export default function FilterByValue() {
       { columnFilter() }
       { comparisonFilter() }
       { valueFilter() }
-      <button
-        type="button"
-        data-testid="button-filter"
-      >
-        Filtrar
-      </button>
     </div>
   );
 }

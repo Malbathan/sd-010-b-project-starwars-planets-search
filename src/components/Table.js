@@ -21,20 +21,41 @@ function Table() {
   }
 
   if (column && comparison && value) {
-    // procura a key com o valor de column
-    // entra em condição para saber em qual vai renderizar (<  >  ou  =)
-    // compara o valor com o value mapeado
+    switch (comparison) {
+    case 'maior que':
+      planetTable = data.filter((filterInfo) => (
+        parseFloat(filterInfo[column]) > parseFloat(value)
+      ));
+      break;
+    case 'menor que':
+      planetTable = data.filter((filterInfo) => (
+        filterInfo[column] < value || (
+          filterInfo[column] === 'unknown')));
+      break;
+    default:
+      planetTable = data.filter((filterInfo) => (
+        filterInfo[column] === value));
+      break;
+    }
+  }
+
+  if (column && comparison && value) {
     console.log('Complete!');
   }
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
       <table>
         {RenderTableByName(planetTable)}
       </table>
     </div>
   );
 }
-// filter = data e faz o map
 
 export default Table;
