@@ -45,9 +45,9 @@ function Header() {
           <select
             id="column"
             data-testid="column-filter"
-            onClick={ (event) => setColumn(event.target.value) }
+            onChange={ (event) => setColumn(event.target.value) }
           >
-            <option value="population" selected>population</option>
+            <option value="population" selected="selected">population</option>
             <option value="orbital_period">orbital_period</option>
             <option value="diameter">diameter</option>
             <option value="rotation_period">rotation_period</option>
@@ -57,16 +57,15 @@ function Header() {
           <select
             id="comparisson"
             data-testid="comparison-filter"
-            onClick={ (event) => setComparisson((event.target.value)) }
+            onChange={ (event) => setComparisson((event.target.value)) }
           >
-            <option selected>menor que</option>
+            <option selected="selected">menor que</option>
             <option>maior que</option>
             <option>igual a</option>
           </select>
           <input
             id="value"
             type="number"
-            value={ chosenValue }
             data-testid="value-filter"
             onChange={ (event) => setValue(event.target.value) }
           />
