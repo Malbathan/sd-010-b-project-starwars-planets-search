@@ -1,80 +1,48 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Context from '../context/context';
 
 function Table() {
   const {
     data,
     filterByName,
-    filterByNumericValues,
-    filterName, filterNumericValues, setData } = useContext(Context);
+    filterName, filterNumericValues, filterByNumeric } = useContext(Context);
   // console.log(data.length, filterByNumericValues);
-  // let newData = data;
+  let newData = data;
 
-  useEffect(() => {
-    const something = () => {
-      for (let i = 0; i < data.length; i += 1) {
-        if (filterByName.name) {
-          const getNewData = data
-            .filter((planets) => planets.name.includes(filterByName.name));
-          setData(getNewData);
-        }
-      }
-    };
-    something();
-  }, [data, filterByName, setData]);
-  // for (let i = 0; i < data.length; i += 1) {
-  //   if (filterByName.name) {
-  //     const getNewData = data
-  //       .filter((planets) => planets.name.includes(filterByName.name));
-  //     newData = getNewData;
-  //   }
-  // }
+  // useEffect(() => {
+  //   const something = () => {
+  //     for (let i = 0; i < data.length; i += 1) {
+  //       if (filterByName.name) {
+  //         const getNewData = data
+  //           .filter((planets) => planets.name.includes(filterByName.name));
+  //         setData(getNewData);
+  //       }
+  //     }
+  //   };
+  //   something();
+  // }, [data, filterByName, setData]);
+
+  for (let i = 0; i < data.length; i += 1) {
+    if (filterByName.name) {
+      const getNewData = data
+        .filter((planets) => planets.name.includes(filterByName.name));
+      newData = getNewData;
+    }
+  }
 
   // const comparisons = ['maior que', 'menor que', 'igual a'];
-  const column1 = ['population', 'orbital_period', 'diameter'];
-  const column2 = ['rotation_period', 'surface_water'];
-  const columns = [...column1, ...column2];
 
-  const filterByNumeric = () => {
-    for (let i = 0; i < columns.length; i += 1) {
-      // for (let j = 0; j < comparisons.length; j += 1) {
-      if (filterByNumericValues[0].column === columns[i]
-          && filterByNumericValues[0].comparison === 'maior que'
-            && filterByNumericValues[0].value) {
-        const getData = data
-          .filter((d) => parseInt(d[columns[i]], 10)
-          > parseInt(filterByNumericValues[0].value, 10));
-        setData(getData);
-      }
-      if (filterByNumericValues[0].column === columns[i]
-          && filterByNumericValues[0].comparison === 'menor que'
-            && filterByNumericValues[0].value) {
-        const getData = data
-          .filter((d) => parseInt(d[columns[i]], 10)
-          < parseInt(filterByNumericValues[0].value, 10));
-        setData(getData);
-      }
-      if (filterByNumericValues[0].column === columns[i]
-          && filterByNumericValues[0].comparison === 'igual a'
-            && filterByNumericValues[0].value) {
-        const getData = data
-          .filter((d) => parseInt(d[columns[i]], 10)
-          === parseInt(filterByNumericValues[0].value, 10));
-        setData(getData);
-      }
-      // }
-    }
-    // if (filterByNumericValues[0].column === 'population'
-    //     && filterByNumericValues[0].comparison === 'maior que'
-    //       && filterByNumericValues[0].value) {
-    //   const getData = data
-    //     .filter((d) => parseInt(d.population, 10)
-    //       > parseInt(filterByNumericValues[0].value, 10));
-    //   setData(getData);
-    //   // console.log(newData);
-    // }
-    // return newData;
-  };
+  // if (filterByNumericValues[0].column === 'population'
+  //     && filterByNumericValues[0].comparison === 'maior que'
+  //       && filterByNumericValues[0].value) {
+  //   const getData = data
+  //     .filter((d) => parseInt(d.population, 10)
+  //       > parseInt(filterByNumericValues[0].value, 10));
+  //   setData(getData);
+  //   // console.log(newData);
+  // }
+  // return newData;
+  // };
 
   // const filterByNumeric = () => {
   //   if (filterByNumericValues[0].column === 'population'
@@ -125,7 +93,7 @@ function Table() {
         <th>edited</th>
         <th>url</th>
       </tr>
-      {data.map((planet, i) => (
+      {newData.map((planet, i) => (
         <tr key={ i }>
           <td>{ planet.name }</td>
           <td>{ planet.rotation_period }</td>

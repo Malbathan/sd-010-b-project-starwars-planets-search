@@ -55,28 +55,48 @@ function Provider({ children }) {
       ],
     );
   }
-  // useEffect(() => {
-  //   setFilters({
-  //     ...filterByName,
-  //     ...filterByNumericValues,
-  //   });
-  // }, [filterByName, filterByNumericValues]);
 
-  //   useEffect(() => {
-  //     const getPlanets = async () => {
-  //       const { results } = await fetch('https://swapi-trybe.herokuapp.com/api/planets/')
-  //         .then((planets) => planets.json());
-  //       setData(results);
-  //     };
-  //     getPlanets();
-  //   }, []);
-  //   console.log(data)
+  const column1 = ['population', 'orbital_period', 'diameter'];
+  const column2 = ['rotation_period', 'surface_water'];
+  const columns = [...column1, ...column2];
+
+  const filterByNumeric = () => {
+    for (let i = 0; i < columns.length; i += 1) {
+      // for (let j = 0; j < comparisons.length; j += 1) {
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'maior que'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          > parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+      }
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'menor que'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          < parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+      }
+      if (filterByNumericValues[0].column === columns[i]
+          && filterByNumericValues[0].comparison === 'igual a'
+            && filterByNumericValues[0].value) {
+        const getData = data
+          .filter((d) => parseInt(d[columns[i]], 10)
+          === parseInt(filterByNumericValues[0].value, 10));
+        setData(getData);
+      }
+      // }
+    }
+  };
   const myObj = {
     data,
     // filters,
     setData,
     filterByName,
     filterByNumericValues,
+    filterByNumeric,
     filterName,
     filterNumericValues,
   };
