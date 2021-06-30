@@ -18,11 +18,6 @@ function TableProvider({ children }) {
     ],
   });
 
-  // Tenho que criar um useEffect para salvar meus estados de filtros numericos
-  useEffect(() => {
-    console.log('Foi modificado');
-  }, [filters.filterByNumericValues]);
-
   // UseEffect para fetch daAPI e salvar os results, salvando no meu estado Data
   useEffect(() => {
     const fetchStarWarsAPI = async () => {

@@ -1,19 +1,20 @@
 import React, { useContext, useState } from 'react';
 import TableContext from '../context/tableContext';
 
+// Object Literals
 const comparacao = {
-  'maior que': (val1, val2) => val1 > val2,
   'menor que': (val1, val2) => val1 < val2,
+  'maior que': (val1, val2) => val1 > val2,
   'igual a': (val1, val2) => val1 === val2,
 };
 
 const compareColumn = ({ comparison, column, value }, planet) => (
-  comparacao[comparison](planet[column], value)
+  comparacao[comparison](Number(planet[column]), Number(value))
 );
 
 function Table() {
   const [column, setColumn] = useState('rotation_period');
-  const [comparison, setComparison] = useState('maior que');
+  const [comparison, setComparison] = useState('menor que');
   const [value, setValue] = useState();
 
   const {
@@ -28,7 +29,7 @@ function Table() {
     const includesName = planet.name.includes(name);
     const includesFiltro = filterByNumericValues
       .every((numericFilter) => compareColumn(numericFilter, planet));
-    console.log(planet.name, includesFiltro);
+    // console.log(planet.name, includesFiltro);
     return includesName && includesFiltro;
   });
 
@@ -43,10 +44,10 @@ function Table() {
   };
 
   const handleChange = (event) => {
-    event.persist();
+    const { target: { value: nameValue } } = event;
     setFilter((oldFilter) => ({ ...oldFilter,
       filterByName: {
-        name: event.target.value,
+        name: nameValue,
       } }));
   };
 
@@ -76,8 +77,8 @@ function Table() {
           value={ comparison }
           onChange={ (event) => setComparison(event.target.value) }
         >
-          <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
+          <option value="maior que">maior que</option>
           <option value="igual a">igual a</option>
         </select>
         <input
