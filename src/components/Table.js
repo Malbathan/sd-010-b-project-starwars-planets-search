@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import dataTable from '../api/References/dataTable';
 import AppContext from '../contextApi/Context';
 import RenderTableByName from './RenderTableByName';
 
@@ -46,6 +47,13 @@ function Table() {
   return (
     <div>
       <table>
+        <thead>
+          <tr>
+            { dataTable.map((info) => (
+              <th key={ info }>{ info }</th>
+            ))}
+          </tr>
+        </thead>
         {RenderTableByName(planetTable)}
       </table>
     </div>
