@@ -7,7 +7,7 @@ function Table() {
     filterByName,
     filterByNumericValues,
     filterName, filterNumericValues, setData } = useContext(Context);
-  console.log(data.length, filterByNumericValues);
+  // console.log(data.length, filterByNumericValues);
   // let newData = data;
 
   useEffect(() => {
@@ -45,7 +45,6 @@ function Table() {
           .filter((d) => parseInt(d[columns[i]], 10)
           > parseInt(filterByNumericValues[0].value, 10));
         setData(getData);
-        console.log(data);
       }
       if (filterByNumericValues[0].column === columns[i]
           && filterByNumericValues[0].comparison === 'menor que'
@@ -54,7 +53,6 @@ function Table() {
           .filter((d) => parseInt(d[columns[i]], 10)
           < parseInt(filterByNumericValues[0].value, 10));
         setData(getData);
-        console.log(data);
       }
       if (filterByNumericValues[0].column === columns[i]
           && filterByNumericValues[0].comparison === 'igual a'
@@ -63,7 +61,6 @@ function Table() {
           .filter((d) => parseInt(d[columns[i]], 10)
           === parseInt(filterByNumericValues[0].value, 10));
         setData(getData);
-        console.log(data);
       }
       // }
     }
