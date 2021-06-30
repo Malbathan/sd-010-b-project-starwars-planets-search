@@ -6,38 +6,13 @@ function SearchBar() {
   const {
     data: { results },
     handleName,
+    selectFilter,
+    handleFilter,
+    handleOrder,
     addFilter,
+    selectColumns,
     setOrder,
-    filters: { filterByNumericValues },
   } = useContext(PlanetsContext);
-
-  const columns = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ].filter((filter) => !filterByNumericValues
-    .map(({ column }) => column).includes(filter));
-
-  const filter = {
-    column: columns[0],
-    comparison: 'maior que',
-    value: 0,
-  };
-
-  const order = {
-    column: 'name',
-    sort: 'ASC',
-  };
-
-  const handleFilter = ({ target: { id, value } }) => {
-    filter[id] = value;
-  };
-
-  const handleOrder = ({ target: { name, value } }) => {
-    order[name] = value;
-  };
 
   const filterForms = () => (
     <form className="App-search-bar">
@@ -45,10 +20,10 @@ function SearchBar() {
       <select
         data-testid="column-filter"
         id="column"
-        defaultValue={ columns[0] }
+        value={ selectFilter.column }
         onChange={ handleFilter }
       >
-        {columns.map((column, index) => (
+        {selectColumns.map((column, index) => (
           <option key={ index } value={ column }>
             {column}
           </option>
@@ -57,7 +32,7 @@ function SearchBar() {
       <select
         data-testid="comparison-filter"
         id="comparison"
-        defaultValue={ filter.comparison }
+        value={ selectFilter.comparison }
         onChange={ handleFilter }
       >
         <option value="maior que">maior que</option>
@@ -68,15 +43,15 @@ function SearchBar() {
         style={ { width: 100 } }
         data-testid="value-filter"
         id="value"
-        defaultValue={ filter.value }
         type="number"
+        value={ selectFilter.value }
         onChange={ handleFilter }
       />
       <button
         data-testid="button-filter"
         type="button"
-        disabled={ !columns.length > 0 }
-        onClick={ () => addFilter(filter) }
+        disabled={ !selectColumns.length > 0 }
+        onClick={ addFilter }
       >
         Filtrar
       </button>
@@ -95,7 +70,7 @@ function SearchBar() {
             <option key={ item } value={ item }>{item}</option>))}
         </select>
         <input
-          checked
+          defaultChecked
           type="radio"
           data-testid="column-sort-input-asc"
           value="ASC"
@@ -114,7 +89,7 @@ function SearchBar() {
         <button
           type="button"
           data-testid="column-sort-button"
-          onClick={ () => setOrder(order) }
+          onClick={ setOrder }
         >
           Ordenar
         </button>

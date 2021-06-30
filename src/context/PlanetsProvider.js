@@ -12,9 +12,26 @@ const initialState = {
   },
 };
 
+const initialColumns = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
+const initialFilter = {
+  column: 'population',
+  comparison: 'maior que',
+  value: 0,
+};
+
 function PlanetsProvider({ children }) {
   const [data, setData] = useState({});
   const [filters, setFilters] = useState(initialState);
+  const [selectColumns, setSelectColumns] = useState(initialColumns);
+  const [selectFilter, setSelectFilter] = useState(initialFilter);
+  const [selectOrder, setSelectOrder] = useState(initialState.order);
 
   async function getData() {
     setData(await fetchPlanets());
@@ -27,10 +44,10 @@ function PlanetsProvider({ children }) {
     });
   }
 
-  function addFilter(filter) {
+  function addFilter() {
     setFilters({
       ...filters,
-      filterByNumericValues: [...filters.filterByNumericValues, filter],
+      filterByNumericValues: [...filters.filterByNumericValues, selectFilter],
     });
   }
 
@@ -42,16 +59,35 @@ function PlanetsProvider({ children }) {
     });
   }
 
-  function setOrder(order) {
+  function handleFilter({ target: { id, value } }) {
+    setSelectFilter({ ...selectFilter, [id]: value });
+  }
+
+  function handleOrder({ target: { name, value } }) {
+    setSelectOrder({ ...selectOrder, [name]: value });
+  }
+
+  function setOrder() {
     setFilters({
-      ...filters, order });
+      ...filters, order: selectOrder });
   }
 
   useEffect(() => { getData(); }, []);
+  useEffect(() => {
+    const fetchColumns = initialColumns.filter((filter) => !filters.filterByNumericValues
+      .map(({ column }) => column).includes(filter));
+    setSelectColumns(fetchColumns);
+    setSelectFilter({ ...initialFilter, column: fetchColumns[0] });
+  }, [filters.filterByNumericValues]);
+
   const contextValue = {
     data,
     filters,
+    selectFilter,
+    selectColumns,
     handleName,
+    handleFilter,
+    handleOrder,
     addFilter,
     delFilter,
     setOrder,
