@@ -12,7 +12,7 @@ let list = [
 ];
 
 let choice = {
-  column: 'population',
+  column: list[0],
   comparison: 'maior que',
   value: '-1',
 };
@@ -36,13 +36,13 @@ function filterFunc({ target: { value, name } }) {
 
 function filterButton() {
   list = list.filter((item) => item !== choice.column);
+  choice = { ...choice, column: list[0] };
 }
 
 function Filters() {
-  const { setfilterText, setfilterByNumericValues } = useContext(TableContext);
+  const { setfilterText } = useContext(TableContext);
   return (
     <form>
-      {/* {console.log(filterText)} */}
       <label htmlFor="name-filter">
         Filtrar por texto
         <input
@@ -93,8 +93,15 @@ function Filters() {
       <button
         type="button"
         onClick={ () => {
+          setfilterText((oldState) => {
+            const test = { filters: {
+              ...oldState.filters,
+              filterByNumericValues: [
+                ...oldState.filters.filterByNumericValues,
+                { ...choice }] } };
+            return test;
+          });
           filterButton();
-          setfilterByNumericValues({ ...choice });
         } }
       >
         Pesquisar

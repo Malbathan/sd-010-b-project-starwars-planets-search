@@ -11,17 +11,11 @@ export default function TableProv({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [
-        {
-          column: 'population',
-          comparison: 'maior que',
-          value: '100000',
-        },
-      ],
+      filterByNumericValues: [],
     },
   });
 
-  // console.log(filterText);
+  console.log(filterText, 'filters');
 
   const planetAPI = async () => {
     const { results } = await getPlanets();
@@ -54,7 +48,6 @@ export default function TableProv({ children }) {
     planetsFilter,
     filterText,
     setfilterText,
-    // setfilterByNumericValues
   };
   return (
     <TableContext.Provider value={ contextoGlobal }>
