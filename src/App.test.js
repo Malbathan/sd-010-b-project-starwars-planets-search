@@ -248,7 +248,7 @@ describe('3 - Crie um filtro para valores numéricos', () => {
     expect(await screen.findAllByRole(ROW_ROLE_SELECTOR)).toHaveLength(2);
   });
 });
-/*
+
 describe('4 - Não utilize filtros repetidos', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
@@ -285,7 +285,7 @@ describe('4 - Não utilize filtros repetidos', () => {
     expect(foundColumnFilter).toHaveLength(4);
   });
 });
-
+/*
 describe('5 - Apague o filtro de valores numéricos e desfaça as filtragens dos dados da tabela ao clicar no ícone de `X` de um dos filtros', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
