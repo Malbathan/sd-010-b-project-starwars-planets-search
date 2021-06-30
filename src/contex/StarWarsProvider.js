@@ -14,7 +14,7 @@ export default function StarWarsProvider({ children }) {
         name: '',
       },
       filterByNumericValues: [],
-      order: {},
+      order: { column: 'name', sort: 'ASC' },
     },
   );
 
@@ -57,25 +57,15 @@ export default function StarWarsProvider({ children }) {
     const negative = -1;
 
     const { order } = filters;
-    if (order.sort === 'ASC' && order.column === 'name') {
-      search.sort((a, b) => {
-        if (b.name < a.name) return negative;
-        if (b.name > a.name) return 1;
-        return 0;
-      });
-    } else {
+    if (order.column === 'name') {
       search.sort((a, b) => {
         if (a.name < b.name) return negative;
-        if (a.name > b.name) return 1;
-        return 0;
+        return 1;
       });
-    }
-
-    if (order.sort === 'ASC') {
-      search.sort((a, b) => a[order.column] - b[order.column]);
     } else {
-      search.sort((a, b) => b[order.column] - a[order.column]);
+      search.sort((a, b) => a[order.column] - b[order.column]);
     }
+    if (order.sort === 'DESC') search.reverse();
 
     setFiltered(search);
   }, [filters, data]);
