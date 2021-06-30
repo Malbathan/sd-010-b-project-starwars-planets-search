@@ -59,22 +59,21 @@ export default function StarWarsProvider({ children }) {
     const { order } = filters;
     if (order.sort === 'ASC' && order.column === 'name') {
       search.sort((a, b) => {
+        if (b.name < a.name) return negative;
+        if (b.name > a.name) return 1;
+        return 0;
+      });
+    } else {
+      search.sort((a, b) => {
         if (a.name < b.name) return negative;
         if (a.name > b.name) return 1;
         return 0;
       });
     }
-    if (order.sort === 'DESC' && order.column === 'name') {
-      search.sort((a, b) => {
-        if (b.name < a.name) return negative;
-        if (b.name > a.name) return 1;
-        return 0;
-      });
-    }
+
     if (order.sort === 'ASC') {
       search.sort((a, b) => a[order.column] - b[order.column]);
-    }
-    if (order.sort === 'DESC') {
+    } else {
       search.sort((a, b) => b[order.column] - a[order.column]);
     }
 

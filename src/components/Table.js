@@ -10,7 +10,9 @@ export default function Table() {
   };
 
   const generateTableLines = (planetInfo) => (
-    Object.values(planetInfo).map((info) => <td key={ info }>{info}</td>));
+    Object.values(planetInfo).map((info, i) => (i === 0
+      ? (<td data-testid="planet-name" key={ info }>{info}</td>)
+      : (<td key={ info }>{info}</td>))));
   return (
     !isLoading
       ? (
