@@ -16,7 +16,7 @@ function Table() {
   let planetTable = data;
 
   if (filterByName.name) {
-    planetTable = data.filter((planet) => (
+    planetTable = planetTable.filter((planet) => (
       planet.name.toLowerCase().includes(filterByName.name)));
   }
 
@@ -45,12 +45,6 @@ function Table() {
 
   return (
     <div>
-      <button
-        type="button"
-        data-testid="button-filter"
-      >
-        Filtrar
-      </button>
       <table>
         {RenderTableByName(planetTable)}
       </table>

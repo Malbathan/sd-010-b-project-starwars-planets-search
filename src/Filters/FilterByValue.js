@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import columnTable from '../api/References/columnTable';
 import comparisonTable from '../api/References/comparisonTable';
 import AppContext from '../contextApi/Context';
@@ -6,35 +6,53 @@ import AppContext from '../contextApi/Context';
 export default function FilterByValue() {
   const { listOfContext: { state, setstate } } = useContext(AppContext);
 
-  const filterColumn = (param) => {
-    setstate({
-      ...state,
-      filters: {
-        ...state.filters,
-        filterByValue:
-          {
-            ...state.filters.filterByValue,
-            column: param,
-          },
-      },
-    });
-  };
+  // const filterColumn = (param) => {
+  //   setstate({
+  //     ...state,
+  //     filters: {
+  //       ...state.filters,
+  //       filterByValue:
+  //         {
+  //           ...state.filters.filterByValue,
+  //           column: param,
+  //         },
+  //     },
+  //   });
+  // };
 
-  const filterComparison = (param) => {
-    setstate({
-      ...state,
-      filters: {
-        ...state.filters,
-        filterByValue:
-          {
-            ...state.filters.filterByValue,
-            comparison: param,
-          },
-      },
-    });
-  };
+  // const filterComparison = (param) => {
+  //   setstate({
+  //     ...state,
+  //     filters: {
+  //       ...state.filters,
+  //       filterByValue:
+  //         {
+  //           ...state.filters.filterByValue,
+  //           comparison: param,
+  //         },
+  //     },
+  //   });
+  // };
 
-  const filterValue = (param) => {
+  // const filterValue = (param) => {
+  //   setstate({
+  //     ...state,
+  //     filters: {
+  //       ...state.filters,
+  //       filterByValue:
+  //         {
+  //           ...state.filters.filterByValue,
+  //           value: param,
+  //         },
+  //     },
+  //   });
+  // };
+
+  const [column, setColum] = useState('');
+  const [comparison, setComparison] = useState('');
+  const [value, setValue] = useState('');
+
+  const applyFilters = () => {
     setstate({
       ...state,
       filters: {
@@ -42,7 +60,9 @@ export default function FilterByValue() {
         filterByValue:
           {
             ...state.filters.filterByValue,
-            value: param,
+            column,
+            comparison,
+            value,
           },
       },
     });
@@ -53,7 +73,7 @@ export default function FilterByValue() {
       <select
         defaultValue="Chose here"
         data-testid="column-filter"
-        onChange={ (e) => filterColumn(e.target.value) }
+        onChange={ (e) => setColum(e.target.value) }
       >
         <option disabled hidden>Choose here</option>
         { columnTable.map((curr) => (
@@ -68,7 +88,7 @@ export default function FilterByValue() {
       <select
         defaultValue="Chose here"
         data-testid="comparison-filter"
-        onChange={ (e) => filterComparison(e.target.value) }
+        onChange={ (e) => setComparison(e.target.value) }
       >
         <option disabled hidden>Choose here</option>
         { comparisonTable.map((curr) => (
@@ -84,7 +104,7 @@ export default function FilterByValue() {
         <input
           data-testid="value-filter"
           type="number"
-          onChange={ (e) => filterValue(e.target.value) }
+          onChange={ (e) => setValue(e.target.value) }
         />
       </label>
     );
@@ -101,6 +121,13 @@ export default function FilterByValue() {
       { columnFilter() }
       { comparisonFilter() }
       { valueFilter() }
+      <button
+        onClick={ () => applyFilters() }
+        type="button"
+        data-testid="button-filter"
+      >
+        Filtrar
+      </button>
     </div>
   );
 }
