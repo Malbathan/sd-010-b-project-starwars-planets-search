@@ -7,17 +7,21 @@ export default function TableProv({ children }) {
   const [planets, setplanets] = useState([]);
   const [planetsFilter, setplanetsFilter] = useState([]);
   const [filterText, setfilterText] = useState({
-    filterByName: {
-      name: '',
-    },
-    filterByNumericValues: [
-      {
-        column: 'population',
-        comparison: 'maior que',
-        value: '100000',
+    filters: {
+      filterByName: {
+        name: '',
       },
-    ],
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
+    },
   });
+
+  // console.log(filterText);
 
   const planetAPI = async () => {
     const { results } = await getPlanets();
@@ -28,15 +32,17 @@ export default function TableProv({ children }) {
   };
 
   useEffect(() => {
-    const { name } = filterText.filterByName;
+    const { filterByName } = filterText.filters;
+    const { name } = filterByName;
+    // const { column, comparison, value } = filterByNumericValues;
+    let filteredPlanets = planets;
+
     if (name !== '') {
-      const filteredPlanets = planets.filter((planet) => planet.name
+      filteredPlanets = planets.filter((planet) => planet.name
         .toLowerCase()
         .includes(name));
-      setplanetsFilter(filteredPlanets);
-    } else {
-      setplanetsFilter(planets);
     }
+    setplanetsFilter(filteredPlanets);
   }, [filterText, planets]);
 
   useEffect(() => {
@@ -44,7 +50,12 @@ export default function TableProv({ children }) {
   }, []);
 
   // junta todos os useStates para jogar no value
-  const contextoGlobal = { planetsFilter, filterText, setfilterText };
+  const contextoGlobal = {
+    planetsFilter,
+    filterText,
+    setfilterText,
+    // setfilterByNumericValues
+  };
   return (
     <TableContext.Provider value={ contextoGlobal }>
       {children}

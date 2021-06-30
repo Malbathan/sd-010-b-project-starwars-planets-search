@@ -39,7 +39,7 @@ function filterButton() {
 }
 
 function Filters() {
-  const { setfilterText } = useContext(TableContext);
+  const { setfilterText, setfilterByNumericValues } = useContext(TableContext);
   return (
     <form>
       {/* {console.log(filterText)} */}
@@ -49,9 +49,17 @@ function Filters() {
           type="text"
           id="name-filter"
           data-testid="name-filter"
-          onChange={ (event) => setfilterText({ filterByName: {
-            name: event.target.value.toLowerCase(),
-          } }) }
+          onChange={ (event) => {
+            event.persist();
+            setfilterText((oldState) => {
+              const test = { filters: {
+                ...oldState.filters,
+                filterByName: {
+                  name: event.target.value.toLowerCase(),
+                } } };
+              return test;
+            });
+          } }
         />
       </label>
       <label htmlFor="column-filter">
@@ -86,9 +94,7 @@ function Filters() {
         type="button"
         onClick={ () => {
           filterButton();
-          setfilterText({ filterByName: [{
-            ...choice,
-          }] });
+          setfilterByNumericValues({ ...choice });
         } }
       >
         Pesquisar
