@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PlanetsProvider from './context/PlanetsProvider';
 import Table from './component/Table';
+import FilterForm from './component/FilterForm';
 import './App.css';
 
 function App() {
-  const [data, setData] = useState([]);
-
-  // didMount - buscando planetas
-  useEffect(() => {
-    const getPlanets = async () => {
-      const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
-      const { results } = await fetch(endpoint).then((response) => response.json());
-      setData(results);
-    };
-    getPlanets();
-  }, []);
-
   return (
-    <>
+    <PlanetsProvider>
       <header>Starwars Planets</header>
-      <Table data={ data } />
-    </>
+      <FilterForm />
+      <Table />
+    </PlanetsProvider>
   );
 }
 
