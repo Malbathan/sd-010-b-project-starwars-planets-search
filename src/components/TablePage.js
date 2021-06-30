@@ -8,6 +8,10 @@ const comparacao = {
   'igual a': (val1, val2) => val1 === val2,
 };
 
+const arrayColumn = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
+
 const compareColumn = ({ comparison, column, value }, planet) => (
   comparacao[comparison](Number(planet[column]), Number(value))
 );
@@ -62,14 +66,8 @@ function Table() {
           value={ column }
           onChange={ (event) => setColumn(event.target.value) }
         >
-          {Object.keys(data[0]).map((planet, index) => (
-            (planet === 'population'
-            || planet === 'orbital_period'
-            || planet === 'diameter'
-            || planet === 'rotation_period'
-            || planet === 'surface_water')
-              ? <option key={ index } value={ planet }>{planet}</option>
-              : 'Sem resposta'
+          {arrayColumn.map((planet, index) => (
+            <option key={ index } value={ planet }>{planet}</option>
           ))}
         </select>
         <select
@@ -81,12 +79,15 @@ function Table() {
           <option value="maior que">maior que</option>
           <option value="igual a">igual a</option>
         </select>
-        <input
-          type="number"
-          data-testid="value-filter"
-          // value={ valor }
-          onChange={ (event) => setValue(event.target.value) }
-        />
+        <div data-testid="filter">
+          <input
+            type="number"
+            data-testid="value-filter"
+            // value={ valor }
+            onChange={ (event) => setValue(event.target.value) }
+          />
+          <button type="button" onClick={ () => setValue() }>X</button>
+        </div>
         <button type="button" data-testid="button-filter" onClick={ () => handleClick() }>
           Adicionar Filtro
         </button>
