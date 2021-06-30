@@ -23,7 +23,7 @@ export default function Filters() {
     { column: 'population', comparison: 'maior que', value: 0 },
   );
   const [columnList, setColumn] = useState(selectColumnOptions);
-  const [localSort, setSort] = useState({ column: 'Name', sort: 'ASC' });
+  const [localSort, setSort] = useState({ column: 'name', sort: 'ASC' });
 
   useEffect(() => {
     setLocalFilter((prevState) => ({

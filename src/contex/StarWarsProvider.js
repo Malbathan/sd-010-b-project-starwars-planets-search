@@ -54,7 +54,23 @@ export default function StarWarsProvider({ children }) {
       ? selectSearch
       : inputSearch;
 
+    const negative = -1;
+
     const { order } = filters;
+    if (order.sort === 'ASC' && order.column === 'name') {
+      search.sort((a, b) => {
+        if (a.name < b.name) return negative;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
+    }
+    if (order.sort === 'DESC' && order.column === 'name') {
+      search.sort((a, b) => {
+        if (b.name < a.name) return negative;
+        if (b.name > a.name) return 1;
+        return 0;
+      });
+    }
     if (order.sort === 'ASC') {
       search.sort((a, b) => a[order.column] - b[order.column]);
     }
@@ -83,19 +99,10 @@ export default function StarWarsProvider({ children }) {
   }
 
   function handleSortClick(sortState) {
-    console.log(sortState);
-
     setFilter({ ...filters, order: sortState });
   }
 
   // PropTypes pesquisado em: https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children
-
-  StarWarsProvider.propTypes = {
-    children: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.node),
-      PropTypes.node,
-    ]).isRequired,
-  };
 
   return (
     <StarWarsContext.Provider
@@ -114,3 +121,10 @@ export default function StarWarsProvider({ children }) {
     </StarWarsContext.Provider>
   );
 }
+
+StarWarsProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
