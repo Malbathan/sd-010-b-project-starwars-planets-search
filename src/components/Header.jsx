@@ -1,13 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import MyContext from './MyContext';
 
 function Header() {
   const { filters, setfilters } = useContext(MyContext);
+  const [selectColumn, setSelectColumn] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
   const [objFilter, setObjFilter] = useState({
-    column: 'population',
+    column: selectColumn[0],
     comparison: 'maior que',
     value: 0,
   });
+
+  useEffect(() => {
+    function updateColumn() {
+      const newColumn = selectColumn.filter((element) => element !== objFilter.column);
+      setSelectColumn(newColumn);
+    }
+
+    if (filters.filterByNumericValues.length > 0) {
+      updateColumn();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters]);
 
   return (
     <form>
@@ -26,25 +40,16 @@ function Header() {
         <select
           id="column"
           data-testid="column-filter"
+          value={ objFilter.column }
           onChange={ (e) => {
             setObjFilter({ ...objFilter, column: e.target.value });
           } }
         >
-          <option value="population">
-            population
-          </option>
-          <option value="orbital_period">
-            orbital_period
-          </option>
-          <option value="diameter">
-            diameter
-          </option>
-          <option value="rotation_period">
-            rotation_period
-          </option>
-          <option value="surface_water">
-            surface_water
-          </option>
+          {selectColumn.map((column) => (
+            <option value={ column } key={ column }>
+              {column}
+            </option>
+          ))}
         </select>
       </label>
       <label htmlFor="comparison-filter">
@@ -80,8 +85,11 @@ function Header() {
         data-testid="button-filter"
         type="button"
         onClick={ () => {
-          setfilters({ ...filters,
-            filterByNumericValues: [...filters.filterByNumericValues, objFilter] });
+          setfilters({
+            ...filters,
+            filterByNumericValues: [...filters.filterByNumericValues, objFilter],
+          });
+          setObjFilter({ ...objFilter, column: selectColumn[0] });
         } }
       >
         Filtrar

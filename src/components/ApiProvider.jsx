@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
@@ -14,24 +15,28 @@ function ApiProvider({ children }) {
 
   useEffect(() => {
     function comparisonFilter() {
-      const { comparison, column, value } = filters.filterByNumericValues[0];
-      if (comparison === 'maior que') {
-        const result = resultApi.filter((i) => i[column] > parseInt(value, 10));
-        setResultFiltro(result);
-      } else if (comparison === 'menor que') {
-        const result = resultApi.filter((i) => i[column] < parseInt(value, 10));
-        setResultFiltro(result);
-      } else if (comparison === 'igual a') {
-        const result = resultApi.filter((i) => i[column] === value);
-        setResultFiltro(result);
-      }
+      filters.filterByNumericValues.forEach((filtro) => {
+        if (filtro.comparison === 'maior que') {
+          const result = resultFiltro
+            .filter((i) => i[filtro.column] > parseInt(filtro.value, 10));
+          setResultFiltro(result);
+        } else if (filtro.comparison === 'menor que') {
+          const result = resultFiltro
+            .filter((i) => i[filtro.column] < parseInt(filtro.value, 10));
+          setResultFiltro(result);
+        } else if (filtro.comparison === 'igual a') {
+          const result = resultFiltro
+            .filter((i) => i[filtro.column] === filtro.value);
+          setResultFiltro(result);
+        }
+      });
     }
     if (resultApi) {
       const apiFiltrada = resultApi.filter((planet) => planet.name.toUpperCase()
         .includes(filters.filterByName.name.toUpperCase()));
       setResultFiltro(apiFiltrada);
     }
-    if (resultApi && filters.filterByNumericValues.length > 0) {
+    if (filters.filterByNumericValues.length > 0) {
       comparisonFilter();
     }
   }, [filters, resultApi]);
@@ -47,7 +52,7 @@ function ApiProvider({ children }) {
 
   return (
     <MyContext.Provider value={ { setfilters, filters, resultFiltro } }>
-      { children }
+      {children}
     </MyContext.Provider>
   );
 }
