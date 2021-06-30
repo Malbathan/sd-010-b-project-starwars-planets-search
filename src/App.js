@@ -2,6 +2,7 @@ import React from 'react';
 import ProviderTabela from './provider/ProviderTabela';
 import Table from './components/Table';
 import SearchBar from './components/SearchBar';
+import FilterSelects from './components/Selects';
 
 function App() {
   // const [planets, setPlanets] = useState([]);
@@ -20,6 +21,7 @@ function App() {
       <div>
         <h1>Star Wars Planets Search</h1>
         <SearchBar />
+        <FilterSelects />
         <Table />
       </div>
     </ProviderTabela>
