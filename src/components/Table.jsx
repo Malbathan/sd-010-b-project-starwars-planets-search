@@ -17,7 +17,7 @@ function Table() {
   const { filters:
     {
       filterByName: { name },
-      filterByNumericValues: [{ column, comparison, number }],
+      filterByNumericValues: [{ column, comparison, value }],
     },
   } = filterPlanetsByName;
 
@@ -28,26 +28,25 @@ function Table() {
         <thead>
           <tr>
             <th>name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-            <th>Url</th>
+            <th>rotation_period</th>
+            <th>orbital_period</th>
+            <th>diameter</th>
+            <th>climate</th>
+            <th>gravity</th>
+            <th>terrain</th>
+            <th>surface_water</th>
+            <th>population</th>
+            <th>films</th>
+            <th>created</th>
+            <th>edited</th>
+            <th>url</th>
           </tr>
         </thead>
         <tbody>
           {data.filter((filter) => {
             const includesName = filter.name.includes(name);
             const localFilter = compare[comparison](
-              Number(filter[column]),
-              Number(number),
+              filter[column], (value),
             );
             return includesName && localFilter;
           })
@@ -66,7 +65,7 @@ function Table() {
               edited,
               url,
             }) => (
-              <tr key={ namePlanet }>
+              <tr key={ population }>
                 <td>{ namePlanet }</td>
                 <td>{ rotationPeriod }</td>
                 <td>{ orbitalPeriod }</td>

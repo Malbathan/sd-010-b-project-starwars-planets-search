@@ -10,7 +10,7 @@ function PlanetsProvider({ children }) {
   const initialState = {
     column: 'population',
     comparison: 'maior que',
-    number: 0,
+    value: '',
   };
   const [localFilter, setLocalFilter] = useState(initialState);
 
@@ -26,13 +26,6 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
-  // const handleColumn = ({ target: { name, value } }) => {
-  //   setPlanetFilters({
-  //     ...planetFilters,
-  //     [name]: value,
-  //   });
-  // };
-
   const handleChange = ({ target }) => {
     setFilterText(target.value);
   };
@@ -46,7 +39,7 @@ function PlanetsProvider({ children }) {
         {
           column: localFilter.column,
           comparison: localFilter.comparison,
-          number: localFilter.number,
+          value: localFilter.value,
         },
       ],
     },

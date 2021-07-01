@@ -12,7 +12,7 @@ function Filter() {
     setLocalFilter({
       column: columnFilter,
       comparison: comparisonFilter,
-      number: valueFilter,
+      value: valueFilter,
     });
   };
 
@@ -53,7 +53,7 @@ function Filter() {
         </select>
         {' '}
         <input
-          name="number"
+          name="value"
           type="number"
           data-testid="value-filter"
           placeholder="População"
