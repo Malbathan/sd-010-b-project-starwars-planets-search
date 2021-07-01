@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className="App-header">
       <img alt="Logo do filme Star Wars" src={ swImg } className="logo-img" />
-      <h2>Planets Search</h2>
+      <h2 className="fade-in-text">Planets Search</h2>
     </div>
   );
 }

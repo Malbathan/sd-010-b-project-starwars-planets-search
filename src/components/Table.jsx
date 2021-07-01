@@ -31,7 +31,9 @@ function Table() {
                   key={ value }
                   data-testid={ planet.name === value ? 'planet-name' : null }
                 >
-                  {value}
+                  {value.includes('https')
+                    ? <a href={ value }>{`Planet: ${value.split('/')[5]}`}</a>
+                    : value }
                 </td>
               ))}
             </tr>

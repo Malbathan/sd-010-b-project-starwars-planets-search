@@ -5,12 +5,12 @@ import '../App.css';
 function SearchBar() {
   const {
     data: { results },
-    handleName,
+    selectColumns,
     selectFilter,
+    handleName,
     handleFilter,
     handleOrder,
     addFilter,
-    selectColumns,
     setOrder,
   } = useContext(PlanetsContext);
 
@@ -69,23 +69,31 @@ function SearchBar() {
           {Object.keys(results[0]).map((item) => (
             <option key={ item } value={ item }>{item}</option>))}
         </select>
-        <input
-          defaultChecked
-          type="radio"
-          data-testid="column-sort-input-asc"
-          value="ASC"
-          name="sort"
-          onChange={ handleOrder }
-        />
-        ASC
-        <input
-          type="radio"
-          data-testid="column-sort-input-desc"
-          value="DESC"
-          name="sort"
-          onChange={ handleOrder }
-        />
-        DESC
+        <div className="input-box">
+          <label htmlFor="ASC">
+            ASC
+            <input
+              defaultChecked
+              type="radio"
+              data-testid="column-sort-input-asc"
+              id="ASC"
+              value="ASC"
+              name="sort"
+              onChange={ handleOrder }
+            />
+          </label>
+          <label htmlFor="DESC">
+            DESC
+            <input
+              type="radio"
+              data-testid="column-sort-input-desc"
+              id="DESC"
+              value="DESC"
+              name="sort"
+              onChange={ handleOrder }
+            />
+          </label>
+        </div>
         <button
           type="button"
           data-testid="column-sort-button"

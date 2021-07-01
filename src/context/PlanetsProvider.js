@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { func } from 'prop-types';
 import PlanetsContext from './PlanetsContext';
-import fetchPlanets from '../services/PlanetsApi';
+import getPlanets from '../services/PlanetsApi';
 
 const initialState = {
   filterByName: { name: '' },
@@ -33,9 +33,19 @@ function PlanetsProvider({ children }) {
   const [selectFilter, setSelectFilter] = useState(initialFilter);
   const [selectOrder, setSelectOrder] = useState(initialState.order);
 
-  async function getData() {
-    setData(await fetchPlanets());
-  }
+  useEffect(() => {
+    async function fetchPlanets() {
+      setData(await getPlanets());
+    } fetchPlanets();
+  }, []);
+
+  useEffect(() => {
+    const newColumns = initialColumns
+      .filter((filter) => !filters.filterByNumericValues
+        .map(({ column }) => column).includes(filter));
+    setSelectColumns(newColumns);
+    setSelectFilter({ ...initialFilter, column: newColumns[0] });
+  }, [filters.filterByNumericValues]);
 
   function handleName({ target: { id, value } }) {
     setFilters({
@@ -55,7 +65,7 @@ function PlanetsProvider({ children }) {
     setFilters({
       ...filters,
       filterByNumericValues: filters.filterByNumericValues
-        .filter((fil) => fil.column !== column),
+        .filter((filter) => filter.column !== column),
     });
   }
 
@@ -71,14 +81,6 @@ function PlanetsProvider({ children }) {
     setFilters({
       ...filters, order: selectOrder });
   }
-
-  useEffect(() => { getData(); }, []);
-  useEffect(() => {
-    const fetchColumns = initialColumns.filter((filter) => !filters.filterByNumericValues
-      .map(({ column }) => column).includes(filter));
-    setSelectColumns(fetchColumns);
-    setSelectFilter({ ...initialFilter, column: fetchColumns[0] });
-  }, [filters.filterByNumericValues]);
 
   const contextValue = {
     data,
