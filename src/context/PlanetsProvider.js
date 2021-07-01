@@ -6,17 +6,13 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
+
   const initialState = {
     column: 'population',
     comparison: 'maior que',
     number: 0,
   };
   const [localFilter, setLocalFilter] = useState(initialState);
-  // const [planetFilters, setPlanetFilters] = useState({
-  //   column: 'population',
-  //   comparison: 'maior que',
-  //   number: 0,
-  // });
 
   const getPlanets = () => {
     // setData(testData.results);
