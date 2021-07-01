@@ -4,8 +4,8 @@ import PlanetsContext from '../context/PlanetsContext';
 function Filter() {
   const { setLocalFilter, handleChange } = useContext(PlanetsContext);
 
-  const [columnFilter, setColumnFilter] = useState();
-  const [comparisonFilter, setComparisonFilter] = useState();
+  const [columnFilter, setColumnFilter] = useState('population');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState();
 
   const handleClick = () => {
@@ -31,6 +31,7 @@ function Filter() {
         <br />
         <span>População: </span>
         <select
+          value={ columnFilter }
           name="column"
           data-testid="column-filter"
           onChange={ (e) => setColumnFilter(e.target.value) }
@@ -43,6 +44,7 @@ function Filter() {
         </select>
         {' '}
         <select
+          value={ comparisonFilter }
           data-testid="comparison-filter"
           name="comparison"
           onChange={ (e) => setComparisonFilter(e.target.value) }

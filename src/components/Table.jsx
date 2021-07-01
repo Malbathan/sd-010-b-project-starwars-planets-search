@@ -21,6 +21,51 @@ function Table() {
     },
   } = filterPlanetsByName;
 
+  const filterName = () => data.filter((filter) => {
+    const includesName = filter.name.includes(name);
+    return includesName;
+  });
+
+  const filterNumber = () => {
+    const result = filterName();
+    return result.filter((planet) => compare[comparison](+planet[column], +value));
+  };
+
+  const renderPlanets = (planet, index) => {
+    const {
+      name: namePlanet,
+      rotation_period: rotationPeriod,
+      orbital_period: orbitalPeriod,
+      diameter,
+      climate,
+      gravity,
+      terrain,
+      surface_water: surfaceWater,
+      population,
+      films,
+      created,
+      edited,
+      url,
+    } = planet;
+    return (
+      <tr key={ `${index} - ${namePlanet}` }>
+        <td>{ namePlanet }</td>
+        <td>{ rotationPeriod }</td>
+        <td>{ orbitalPeriod }</td>
+        <td>{ diameter }</td>
+        <td>{ climate }</td>
+        <td>{ gravity }</td>
+        <td>{ terrain }</td>
+        <td>{ surfaceWater }</td>
+        <td>{ population }</td>
+        <td>{ films }</td>
+        <td>{ created }</td>
+        <td>{ edited }</td>
+        <td>{ url }</td>
+      </tr>);
+  };
+
+  console.log(name);
   return (
     <div>
       <Header />
@@ -43,43 +88,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.filter((filter) => {
-            const includesName = filter.name.includes(name);
-            const localFilter = compare[comparison](
-              filter[column], (value),
-            );
-            return includesName && localFilter;
-          })
-            .map(({
-              name: namePlanet,
-              rotation_period: rotationPeriod,
-              orbital_period: orbitalPeriod,
-              diameter,
-              climate,
-              gravity,
-              terrain,
-              surface_water: surfaceWater,
-              population,
-              films,
-              created,
-              edited,
-              url,
-            }) => (
-              <tr key={ population }>
-                <td>{ namePlanet }</td>
-                <td>{ rotationPeriod }</td>
-                <td>{ orbitalPeriod }</td>
-                <td>{ diameter }</td>
-                <td>{ climate }</td>
-                <td>{ gravity }</td>
-                <td>{ terrain }</td>
-                <td>{ surfaceWater }</td>
-                <td>{ population }</td>
-                <td>{ films }</td>
-                <td>{ created }</td>
-                <td>{ edited }</td>
-                <td>{ url }</td>
-              </tr>))}
+          {!value ? filterName().map(renderPlanets) : filterNumber().map(renderPlanets)}
         </tbody>
       </table>
     </div>
