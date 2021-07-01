@@ -6,10 +6,17 @@ export default function Filter() {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState('0');
+  const [columnMap, setColumnMap] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water']);
 
-  // function handleChangeName(e) {
-  //   setFilters({ ...filters, filterByName: { name: e.target.value } });
-  // }
+  function exColumnMap() {
+    setFilters(
+      { ...filters,
+        filterByNumericValues:
+        [...filters.filterByNumericValues, { column, comparison, value }] },
+    );
+    setColumnMap(columnMap.filter((e) => e !== column));
+  }
 
   return (
     <>
@@ -30,11 +37,7 @@ export default function Filter() {
           data-testid="column-filter"
           onChange={ ((e) => setColumn(e.target.value)) }
         >
-          <option name="column">population</option>
-          <option name="column">orbital_period</option>
-          <option name="column">diameter</option>
-          <option name="column">rotation_period</option>
-          <option name="column">surface_water</option>
+          {columnMap.map((e) => (<option key={ e } name="column">{e}</option>))}
         </select>
       </label>
       <label htmlFor="number">
@@ -56,10 +59,8 @@ export default function Filter() {
       />
       <button
         type="button"
-        data-testid="button-filter'"
-        onClick={ (() => setFilters(
-          { ...filters, filterByNumericValues: [{ column, comparison, value }] },
-        )) }
+        data-testid="button-filter"
+        onClick={ exColumnMap }
       >
         Filtrar
       </button>

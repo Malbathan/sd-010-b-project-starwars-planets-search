@@ -31,7 +31,8 @@ function StarWarsProvider({ children }) {
       if (filters.filterByNumericValues.length === 0) {
         return data;
       }
-      const { column, comparison, value } = filters.filterByNumericValues[0];
+      const { column, comparison, value } = filters
+        .filterByNumericValues[filters.filterByNumericValues.length - 1];
       switch (comparison) {
       case 'maior que':
         return Number(el[column]) > Number(value);
