@@ -1,6 +1,10 @@
 import React, { useContext, useState } from 'react';
 import StarWarsContext from '../context/StarWarsContext';
 
+// Ajuda de Pedro Henrique no requisito 2;
+// Melhor entendimento da execução do requisito 3 com Zambelli;
+// Ajuda de Fernanda Porto nos requisitos 3 e 4;
+
 export default function Filter() {
   const { filters, setFilters } = useContext(StarWarsContext);
   const [column, setColumn] = useState('population');
