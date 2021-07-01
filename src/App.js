@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
+import Table from './components/Table';
+import SearchProvider from './context/SearchProvider';
 
-// inicio do projeto
 function App() {
   return (
-    <span>Hello, App!</span>
+    <SearchProvider>
+      <Table />
+    </SearchProvider>
   );
 }
 
