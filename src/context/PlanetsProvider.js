@@ -6,16 +6,17 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [filterText, setFilterText] = useState('');
-  const [planetFilters, setPlanetFilters] = useState({
+  const initialState = {
     column: 'population',
     comparison: 'maior que',
     number: 0,
-  });
-  const [localFilter, setLocalFilter] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    number: 0,
-  });
+  };
+  const [localFilter, setLocalFilter] = useState(initialState);
+  // const [planetFilters, setPlanetFilters] = useState({
+  //   column: 'population',
+  //   comparison: 'maior que',
+  //   number: 0,
+  // });
 
   const getPlanets = () => {
     // setData(testData.results);
@@ -29,23 +30,15 @@ function PlanetsProvider({ children }) {
     getPlanets();
   }, []);
 
-  const handleColumn = ({ target: { name, value } }) => {
-    setPlanetFilters({
-      ...planetFilters,
-      [name]: value,
-    });
-  };
-
-  const handleClick = ({ name, value }) => {
-    setLocalFilter({
-      ...localFilter,
-      [name]: value,
-    });
-  };
+  // const handleColumn = ({ target: { name, value } }) => {
+  //   setPlanetFilters({
+  //     ...planetFilters,
+  //     [name]: value,
+  //   });
+  // };
 
   const handleChange = ({ target }) => {
     setFilterText(target.value);
-    console.log(data);
   };
 
   const filterPlanetsByName = {
@@ -55,9 +48,9 @@ function PlanetsProvider({ children }) {
       },
       filterByNumericValues: [
         {
-          column: planetFilters.column,
-          comparison: planetFilters.comparison,
-          value: planetFilters.number,
+          column: localFilter.column,
+          comparison: localFilter.comparison,
+          number: localFilter.number,
         },
       ],
     },
@@ -65,11 +58,11 @@ function PlanetsProvider({ children }) {
 
   const context = {
     data,
+    localFilter,
     filterPlanetsByName,
+    setLocalFilter,
     getPlanets,
     handleChange,
-    handleColumn,
-    handleClick,
   };
 
   return (

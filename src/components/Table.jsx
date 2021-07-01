@@ -17,7 +17,7 @@ function Table() {
   const { filters:
     {
       filterByName: { name },
-      filterByNumericValues: [{ column, comparison, value }],
+      filterByNumericValues: [{ column, comparison, number }],
     },
   } = filterPlanetsByName;
 
@@ -45,11 +45,11 @@ function Table() {
         <tbody>
           {data.filter((filter) => {
             const includesName = filter.name.includes(name);
-            const planetFilter = compare[comparison](
+            const localFilter = compare[comparison](
               Number(filter[column]),
-              Number(value),
+              Number(number),
             );
-            return includesName && planetFilter;
+            return includesName && localFilter;
           })
             .map(({
               name: namePlanet,
