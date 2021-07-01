@@ -116,8 +116,6 @@ function Filter() {
     <form action="">
       <input
         type="text"
-        name=""
-        id=""
         onChange={ handleChangeText }
         data-testid="name-filter"
       />
@@ -127,7 +125,7 @@ function Filter() {
         data-testid="column-filter"
       >
         {numericFilters.map((filter, index) => (
-          <option key={ `${filter}${index}` }>{filter}</option>
+          <option key={ `${filter}_${index}` }>{filter}</option>
         ))}
       </select>
       <select
@@ -142,14 +140,11 @@ function Filter() {
       <input
         type="number"
         name="value"
-        id=""
         onChange={ handleChangeNumeric }
         data-testid="value-filter"
       />
       <button
         type="button"
-        name=""
-        id=""
         onClick={ handleClick }
         data-testid="button-filter"
       >

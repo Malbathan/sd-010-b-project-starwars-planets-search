@@ -4,6 +4,7 @@ import { FiltersContext } from '.';
 
 function FiltersProvider({ children }) {
   const [filters, setFilters] = useState({});
+  const [orderNow, setOrderNow] = useState(false);
   // const [applyFilters, setApplyFilters] = useState(false);
   // setFilters({
   //   ...filters,
@@ -14,7 +15,7 @@ function FiltersProvider({ children }) {
 
   return (
     <FiltersContext.Provider
-      value={ { filters, setFilters } }
+      value={ { filters, setFilters, orderNow, setOrderNow } }
     >
       {children}
     </FiltersContext.Provider>
