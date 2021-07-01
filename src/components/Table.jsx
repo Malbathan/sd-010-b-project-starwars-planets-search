@@ -31,7 +31,6 @@ export default function Table() {
   const handleClick = () => {
     const { column, condition, numberSelect } = filterByNumeric;
     const number = Number(numberSelect);
-
     const filteringListByNumber = data.filter((planet) => {
       if (condition === 'maior que') {
         return planet[column] > number;
@@ -154,9 +153,6 @@ export default function Table() {
         <td>{ url }</td>
       </tr>));
   };
-
-  // useEffect(conditionalRendering, [dataFilteredBySelects]);
-
   // render
   return (
     <div>
@@ -202,7 +198,6 @@ export default function Table() {
         <button type="button" onClick={ handleClick } data-testid="button-filter">
           Filtrar
         </button>
-
       </form>
       <table>
         <thead>
