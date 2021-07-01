@@ -22,13 +22,13 @@ function ContextProvider({ children }) {
   const context = {
     data,
     setData,
-    fetchAPI,
     dataFilteredByName,
     setDataFilteredByName,
     filterByNumeric,
     setFilterByNumeric,
     dataFilteredBySelects,
     setDataFilteredBySelects,
+    fetchAPI,
   };
 
   return (

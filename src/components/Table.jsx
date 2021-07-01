@@ -27,18 +27,6 @@ export default function Table() {
     setFilters({ filterByName: { name: value } });
   };
 
-  // filtering list with name
-  useEffect(() => {
-  // filtered By Name
-    const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
-    setDataFilteredByName(countriesFilteredByName);
-  }, [data, nameInputState, setDataFilteredByName]);
-
-  // saving data from selects
-  const handleChangeSelects = ({ target: { name, value } }) => {
-    setFilterByNumeric({ ...filterByNumeric, [name]: value });
-  };
-
   // filtering list with selects
   const handleClick = () => {
     const { column, condition, numberSelect } = filterByNumeric;
@@ -47,17 +35,60 @@ export default function Table() {
     const filteringListByNumber = data.filter((planet) => {
       if (condition === 'maior que') {
         return planet[column] > number;
-      }
-      if (condition === 'menor que') {
+      } if (condition === 'menor que') {
         return planet[column] < number;
       }
-      return planet[column] === number;
+      return Number(planet[column]) === number;
     });
     setDataFilteredBySelects(filteringListByNumber);
   };
 
+  // filtering list with name
+  useEffect(() => {
+  // filtered By Name
+    const countriesFilteredByName = data.filter((e) => e.name.includes(nameInputState));
+    setDataFilteredByName(countriesFilteredByName);
+  }, [data, nameInputState, setDataFilteredByName, dataFilteredBySelects]);
+
+  // saving data from selects
+  const handleChangeSelects = ({ target: { name, value } }) => {
+    setFilterByNumeric({ ...filterByNumeric, [name]: value });
+  };
+
   const conditionalRendering = () => {
     // conditional depending on the filters
+    if (dataFilteredBySelects.length > 0) {
+      return dataFilteredBySelects.map(({
+        name: namePlanet,
+        rotation_period: rotationPeriod,
+        orbital_period: orbitalPeriod,
+        diameter,
+        climate,
+        gravity,
+        terrain,
+        surface_water: surfaceWater,
+        population,
+        films,
+        created,
+        edited,
+        url,
+      }) => (
+        <tr key={ namePlanet }>
+          <td>{ namePlanet }</td>
+          <td>{ rotationPeriod }</td>
+          <td>{ orbitalPeriod }</td>
+          <td>{ diameter }</td>
+          <td>{ climate }</td>
+          <td>{ gravity }</td>
+          <td>{ terrain }</td>
+          <td>{ surfaceWater }</td>
+          <td>{ population }</td>
+          <td>{ films }</td>
+          <td>{ created }</td>
+          <td>{ edited }</td>
+          <td>{ url }</td>
+        </tr>));
+    }
     if (dataFilteredByName) {
       return (
         dataFilteredByName.map(({
@@ -92,7 +123,7 @@ export default function Table() {
           </tr>))
       );
     }
-    data.map(({
+    return data.map(({
       name: namePlanet,
       rotation_period: rotationPeriod,
       orbital_period: orbitalPeriod,
@@ -124,6 +155,8 @@ export default function Table() {
       </tr>));
   };
 
+  // useEffect(conditionalRendering, [dataFilteredBySelects]);
+
   // render
   return (
     <div>
@@ -138,7 +171,12 @@ export default function Table() {
             placeholder="Filtering by name"
           />
         </label>
-        <select name="column" id="column" onChange={ handleChangeSelects } data-testid="column-filter">
+        <select
+          name="column"
+          id="column"
+          onChange={ handleChangeSelects }
+          data-testid="column-filter"
+        >
           <option defaultValue="population">population</option>
           <option value="orbital_period">orbital_period</option>
           <option value="diameter">diameter</option>
@@ -155,7 +193,12 @@ export default function Table() {
           <option value="menor que">menor que</option>
           <option value="igual a">igual a</option>
         </select>
-        <input type="number" name="numberSelect" data-testid="value-filter" onChange={ handleChangeSelects } />
+        <input
+          type="number"
+          name="numberSelect"
+          data-testid="value-filter"
+          onChange={ handleChangeSelects }
+        />
         <button type="button" onClick={ handleClick } data-testid="button-filter">
           Filtrar
         </button>
