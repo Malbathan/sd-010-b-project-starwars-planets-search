@@ -91,7 +91,6 @@ export default function Filters() {
       <label htmlFor="value">
         <input
           min="0"
-          value={ local.valuehandleSortSelectedColumn }
           type="number"
           data-testid="value-filter"
           id="value"
