@@ -1,57 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanets from '../api';
-import store, { initialState } from './store';
+import store, { FILTERS, OPTIONS, PLANETS } from './store';
 
 const Provider = ({ children }) => {
-  const [state, setState] = useState(initialState);
-  const { isFetching, data, dataFiltered, filters } = state;
-  const { filterOn, details, operator, options } = filters;
-  const { filterByName, filterByTypes, filteredByNumbers } = options;
-  const { column, comparison, number, filterTypesOn } = filterByTypes;
+  const [planets, setPlanets] = useState(PLANETS);
+  const [filters, setFilters] = useState(FILTERS);
+  const [options, setOptions] = useState(OPTIONS); const { details, operator } = options;
+  const { isFetching, data, dataFiltered } = planets;
+  const { filterOn, column, comparison, number,
+    filterTypesOn, filteredByNumbers } = filters;
 
   const getPlanets = async () => {
-    const planets = await fetchPlanets();
-    console.log(planets);
-    setState({ ...state, data: planets, isFetching: false });
+    const dataPlanets = await fetchPlanets();
+    setPlanets({ ...planets, data: dataPlanets, isFetching: false });
   };
 
   const handleChange = ({ target: { name, value, id } }) => {
     if (id === 'filterByName') {
-      setState({ ...state,
-        filters: { ...filters,
-          filterOn: true,
-          options: { ...options,
-            filterByName: { [name]: value, filterNameOn: true } } } });
+      setFilters({ ...filters,
+        filterOn: true,
+        [name]: value,
+        filterNameOn: true });
     } else {
-      setState({ ...state,
-        filters: { ...filters,
-          options: { ...options,
-            filterByTypes: { ...filterByTypes, [name]: value } } } });
+      setFilters({ ...filters, [name]: value });
     }
   };
 
   const filterByNamE = (name) => {
     if (name !== '') {
       let planetsFiltered = data
-        .filter((planets) => planets.name.includes(name));
+        .filter((Planets) => Planets.name.includes(name));
 
       if (!planetsFiltered.length) {
         planetsFiltered = data
-          .filter((planets) => planets.name.includes((name.length === 1) ? (
+          .filter((Planets) => Planets.name.includes((name.length === 1) ? (
             name) : name[0].toUpperCase()));
       }
-      setState({ ...state,
-        dataFiltered: planetsFiltered,
-        filters: { ...filters,
-          filterOn: false,
-          options: { ...options, filterByName: { name: '', filterNameOn: false } } } });
+      setPlanets({ ...planets, dataFiltered: planetsFiltered });
+      setFilters({ ...filters,
+        filterOn: false,
+        name: '',
+        filterNameOn: false });
     } else {
-      setState({ ...state,
-        dataFiltered: undefined,
-        filters: { ...filters,
-          filterOn: false,
-          options: { ...options, filterByName: { name: '', filterNameOn: false } } } });
+      setPlanets({ ...planets, dataFiltered: undefined });
+      setFilters({ ...filters,
+        filterOn: false,
+        name: '',
+        filterNameOn: false });
     }
   };
 
@@ -70,32 +66,27 @@ const Provider = ({ children }) => {
         }
         return data;
       });
-    setState({ ...state,
-      dataFiltered: planetsFiltered,
-      filters: { ...filters,
-        filterOn: false,
-        options: { ...options,
-          filterByTypes: { ...filterByTypes, number: '', filterTypesOn: false } } } });
+    setPlanets({ ...planets, dataFiltered: planetsFiltered });
+    setFilters({ ...filters,
+      filterOn: false,
+      filterTypesOn: false,
+      filterByTypes: true,
+      number: '' });
   };
 
   const handleClick = () => {
     const newDetails = details.filter((detail) => detail !== column);
 
-    setState({ ...state,
-      filters: { ...filters,
-        filterBtn: true,
-        filterOn: true,
-        details: newDetails,
-        options: { ...options,
-          filterByTypes: { ...filterByTypes, filterTypesOn: true },
-          filteredByNumbers: [...filteredByNumbers,
-            { id: filteredByNumbers.length, column, comparison, number }],
-        },
-      } });
+    setOptions({ ...options, details: newDetails });
+    setFilters({ ...filters,
+      filterOn: true,
+      filterTypesOn: true,
+      filteredByNumbers: [...filteredByNumbers,
+        { id: filteredByNumbers.length, column, comparison, number }] });
   };
 
   const filterPlanets = () => {
-    const { name, filterNameOn } = filterByName;
+    const { name, filterNameOn } = filters;
 
     if (filterNameOn) filterByNamE(name);
     if (filterTypesOn) filterByNumber(column, comparison);
@@ -104,22 +95,18 @@ const Provider = ({ children }) => {
   const clearFilter = (id) => {
     const removedFilter = filteredByNumbers.filter((item) => item.id !== id);
 
-    setState({ ...state,
-      dataFiltered: undefined,
-      filters: { ...filters,
-        options: { ...options,
-          filteredByNumbers: removedFilter,
-        },
-      } });
+    setPlanets({ ...planets, dataFiltered: undefined });
+    setFilters({ ...filters, filteredByNumbers: removedFilter });
   };
 
+  //---------------------------------------------------------------------
+  // CICLOS DE VIDA
   useEffect(() => {
     if (isFetching) getPlanets();
     if (filterOn) filterPlanets();
   });
 
-  //---------------------------------------------------------------------
-
+  // CONTEXT API
   const contextValue = {
     data,
     dataFiltered,
