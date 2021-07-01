@@ -7,7 +7,6 @@ import TableContext from '../context/TableContext';
 function TableProvider({ children }) {
   const [data, setData] = useState([]);
   const [titles, setTitles] = useState([]);
-  // const [filterName, setFilterName] = useState([]);
   // mudei esse estado para filters pois estava fazendo diferente do que pede no readme.
   const [filters, setFilters] = useState({
     filterByName: {
@@ -33,13 +32,12 @@ function TableProvider({ children }) {
   // handleChange input planet name
   const handleChange = ({ target }) => {
     setFilters({ ...filters, filterByName: { name: target.value } });
-    // setFilterName(value);
   };
 
+  // o lint colocou esse useCallback toda vez que eu salvava o arquivo.
+  // https://www.youtube.com/watch?v=jMWNNSx-mcU&ab_channel=Rocketseat
   const filteredPlanets = useCallback(() => {
-    console.log(filters);
     const { column, comparison, value } = filters.filterByNumericValue[0];
-    console.log('entoru');
 
     const filterInAPI = data.filter((element) => {
       if (comparison === 'maior que') {
@@ -53,12 +51,14 @@ function TableProvider({ children }) {
     setData(filterInAPI);
   }, [data, filters]);
 
+  // https://stackoverflow.com/questions/53255951/equivalent-to-componentdidupdate-using-react-hooks
   useEffect(() => {
     if (update === true) {
       filteredPlanets();
     }
     setUptade(false);
   }, [filteredPlanets, update]);
+  // o lint também colocou esse filteredPlanet dentro do array de dependências
 
   const handleClick = (state) => {
     setFilters(
