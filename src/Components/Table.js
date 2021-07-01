@@ -1,15 +1,21 @@
 import React, { useContext } from 'react';
 import MyContext from '../Context/MyContext';
 
-function Table() {
-  const { data } = useContext(MyContext);
+const { data } = useContext(MyContext);
+
+function tableHead( { data } ) {
+
+}
+
+function TableBody() {
   const planets = data;
   // console.log(planets);
   return (
-    <tbody>
+    <section>
       {planets.map((planet, index) => (
         <tr key={ index }>
           <td>{ planet.name }</td>
+          <td>{ planet.orbital_period }</td>
           <td>{ planet.rotation_period }</td>
           <td>{ planet.diameter }</td>
           <td>{ planet.climate }</td>
@@ -23,7 +29,7 @@ function Table() {
           <td>{ planet.url }</td>
         </tr>
       ))}
-    </tbody>
+    </section>
   );
 }
 
