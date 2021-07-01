@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import SearchContext from '../context/SearchContext';
 import FetchPlanetAPI from '../services/serviceAPI';
 
-import './Table.css';
-
 function Table() {
   const { results } = FetchPlanetAPI();
   const { data, setData } = useContext(SearchContext);
