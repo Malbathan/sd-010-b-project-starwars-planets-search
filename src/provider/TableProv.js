@@ -31,17 +31,17 @@ export default function TableProv({ children }) {
     'igual a': (pValue, fValue) => pValue === fValue,
   };
 
-  function teste(fBNValues) {
-    const plan = planets.filter((planet) => fBNValues
-      .every((filters) => compara[filters.comparison](planet[filters
-        .column], filters.value)));
-    console.log(fBNValues, plan, 'teste');
-    return plan;
-  }
-
   useEffect(() => {
     const { filterByName, filterByNumericValues } = filterText.filters;
     const { name } = filterByName;
+
+    function teste(fBNValues) {
+      const plan = planets.filter((planet) => fBNValues
+        .every((filters) => compara[filters.comparison](planet[filters
+          .column], filters.value)));
+      console.log(fBNValues, plan, 'teste');
+      return plan;
+    }
     let filteredPlanets = teste(filterByNumericValues);
     if (name !== '') {
       filteredPlanets = filteredPlanets.filter((planet) => planet.name
@@ -50,7 +50,7 @@ export default function TableProv({ children }) {
     }
 
     setplanetsFilter(filteredPlanets);
-  }, [filterText, planets]);
+  }, [compara, filterText, planets]);
 
   useEffect(() => {
     planetAPI();
