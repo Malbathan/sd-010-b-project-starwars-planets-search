@@ -2,23 +2,19 @@ import React, { useContext, useState } from 'react';
 // import PropTypes from 'prop-types';
 import TableContext from '../context/contexto';
 
-let list = [
-  'population',
-  'orbital_period',
-  'diameter',
-  'rotation_period',
-  'surface_water',
-];
-
-function filterButton(col) {
-  list = list.filter((item) => item !== col);
-}
-
 function Filters() {
-  const [column, setColumn] = useState(list[0]);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState();
+  const [list, setlist] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [column, setColumn] = useState(list[0]);
   const { setfilterText } = useContext(TableContext);
+
   return (
     <form>
       <label htmlFor="name-filter">
@@ -81,7 +77,7 @@ function Filters() {
 
             return test;
           });
-          filterButton(column);
+          setlist(list.filter((item) => item !== column));
           setColumn(list[0]);
         } }
       >
