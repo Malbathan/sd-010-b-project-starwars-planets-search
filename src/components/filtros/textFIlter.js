@@ -7,7 +7,7 @@ function TextFilter() {
     <section>
       <input
         data-testid="name-filter"
-        onChange={ (e) => setText(e.target.value) }
+        onChange={ (event) => setText(event.target.value) }
         type="text"
       />
     </section>
