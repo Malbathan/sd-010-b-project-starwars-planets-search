@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 // import PropTypes from 'prop-types';
 import TableContext from '../context/contexto';
 
@@ -6,40 +6,18 @@ let list = [
   'population',
   'orbital_period',
   'diameter',
-  'rotation',
-  'period',
+  'rotation_period',
   'surface_water',
 ];
 
-let choice = {
-  column: list[0],
-  comparison: 'maior que',
-  value: '-1',
-};
-
-function filterFunc({ target: { value, name } }) {
-  switch (name) {
-  case 'column-filter':
-    choice = { ...choice, column: value };
-    break;
-  case 'comparison-filter':
-    choice = { ...choice, comparison: value };
-    break;
-  case 'value':
-    choice = { ...choice, value };
-    break;
-
-  default:
-    break;
-  }
-}
-
-function filterButton() {
-  list = list.filter((item) => item !== choice.column);
-  choice = { ...choice, column: list[0] };
+function filterButton(col) {
+  list = list.filter((item) => item !== col);
 }
 
 function Filters() {
+  const [column, setColumn] = useState(list[0]);
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState();
   const { setfilterText } = useContext(TableContext);
   return (
     <form>
@@ -67,7 +45,7 @@ function Filters() {
         <select
           name="column-filter"
           data-testid="column-filter"
-          onChange={ (target) => { filterFunc(target); } }
+          onChange={ (event) => { setColumn(event.target.value); } }
         >
           {list.map((opt, i) => <option key={ i } value={ opt }>{opt}</option>)}
         </select>
@@ -77,7 +55,7 @@ function Filters() {
         <select
           name="comparison-filter"
           data-testid="comparison-filter"
-          onChange={ (target) => { filterFunc(target); } }
+          onChange={ (event) => { setComparison(event.target.value); } }
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -88,20 +66,23 @@ function Filters() {
         type="number"
         name="value"
         data-testid="value-filter"
-        onChange={ (target) => { filterFunc(target); } }
+        onChange={ (event) => { setValue(event.target.value); } }
       />
       <button
         type="button"
+        data-testid="button-filter"
         onClick={ () => {
           setfilterText((oldState) => {
             const test = { filters: {
               ...oldState.filters,
               filterByNumericValues: [
                 ...oldState.filters.filterByNumericValues,
-                { ...choice }] } };
+                { column, comparison, value }] } };
+
             return test;
           });
-          filterButton();
+          filterButton(column);
+          setColumn(list[0]);
         } }
       >
         Pesquisar

@@ -36,8 +36,10 @@ export default function TableProv({ children }) {
     };
     function teste(fBNValues) {
       const plan = planets.filter((planet) => fBNValues
-        .every((filters) => compara[filters.comparison](planet[filters
-          .column], filters.value)));
+        .every((filters) => compara[filters.comparison](
+          parseInt((planet[filters.column]), 10),
+          parseInt(filters.value, 10),
+        )));
       return plan;
     }
     let filteredPlanets = teste(filterByNumericValues);
@@ -68,5 +70,5 @@ export default function TableProv({ children }) {
 }
 
 TableProv.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

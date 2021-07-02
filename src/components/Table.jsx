@@ -14,15 +14,18 @@ function Table() {
     <div>
       <Filters />
       <table>
-        <tr>
-          {tags.map((tag, i) => <th key={ i }>{tag}</th>)}
-        </tr>
-        {planetsFilter.map((planet, i) => (<TableLine
-          i={ i }
-          key={ i }
-          planet={ planet }
-        />))}
-
+        <thead>
+          <tr>
+            {tags.map((tag, i) => <th key={ i }>{tag}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {planetsFilter.map((planet, i) => (<TableLine
+            i={ i }
+            key={ i }
+            planet={ planet }
+          />))}
+        </tbody>
       </table>
     </div>
   );
