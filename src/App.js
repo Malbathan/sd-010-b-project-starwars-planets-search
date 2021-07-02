@@ -1,9 +1,15 @@
-import React from 'react';
-import './App.css';
+import React, { useContext } from 'react';
+import ContextPlanets from './context/ContextPlanets';
+// import './App.css';
 
 function App() {
+  const { data } = useContext(ContextPlanets);
+
   return (
-    <span>Hello, App!</span>
+    <div>
+      <span>Hello, App!</span>
+      { data.map((planet) => console.log(planet))}
+    </div>
   );
 }
 
