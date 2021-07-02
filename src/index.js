@@ -1,5 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import PlanetsProvider from './Context/PlanetsProvider';
+
+ReactDOM.render(
+  <PlanetsProvider>
+    <App />
+  </PlanetsProvider>, document.getElementById('root'),
+);
