@@ -7,6 +7,7 @@ import getPlanets from '../services/getPlanets';
 function StarwarsProvider({ children }) { // props descontruction
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [planetsByValue, setPlanetsByValue] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: {
       name: '',
@@ -39,6 +40,8 @@ function StarwarsProvider({ children }) { // props descontruction
         fetchPlanets,
         filters,
         setFilters,
+        planetsByValue,
+        setPlanetsByValue,
       } }
     >
       {children}

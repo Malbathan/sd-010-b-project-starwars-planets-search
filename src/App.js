@@ -2,6 +2,7 @@ import React from 'react';
 import StarwarsProvider from './context/StarwarsProvider';
 
 import FilterByName from './components/FilterByName';
+import FilterByNumber from './components/FilterByNumber';
 import Table from './components/Table';
 
 import './App.css';
@@ -14,6 +15,7 @@ function App() {
         <img id="logo" src={ StarWarsLogo } alt="StarWars logo" />
       </header>
       <FilterByName />
+      <FilterByNumber />
       <Table />
     </StarwarsProvider>
   );
