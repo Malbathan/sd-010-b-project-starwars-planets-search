@@ -1,10 +1,12 @@
 async function fetchPlanets() {
   try {
-    const endpoint = 'https://swapi-trybe.herokuapp.com/api/planets/?format=json';
-    const result = await fetch(endpoint);
-    return result;
-  } catch (error) {
-    console.log('ooops!!!');
+    const endPoint = 'https://swapi-trybe.herokuapp.com/api/planets/';
+    const response = await fetch(endPoint);
+    const { results } = await response.json();
+    // console.log(results); // Teste retorno API
+    return results;
+  } catch (err) {
+    console.log(err);
   }
 }
 

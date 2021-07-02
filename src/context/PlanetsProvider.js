@@ -5,6 +5,7 @@ import fetchPlanets from '../api/fetchPlanets';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  // const [loading, setLoading] = useState(true);
 
   const contextValue = {
     data,
@@ -13,11 +14,12 @@ function PlanetsProvider({ children }) {
 
   useEffect(() => {
     const getData = async () => {
-      const { results } = await fetchPlanets();
-      // console.log(results);
-      setData(results);
+      const planets = await fetchPlanets();
+      setData(planets);
+      // setLoading(false)
     };
     getData();
+    // console.log(getData());
   }, []);
 
   return (
