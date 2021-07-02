@@ -25,21 +25,19 @@ export default function TableProv({ children }) {
     setplanets(results);
   };
 
-  const compara = {
-    'maior que': (pValue, fValue) => pValue > fValue,
-    'menor que': (pValue, fValue) => pValue < fValue,
-    'igual a': (pValue, fValue) => pValue === fValue,
-  };
-
   useEffect(() => {
     const { filterByName, filterByNumericValues } = filterText.filters;
     const { name } = filterByName;
 
+    const compara = {
+      'maior que': (pValue, fValue) => pValue > fValue,
+      'menor que': (pValue, fValue) => pValue < fValue,
+      'igual a': (pValue, fValue) => pValue === fValue,
+    };
     function teste(fBNValues) {
       const plan = planets.filter((planet) => fBNValues
         .every((filters) => compara[filters.comparison](planet[filters
           .column], filters.value)));
-      console.log(fBNValues, plan, 'teste');
       return plan;
     }
     let filteredPlanets = teste(filterByNumericValues);
@@ -50,7 +48,7 @@ export default function TableProv({ children }) {
     }
 
     setplanetsFilter(filteredPlanets);
-  }, [compara, filterText, planets]);
+  }, [filterText, planets]);
 
   useEffect(() => {
     planetAPI();
