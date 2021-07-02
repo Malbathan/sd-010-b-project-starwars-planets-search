@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import StarwarsContext from './StarwarsContext';
-import getPlanets from '../../services/getPlanets';
+import getPlanets from '../services/getPlanets';
 
 function StarwarsProvider({ children }) { // props descontruction
   const [isLoading, setIsLoading] = useState(false);
@@ -11,6 +11,13 @@ function StarwarsProvider({ children }) { // props descontruction
     filterByName: {
       name: '',
     },
+    filterByNumericValues: [
+      {
+        column: 'population',
+        comparison: 'maior que',
+        value: '100000',
+      },
+    ],
   });
 
   const fetchPlanets = async () => {

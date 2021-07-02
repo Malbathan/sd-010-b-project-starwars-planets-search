@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import StarwarsContext from './context/StarwarsContext';
+import StarwarsContext from '../context/StarwarsContext';
 
-function FilterByName() {
+export default function FilterByName() {
   const { filters: { filterByName: { name } }, setFilters } = useContext(StarwarsContext);
 
   const handleChange = ({ target }) => {
@@ -22,5 +22,3 @@ function FilterByName() {
     </label>
   );
 }
-
-export default FilterByName;

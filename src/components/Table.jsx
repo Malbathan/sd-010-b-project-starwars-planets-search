@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import StarwarsContext from './context/StarwarsContext';
+import StarwarsContext from '../context/StarwarsContext';
 
 import './table.css';
 
