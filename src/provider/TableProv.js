@@ -15,7 +15,7 @@ export default function TableProv({ children }) {
     },
   });
 
-  console.log(filterText, 'filters');
+  // console.log(filterText, 'filters');
 
   const planetAPI = async () => {
     const { results } = await getPlanets();
@@ -25,17 +25,30 @@ export default function TableProv({ children }) {
     setplanets(results);
   };
 
-  useEffect(() => {
-    const { filterByName } = filterText.filters;
-    const { name } = filterByName;
-    // const { column, comparison, value } = filterByNumericValues;
-    let filteredPlanets = planets;
+  const compara = {
+    'maior que': (pValue, fValue) => pValue > fValue,
+    'menor que': (pValue, fValue) => pValue < fValue,
+    'igual a': (pValue, fValue) => pValue === fValue,
+  };
 
+  function teste(fBNValues) {
+    const plan = planets.filter((planet) => fBNValues
+      .every((filters) => compara[filters.comparison](planet[filters
+        .column], filters.value)));
+    console.log(fBNValues, plan, 'teste');
+    return plan;
+  }
+
+  useEffect(() => {
+    const { filterByName, filterByNumericValues } = filterText.filters;
+    const { name } = filterByName;
+    let filteredPlanets = teste(filterByNumericValues);
     if (name !== '') {
-      filteredPlanets = planets.filter((planet) => planet.name
+      filteredPlanets = filteredPlanets.filter((planet) => planet.name
         .toLowerCase()
         .includes(name));
     }
+
     setplanetsFilter(filteredPlanets);
   }, [filterText, planets]);
 
