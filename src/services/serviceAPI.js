@@ -8,7 +8,7 @@ const FetchPlanetAPI = () => {
   const searchAPI = () => {
     fetch(API)
       .then((response) => response.json())
-      .then((response) => setListPlanet(response));
+      .then(setListPlanet);
   };
 
   useEffect(searchAPI, []);

@@ -4,21 +4,25 @@ import FetchPlanetAPI from '../services/serviceAPI';
 
 function Table() {
   const { results } = FetchPlanetAPI();
-  const { data, setData } = useContext(SearchContext);
+  const { data, setData, filtraNome: { filters:
+    { filterByName: { name } } } } = useContext(SearchContext);
 
   if (results !== undefined) {
     results.map((planeta) => delete planeta.residents);
     setData(results);
   }
 
+  const filtro = name !== ''
+    ? data.filter((planeta) => planeta.name.includes(name)) : data;
+
   let titulo = [];
-  if (data.length > 0) {
-    titulo = Object.keys(data[0]);
+  if (filtro.length > 0) {
+    titulo = Object.keys(filtro[0]);
   }
 
   //  TABELA E REGEX - HENRIQUE ZÓZIMO
   return (
-    (data.length > 0
+    (filtro.length > 0
       ? (
         <table className="planetas">
           <thead>
@@ -33,7 +37,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {data.map((planet) => (
+            {filtro.map((planet) => (
               <tr key={ planet.name }>
                 <td>{planet.name}</td>
                 <td>{planet.rotation_period}</td>

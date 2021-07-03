@@ -5,8 +5,16 @@ import SearchContext from './SearchContext';
 function SearchProvider({ children }) {
   const [data, setData] = useState([]);
 
+  const [filtraNome, setFiltraNome] = useState({
+    filters: {
+      filterByName: {
+        name: '',
+      },
+    },
+  });
+
   return (
-    <SearchContext.Provider value={ { data, setData } }>
+    <SearchContext.Provider value={ { data, setData, filtraNome, setFiltraNome } }>
       { children }
     </SearchContext.Provider>
   );
